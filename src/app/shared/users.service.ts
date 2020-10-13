@@ -150,7 +150,4 @@ export class UsersService {
     const ref = this.storage.ref(filePath);
     const task = ref.put(file);
   }
-// chutiya
-// Ishaan ki maa
-// double chut
 }
