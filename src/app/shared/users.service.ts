@@ -33,6 +33,7 @@ export class UsersService {
 
 
   //--------------------------------------- Profile details ---------------------------------------
+  // Get profile details from cloud firestore
   getProfileDetails(uid: string) {
     let index = this.profileDetailsList.findIndex(details => {
       return details.uid === uid;
@@ -47,6 +48,7 @@ export class UsersService {
     }
   }
 
+  // Add profile details from cloud firestore
   addProfileDetails(uid: string, details: ProfileDetails) {
     const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
     const obj = {username : details.username, bio: bio};
@@ -55,6 +57,7 @@ export class UsersService {
 
 
   //--------------------------------------- Personal Details ---------------------------------------
+  // Get personal details from cloud firestore
   getPersonalDetails(uid: string) {
     let index = this.personalDetailsList.findIndex(details => {
       return details.uid === uid;
@@ -69,6 +72,7 @@ export class UsersService {
     }
   }
 
+  // Add personal details from cloud firestore
   addPersonalDetails(uid: string, details: PersonalDetails) {
     const obj = {dateCreated : details.dateCreated, dateOfBirth : details.dateOfBirth,email: details.email, name: details.name};
     this.personalDetailsCollection.doc(uid).set(obj);
@@ -76,6 +80,7 @@ export class UsersService {
 
 
   //--------------------------------------- Profile Stickers ---------------------------------------
+  // Get profile stickers from cloud firestore
   getProfileStickers(uid: string) {
     let index = this.profileStickersList.findIndex(details => {
       return details.uid === uid;
@@ -90,6 +95,7 @@ export class UsersService {
     }
   }
 
+  // Add profile stickers from cloud firestore
   addProfileStickers(uid: string, profileSticker: ProfileSticker[]) {
     const stickerArray = [];
     profileSticker.forEach(sticker => {
@@ -100,7 +106,7 @@ export class UsersService {
 
 
   // --------------------------------------- Display Picture ---------------------------------------
-  // Reference cloud firestore
+  // Get display picture from cloud firestore
   private getDisplayPictureRef(uid: string) {
     let index = this.displayPictureRefList.findIndex(details => {
       return details.uid === uid;
@@ -115,12 +121,13 @@ export class UsersService {
     }
   }
 
+  // Add display picture from cloud firestore
   private addDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
     const dp = {name: uid, dateCreated: displayPicture.dateCreated}
     this.displayPictureCollection.doc(uid).set(dp);
   }
 
-  // Reference firebase storage
+  // Get display picture from firebase storage
   getDisplayPicture(uid: string) {
     let index = this.displayPictureList.findIndex(details => {
       return details.uid === uid;
@@ -141,6 +148,7 @@ export class UsersService {
     }
   }
 
+  // Add display picture from firebase storage
   addDisplayPicture(uid: string, displayPicture: DisplayPicture, content: any) {
     // Upload to cloud firestore
     this.addDisplayPictureRef(uid, displayPicture);
