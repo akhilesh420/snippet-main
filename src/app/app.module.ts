@@ -1,0 +1,81 @@
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirePerformanceModule } from "@angular/fire/performance";
+
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { ExploreComponent } from './explore/explore.component';
+import { CollectionComponent } from './collection/collection.component';
+import { CreateComponent } from './create/create.component';
+import { ProfileComponent } from './profile/profile.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { FeedComponent } from './feed/feed.component';
+import { PostComponent } from './feed/post/post.component';
+import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProfileCreateComponent } from './profile/profile-create/profile-create.component';
+import { CommentsComponent } from './feed/post/comments/comments.component';
+import { CommentComponent } from './feed/post/comments/comment/comment.component';
+import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
+import { HolderComponent } from './feed/post/holder/holder.component';
+import { StickerComponent } from './sticker/sticker.component';
+import { ProfileDisplayComponent } from './profile-display/profile-display.component';
+import { SinglePostComponent } from './single-post/single-post.component';
+import { AuthComponent } from './auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { TitleCaseDirective } from './shared/directives/title-case.directive';
+import { TitleCasePipe } from '@angular/common';
+import { environment } from '../environments/environment';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    ExploreComponent,
+    CollectionComponent,
+    CreateComponent,
+    ProfileComponent,
+    FeedbackComponent,
+    FeedComponent,
+    PostComponent,
+    PostEditComponent,
+    ProfileEditComponent,
+    ProfileCreateComponent,
+    CommentsComponent,
+    CommentComponent,
+    CommentListComponent,
+    HolderComponent,
+    StickerComponent,
+    ProfileDisplayComponent,
+    SinglePostComponent,
+    AuthComponent,
+    LoadingSpinnerComponent,
+    TitleCaseDirective
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule, // firestore
+    AngularFireAuthModule, // auth
+    AngularFireStorageModule, // storage
+    AngularFirePerformanceModule
+  ],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+    TitleCasePipe,
+    Title],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
