@@ -1,0 +1,73 @@
+label,
+span{
+  font-family: 'Champagne & Limousines';
+  font-weight: bold;
+  font-size: 24px;
+  color: #D8B869;
+}
+
+input,
+input:focus,
+textarea,
+textarea:focus {
+  font-family: 'Champagne & Limousines';
+  font-weight: bold;
+  font-size: 18px;
+  color: #F7F7F7;
+  border: 2px solid #D8B869;
+  background: #131114;
+  margin-bottom: 35px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  /* color: rgba(216,184,105,1); */
+}
+
+.btn {
+  font-family: 'Champagne & Limousines';
+  font-weight: bold;
+  font-size: 24px;
+  color: #D8B869;
+  border: 2px solid #D8B869;
+  background: #131114;
+  border-radius: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.btn:enabled:hover{
+  background: #D8B869;
+  color: #080708;
+}
+
+input.form-control.ng-invalid.ng-touched {
+  border: 2px solid #891E13;
+}
+
+input.invalidAmount {
+  border: 2px solid #891E13;
+}
+
+.horizontal-center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0);
+}
+
+.danger-alert {
+  border: 2px solid #891E13;
+  background: #131114;
+  margin-bottom: 35px;
+  border-radius: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-family: 'Champagne & Limousines';
+  font-weight: bold;
+  font-size: 18px;
+  color:#891E13;
+}

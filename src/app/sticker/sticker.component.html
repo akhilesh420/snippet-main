@@ -1,0 +1,13 @@
+<div >
+  <div
+    (click)="onClick()"
+    class="sticker"
+    style="cursor: pointer;"
+    [ngStyle]="{'width': size,'height': size}">
+    <img [src]='stickerSrc ? stickerSrc : placeholderImg'
+         alt="sticker"
+         [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
+         (load)="onLoad($event)"
+         (click)="onClick()">
+  </div>
+</div>

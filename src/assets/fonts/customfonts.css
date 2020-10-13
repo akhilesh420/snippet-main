@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'ChampagneAndLimousines';
+  src: url("src/assets/fonts/Champagne & Limousines/Champagne & Limousines.ttf"),
+  url("src/assets/fonts/Champagne & Limousines/champagne__limousines-webfont.woff"),
+  url("src/assets/fonts/Champagne & Limousines/champagne__limousines-webfont.woff2")  format("truetype");
+}
+
+@font-face {
+  font-family: 'ChampagneAndLimousines';
+  src: url("src/assets/fonts/Champagne & Limousines/Champagne & Limousines Bold.ttf"),
+  url("src/assets/fonts/Champagne & Limousines/champagne__limousines_bold-webfont.woff"),
+  url("src/assets/fonts/Champagne & Limousines/champagne__limousines_bold-webfont.woff2")  format("truetype");
+  font-weight: bold;
+}

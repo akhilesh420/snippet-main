@@ -1,0 +1,166 @@
+<div class="postContainer" (click)='postView()'>
+  <!-- post content -->
+  <div *ngIf="!loadPostContent">
+    <img
+    class="backgroundImg"
+    src={{post.postContent.content}}
+    width="100%"
+    alt="post content"
+    [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%', 'height': imageProp.height, 'width': imageProp.width}"
+    (click)="showComments ? showDetails = false : showDetails = !showDetails; showComments = false; holderToggle = false;"
+    (load)="onLoad($event)">
+    <div *ngIf="createPost">
+      <img [src]="addIcon" alt="add" class="add-icon" (click)="onAddClick('content')" style="width: 116px; height: 116px;">
+    </div>
+  </div>
+  <div *ngIf="loadPostContent" class="add-icon">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <!-- profile tab -->
+  <div class="profileTab" [ngStyle]="{'height': showComments === false ? '71px' : '400px'}">
+    <div class="profileDetails">
+      <a style = "cursor: pointer;" [routerLink]='profileRoute'>
+        <div class="name"
+             style="width: 180px; overflow-X: scroll; overflow-y: hidden; text-align: left;">
+          {{ profile.profileDetails.username }}
+        </div>
+      </a>
+      <!-- Profile Stickers -->
+      <div class="profileStickers">
+        <div class="row" style="width: 100%;">
+          <div class="col" *ngFor="let i of emptyProfileSticker"
+          style="padding: 0px; height: 24px">
+          </div>
+          <div class="col"
+          *ngFor="let sticker of profile.profileStickers.stickers"
+          style="padding: 0px; height: 24px">
+            <app-sticker [pid]="sticker.pid" [size]="'24px'"></app-sticker>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!-- Post Sticker -->
+    <a style="cursor: pointer;" (click)='collectSticker()'>
+      <div class="postSticker">
+        <img class="sticker-img"
+             src={{post.stickerContent.sticker}}
+             width="100%" alt="post content"
+             (load)="onStickerLoad($event)"
+             *ngIf="!loadStickerContent"
+             [ngStyle]="{'height': stickerProp.height, 'width': stickerProp.width}">
+        <img class="sticker-img"
+          src={{placeholderImg}}
+          width="100%" alt="post content"
+          (load)="onStickerLoad($event)"
+          *ngIf="loadStickerContent"
+          [ngStyle]="{'height': stickerProp.height, 'width': stickerProp.width}">
+        <div *ngIf="createPost">
+          <img [src]="addIcon" alt="add" class="add-icon" (click)="onAddClick('sticker')" style="width: 57px; height: 57px;">
+        </div>
+      </div>
+    </a>
+    <div  class="engagementBar">
+      <div class="bar">
+      </div>
+      <div class="engagement"
+        [ngStyle]=engagementProp>
+      </div>
+    </div>
+    <!-- comment button -->
+    <div *ngIf="!createPost">
+      <div class="commentButton"
+          (click)="showComments = !showComments; holderToggle = false;"
+           style="cursor: pointer;" >
+      <div class="hideExtra">
+        <div class="buttonBackground">
+        </div>
+      </div>
+      <img src="https://i.ibb.co/twfK1TW/icons-3x.png" alt="comment button">
+    </div>
+    <div *ngIf="showComments === true" class="commentsSection">
+      <!-- Coming soon placeholder -->
+      <div class="row" style="height: 100%; position: relative">
+        <div class="col" style="position: absolute;left: 50%; top: 50%; transform: translate(-50%,50%)">
+          <p class="temp">Coming soon!</p>
+        </div>
+      </div>
+      <!-- <app-comments class="section" [postId]="postDetails.postId"></app-comments> -->
+    </div>
+    </div>
+  </div>
+  <!-- post details -->
+  <div class="postDetails">
+    <div
+      class="postTitle"
+      (click)="showDetails = !showDetails"
+      style = "cursor: pointer;">
+      {{post.postDetails.title}}
+    </div>
+    <div class="showDetails" (click)="showDetails = !showDetails">
+      <img src={{getDetailsButton()}} alt="Post-Detail-Button">
+    </div>
+    <div *ngIf="showDetails === true">
+      <!-- holder list row-->
+      <div class="row" style="margin:0; margin-top: 72px; width: 100%;">
+        <div class="col-6" style="padding-left: 15px;">
+          <div class="holderList" (click)="holderToggle = !holderToggle; showComments = false;">
+            <div class="row">
+              <div class="col-2" style="padding-right: 0px;">
+                <img src="/assets/icons/sticker-icon.png" alt="sticker icon">
+              </div>
+              <div class="col-8" style="padding-left: 1px;">
+                <p class="float-left">Holder List</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-4" *ngIf="post.stickerDetails.engagementRatio === 1 && !createPost && !loadStickerDetails">
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-3" style="padding-right: 11px; padding-left: 0px; padding-top: 4px">
+              <img class="float-right" src="https://i.ibb.co/pWGZ1k4/views-3x.png" alt="views">
+            </div>
+            <div class="col-5" style="padding-right: 19px; padding-left: 0px">
+              <p class="metrics float-left">{{views}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- stickers collected row -->
+      <div class="row" style="width: 100%; margin-top:5px">
+        <div class="col-6" style="padding-left: 15px; height: 24px"></div>
+        <div class="col-2"></div>
+        <div class="col-4" *ngIf="post.stickerDetails.engagementRatio === 1  && !createPost">
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-3" style="padding-right: 11px; padding-left: 0px; padding-top: 4px">
+              <img class="float-right" src="/assets/icons/sticker-icon.png" alt="sticker icon">
+            </div>
+            <div class="col-5" style="padding-right: 19px; padding-left: 0px">
+              <p class="metrics float-left">{{collected}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- description row -->
+      <div *ngIf="holderToggle === false" class="row" style="width: 100%; margin:0;">
+        <div class="col-12" style="padding-left: 19px; word-wrap: break-word">
+          <p class="description float-left text-left" style="width: 100%;">{{post.postDetails.description}}</p>
+        </div>
+      </div>
+      <!-- holder list popup -->
+      <div class="holderContainer" *ngIf="holderToggle === true">
+        <!-- Coming soon placeholder -->
+        <div class="row" style="height: 100%; position: relative">
+          <div class="col" style="position: absolute;left: 50%; top: 50%; transform: translate(-50%,-50%)">
+            <p class="temp">Coming soon!</p>
+          </div>
+        </div>
+        <!-- <div class="holderListContainer">
+          <app-holder *ngFor="let holder of postDetails.holderList" [userId]="holder"></app-holder>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

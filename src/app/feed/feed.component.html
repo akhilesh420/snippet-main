@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row" align="center">
+    <div class="col-md-12">
+      <div *ngIf="isFetching" style="text-align: center;" class="horizontal-center">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div *ngIf="postsList.length >= 1 && !isFetching">
+        <app-post *ngFor="let posts of postsList"
+                  [post]="posts.post"
+                  [pid]="posts.pid" >
+        </app-post>
+      </div>
+      <div *ngIf="!isFetching">
+        <p >Thats all folks!</p>
+      </div>
+    </div>
+  </div>
+</div>

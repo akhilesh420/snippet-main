@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" align="center">
+      <div class="outerContainer">
+        <div class="row" style="margin-top: 8px; height: 60px; width: 100%">
+          <div class="col-2"
+            style="padding: 0px; margin-right: 0px;"></div>
+          <div class="col" *ngFor="let i of emptyProfileSticker"
+          style="padding: 0px; margin-left: -8px; margin-right: 8px;">
+            </div>
+          <div class="col-2"
+            *ngFor="let sticker of profile.profileStickers.stickers"
+            style="padding: 0px; margin-left: -8px; margin-right: 8px;">
+            <app-sticker [pid]="sticker.pid" [size]="'60px'"></app-sticker>
+          </div>
+        </div>
+        <div class="row" style="width: 100%; margin-top: 16px">
+          <div class="col-3" style="padding-left: 9px;">
+            <div class="storySignifier">
+              <div class="dpBackground">
+                <div class="dpBorder">
+                  <img [src]="profile.displayPicture ? profile.displayPicture.content : placeholderImg"
+                       alt="display picture"
+                       height="100%"
+                      [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
+                      (load)="onLoad($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1"></div>
+          <div class="col-5 description" style="padding-left: 0px; padding-right: 0px" align="left">
+            <div class="div" style="color:#D8B869; font-size: 14px; word-wrap: break-word">
+              {{profile.profileDetails.bio.title ? profile.profileDetails.bio.title : 'Title'}}
+            </div>
+            <div class="div" style="color:#FFFFFF; font-size: 14px; word-wrap: break-word">
+              {{profile.profileDetails.bio.location ? profile.profileDetails.bio.location : 'Location'}}
+            </div>
+            <div class="div" style="color:#FFFFFF; line-height: 150%; word-wrap: break-word">
+              {{profile.profileDetails.bio.content ? profile.profileDetails.bio.content : 'Content'}}
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="row metrics" style="margin-top: 76px;">
+              <div class="col-5" style="padding-left: 0px; padding-right: 0px;">
+                <div class="row">
+                  <div class="col-12" style="height: 16px;">
+                    <span class="alignMetric">{{collectedDisplay}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 collect" style="margin-top: 6px; height: 35px">
+                    <img src="https://i.ibb.co/jJVZQ4S/Group-141.png" alt="Stickers collected" style="width: 35px">
+                  </div>
+                </div>
+              </div>
+              <div class="col-5" style="padding-left: 25px; padding-right: 0px;">
+                <div class="row">
+                  <div class="col-12" style="height: 16px;">
+                    <span class="alignMetric">{{viewsDisplay}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 views" style="margin-top: 6px; height: 35px;">
+                    <img src="https://i.ibb.co/hfx6Q6v/Views-Icon.png" alt="Views-Icon" style="width: 30px">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row bottom-row" style="width: 100%; margin-top: 9px">
+          <div class="col-1" style="margin-left: 10px; padding-left: 0px; height: 30px;">
+            <a style="cursor: pointer;" (click)='editProfile()'>
+              <img src="https://i.ibb.co/fQ2KFj8/icons8-edit.png" alt="icons-edit" width="18px" *ngIf="uid === myUid">
+            </a>
+          </div>
+          <div class="col username" style="height: 30px; padding-right: 17px;">
+            <span class="float-right" style="height: 30px;">
+              {{profile.profileDetails.username}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

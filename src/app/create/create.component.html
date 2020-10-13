@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="isCreating" style="text-align: center;" class="horizontal-center">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <form class="horizontal-center" (ngSubmit)="onSubmit()" #f="ngForm" *ngIf="!isCreating">
+      <div class="container">
+        <div class="row">
+          <div class="col-md"></div>
+          <div class="col-md">
+             <!-- realtime post -->
+            <div class="row">
+              <div class="col-md" style="position: relative;">
+                <div class="file-input-container">
+                  <input
+                    type="file"
+                    id="contentFile"
+                    class="form-control-file"
+                    accept="image/x-png,image/gif,image/jpeg,image/tiff"
+                    ngModel
+                    name="content"
+                    (change)="onContentChange($event)"
+                    #contentInput
+                    required>
+                    <input
+                    type="file"
+                    id="stickerFile"
+                    class="form-control-file"
+                    accept="image/x-png,image/gif,image/jpeg,image/tiff"
+                    ngModel
+                    name="sticker"
+                    (change)="onStickerChange($event)"
+                    #stickerInput
+                    required>
+                </div>
+                <app-post [post]="post" [createPost]="true" (addClick)="onAddClick($event)"></app-post>
+              </div>
+            </div>
+            <!-- Error message -->
+            <div class="row">
+              <div class="col-md">
+                <div class="danger-alert" *ngIf="error">
+                  {{ error }}
+                </div>
+              </div>
+            </div>
+            <!-- title -->
+            <div class="row">
+              <div class="col-md">
+                <div class="inputFields">
+                  <label for="postTitle" class="text-left">Title</label>
+                  <input
+                    type="text"
+                    id="title"
+                    class="form-control"
+                    [(ngModel)]="title"
+                    (input)="onTitleChange()"
+                    name="title"
+                    required
+                    maxlength="19">
+                </div>
+              </div>
+            </div>
+            <!-- description -->
+            <div class="row">
+              <div class="col-md">
+                <div class="inputFields">
+                  <label for="postDesc" class="text-left">Description</label>
+                  <input
+                    type="text"
+                    id="description"
+                    class="form-control"
+                    [(ngModel)]="desc"
+                    (input)="onDescriptionChange()"
+                    name="description"
+                    maxlength="240"
+                    required>
+                </div>
+              </div>
+            </div>
+            <!-- sticker amount -->
+            <div class="row">
+              <div class="col-md">
+                <div class="inputFields" style="width: 100px">
+                  <label for="stickerAmount" class="text-left">Amount</label>
+                  <input
+                    type="number"
+                    id="amount"
+                    class="form-control"
+                    ngModel
+                    name="amount"
+                    required
+                    min={{minSticker}}
+                    max={{maxSticker}}
+                    [(ngModel)]="amount"
+                    [ngClass]="{'invalidAmount': !amountValidation(amount)}">
+                </div>
+              </div>
+
+              <div class="col-md" align="right">
+                <label for="empty"></label>
+                <button
+                class="btn btn-default"
+                style="margin-top:10px;">Create</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+

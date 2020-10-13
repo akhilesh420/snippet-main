@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-xl navbar-light" style="background-color: #131114;" [ngStyle]="{'margin-bottom': marginBottom}">
+  <a routerLink="/"><span class="logoMain">Snippet</span><span class="logoSub">Creative Community</span></a>
+
+  <button
+    class="navbar-toggler ml-auto custom-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarToggler"
+    (click)="onClick()" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon" ></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarToggler">
+    <ul class="navbar-nav mr-auto" [ngStyle]="{'margin-left': marginLeft}">
+      <li class="fontHeader nav-item" ><a routerLink="/explore" >Explore</a></li>
+      <li routerLinkActive="active" class="fontHeader nav-item" *ngIf="isAuthenticated"><a [routerLink]='collectionRoute'>My collection</a></li>
+      <li routerLinkActive="active" class="fontHeader nav-item" *ngIf="isAuthenticated"><a routerLink="/create">Create</a></li>
+      <li routerLinkActive="active" class="fontHeader nav-item" *ngIf="isAuthenticated"><a [routerLink]='profileRoute'>Profile</a></li>
+      <li routerLinkActive="active" class="fontHeader nav-item"><a routerLink="/feedback">Feedback</a></li>
+    </ul>
+    <ul class="navbar-nav my-2 my-sm-0" >
+      <li class="fontHeader nav-item" *ngIf="isAuthenticated"><a style='cursor: pointer;' (click)="onLogout()">Logout</a></li>
+      <li class="fontHeader nav-item" *ngIf="!isAuthenticated"><a routerLink="/auth">Login/Signup</a></li>
+    </ul>
+  </div>
+</nav>
