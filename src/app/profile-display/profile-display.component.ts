@@ -1,10 +1,10 @@
+import { DisplayPicture, ProfileSticker } from './../shared/profile.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { PostDataService } from './../shared/postdata.service';
 import { PostService } from './../shared/post.service';
 import { map } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
-import { ProfileStickers, ProfileDetails, DisplayPicture } from './../shared/profile.model';
 import { ProfileDataService } from './../shared/profiledata.service';
 import { ProfileService } from './../shared/profile.service';
 import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
@@ -37,7 +37,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   subTotalCollected: Subscription;
   userSubs: Subscription;
 
-  profileStickers = new Subject<ProfileStickers>();
+  profileStickers = new Subject<ProfileSticker[]>();
   displayPicture = new Subject<any>();
   totalViews = new Subject<number>();
   totalCollected = new Subject<number>();
@@ -107,7 +107,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
         this.profile.displayPicture = response;
         this.fetchingDP = true;
       } else {
-        this.profile.displayPicture = new DisplayPicture('69',this.placeholderImg);
+        this.profile.displayPicture = new DisplayPicture('69', new Date(), 'jpeg');
       }
     },
     errorMessage => {

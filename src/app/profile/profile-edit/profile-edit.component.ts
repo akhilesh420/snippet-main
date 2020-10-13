@@ -5,7 +5,7 @@ import { map, take } from 'rxjs/operators';
 import { ProfileDataService } from './../../shared/profiledata.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { ProfileDetails, ProfileStickers, PersonalDetails, Biography, ProfileSticker, DisplayPicture } from './../../shared/profile.model';
+import { ProfileDetails, PersonalDetails, Biography, ProfileSticker, DisplayPicture } from './../../shared/profile.model';
 import { Subscription } from 'rxjs';
 import { ProfileService } from './../../shared/profile.service';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
@@ -32,7 +32,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   collectionList: {posts: Posts, dateCollected: Date ,colour: string}[] = [];
   oldPsid: string[] = [];
-  profile: Profile = new Profile(new ProfileDetails('', new Biography('',null,null)), new ProfileStickers([]),new PersonalDetails(null,null,null,null), new DisplayPicture('69',this.dpSrc));
+  profile: Profile = new Profile(new ProfileDetails('', new Biography('',null,null)), [],new PersonalDetails(null,null,null,null), new DisplayPicture('69',this.dpSrc));
   isFetching = true;
   isFetchingCollection: boolean = true;
   isSaving = false;
@@ -166,7 +166,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
       let tempPosts = new Posts(pid, new Post(tempPostDetails));
 
-      let index = this.profile.profileStickers.stickers.findIndex(sticker => {
+      let index = this.profile.profileStickers.findIndex(sticker => {
         return sticker.pid === pid;
       });
 

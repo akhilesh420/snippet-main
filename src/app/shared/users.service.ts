@@ -33,7 +33,7 @@ export class UsersService {
 
 
   //--------------------------------------- Profile details ---------------------------------------
-  // Get profile details from cloud firestore
+  // Get profile details from cloud firestore by UID
   getProfileDetails(uid: string) {
     let index = this.profileDetailsList.findIndex(details => {
       return details.uid === uid;
@@ -48,6 +48,11 @@ export class UsersService {
     }
   }
 
+  // Get profile details from cloud firestore by key
+  getProfileDetailsByKey(key: string, value: any) {
+      return this.afs.collection<ProfileDetails>('profile details', ref => ref.where(key,'==',value)).valueChanges();
+  }
+
   // Add profile details from cloud firestore
   addProfileDetails(uid: string, details: ProfileDetails) {
     const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
@@ -57,7 +62,7 @@ export class UsersService {
 
 
   //--------------------------------------- Personal Details ---------------------------------------
-  // Get personal details from cloud firestore
+  // Get personal details from cloud firestore by UID
   getPersonalDetails(uid: string) {
     let index = this.personalDetailsList.findIndex(details => {
       return details.uid === uid;
@@ -80,7 +85,7 @@ export class UsersService {
 
 
   //--------------------------------------- Profile Stickers ---------------------------------------
-  // Get profile stickers from cloud firestore
+  // Get profile stickers from cloud firestore by UID
   getProfileStickers(uid: string) {
     let index = this.profileStickersList.findIndex(details => {
       return details.uid === uid;
@@ -106,7 +111,7 @@ export class UsersService {
 
 
   // --------------------------------------- Display Picture ---------------------------------------
-  // Get display picture from cloud firestore
+  // Get display picture from cloud firestore by UID
   private getDisplayPictureRef(uid: string) {
     let index = this.displayPictureRefList.findIndex(details => {
       return details.uid === uid;
@@ -127,7 +132,7 @@ export class UsersService {
     this.displayPictureCollection.doc(uid).set(dp);
   }
 
-  // Get display picture from firebase storage
+  // Get display picture from firebase storage by UID
   getDisplayPicture(uid: string) {
     let index = this.displayPictureList.findIndex(details => {
       return details.uid === uid;

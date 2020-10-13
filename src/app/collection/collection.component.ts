@@ -1,5 +1,5 @@
 import { Post } from 'src/app/shared/post.model';
-import { Biography, Profile, ProfileStickers } from 'src/app/shared/profile.model';
+import { Biography, Profile, ProfileSticker } from 'src/app/shared/profile.model';
 import { Subject } from 'rxjs';
 import { PostDataService } from './../shared/postdata.service';
 import { ProfileDataService } from './../shared/profiledata.service';
@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
 })
 export class CollectionComponent implements OnInit, OnDestroy {
 
-  profile: Profile = new Profile(new ProfileDetails('', new Biography('','','')), new ProfileStickers([]));
+  profile: Profile = new Profile(new ProfileDetails('', new Biography('','','')), []);
   postsList: Posts[] = [];
   isFetchingProfile = true;
   isFetchingPosts = true;

@@ -1,3 +1,4 @@
+import { UsersService } from './../shared/users.service';
 import { ProfileService } from './../shared/profile.service';
 import { DataService } from './../shared/data.service';
 import { Biography, ProfileDetails, PersonalDetails } from './../shared/profile.model';
@@ -42,8 +43,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService,
               private router: Router,
               private dataService: DataService,
-              private profileService: ProfileService,
-              private profileDataService: ProfileDataService) {}
+              private userService: UsersService) {}
 
   ngOnInit(): void {
      let todayDate = new Date();
@@ -99,7 +99,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       }
     }
 
-
     const email = form.value.email;
     const password = form.value.password;
 
@@ -118,7 +117,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     authObs.subscribe(
       resData => {
         if (this.isLoginMode && !this.isForgetMode) {
-          this.subProfileDetails = this.profileService.getProfileDetails(resData.localId).pipe(take(2)).subscribe(response => {
+          this.subProfileDetails = this.userService.getProfileDetails(resData.localId).pipe().subscribe(response => {
           },
           errorMessage => {
             console.log(errorMessage);
@@ -129,21 +128,10 @@ export class AuthComponent implements OnInit, OnDestroy {
         } else if (!this.isLoginMode && !this.isForgetMode) {
           let profileDetails  = new ProfileDetails(this.username, new Biography("","",""));
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
-          let prid: string;
-          this.profileDataService.fetchUsername(profileDetails.username).subscribe((response) => {
+          this.userService.getProfileDetailsByKey('username',profileDetails.username).subscribe((response) => {
             if (Object.keys(response).length === 0) {
-              this.profileDataService.addProfileDetails(profileDetails, resData.localId).subscribe((response) => {
-                prid = response['name'];
-                this.profileDataService.addUsername(profileDetails.username).subscribe( response => {
-                  this.profileDataService.addPersonalDetails(personalDetails, resData.localId).subscribe(
-                    response => {}, errorMessage => {
-                      this.error = errorMessage;
-                    }
-                  )
-                 }, errorMessage => {
-                   this.error = errorMessage;
-                  })
-              },errorMessage => { this.error = errorMessage;});
+              this.userService.addProfileDetails(resData.localId, profileDetails);
+              this.userService.addPersonalDetails(resData.localId,personalDetails);
               form.reset();
               this.router.navigate(['/explore']);
             } else {
@@ -178,5 +166,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.subProfileDetails.unsubscribe();
   }
 }

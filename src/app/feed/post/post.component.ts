@@ -3,7 +3,7 @@ import { AuthService } from './../../auth/auth.service';
 import { Subject, Subscription } from 'rxjs';
 import { PostDataService } from './../../shared/postdata.service';
 import { ProfileDataService } from './../../shared/profiledata.service';
-import { Biography, ProfileDetails, ProfileStickers, Profile  } from './../../shared/profile.model';
+import { Biography, ProfileDetails, ProfileSticker, Profile  } from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
 import { ProfileService } from '../../shared/profile.service';
 import { Post, PostContent, StickerDetails, Posts, StickerContent } from './../../shared/post.model';
@@ -24,8 +24,7 @@ import { map } from 'rxjs/operators';
   @Output() addClick = new EventEmitter();
   @Output() init = new EventEmitter<boolean>();
 
-  profile: Profile = new Profile( new ProfileDetails('',new Biography('','','')),
-                                  new ProfileStickers([]));
+  profile: Profile = new Profile( new ProfileDetails('',new Biography('','','')), []);
 
   addIcon = "assets/icons/add_icon@2x.png"
   placeholderImg = 'assets/default image/blank_image@2x.png';
@@ -58,7 +57,7 @@ import { map } from 'rxjs/operators';
   userSubs: Subscription;
 
   profileDetails =  new Subject<ProfileDetails>();
-  profileStickers=  new Subject<ProfileStickers>();
+  profileStickers=  new Subject<ProfileSticker[]>();
   postContent = new Subject<PostContent>();
   stickerContent = new Subject<StickerContent>();
   stickerDetails = new Subject<StickerDetails>();
