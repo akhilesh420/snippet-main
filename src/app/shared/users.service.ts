@@ -3,6 +3,7 @@ import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from 
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class UsersService {
 
 
   constructor(private afs: AngularFirestore,
-              private storage: AngularFireStorage) {
+              private storage: AngularFireStorage,
+              private db: AngularFireDatabase) {
     this.profileDetailsCollection = afs.collection<ProfileDetails>('profile details');
     this.personalDetailsCollection = afs.collection<PersonalDetails>('personal details');
     this.profileStickersCollection = afs.collection<ProfileSticker[]>('profile stickers');
