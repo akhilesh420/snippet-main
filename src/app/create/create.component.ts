@@ -2,7 +2,6 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
 import { DataService } from './../shared/data.service';
-import { WindowStateService } from './../shared/window.service';
 import { Post, PostContent, PostDetails, StickerContent, StickerDetails } from './../shared/post.model';
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';

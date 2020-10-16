@@ -362,7 +362,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       if (this.changedProfileStickers) {
         this.profileDataService.fetchProfileStickers(this.uid).subscribe(response => {
           response.forEach(sticker => {
-            this.profileDataService.deleteProfileStickers(sticker.psid).subscribe(response => {}, errorMessage => {this.handleError();});
+            this.profileDataService.deleteProfileStickers(sticker).subscribe(response => {}, errorMessage => {this.handleError();});
           });
         });
             this.addProfileStickers();

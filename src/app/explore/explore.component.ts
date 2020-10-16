@@ -4,7 +4,7 @@ import { PostDataService } from './../shared/postdata.service';
 import { DataService } from './../shared/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Post } from '../shared/post.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-explore',
@@ -13,9 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class ExploreComponent implements OnInit, OnDestroy {
 
-  private subsPost: Subscription;
-
-  postsList: Posts[] = [];
+  postsList: Observable<PostDetails[]>;
   isFetching = true;
 
 
@@ -24,27 +22,7 @@ export class ExploreComponent implements OnInit, OnDestroy {
               private postService: PostService) { }
 
   ngOnInit(): void {
-    // this.isFetching = true;
-    // this.postDataService.getPostDetails().subscribe(response => {
-    //   for (let key in response) {
-    //     let tempPostDetails: PostDetails = new PostDetails( response[key].uid,
-    //                                                         response[key].title,
-    //                                                         response[key].description,
-    //                                                         response[key].dateCreated,
-    //                                                         response[key].price);
-    //     let posts: Posts[] = this.postService.getPosts();
-    //     let postInfo = posts.find(data => data.pid === key);
-    //     if (!postInfo) {
-    //       this.postService.updatePostDetails(key, tempPostDetails);
-    //     }
-    //     this.postsList.push(new Posts(key, new Post(tempPostDetails)))
-    //   }
-    //   this.postsList = this.postsList.reverse();
-    //   this.isFetching = false;
-    // }, errorMessage => {
-    //   console.log(errorMessage);
-    // }
-    // )
+    // get posts from postsService as observable
   }
 
   ngOnDestroy() {

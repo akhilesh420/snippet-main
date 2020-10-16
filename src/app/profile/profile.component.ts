@@ -4,7 +4,7 @@ import { PostDetails, Posts } from './../shared/post.model';
 import { Subject, Subscription } from 'rxjs';
 import { ProfileService } from './../shared/profile.service';
 import { ProfileDataService } from './../shared/profiledata.service';
-import { Biography, Profile, ProfileStickers } from 'src/app/shared/profile.model';
+import { Biography, Profile, ProfileSticker } from 'src/app/shared/profile.model';
 import { ProfileDetails } from './../shared/profile.model';
 import { PostService } from './../shared/post.service';
 import { Component, OnInit } from '@angular/core';

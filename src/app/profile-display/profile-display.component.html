@@ -9,7 +9,7 @@
           style="padding: 0px; margin-left: -8px; margin-right: 8px;">
             </div>
           <div class="col-2"
-            *ngFor="let sticker of profile.profileStickers.stickers"
+            *ngFor="let sticker of profileStickers | async"
             style="padding: 0px; margin-left: -8px; margin-right: 8px;">
             <app-sticker [pid]="sticker.pid" [size]="'60px'"></app-sticker>
           </div>
@@ -19,7 +19,7 @@
             <div class="storySignifier">
               <div class="dpBackground">
                 <div class="dpBorder">
-                  <img [src]="profile.displayPicture ? profile.displayPicture.content : placeholderImg"
+                  <img [src]="displayPicture ? displayPicture : placeholderImg | async"
                        alt="display picture"
                        height="100%"
                       [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
@@ -29,15 +29,15 @@
             </div>
           </div>
           <div class="col-1"></div>
-          <div class="col-5 description" style="padding-left: 0px; padding-right: 0px" align="left">
+          <div class="col-5 description" style="padding-left: 0px; padding-right: 0px" align="left" *ngIf="profileDetails | async; let details">
             <div class="div" style="color:#D8B869; font-size: 14px; word-wrap: break-word">
-              {{profile.profileDetails.bio.title ? profile.profileDetails.bio.title : 'Title'}}
+              {{details.bio.title}}
             </div>
             <div class="div" style="color:#FFFFFF; font-size: 14px; word-wrap: break-word">
-              {{profile.profileDetails.bio.location ? profile.profileDetails.bio.location : 'Location'}}
+              {{details.bio.location}}
             </div>
             <div class="div" style="color:#FFFFFF; line-height: 150%; word-wrap: break-word">
-              {{profile.profileDetails.bio.content ? profile.profileDetails.bio.content : 'Content'}}
+              {{details.bio.content}}
             </div>
           </div>
           <div class="col-3">
@@ -76,8 +76,8 @@
             </a>
           </div>
           <div class="col username" style="height: 30px; padding-right: 17px;">
-            <span class="float-right" style="height: 30px;">
-              {{profile.profileDetails.username}}
+            <span class="float-right" style="height: 30px;" *ngIf="profileDetails | async; let details">
+              {{details.username}}
             </span>
           </div>
         </div>

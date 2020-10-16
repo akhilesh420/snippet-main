@@ -1,14 +1,17 @@
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { AngularFireDatabase } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+
+  maxConnect = 100; //Maximum number of allowed connection
+  connectCount = 0; //Total number of connection
 
   // Collection
   private profileDetailsCollection: AngularFirestoreCollection<ProfileDetails>;
@@ -17,22 +20,26 @@ export class UsersService {
   private displayPictureCollection: AngularFirestoreCollection<DisplayPicture>;
 
   // Downloaded data storage
-  private profileDetailsList: {uid: string, obs: Observable<ProfileDetails>}[] = [];
-  private personalDetailsList: {uid: string, obs: Observable<PersonalDetails>}[] = [];
-  private profileStickersList: {uid: string, obs: Observable<ProfileSticker[]>}[] = [];
+  private profileDetailsList: {uid: string, obs: BehaviorSubject<ProfileDetails>}[] = [];
+  private personalDetailsList: {uid: string, obs: BehaviorSubject<PersonalDetails>}[] = [];
+  private profileStickersList: {uid: string, obs: BehaviorSubject<ProfileSticker[]>}[] = [];
   private displayPictureRefList: {uid: string, obs: Observable<DisplayPicture>}[] = [];
   private displayPictureList: {uid: string, obs: BehaviorSubject<any>}[] = [];
 
 
   constructor(private afs: AngularFirestore,
-              private storage: AngularFireStorage,
-              private db: AngularFireDatabase) {
+              private storage: AngularFireStorage) {
     this.profileDetailsCollection = afs.collection<ProfileDetails>('profile details');
     this.personalDetailsCollection = afs.collection<PersonalDetails>('personal details');
     this.profileStickersCollection = afs.collection<ProfileSticker[]>('profile stickers');
     this.displayPictureCollection = afs.collection<DisplayPicture>('display picture');
   }
 
+  // Stops more than max connection from occurring
+  // NOT WORKING RN -> maybe a subscription array??
+  cleanUp(uid: string, folder: string, connectNumber: number) {
+    return this.connectCount === connectNumber + this.maxConnect;
+  }
 
   //--------------------------------------- Profile details ---------------------------------------
   // Get profile details from cloud firestore by UID
@@ -42,15 +49,20 @@ export class UsersService {
     })
 
     if (index === -1) {
-      const observe = this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges();
-      this.profileDetailsList.push({uid: uid, obs: observe});
-      return observe;
+      this.profileDetailsList.push({uid: uid, obs: new BehaviorSubject<ProfileDetails>(undefined)});
+      let secIndex = this.displayPictureList.length - 1;
+      let connectNumber = this.connectCount; //connection number
+      this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(response => {
+        this.profileDetailsList[secIndex].obs.next(response);
+      });
+      return this.profileDetailsList[secIndex].obs;
     } else {
      return this.profileDetailsList[index].obs;
     }
   }
 
   // Get profile details from cloud firestore by key
+  // Used by auth service for username verification
   getProfileDetailsByKey(key: string, value: any) {
       return this.afs.collection<ProfileDetails>('profile details', ref => ref.where(key,'==',value)).valueChanges();
   }
@@ -71,9 +83,12 @@ export class UsersService {
     })
 
     if (index === -1) {
-      const observe = this.afs.doc<PersonalDetails>('personal details/' + uid).valueChanges();
-      this.personalDetailsList.push({uid: uid, obs: observe});
-      return observe;
+      this.personalDetailsList.push({uid: uid, obs: new BehaviorSubject<PersonalDetails>(undefined)});
+      let secIndex = this.displayPictureList.length - 1;
+      this.afs.doc<PersonalDetails>('personal details/' + uid).valueChanges().subscribe(response => {
+        this.personalDetailsList[secIndex].obs.next(response);
+      });;
+      return this.personalDetailsList[secIndex].obs;
     } else {
      return this.personalDetailsList[index].obs;
     }
@@ -81,7 +96,7 @@ export class UsersService {
 
   // Add personal details from cloud firestore
   addPersonalDetails(uid: string, details: PersonalDetails) {
-    const obj = {dateCreated : details.dateCreated, dateOfBirth : details.dateOfBirth,email: details.email, name: details.name};
+    const obj = {dateCreated : details.dateCreated, dateOfBirth : details.dateOfBirth, email: details.email, name: details.name};
     this.personalDetailsCollection.doc(uid).set(obj);
   }
 
@@ -94,9 +109,12 @@ export class UsersService {
     })
 
     if (index === -1) {
-      const observe = this.afs.doc<ProfileSticker[]>('profile stickers/' + uid).valueChanges();
-      this.profileStickersList.push({uid: uid, obs: observe});
-      return observe;
+      this.profileStickersList.push({uid: uid, obs: new BehaviorSubject<ProfileSticker[]>(undefined)});
+      let secIndex = this.displayPictureList.length - 1;
+      this.afs.doc<ProfileSticker[]>('profile stickers/' + uid).valueChanges().subscribe(response => {
+        this.profileStickersList[secIndex].obs.next(response);
+      });;
+      return this.profileStickersList[secIndex].obs;
     } else {
      return this.profileStickersList[index].obs;
     }
@@ -165,4 +183,5 @@ export class UsersService {
     const ref = this.storage.ref(filePath);
     const task = ref.put(file);
   }
+
 }
