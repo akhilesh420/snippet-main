@@ -17,7 +17,7 @@ export class FeedService {
 
    // get explore page
   getExplorePage() {
-    return this.afs.collection<PostDetails>('post details').valueChanges();
+    return this.afs.collection<PostDetails>('post details').valueChanges({idField: 'pid'});
     // get posts from postsService as observable
   }
 

@@ -20,6 +20,9 @@ export class FeedComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.postsList.subscribe(response => {
+      console.log(response); //log
+    })
   }
 
 

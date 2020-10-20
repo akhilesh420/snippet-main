@@ -4,7 +4,8 @@ export class PostDetails {
     public uid: string,
     public title: string,
     public description : string,
-    public dateCreated: Date
+    public dateCreated: Date,
+    public pid?: string
   ) { }
 
 }

@@ -19,7 +19,7 @@ import { Activity } from 'src/app/shared/activity.model';
 
   @Input() postDetails: PostDetails;
   @Input() createPost?: boolean = false;
-  @Input() pid?: string;
+  pid: string;
   @Input() postContent$?: BehaviorSubject<any>;
   @Input() stickerContent$?: BehaviorSubject<any>;
 
@@ -72,11 +72,12 @@ import { Activity } from 'src/app/shared/activity.model';
     }, errorMessage => {
       console.log(errorMessage);
     });
-
+    console.log(this.postDetails); //log
     this.uid = this.postDetails.uid;
     this.setUpProfile();
 
     if (!this.createPost) {
+      this.pid = this.postDetails.pid; //exists because of idfield
       this.setUpPost();
       this.setUpActivity();
       this.setUpEngagement();
@@ -99,6 +100,7 @@ import { Activity } from 'src/app/shared/activity.model';
 
   setUpActivity() {
     this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      console.log(response);
       this.activity = response[0];
       this.setUpEngagement();
       if (this.engagementRatio) {

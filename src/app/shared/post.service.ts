@@ -75,7 +75,8 @@ export class PostService {
       this.postContentList.push({pid: pid, obs: new BehaviorSubject<any>(this.placeholderImg)});
       let secIndex = this.postContentList.length - 1;
       this.getPostContentRef(pid).subscribe((response: PostContent) => {
-        const ref = this.storage.ref('Post/' + name);
+        console.log(response); //log
+        const ref = this.storage.ref('Post/' + response.name);
         ref.getDownloadURL().subscribe(response => {
           this.postContentList[secIndex].obs.next(response);
         });
@@ -108,7 +109,7 @@ export class PostService {
       this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(this.placeholderImg)});
       let secIndex = this.postContentList.length - 1;
       this.getStickerContentRef(pid).subscribe((response: StickerContent) => {
-        const ref = this.storage.ref('Post/' + name);
+        const ref = this.storage.ref('Post/' + response.name);
         ref.getDownloadURL().subscribe(response => {
           this.stickerContentList[secIndex].obs.next(response);
         });

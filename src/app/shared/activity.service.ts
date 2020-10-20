@@ -30,7 +30,8 @@ export class ActivityService {
   // viewerID: UID of the person who viewed the post
   // vieweeID: UID of the person whose post was viewed
   addViews(pid: string, viewerID: string, vieweeID: string) {
-    this.viewsCollection.add(new View(viewerID, vieweeID, pid, new Date()));
+    const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date()};
+    this.viewsCollection.add(obj);
   }
 
   // --------------------------------------- Collection ---------------------------------------
@@ -38,7 +39,8 @@ export class ActivityService {
   // collectorID: UID of the person who collected the sticker
   // collecteeID: UID of the person whose sticker was collected
   addCollection(pid: string, collectorID: string, collecteeID: string) {
-    this.collectionCollection.add(new Collection(collectorID, collecteeID, pid, new Date()));
+    const obj = {collectorID: collectorID, collecteeID: collecteeID, pid: pid, timeStamp: new Date()};
+    this.collectionCollection.add(obj);
   }
 
   // get collection by uid

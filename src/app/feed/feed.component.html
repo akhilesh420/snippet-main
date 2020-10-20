@@ -4,9 +4,9 @@
       <ng-template #loading style="text-align: center;" class="horizontal-center">
         <app-loading-spinner></app-loading-spinner>
       </ng-template>
-      <div *ngIf="postsList | async; else loading; let list$">
-        <app-post *ngFor="let posts of list$" > </app-post>
-        <p *ngIf="list$.length === 0;">Thats all folks!</p>
+      <div *ngIf="postsList | async; else loading; let posts">
+        <app-post *ngFor="let postDetails of posts" [postDetails]="postDetails"> </app-post>
+        <p *ngIf="posts.length === 0;">Thats all folks!</p>
       </div>
     </div>
   </div>
