@@ -1,9 +1,11 @@
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { PostDetails } from 'src/app/shared/post.model';
-import { AuthService } from './../auth/auth.service';
 import { Injectable } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { forkJoin, Observable, Subject } from 'rxjs';
+import { Collection } from '../shared/activity.model';
+import { PostService } from '../shared/post.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +13,51 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class FeedService {
 
   constructor(private activityService: ActivityService,
+              private postService: PostService,
               private afs: AngularFirestore) {
 
    }
 
-   // get explore page
+  // get explore page
   getExplorePage() {
     return this.afs.collection<PostDetails>('post details').valueChanges({idField: 'pid'});
-    // get posts from postsService as observable
+  }
+
+  // get profile page
+  getProfilePage(uid: string) {
+    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid)).valueChanges({idField: 'pid'});
   }
 
   // generate collection page by uid
-  getCollectionPage(uid: string, notifier: any) {
-  //   this.activityService.getCollection(uid).pipe(takeUntil(notifier)).subscribe(response => {
-  //     let tempCollection: {pid: string, date: Date}[];
-  //     let tempPosts: PostDetails[];
-  //     response.forEach(collection => {
-  //       tempCollection.push({pid: collection.pid, date: collection.timeStamp});
-  //     });
-  //     tempCollection.sort((b,a) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  //     tempCollection.forEach(post => {
-  //       //get post from post service and push to tempPosts
-  //     })
-  //     // emit collection with tempPosts
-  //   });
+  getCollectionPage(uid: string, notifier$: Observable<any>) {
+    let collectionList = new Subject<PostDetails[]>() ;
+    let collectionDetails: Collection[] = [];
+
+    this.activityService.getUserCollection(uid).pipe(takeUntil(notifier$)) //get details of user collection
+    .subscribe((response:Collection[]) => {
+      let postDetailsLists: PostDetails[] = [];
+      collectionDetails = response;
+      response.forEach(collection => {
+        this.postService.getPostDetails(collection.pid).pipe(map(changes => { //get the post detail for each pid in collection
+          return { pid: collection.pid, ...changes};
+        })).subscribe(res => {
+          postDetailsLists.push(res);
+          collectionList.next(postDetailsLists);
+          })
+      });
+    });
+
+    return collectionList.pipe(map(postsList => { 
+      postsList = postsList.filter(post => { //Filter out users own posts
+        return uid != post.uid;
+      })
+      postsList.forEach(post => { //change dateCreated with collection timestamp to sort properly in feed
+        const index = collectionDetails.findIndex(collection => {
+          return collection.pid === post.pid;
+        });
+        post.dateCreated = collectionDetails[index].timeStamp;
+      })
+      return postsList;
+    }));
   }
 }

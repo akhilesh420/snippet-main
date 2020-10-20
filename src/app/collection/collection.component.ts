@@ -1,15 +1,12 @@
-import { UsersService } from './../shared/users.service';
-import { Biography, Profile, ProfileSticker } from 'src/app/shared/profile.model';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { PostDetails, Posts } from './../shared/post.model';
-import { map, takeUntil } from 'rxjs/operators';
-import { PostService } from './../shared/post.service';
+import { takeUntil } from 'rxjs/operators';
 import { AuthService } from './../auth/auth.service';
 import { ProfileDetails } from './../shared/profile.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivityService } from '../shared/activity.service';
+import { FeedService } from '../feed/feed.service';
 
 @Component({
   selector: 'app-collection',
@@ -18,10 +15,10 @@ import { ActivityService } from '../shared/activity.service';
 })
 export class CollectionComponent implements OnInit, OnDestroy {
 
-  notifier = new Subject();
+  notifier$ = new Subject();
 
   profileDetails: BehaviorSubject<ProfileDetails>;
-  collection: Observable<PostDetails>[];
+  postsList: Observable<PostDetails[]>;
   uid: string;
   myUid: string;
   isAuthenticated: boolean;
@@ -31,13 +28,11 @@ export class CollectionComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private authService: AuthService,
-              private usersService: UsersService,
-              private postService: PostService,
-              private activityService: ActivityService) {}
+              private feedService: FeedService) {}
 
   ngOnInit(): void {
 
-    this.userSubs = this.authService.user.pipe(takeUntil(this.notifier)).subscribe(response => {
+    this.userSubs = this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
         this.myUid = response.id;
@@ -58,25 +53,13 @@ export class CollectionComponent implements OnInit, OnDestroy {
   }
 
 
-  setUp() { //Can be moved to a service
-    this.profileDetails = this.usersService.getProfileDetails(this.uid);
-    this.activityService.getUserCollection(this.uid).pipe(takeUntil(this.notifier)).subscribe(response => {
-      let tempCollection: {pid: string, date: Date}[];
-      let tempPosts: Observable<PostDetails>[];
-      response.forEach(collection => {
-        tempCollection.push({pid: collection.pid, date: collection.timeStamp});
-      });
-      tempCollection.sort((b,a) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      tempCollection.forEach(post => {
-        tempPosts.push(this.postService.getPostDetails(post.pid));
-      })
-      this.collection = tempPosts;
-    });
+  setUp() {
+    this.postsList = this.feedService.getCollectionPage(this.uid,this.notifier$);
   }
 
   ngOnDestroy() {
-    this.notifier.next();
-    this.notifier.complete();
+    this.notifier$.next();
+    this.notifier$.complete();
   }
 
 }

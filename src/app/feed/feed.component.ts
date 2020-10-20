@@ -11,6 +11,7 @@ import { Post, PostDetails, Posts } from './../shared/post.model';
 export class FeedComponent implements OnInit {
 
   @Input() postsList: Observable<PostDetails[]>; //must include pid
+  @Input() database?: string; //Only required if data from realtime database
   batch: number = 0;
   maxBatch: number = 0;
   render: number = 2;
@@ -20,9 +21,6 @@ export class FeedComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.postsList.subscribe(response => {
-      console.log(response); //log
-    })
   }
 
 

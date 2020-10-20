@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivityService } from '../shared/activity.service';
 
 
 
@@ -38,8 +39,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
 
   constructor(private authService: AuthService,
-              private router: Router,
-              private userService: UsersService) {}
+              private userService: UsersService,
+              private activityService: ActivityService,
+              private router: Router) {}
 
   ngOnInit(): void {
      let todayDate = new Date();
@@ -122,6 +124,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             if (Object.keys(response).length === 0) {
               this.userService.addProfileDetails(resData.localId, profileDetails);
               this.userService.addPersonalDetails(resData.localId,personalDetails);
+              this.activityService.addActivity(resData.localId, 'user')
               form.reset();
               this.router.navigate(['/explore']);
             } else {

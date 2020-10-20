@@ -1,12 +1,13 @@
 const functions = require('firebase-functions');
 const admin = require("firebase-admin");
-const db = admin.firestore();
+admin.initializeApp()
+const db = admin.database();
 
-exports.updateUserView = functions.firestore
-  .document('views/{viewID}')
+exports.updateUserView = functions.database
+  .ref('views/{viewID}')
   .onCreate((snap: any, context: any) => {
     let newView = snap.data();
-    let userActivity = admin.firestore().doc('activity/' + newView.vieweeID);
+    let userActivity = db.list('activity', (ref:any) => ref.orderByChild('id').equalTo(newView.vieweeID));
 
     return db.runTransaction((transaction:any) => {
       return transaction.get(userActivity).then((response:any) => {

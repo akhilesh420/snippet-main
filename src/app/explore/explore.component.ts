@@ -12,15 +12,13 @@ import { FeedService } from '../feed/feed.service';
 })
 export class ExploreComponent implements OnInit, OnDestroy {
 
-  postsList: Observable<PostDetails[]>;
-  isFetching = true;
+  postsList: Observable<PostDetails[]>
 
 
   constructor(private feedService: FeedService) { }
 
   ngOnInit(): void {
     this.postsList = this.feedService.getExplorePage();
-    console.log(this.postsList); //log
   }
 
   ngOnDestroy() {

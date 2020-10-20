@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription,forkJoin } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
 import { PostContent, PostDetails, StickerContent, StickerDetails } from './../shared/post.model';
@@ -6,6 +6,7 @@ import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/co
 import { NgForm } from '@angular/forms';
 import { PostService } from '../shared/post.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivityService } from '../shared/activity.service';
 
 @Component({
   selector: 'app-create',
@@ -50,6 +51,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private authService: AuthService,
               private postService: PostService,
+              private activityService: ActivityService,
               private afs: AngularFirestore) { }
 
   ngOnInit(): void {
@@ -142,19 +144,24 @@ export class CreateComponent implements OnInit, OnDestroy {
     let pcid = this.afs.createId();
     let scid = this.afs.createId();
 
-    this.postService.addPostDetails(pid,this.postDetails);
-    this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
-    this.postService.addStickerContentRef(pid, new StickerContent(scid, this.stickerContent.type));
-    this.postService.addStickerDetails(pid, this.stickerDetails);
-    this.postService.addContent(pcid,this.postContent).subscribe(response => {
-      console.log('post upload: '+response+'%');//log
-    });
-    this.postService.addContent(scid,this.stickerContent).subscribe(response => {
-      console.log('sticker upload: '+response+'%');//log
-    });;
+    let postSubs =  this.postService.addContent(pcid,this.postContent);
+    let stickerSubs = this.postService.addContent(scid,this.stickerContent);
 
-    this.isCreating = false;
+    forkJoin([postSubs, stickerSubs]).subscribe(results => {
+      console.log(results[0], results[1]); //log
+      if (results[0] === 100 && results[1] === 100) {
+        this.postService.addPostDetails(pid,this.postDetails);
+        this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
+        this.postService.addStickerContentRef(pid, new StickerContent(scid, this.stickerContent.type));
+        this.postService.addStickerDetails(pid, this.stickerDetails);
+       
+        this.activityService.addActivity(pid, 'post');
+        this.activityService.addCollection(pid,this.uid,this.uid);
+      } 
+    });
+    
     this.router.navigate(['/explore']);
+    this.isCreating = false;
   }
 
   onAddClick(event: any) {

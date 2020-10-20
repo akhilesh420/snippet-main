@@ -5,7 +5,7 @@ import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
 import { StickerDetails, PostDetails } from './../../shared/post.model';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity } from 'src/app/shared/activity.model';
@@ -72,8 +72,8 @@ import { Activity } from 'src/app/shared/activity.model';
     }, errorMessage => {
       console.log(errorMessage);
     });
-    console.log(this.postDetails); //log
     this.uid = this.postDetails.uid;
+    this.profileRoute = "/profile/" + this.uid;
     this.setUpProfile();
 
     if (!this.createPost) {
@@ -99,20 +99,17 @@ import { Activity } from 'src/app/shared/activity.model';
   }
 
   setUpActivity() {
-    this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-      console.log(response);
+    this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.activity = response[0];
       this.setUpEngagement();
       if (this.engagementRatio) {
         this.views = this.convertToShort(this.activity.views);
         this.collected = this.convertToShort(this.activity.collected);
       }
-
     });;
   }
 
   getEmptySlots(stickers) {
-    console.log(stickers); //log
     return [...Array(5-stickers.length).keys()]; 
   }
 
@@ -192,7 +189,7 @@ import { Activity } from 'src/app/shared/activity.model';
     if (this.isAuthenticated) {
       if (!this.collectingSticker && !this.createPost) {
         this.collectingSticker = true;
-        this.activityService.getPostCollection(this.pid).subscribe(response => {
+        this.activityService.getPostCollection(this.pid).pipe(take(1)).subscribe(response => {
           let valid: boolean = false;
           for (let key in response) {
             if (response[key].collectorID === this.myUid) {

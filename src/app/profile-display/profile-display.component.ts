@@ -2,10 +2,11 @@ import { UsersService } from './../shared/users.service';
 import { DisplayPicture, ProfileSticker, ProfileDetails } from './../shared/profile.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
-import { PostService } from './../shared/post.service';
-import { map } from 'rxjs/operators';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ActivityService } from '../shared/activity.service';
+import { Activity } from '../shared/activity.model';
 
 @Component({
   selector: 'app-profile-display',
@@ -14,121 +15,98 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 })
 export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
-  // @Input() uid: string;
+  @Input() uid: string;
 
-  // profileDetails: BehaviorSubject<ProfileDetails>;
-  // profileStickers: BehaviorSubject<ProfileSticker[]>;
-  // displayPicture: BehaviorSubject<any>;
+  profileDetails$: BehaviorSubject<ProfileDetails>;
+  profileStickers$: BehaviorSubject<ProfileSticker[]>;
+  displayPicture$: BehaviorSubject<any>;
+  activity: Activity;
 
-  // collected: number = 0;
-  // views: number = 0;
+  isAuthenticated: boolean;
+  notifier$ = new Subject();
 
-  // viewsDisplay: string = '0';
-  // collectedDisplay: string = '0';
-  // myUid: string;
-  // placeholderImg = "assets/default image/blank_image@2x.png";
+  collected: string = '0';
+  views: string = '0';
 
-  // fetchingDP: boolean = true;
-  // fetchingPS: boolean = true;
-  // isAuthenticated: boolean;
+  viewsDisplay: string = '0';
+  collectedDisplay: string = '0';
+  myUid: string;
+  placeholderImg = "assets/default image/blank_image@2x.png";
 
-  // userSubs: Subscription;
+  imageProp = {'height':'100%', 'width':'auto'};
 
-
-  // imageProp = {'height':'100%', 'width':'auto'};
-  // emptyProfileSticker: number[] = [0,0,0,0,0];
-
-  // constructor( private postService: PostService,
-  //              private postDataService: PostDataService,
-  //              private authService: AuthService,
-  //              private usersService: UsersService,
-  //              private router: Router,
-  //              private route: ActivatedRoute) { }
+  constructor( private authService: AuthService,
+               private usersService: UsersService,
+               private activityService: ActivityService,
+               private router: Router) { }
 
   ngOnInit(): void {
 
-  //   this.userSubs = this.authService.user.subscribe(response => {
-  //     this.isAuthenticated = !!response;
-  //     if (this.isAuthenticated) {
-  //       this.myUid = response.id;
-  //     }
-  //   }, errorMessage => {
-  //     console.log(errorMessage);
-  //   });
+    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.isAuthenticated = !!response;
+      if (this.isAuthenticated) {
+        this.myUid = response.id;
+      }
+    }, errorMessage => {
+      console.log(errorMessage);
+    });
 
-  //   this.setUpViews();
-  //   this.setUpCollected();
-  //   this.setUpProfileDetails();
-  //   this.setUpProfileStickers();
-  //   this.setUpDisplayPicture();
+    this.setUpProfile();
   }
 
-  // ngOnChanges() {
-  //   this.setUpViews();
-  //   this.setUpCollected();
-  //   this.setUpProfileStickers();
-  //   this.setUpDisplayPicture();
-  // }
+  setUpProfile() {
+    this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
+    this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
+    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+  }
 
-  // setUpProfileDetails() {
-  //   this.profileDetails = this.usersService.getProfileDetails(this.uid);
-  // }
+  setUpActivity() {
+    this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.activity = response[0];
+      this.views = this.convertToShort(this.activity.views);
+        this.collected = this.convertToShort(this.activity.collected);
+    });;
+  }
 
-  // setUpProfileStickers() {
-  //   this.profileStickers = this.usersService.getProfileStickers(this.uid);
-  // }
+  convertToShort(num: number): string {
+    let short = 0;
+    if (num/1000000 <= 1) {
+      if (num/1000 <= 1) {
+          return num.toString();
+      } else {
+        short = Math.round((num/1000) * 10) / 10;
+        return short.toString() + 'K';
+      }
+    } else {
+      short = Math.round((num/1000000) * 100) / 100;
+      return short.toString() + 'M';
+      }
+  }
 
-  // setUpDisplayPicture() {
-  //   this.displayPicture = this.usersService.getDisplayPicture(this.uid);
-  // }
+  editProfile() {
+    if (this.uid === this.myUid) {
+      this.router.navigate(['profile/'+this.myUid+'/edit']);
+    }
+  }
 
-  // setUpViews() {
-  //   this.postDataService.fetchViews('cuid', this.uid).subscribe(response => {
-  //     this.views = Object.keys(response).length;
-  //     this.viewsDisplay = this.convertToShort(this.views);
-  //  }, errorMessage => {
-  //    console.log(errorMessage);
-  //  });
-  // }
+  onLoad(event: any) {
+    let width = event.target.width;
+    let height= event.target.height;
+    if (width/height < 1) {
+      this.imageProp.width = '100%';
+      this.imageProp.height = 'auto';
+    } else {
+      this.imageProp.width = 'auto';
+      this.imageProp.height = '100%';
+    }
+  }
 
-  // setUpCollected() {
-
-  // }
-
-  // convertToShort(num: number): string {
-  //   let short = 0;
-  //   if (num/1000000 <= 1) {
-  //     if (num/1000 <= 1) {
-  //         return num.toString();
-  //     } else {
-  //       short = Math.round((num/1000) * 10) / 10;
-  //       return short.toString() + 'K';
-  //     }
-  //   } else {
-  //     short = Math.round((num/1000000) * 100) / 100;
-  //     return short.toString() + 'M';
-  //     }
-  // }
-
-  // editProfile() {
-  //   if (this.uid === this.myUid) {
-  //     this.router.navigate(['profile/'+this.myUid+'/edit']);
-  //   }
-  // }
-
-  // onLoad(event: any) {
-  //   let width = event.target.width;
-  //   let height= event.target.height;
-  //   if (width/height < 1) {
-  //     this.imageProp.width = '100%';
-  //     this.imageProp.height = 'auto';
-  //   } else {
-  //     this.imageProp.width = 'auto';
-  //     this.imageProp.height = '100%';
-  //   }
-  // }
+  getEmptySlots(stickers) {
+    return [...Array(5-stickers.length).keys()]; 
+  }
 
   ngOnDestroy() {
-    // if (this.userSubs) {this.userSubs.unsubscribe();}
+    this.notifier$.next();
+    this.notifier$.complete();
   }
 }

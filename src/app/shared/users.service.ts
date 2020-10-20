@@ -1,5 +1,5 @@
-import { Observable, BehaviorSubject } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, takeWhile } from 'rxjs/operators';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -12,6 +12,8 @@ export class UsersService {
 
   maxConnect = 100; //Maximum number of allowed connection
   connectCount = 0; //Total number of connection
+
+  placeholderImg = 'assets/default image/blank_image@2x.png';
 
   // Collection
   private profileDetailsCollection: AngularFirestoreCollection<ProfileDetails>;
@@ -52,7 +54,6 @@ export class UsersService {
       let secIndex = this.profileDetailsList.length - 1;
       let connectNumber = this.connectCount; //connection number
       this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(response => {
-        console.log(response)
         this.profileDetailsList[secIndex].obs.next(response);
       });
       return this.profileDetailsList[secIndex].obs;
@@ -149,11 +150,11 @@ export class UsersService {
     })
 
     if (index === -1) {
-      this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(null)});
+      this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(this.placeholderImg)});
       let secIndex = this.displayPictureList.length - 1;
       this.getDisplayPictureRef(uid).subscribe((response: DisplayPicture) => {
-        const ref = this.storage.ref('Display picture/' + uid + "." + response.fileFormat);
-        ref.getDownloadURL().subscribe(response => {
+        const ref = this.storage.ref('Display picture/' + uid);
+        ref.getDownloadURL().pipe(catchError(this.handleError)).subscribe(response => {
           this.displayPictureList[secIndex].obs.next(response);
         });
       });
@@ -168,10 +169,23 @@ export class UsersService {
     // Upload to cloud firestore
     this.addDisplayPictureRef(uid, displayPicture);
     // Upload to storage
-    const file = content.target.files[0];
+    const file = content;
     const filePath = 'Display picture/'+uid;
     const ref = this.storage.ref(filePath);
     const task = ref.put(file);
+    return task.percentageChanges();
+  }
+
+  handleError(error) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
   }
 
 }

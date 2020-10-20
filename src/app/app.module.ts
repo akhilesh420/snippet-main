@@ -36,6 +36,7 @@ import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
 import { environment } from '../environments/environment';
 import { WithLoadingPipe } from './shared/with-loading.pipe';
+import { DateSortPipe } from './shared/date-sort.pipe';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { WithLoadingPipe } from './shared/with-loading.pipe';
     AuthComponent,
     LoadingSpinnerComponent,
     TitleCaseDirective,
-    WithLoadingPipe
+    WithLoadingPipe,
+    DateSortPipe
   ],
   imports: [
     BrowserModule,
