@@ -1,10 +1,9 @@
 import { PostService } from './../shared/post.service';
 import { PostDetails, Posts } from './../shared/post.model';
-import { PostDataService } from './../shared/postdata.service';
-import { DataService } from './../shared/data.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Post } from '../shared/post.model';
 import { Subscription, Observable } from 'rxjs';
+import { FeedService } from '../feed/feed.service';
 
 @Component({
   selector: 'app-explore',
@@ -17,12 +16,11 @@ export class ExploreComponent implements OnInit, OnDestroy {
   isFetching = true;
 
 
-  constructor(private dataService: DataService,
-              private postDataService: PostDataService,
-              private postService: PostService) { }
+  constructor(private feedService: FeedService) { }
 
   ngOnInit(): void {
-    // get posts from postsService as observable
+    this.postsList = this.feedService.getExplorePage();
+    console.log(this.postsList); //log
   }
 
   ngOnDestroy() {

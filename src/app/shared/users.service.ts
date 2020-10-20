@@ -23,7 +23,6 @@ export class UsersService {
   private profileDetailsList: {uid: string, obs: BehaviorSubject<ProfileDetails>}[] = [];
   private personalDetailsList: {uid: string, obs: BehaviorSubject<PersonalDetails>}[] = [];
   private profileStickersList: {uid: string, obs: BehaviorSubject<ProfileSticker[]>}[] = [];
-  private displayPictureRefList: {uid: string, obs: Observable<DisplayPicture>}[] = [];
   private displayPictureList: {uid: string, obs: BehaviorSubject<any>}[] = [];
 
 
@@ -50,9 +49,10 @@ export class UsersService {
 
     if (index === -1) {
       this.profileDetailsList.push({uid: uid, obs: new BehaviorSubject<ProfileDetails>(undefined)});
-      let secIndex = this.displayPictureList.length - 1;
+      let secIndex = this.profileDetailsList.length - 1;
       let connectNumber = this.connectCount; //connection number
       this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(response => {
+        console.log(response)
         this.profileDetailsList[secIndex].obs.next(response);
       });
       return this.profileDetailsList[secIndex].obs;
@@ -84,7 +84,7 @@ export class UsersService {
 
     if (index === -1) {
       this.personalDetailsList.push({uid: uid, obs: new BehaviorSubject<PersonalDetails>(undefined)});
-      let secIndex = this.displayPictureList.length - 1;
+      let secIndex = this.personalDetailsList.length - 1;
       this.afs.doc<PersonalDetails>('personal details/' + uid).valueChanges().subscribe(response => {
         this.personalDetailsList[secIndex].obs.next(response);
       });;
@@ -110,7 +110,7 @@ export class UsersService {
 
     if (index === -1) {
       this.profileStickersList.push({uid: uid, obs: new BehaviorSubject<ProfileSticker[]>(undefined)});
-      let secIndex = this.displayPictureList.length - 1;
+      let secIndex = this.profileStickersList.length - 1;
       this.afs.doc<ProfileSticker[]>('profile stickers/' + uid).valueChanges().subscribe(response => {
         this.profileStickersList[secIndex].obs.next(response);
       });;
@@ -133,17 +133,7 @@ export class UsersService {
   // --------------------------------------- Display Picture ---------------------------------------
   // Get display picture from cloud firestore by UID
   private getDisplayPictureRef(uid: string) {
-    let index = this.displayPictureRefList.findIndex(details => {
-      return details.uid === uid;
-    })
-
-    if (index === -1) {
-      const observe = this.afs.doc<DisplayPicture>('display picture/' + uid).valueChanges();
-      this.displayPictureRefList.push({uid: uid, obs: observe});
-      return observe;
-    } else {
-     return this.displayPictureRefList[index].obs;
-    }
+    return this.afs.doc<DisplayPicture>('display picture/' + uid).valueChanges();
   }
 
   // Add display picture from cloud firestore

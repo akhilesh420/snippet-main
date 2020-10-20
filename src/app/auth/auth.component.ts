@@ -1,8 +1,5 @@
 import { UsersService } from './../shared/users.service';
-import { ProfileService } from './../shared/profile.service';
-import { DataService } from './../shared/data.service';
 import { Biography, ProfileDetails, PersonalDetails } from './../shared/profile.model';
-import { ProfileDataService } from './../shared/profiledata.service';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
@@ -42,7 +39,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private dataService: DataService,
               private userService: UsersService) {}
 
   ngOnInit(): void {
@@ -117,18 +113,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     authObs.subscribe(
       resData => {
         if (this.isLoginMode && !this.isForgetMode) {
-          this.subProfileDetails = this.userService.getProfileDetails(resData.localId).pipe().subscribe(response => {
-          },
-          errorMessage => {
-            console.log(errorMessage);
-          });
-
           form.reset();
           this.router.navigate(['/explore']);
         } else if (!this.isLoginMode && !this.isForgetMode) {
           let profileDetails  = new ProfileDetails(this.username, new Biography("","",""));
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
-          this.userService.getProfileDetailsByKey('username',profileDetails.username).subscribe((response) => {
+          this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {
             if (Object.keys(response).length === 0) {
               this.userService.addProfileDetails(resData.localId, profileDetails);
               this.userService.addPersonalDetails(resData.localId,personalDetails);
@@ -136,8 +126,8 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.router.navigate(['/explore']);
             } else {
               this.error = "Username taken";
-              this.authService.deleteUser(resData.idToken).subscribe(response => {
-                this.authService.logout(false);
+              this.authService.deleteUser(resData.idToken).pipe(take(1)).subscribe(response => {
+                this.authService.logout();
               }, errorMessage => {
                 console.log(errorMessage);
               });
@@ -166,6 +156,5 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subProfileDetails.unsubscribe();
   }
 }

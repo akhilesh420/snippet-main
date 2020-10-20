@@ -1,9 +1,6 @@
-import { Collection } from './../shared/activity.service';
 import { UsersService } from './../shared/users.service';
-import { Post } from 'src/app/shared/post.model';
 import { Biography, Profile, ProfileSticker } from 'src/app/shared/profile.model';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
-import { PostDataService } from './../shared/postdata.service';
 import { PostDetails, Posts } from './../shared/post.model';
 import { map, takeUntil } from 'rxjs/operators';
 import { PostService } from './../shared/post.service';
@@ -24,7 +21,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   notifier = new Subject();
 
   profileDetails: BehaviorSubject<ProfileDetails>;
-  collection: Observable<PostDetails[]>;
+  collection: Observable<PostDetails>[];
   uid: string;
   myUid: string;
   isAuthenticated: boolean;
@@ -35,6 +32,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
               private router: Router,
               private authService: AuthService,
               private usersService: UsersService,
+              private postService: PostService,
               private activityService: ActivityService) {}
 
   ngOnInit(): void {
@@ -43,35 +41,36 @@ export class CollectionComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
         this.myUid = response.id;
-        this.route.params
-        .subscribe(
-          (params: Params) => {
-            this.uid = params['id'];
-            if (this.uid === this.myUid) {
-              this.setUp();
-            } else {
-              this.router.navigate(['/explore']);
-            }
-          }
-        );
       }
     });
+
+    this.route.params
+    .subscribe(
+      (params: Params) => {
+        this.uid = params['id'];
+        if (this.uid === this.myUid) {
+          this.setUp();
+        } else {
+          this.router.navigate(['/explore']);
+        }
+      }
+    );
   }
 
 
   setUp() { //Can be moved to a service
     this.profileDetails = this.usersService.getProfileDetails(this.uid);
-    this.activityService.getCollection(this.uid).pipe(takeUntil(this.notifier)).subscribe(response => {
+    this.activityService.getUserCollection(this.uid).pipe(takeUntil(this.notifier)).subscribe(response => {
       let tempCollection: {pid: string, date: Date}[];
-      let tempPosts: PostDetails[];
+      let tempPosts: Observable<PostDetails>[];
       response.forEach(collection => {
         tempCollection.push({pid: collection.pid, date: collection.timeStamp});
       });
       tempCollection.sort((b,a) => new Date(b.date).getTime() - new Date(a.date).getTime());
       tempCollection.forEach(post => {
-        //get post from post service and push to tempPosts
+        tempPosts.push(this.postService.getPostDetails(post.pid));
       })
-      // emit collection with tempPosts
+      this.collection = tempPosts;
     });
   }
 

@@ -1,5 +1,4 @@
 import { PostService } from './../../../shared/post.service';
-import { ProfileService } from './../../../shared/profile.service';
 import { Profile } from '../../../shared/profile.model';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -14,7 +13,7 @@ export class HolderComponent implements OnInit {
   profileDetails: Profile;
   spacingSticker: String = "0px";
 
-  constructor(private postService: PostService, private profileService: ProfileService) {
+  constructor(private postService: PostService) {
    }
 
   ngOnInit(): void {

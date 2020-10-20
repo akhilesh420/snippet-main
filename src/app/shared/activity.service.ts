@@ -2,33 +2,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase } from '@angular/fire/database';
-
-export class View {
-
-  constructor(
-    public viewerID: string,
-    public vieweeID: string,
-    public pid: string,
-    public timeStamp: Date
-  ) {}
-}
-
-export class Collection {
-
-  constructor(
-    public collectorID: string,
-    public collecteeID: string,
-    public pid: string,
-    public timeStamp: Date
-  ) {}
-
-}
-
-export class Activity {
-   constructor(
-
-   )
-}
+import { Activity, Collection, View } from './activity.model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +22,7 @@ export class ActivityService {
   // --------------------------------------- Activity ---------------------------------------
   // gets activity for user or post
   getActivity(id: string) {
-    return this.db.list('/activity/' + id).valueChanges();
+    return this.db.list<Activity>('/activity/' + id).valueChanges();
   }
 
   // --------------------------------------- Views ---------------------------------------
@@ -59,7 +33,6 @@ export class ActivityService {
     this.viewsCollection.add(new View(viewerID, vieweeID, pid, new Date()));
   }
 
-
   // --------------------------------------- Collection ---------------------------------------
   // add collector to cloud firestore
   // collectorID: UID of the person who collected the sticker
@@ -69,8 +42,14 @@ export class ActivityService {
   }
 
   // get collection by uid
-  getCollection(uid: string) {
+  getUserCollection(uid: string) {
     return this.afs.collection<Collection>('collection', ref => ref.where('uid','==',uid)).valueChanges();
   }
+
+  // get collection by pid
+  getPostCollection(pid: string) {
+    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid)).valueChanges();
+  }
+
 
 }

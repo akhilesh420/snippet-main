@@ -35,6 +35,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
 import { environment } from '../environments/environment';
+import { WithLoadingPipe } from './shared/with-loading.pipe';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { environment } from '../environments/environment';
     SinglePostComponent,
     AuthComponent,
     LoadingSpinnerComponent,
-    TitleCaseDirective
+    TitleCaseDirective,
+    WithLoadingPipe
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,7 @@ import { environment } from '../environments/environment';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    AngularFirePerformanceModule
+    // AngularFirePerformanceModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},

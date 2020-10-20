@@ -1,5 +1,4 @@
 import { Subject } from 'rxjs';
-import { DataService } from './../../../shared/data.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
@@ -16,7 +15,7 @@ export class CommentsComponent implements OnInit {
 
   commentList: Comment[] = [];
 
-  constructor(private dataService: DataService) { }
+  constructor() { }
 
   ngOnInit(): void {
     // this.dataService.queryData('comment', "postId", this.postId)

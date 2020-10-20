@@ -1,4 +1,3 @@
-import { DataService } from './../../../../shared/data.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -11,7 +10,7 @@ export class CommentListComponent implements OnInit {
   @Input() commentList: Comment[] = [];
   @Input() postId: number;
 
-  constructor(private dataService:  DataService) {
+  constructor() {
    }
 
   ngOnInit(): void { }

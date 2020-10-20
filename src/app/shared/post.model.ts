@@ -4,8 +4,7 @@ export class PostDetails {
     public uid: string,
     public title: string,
     public description : string,
-    public dateCreated: Date,
-    public price: number = 0
+    public dateCreated: Date
   ) { }
 
 }
@@ -13,7 +12,7 @@ export class PostDetails {
 export class PostContent {
 
   constructor(
-    public content: any,
+    public name: string,
     public fileFormat: string = 'image'
   ) {}
 }
@@ -21,17 +20,16 @@ export class PostContent {
 export class StickerDetails {
 
   constructor(
-    public amountCollected: number,
     public amountReleased: number,
-    public engagementRatio: number
+    public price: number = 0
   ) {}
 }
 
 export class StickerContent {
 
   constructor(
-    public sticker: any,
-    public scid: string
+    public name: string,
+    public fileFormat: string = 'image'
   ) {}
 }
 

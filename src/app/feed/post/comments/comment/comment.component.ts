@@ -1,7 +1,6 @@
 import { PostService } from './../../../../shared/post.service';
 import { Post } from './../../../../shared/post.model';
 import { Profile } from '../../../../shared/profile.model';
-import { ProfileService } from './../../../../shared/profile.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -17,7 +16,7 @@ export class CommentComponent implements OnInit {
   postDetails: Post;
   spacingSticker = "3px";
 
-  constructor(private profileService: ProfileService, private postService: PostService) {
+  constructor( private postService: PostService) {
    }
 
   ngOnInit(): void {

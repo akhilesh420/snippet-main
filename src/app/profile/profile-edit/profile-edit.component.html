@@ -1,4 +1,4 @@
-<div *ngIf="isSaving" style="text-align: center;" class="horizontal-center">
+<!-- <div *ngIf="isSaving" style="text-align: center;" class="horizontal-center">
   <app-loading-spinner></app-loading-spinner>
 </div>
 <form #f='ngForm' (ngSubmit)="onSubmit(f)" *ngIf="!isFetching && !isSaving" class="horizontal-center">
@@ -7,7 +7,7 @@
     <div class="col-md">
       <div class="row">
         <div class="col-md-6">
-          <!-- Account details -->
+          Account details
           <div class="row">
             <div class="col-md">
               <div class="inputFields">
@@ -33,7 +33,7 @@
                           height="100%"
                           [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
                           (load)="onLoad($event)">
-                          <!-- Add icon -->
+                          Add icon
                         <img [src]="addIcon"
                              alt="add"
                              class="add-icon"
@@ -46,7 +46,7 @@
               </div>
             </div>
           </div>
-          <!-- Description -->
+          Description
           <div class="row" style="margin-top: 30px;">
             <div class="col-12">
               <div class="form-group">
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          <!-- Stickers -->
+          Stickers
           <div class="row">
             <div class="col-12">
             <div class="form-group">
@@ -146,7 +146,7 @@
           </div>
         </div>
       </div>
-      <!-- Error message -->
+      Error message
       <div class="row">
         <div class="col-md">
           <div class="danger-alert" *ngIf="error">
@@ -154,7 +154,7 @@
           </div>
         </div>
       </div>
-      <!-- confirm -->
+      confirm
       <div class="row">
         <div class="col-6 offset-6">
           <button class="btn float-right">Confirm</button>
@@ -164,4 +164,4 @@
     <div class="col-md"></div>
   </div>
 </form>
-
+ -->
