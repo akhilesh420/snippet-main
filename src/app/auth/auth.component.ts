@@ -1,5 +1,5 @@
 import { UsersService } from './../shared/users.service';
-import { Biography, ProfileDetails, PersonalDetails } from './../shared/profile.model';
+import { Biography, ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './../shared/profile.model';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
@@ -124,6 +124,8 @@ export class AuthComponent implements OnInit, OnDestroy {
             if (Object.keys(response).length === 0) {
               this.userService.addProfileDetails(resData.localId, profileDetails);
               this.userService.addPersonalDetails(resData.localId,personalDetails);
+              this.userService.addProfileStickers(resData.localId,[]);
+              this.userService.addDisplayPicture(resData.localId, new DisplayPicture(resData.localId, new Date(), 'image'), null);
               this.activityService.addActivity(resData.localId, 'user')
               form.reset();
               this.router.navigate(['/profile/' + resData.localId + '/edit']);

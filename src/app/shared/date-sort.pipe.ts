@@ -5,12 +5,19 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateSortPipe implements PipeTransform {
 
-  transform(value: any[], database: string = 'afs'): unknown {
-    if (database === 'afs') {
+  transform(value: any[], type: string = 'afs'): unknown {
+    if (value.length === 0) {
+      return value;
+    }
+    if (type === 'afs') {
       return value.sort((a, b) => b.dateCreated.toMillis() - a.dateCreated.toMillis());
     }
-    else if (database === 'db') {
+    else if (type === 'db') {
       return value.sort((a, b) => b.dateCreated - a.dateCreated);
+    } 
+    else if (type === 'collectionDisplay') {
+      console.log(value); //log
+      return value.sort((a, b) => a.postDetails.dateCreated - b.postDetails.dateCreated);
     }
   }
 }

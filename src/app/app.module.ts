@@ -21,7 +21,6 @@ import { FeedComponent } from './feed/feed.component';
 import { PostComponent } from './feed/post/post.component';
 import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
-import { ProfileCreateComponent } from './profile/profile-create/profile-create.component';
 import { CommentsComponent } from './feed/post/comments/comments.component';
 import { CommentComponent } from './feed/post/comments/comment/comment.component';
 import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
@@ -51,7 +50,6 @@ import { DateSortPipe } from './shared/date-sort.pipe';
     PostComponent,
     PostEditComponent,
     ProfileEditComponent,
-    ProfileCreateComponent,
     CommentsComponent,
     CommentComponent,
     CommentListComponent,

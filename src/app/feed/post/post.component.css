@@ -203,7 +203,7 @@
 }
 
 .postDetails .holderList{
-  font-family: 'Champagne & Limousines';
+  font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 18px;
   letter-spacing: 0.05em;
@@ -291,7 +291,6 @@
 }
 
 .temp {
-  font-family: 'Comfortaa';
   font-weight: bold;
   font-size: 24px;
   height: 100%;

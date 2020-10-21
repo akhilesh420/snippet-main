@@ -1,13 +1,13 @@
-<!-- <div *ngIf="isSaving" style="text-align: center;" class="horizontal-center">
+<div *ngIf="isSaving" style="text-align: center;" class="horizontal-center">
   <app-loading-spinner></app-loading-spinner>
 </div>
-<form #f='ngForm' (ngSubmit)="onSubmit(f)" *ngIf="!isFetching && !isSaving" class="horizontal-center">
+<form #f='ngForm' (ngSubmit)="onSubmit(f)" *ngIf="!isSaving" class="horizontal-center">
   <div class="row">
     <div class="col-md"></div>
     <div class="col-md">
       <div class="row">
         <div class="col-md-6">
-          Account details
+          <!-- Account details -->
           <div class="row">
             <div class="col-md">
               <div class="inputFields">
@@ -26,9 +26,9 @@
                   </div>
                   <div class="storySignifier" style="margin-top: 10.8px">
                     <div class="dpBackground">
-                      <div class="dpBorder">
+                      <div class="dpBorder" *ngIf="displayPicture$ | async as content;">
                         <img
-                          [src]="profile.displayPicture ? profile.displayPicture.content : dpSrc"
+                          [src]="content"
                           alt="profile picture"
                           height="100%"
                           [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
@@ -46,7 +46,7 @@
               </div>
             </div>
           </div>
-          Description
+          <!-- Description -->
           <div class="row" style="margin-top: 30px;">
             <div class="col-12">
               <div class="form-group">
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="col-md-6">
-          Stickers
+          <!-- Stickers -->
           <div class="row">
             <div class="col-12">
             <div class="form-group">
@@ -116,24 +116,25 @@
                 <div class="col-12">
                   <div class="stickerSelect">
                     <ul class="list-group"
-                        *ngFor="let option of collectionList; let i = index">
+                        *ngFor="let collection of collectionList | dateSort :'collectionDisplay'">
                       <li class="list-group-item"
-                          (click)="onStickerClick(option)"
+                          (click)="onStickerClick(collection)"
                           style="cursor: pointer; display: inline;"
-                          [ngStyle]="{'background': option.colour}">
+                          [ngStyle]="{'background': collection.colour}">
                         <div class="row">
                           <div class="col-1">
                             <div class="sticker"
                              style="width: 30px; height: 30px;">
-                              <img [src]='option.posts.post.stickerContent ? option.posts.post.stickerContent.sticker : dpSrc'
+                              <img [src]='collection.sticker | async'
                                alt="sticker"
                                #sticker
-                               [ngStyle]="setUpStickerSize(sticker)"
-                              >
+                               [ngStyle]="setUpStickerSize(sticker)">
                             </div>
                           </div>
-                          <div class="col-10 stickerTitle" style="padding-left: 30px; word-wrap: break-word">
-                            {{option.posts.post.postDetails.title}}
+                          <div class="col-10 stickerTitle" 
+                               style="padding-left: 30px; word-wrap: break-word"
+                               *ngIf="collection.postDetails">
+                            {{collection.postDetails.title}}
                           </div>
                         </div>
                       </li>
@@ -146,7 +147,7 @@
           </div>
         </div>
       </div>
-      Error message
+      <!-- Error message -->
       <div class="row">
         <div class="col-md">
           <div class="danger-alert" *ngIf="error">
@@ -154,7 +155,7 @@
           </div>
         </div>
       </div>
-      confirm
+      <!-- confirm -->
       <div class="row">
         <div class="col-6 offset-6">
           <button class="btn float-right">Confirm</button>
@@ -164,4 +165,4 @@
     <div class="col-md"></div>
   </div>
 </form>
- -->
+

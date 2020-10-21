@@ -1,23 +1,21 @@
-import { Posts, StickerContent } from './../../shared/post.model';
 import { PostService } from './../../shared/post.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ProfileDetails, PersonalDetails, Biography, ProfileSticker, DisplayPicture } from './../../shared/profile.model';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { ProfileDetails, Biography, ProfileSticker, DisplayPicture } from './../../shared/profile.model';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { Post, PostDetails } from 'src/app/shared/post.model';
-import { Profile } from 'src/app/shared/profile.model';
+import { PostDetails } from 'src/app/shared/post.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Collection } from 'src/app/shared/activity.model';
 import { takeUntil } from 'rxjs/operators';
 
-class collectionDisplay{
+class CollectionDisplay{
 
   constructor(
-    private postDetails: Observable<PostDetails>,
-    private sticker: BehaviorSubject<any>,
-    private colour: string
+    public pid: string,
+    public postDetails: PostDetails,
+    public sticker: BehaviorSubject<any>,
+    public colour: string
   ) {}
 }
 
@@ -30,12 +28,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
 
-  profileDetails$: Observable<ProfileDetails>;
-  displayPicture$: Observable<any>;
+  displayPicture$: BehaviorSubject<any>;
   notifier$ = new Subject();
-  collectionList: Observable<[]>;
-  profileStickers: ProfileSticker[];
 
+  collectionList: CollectionDisplay[] = [];
+  profileStickers: ProfileSticker[];
+  displayPicture: any;
+  profileDetails: ProfileDetails = new ProfileDetails('proxy', new Biography('','',''));
 
   dpUpload: any;
   touched = false;
@@ -47,20 +46,22 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   oldPsid: string[] = [];
   isSaving = false;
+
   uid: string;
   title: string;
   location: string;
   content: string;
   username: string;
+
   error: string = null;
-  lastTitle: string;
-  lastLocation: string;
-  lastContent: string;
+  oldTitle: string;
+  oldLocation: string;
+  oldContent: string;
   stickerClickTimer: boolean = true;
 
   changedDP: boolean = false;
   changedProfileStickers: boolean = false;
-  changedBio: boolean = false;
+  changedProfileDetails: boolean = false;
 
   stickerDelete = new Subject<number>();
 
@@ -78,7 +79,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       (params: Params) => {
         this.uid = params['id'];
         this.setUp();
-        this.getCollectionList();
       }, errorMessage => {
         console.log(errorMessage);
         this.handleError();
@@ -87,113 +87,78 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   setUp() {
     // Set up profile 
-    this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
-    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+    this.usersService.getProfileDetails(this.uid).pipe(takeUntil(this.notifier$))
+    .subscribe((response: ProfileDetails) => {
+      console.log(response); //log
+      if (response) {
+        this.title = response.bio.title;
+        this.oldTitle = response.bio.title;
+        this.location = response.bio.location;
+        this.oldLocation = response.bio.location;
+        this.content = response.bio.content;
+        this.oldContent = response.bio.content;
+        this.username = response.username;
+      }
+    });
 
     this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
     .subscribe((response: ProfileSticker[]) => {
-      this.profileStickers = response; 
+      if (response) {
+        console.log(response); //log
+        this.profileStickers = response;
+        this.getCollectionList(); 
+      }
     });
 
-    // Set up collection
-    this.activityService.getUserCollection(this.uid).pipe(takeUntil(this.notifier$)) //get details of user collection
-    .subscribe((response:Collection[]) => {
-      response.forEach(collection => {
-        let tempColour: string;
-        const tempPostDetails = this.postService.getPostDetails(collection.pid);
-        const tempStickerContent = this.postService.getStickerContent(collection.pid);
-        const index = this.profileStickers.findIndex(sticker => {
-          return sticker.pid === collection.pid
-        })
-        index === -1 ? tempColour = 'transparent' : tempColour = '#53BD9C';
-        this.collectionList.push({})
-      });
-    });
+    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
   }
 
   getCollectionList() {
-
-    this.postDataService.fetchSCL('uid',this.uid).pipe( map( stickerCollector => {
-      let dataArray = [];
-      for (let key in stickerCollector) {
-        dataArray.push(stickerCollector[key]);
-      }
-      return dataArray;
-    })).subscribe(sclVal => {
-      sclVal.forEach(collector => {
-        let pid = collector.pid;
-        let dateCollected = collector.dateCreated;
-        this.setUpPostDetails(pid, dateCollected)
-      });
-      this.isFetchingCollection = false;
-    }, errorMessage => {
-      console.log(errorMessage);
-      this.handleError();
-    });
-  }
-
-  setUpPostDetails(pid: string, dateCollected: Date) {
-
-   this.subPostDetails = this.postService.getPostDetails(pid).pipe(take(2)).subscribe( data => {
-     if (data) {
-      let tempPostDetails: PostDetails;
-      tempPostDetails = data;
-
-      let tempPosts = new Posts(pid, new Post(tempPostDetails));
-
-      let index = this.profile.profileStickers.findIndex(sticker => {
-        return sticker.pid === pid;
-      });
-
-      if (index != -1) {
-        let collection = { posts: tempPosts, dateCollected: new Date(), colour: '#53BD9C'};
-        this.collectionList.push(collection);
-      } else {
-        let collection = { posts: tempPosts, dateCollected: dateCollected, colour: 'transparent'};
-        this.collectionList.push(collection);
-      }
-
-      this.collectionList.sort((a, b) => new Date(b.dateCollected).getTime() - new Date(a.dateCollected).getTime());
-
-      this.setUpStickerContent(pid);
-     }
-      }, errorMessage => {
-        console.log(errorMessage);
-        this.handleError();
-    });
-  }
-
-  setUpStickerContent(pid:string) {
-
-    this.subStickerContent = this.postService.getStickerContent(pid).subscribe(response => {
+    // Set up collection
+    this.activityService.getUserCollection(this.uid).pipe(takeUntil(this.notifier$)) //get details of user collection
+    .subscribe((response:Collection[]) => {
+      console.log(response); //log
       if (response) {
-        this.collectionList.find(collection => {
-          return collection.posts.pid === pid;
-        })
-        .posts.post.stickerContent = response;
+        this.collectionList = []; //reset collection list
+        response.forEach(collection => {
+          let tempPostDetails: PostDetails;
+          let tempStickerContent: BehaviorSubject<any>;
+          let tempColour: string;
+          this.postService.getPostDetails(collection.pid).pipe(takeUntil(this.notifier$))
+          .subscribe(data => {
+            console.log(data); //log
+            tempPostDetails = data;
+            tempStickerContent = this.postService.getStickerContent(collection.pid);
+            const index = this.profileStickers.findIndex(sticker => {
+              return sticker.pid === collection.pid
+            })
+            if (index === -1) {
+              tempColour = 'transparent'
+            } else {
+              tempPostDetails.dateCreated = new Date(); //sort selected stickers to the top  
+              tempColour = '#53BD9C';
+            }
+            this.collectionList.push(new CollectionDisplay(collection.pid, tempPostDetails, tempStickerContent, tempColour));
+          });
+        });
       }
-    },
-    errorMessage => {
-      console.log(errorMessage);
     });
-
   }
 
-  onStickerClick(option: {posts: Posts, dateCreated:Date, colour: string}) {
-    if (option.posts.post.postDetails) {
-      this.changedProfileStickers = true;
-      let pid = option.posts.pid;
-      let index = this.profile.profileStickers.stickers.findIndex(sticker => {
-        return sticker.pid === pid;
-      });
-      if (index != -1) {
-        this.profile.profileStickers.stickers.splice(index,1);
-        option.colour = 'transparent';
-      } else if (index === -1 && this.profile.profileStickers.stickers.length < 5) {
-        this.profile.profileStickers.stickers.push(new ProfileSticker('69',pid, new Date()));
-        option.colour = '#53BD9C';
-      };
-    }
+  onStickerClick(collection: CollectionDisplay) {
+    this.changedProfileStickers = true;
+    let pid = collection.pid;
+    let index = this.profileStickers.findIndex(sticker => {
+      return sticker.pid === pid;
+    });
+    if (index != -1) {
+      this.profileStickers.splice(index,1);
+      collection.colour = 'transparent';
+    } else if (index === -1 && this.profileStickers.length < 5) {
+      const selectDate = new Date();
+      this.profileStickers.push(new ProfileSticker(pid, selectDate));
+      collection.colour = '#53BD9C';
+    };
   }
 
   fileUpload(event) {
@@ -206,7 +171,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       reader.onload = (event:any) => {
         if (file.size < 4*1024*1024) { //Firebase upload max size 10 MB
           this.error = null;
-          this.profile.displayPicture.content = event.target.result;
+          this.displayPicture = file;
+          this.displayPicture$.next(event.target.result);
         } else {
           this.error ='Post file size too big! There is a 4 MB limit';
         }
@@ -253,59 +219,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.dpInput.nativeElement.click();
   }
 
-  patchDisplayPicture() {
-    if (this.changedDP) {
-      let dpid = this.profile.displayPicture.dpid;
-      this.profileDataService.deleteDisplayPicture(dpid).subscribe(response => {
-        this.profileDataService.addDisplayPicture(this.profile.displayPicture,this.uid).subscribe(response => {
-          this.profileService.updateDisplayPicture(this.uid, this.profile.displayPicture);
-          this.finishUp()
-        }, errorMessage => {
-          console.log(errorMessage);
-          this.handleError();
-        });
-      },errorMessage => {
-        console.log(errorMessage);
-        this.handleError();
-      });
-    } else {
-      this.finishUp();
-    }
-  }
-
-  patchProfileDetails() {
-    if (this.changedBio) {
-      let prid = this.profileService.getPRIDfromUID(this.uid);
-      this.profileDataService.deleteProfileDetails(prid).subscribe(response => {
-        this.profileDataService.addProfileDetails(this.profile.profileDetails, this.uid).subscribe(response => {
-          this.profileService.updateProfileDetails(this.uid, this.profile.profileDetails);
-          this.profileService.updateMapUIDtoPRID(this.uid, response['name']);
-          this.patchDisplayPicture();
-        }, errorMessage => {
-          console.log(errorMessage);
-          this.handleError();
-        });
-      }, errorMessage => {
-        console.log(errorMessage);
-        this.handleError();
-      });
-    } else {
-      this.patchDisplayPicture();
-    }
-  }
-
-  addProfileStickers() {
-    this.profile.profileStickers.stickers.forEach(sticker => {
-      this.profileDataService.addProfileSticker(sticker, this.uid).subscribe(response =>{
-      }, errorMessage => {
-        console.log(errorMessage);
-        this.handleError();
-      });
-    })
-    this.profileService.updateProfileStickers(this.uid, this.profile.profileStickers);
-    this.patchProfileDetails();
-  }
-
   onSubmit(f) {
     if (!this.isSaving) {
       if (this.title && this.title.length > 15) {
@@ -318,31 +231,42 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         return;
       }
 
-      if (this.profile.profileStickers.stickers.length > 5) {
-        for (let i=0; i <= this.profile.profileStickers.stickers.length; i++) {
-          this.profile.profileStickers.stickers.pop();
+      if (this.profileStickers.length > 5) { //in case of an error
+        for (let i=0; i <= this.profileStickers.length; i++) {
+          this.profileStickers.pop();
          }
       }
 
       this.isSaving = true;
 
-      this.profile.profileDetails.bio.title = this.title;
-      this.profile.profileDetails.bio.content = this.content;
-      this.profile.profileDetails.bio.location = this.location;
+      this.profileDetails.bio.title = this.title;
+      this.profileDetails.bio.content = this.content;
+      this.profileDetails.bio.location = this.location;
+      this.profileDetails.username = this.username;
 
-      if (this.lastTitle != this.title || this.lastLocation != this.location || this.lastContent != this.content) {
-        this.changedBio = true;
+      if (this.oldTitle != this.title || this.oldLocation != this.location || this.oldContent != this.content) {
+        this.changedProfileDetails = true;
       }
 
+      //Update required field
       if (this.changedProfileStickers) {
-        this.profileDataService.fetchProfileStickers(this.uid).subscribe(response => {
-          response.forEach(sticker => {
-            this.profileDataService.deleteProfileStickers(sticker).subscribe(response => {}, errorMessage => {this.handleError();});
-          });
-        });
-            this.addProfileStickers();
+        this.usersService.updateProfileSticker(this.uid,this.profileStickers);
+      } 
+
+      if (this.changedProfileDetails) {
+        this.usersService.updateProfileDetails(this.uid, this.profileDetails);
+      }
+
+      if (this.changedDP) {
+        this.usersService.updateDisplayPicture(this.uid, this.displayPicture).pipe(takeUntil(this.notifier$))
+        .subscribe(response => {
+          if (response === 100) {
+            this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(this.uid, new Date(), this.displayPicture.type));
+            this.finishUp();
+          }
+        })
       } else {
-        this.patchProfileDetails();
+        this.finishUp();
       }
     }
   }

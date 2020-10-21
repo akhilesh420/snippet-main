@@ -1,5 +1,5 @@
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { catchError, takeWhile } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError, Subject } from 'rxjs';
+import { catchError, take, takeWhile } from 'rxjs/operators';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -52,7 +52,6 @@ export class UsersService {
     if (index === -1) {
       this.profileDetailsList.push({uid: uid, obs: new BehaviorSubject<ProfileDetails>(undefined)});
       let secIndex = this.profileDetailsList.length - 1;
-      let connectNumber = this.connectCount; //connection number
       this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(response => {
         this.profileDetailsList[secIndex].obs.next(response);
       });
@@ -75,6 +74,12 @@ export class UsersService {
     this.profileDetailsCollection.doc(uid).set(obj);
   }
 
+  // Update profile details from cloud firestore
+  updateProfileDetails(uid: string, details: ProfileDetails) {
+    const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
+    const obj = {username : details.username, bio: bio};
+    this.profileDetailsCollection.doc(uid).update(obj);
+  }
 
   //--------------------------------------- Personal Details ---------------------------------------
   // Get personal details from cloud firestore by UID
@@ -101,7 +106,6 @@ export class UsersService {
     this.personalDetailsCollection.doc(uid).set(obj);
   }
 
-
   //--------------------------------------- Profile Stickers ---------------------------------------
   // Get profile stickers from cloud firestore by UID
   getProfileStickers(uid: string) {
@@ -112,8 +116,8 @@ export class UsersService {
     if (index === -1) {
       this.profileStickersList.push({uid: uid, obs: new BehaviorSubject<ProfileSticker[]>(undefined)});
       let secIndex = this.profileStickersList.length - 1;
-      this.afs.doc<ProfileSticker[]>('profile stickers/' + uid).valueChanges().subscribe(response => {
-        this.profileStickersList[secIndex].obs.next(response);
+      this.afs.doc<{stickers: ProfileSticker[]}>('profile stickers/' + uid).valueChanges().subscribe(response => {
+        this.profileStickersList[secIndex].obs.next(response.stickers);
       });;
       return this.profileStickersList[secIndex].obs;
     } else {
@@ -127,9 +131,17 @@ export class UsersService {
     profileSticker.forEach(sticker => {
       stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})
     });
-    this.profileStickersCollection.doc(uid).set(stickerArray);
+    this.profileStickersCollection.doc(uid).set({stickers: stickerArray});
   }
 
+  // Update profile stickers from 
+  updateProfileSticker(uid: string, profileSticker: ProfileSticker[]) {
+    const stickerArray = [];
+    profileSticker.forEach(sticker => {
+      stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})
+    });
+    this.profileStickersCollection.doc(uid).update({stickers: stickerArray});
+  }
 
   // --------------------------------------- Display Picture ---------------------------------------
   // Get display picture from cloud firestore by UID
@@ -143,6 +155,12 @@ export class UsersService {
     this.displayPictureCollection.doc(uid).set(dp);
   }
 
+  // Update display picture from cloud firestore
+  updateDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
+    const dp = {name: uid, dateCreated: displayPicture.dateCreated}
+    this.displayPictureCollection.doc(uid).update(dp);
+  }
+
   // Get display picture from firebase storage by UID
   getDisplayPicture(uid: string) {
     let index = this.displayPictureList.findIndex(details => {
@@ -153,8 +171,9 @@ export class UsersService {
       this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(this.placeholderImg)});
       let secIndex = this.displayPictureList.length - 1;
       this.getDisplayPictureRef(uid).subscribe((response: DisplayPicture) => {
+        console.log(response); //log
         const ref = this.storage.ref('Display picture/' + uid);
-        ref.getDownloadURL().pipe(catchError(this.handleError)).subscribe(response => {
+        ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
           this.displayPictureList[secIndex].obs.next(response);
         });
       });
@@ -169,13 +188,24 @@ export class UsersService {
     // Upload to cloud firestore
     this.addDisplayPictureRef(uid, displayPicture);
     // Upload to storage
+    if (content) {
+      const file = content;
+      const filePath = 'Display picture/'+uid;
+      const ref = this.storage.ref(filePath);
+      const task = ref.put(file);
+      return task.percentageChanges();
+    } 
+  }
+
+   // Update display picture from firebase storage
+   updateDisplayPicture(uid: string, content: any) {
     const file = content;
-    const filePath = 'Display picture/'+uid;
-    const ref = this.storage.ref(filePath);
-    const task = ref.put(file);
+    const filePath = 'Display picture/' + uid;
+    const task = this.storage.upload(filePath, file);
     return task.percentageChanges();
   }
 
+  // --------------------------------------- Error handling ---------------------------------------
   handleError(error) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {

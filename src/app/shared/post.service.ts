@@ -106,11 +106,13 @@ export class PostService {
 
     if (index === -1) {
       this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(this.placeholderImg)});
-      let secIndex = this.postContentList.length - 1;
+      let secIndex = this.stickerContentList.length - 1;
       this.getStickerContentRef(pid).subscribe((response: StickerContent) => {
         const ref = this.storage.ref('Post/' + response.name);
         ref.getDownloadURL().subscribe(response => {
-          this.stickerContentList[secIndex].obs.next(response);
+          if (response) {
+            this.stickerContentList[secIndex].obs.next(response);
+          }
         });
       });
       return this.stickerContentList[secIndex].obs
