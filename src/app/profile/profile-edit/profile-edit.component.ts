@@ -1,12 +1,25 @@
 import { Posts, StickerContent } from './../../shared/post.model';
 import { PostService } from './../../shared/post.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ProfileDetails, PersonalDetails, Biography, ProfileSticker, DisplayPicture } from './../../shared/profile.model';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Post, PostDetails } from 'src/app/shared/post.model';
 import { Profile } from 'src/app/shared/profile.model';
+import { UsersService } from 'src/app/shared/users.service';
+import { ActivityService } from 'src/app/shared/activity.service';
+import { Collection } from 'src/app/shared/activity.model';
+import { takeUntil } from 'rxjs/operators';
+
+class collectionDisplay{
+
+  constructor(
+    private postDetails: Observable<PostDetails>,
+    private sticker: BehaviorSubject<any>,
+    private colour: string
+  ) {}
+}
 
 @Component({
   selector: 'app-profile-edit',
@@ -18,21 +31,21 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
 
   profileDetails$: Observable<ProfileDetails>;
-  profileStickers$: Observable<ProfileSticker[]>;
   displayPicture$: Observable<any>;
+  notifier$ = new Subject();
+  collectionList: Observable<[]>;
+  profileStickers: ProfileSticker[];
+
 
   dpUpload: any;
   touched = false;
 
   dpSrc: string = "/assets/default image/080708 background.png";
-  addIcon = "assets/icons/add_icon@2x.png"
+  addIcon = "assets/icons/add_icon@2x.png";
 
   imageProp = {'height':'100%', 'width':'auto'};
 
-  collectionList: {posts: Posts, dateCollected: Date ,colour: string}[] = [];
   oldPsid: string[] = [];
-  isFetching = true;
-  isFetchingCollection: boolean = true;
   isSaving = false;
   uid: string;
   title: string;
@@ -53,20 +66,18 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
 
   constructor(private postService: PostService,
+              private usersService: UsersService,
+              private activityService: ActivityService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
 
-    this.isFetching = true;
-
     this.route.params
     .subscribe(
       (params: Params) => {
         this.uid = params['id'];
-        this.setUpProfileDetails();
-        this.setUpProfileStickers();
-        this.setUpDP();
+        this.setUp();
         this.getCollectionList();
       }, errorMessage => {
         console.log(errorMessage);
@@ -75,63 +86,32 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   setUp() {
+    // Set up profile 
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
-    this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
-  }
 
-  setUpProfileDetails() {
-    this.isFetching = true;
-
-    this.subProfileDetails = this.profileService.getProfileDetails(this.uid).subscribe(response => {
-      if (response) {
-        this.profile.profileDetails = response;
-        this.isFetching = false;
-        this.title = this.profile.profileDetails.bio.title;
-        this.location = this.profile.profileDetails.bio.location;
-        this.content = this.profile.profileDetails.bio.content;
-        this.lastTitle = this.profile.profileDetails.bio.title.slice();
-        this.lastLocation = this.profile.profileDetails.bio.location.slice();
-        this.lastContent = this.profile.profileDetails.bio.content.slice();
-        this.username = this.profile.profileDetails.username;
-      }
-    },
-    errorMessage => {
-      console.log(errorMessage);
-      this.handleError();
+    this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
+    .subscribe((response: ProfileSticker[]) => {
+      this.profileStickers = response; 
     });
 
-  }
-
-  setUpProfileStickers() {
-
-    this.subProfileStickers = this.profileService.getProfileStickers(this.uid).subscribe(response => {
-      if (response) {
-        this.profile.profileStickers = response;
-      }
-    },
-    errorMessage => {
-      console.log(errorMessage);
-      this.handleError();
-    });
-
-  }
-
-  setUpDP() {
-    this.subDisplayPicture = this.profileService.getDisplayPicture(this.uid).subscribe(response => {
-      if (response) {
-        this.profile.displayPicture = response;
-      }
-    },
-    errorMessage => {
-      console.log(errorMessage);
-      this.handleError();
+    // Set up collection
+    this.activityService.getUserCollection(this.uid).pipe(takeUntil(this.notifier$)) //get details of user collection
+    .subscribe((response:Collection[]) => {
+      response.forEach(collection => {
+        let tempColour: string;
+        const tempPostDetails = this.postService.getPostDetails(collection.pid);
+        const tempStickerContent = this.postService.getStickerContent(collection.pid);
+        const index = this.profileStickers.findIndex(sticker => {
+          return sticker.pid === collection.pid
+        })
+        index === -1 ? tempColour = 'transparent' : tempColour = '#53BD9C';
+        this.collectionList.push({})
+      });
     });
   }
 
   getCollectionList() {
-
-    this.isFetchingCollection = true;
 
     this.postDataService.fetchSCL('uid',this.uid).pipe( map( stickerCollector => {
       let dataArray = [];
@@ -379,6 +359,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
+    this.notifier$.next();
+    this.notifier$.complete();
   }
 }
