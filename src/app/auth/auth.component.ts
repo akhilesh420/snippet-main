@@ -126,7 +126,7 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.userService.addPersonalDetails(resData.localId,personalDetails);
               this.activityService.addActivity(resData.localId, 'user')
               form.reset();
-              this.router.navigate(['/explore']);
+              this.router.navigate(['/profile/' + resData.localId + '/edit']);
             } else {
               this.error = "Username taken";
               this.authService.deleteUser(resData.idToken).pipe(take(1)).subscribe(response => {

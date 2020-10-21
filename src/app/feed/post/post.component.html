@@ -47,9 +47,9 @@
     <!-- Post Sticker -->
     <a style="cursor: pointer;" (click)='collectSticker()'>
       <div class="postSticker"
-        *ngIf="stickerContent$ | async as content">
+        *ngIf="stickerContent$ | async as stickerContent">
         <img class="sticker-img"
-             src={{content}}
+             src={{stickerContent}}
              width="100%" alt="post content"
              (load)="onStickerLoad($event)"
              [ngStyle]="{'height': stickerProp.height, 'width': stickerProp.width}">

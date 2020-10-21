@@ -72,7 +72,7 @@ export class PostService {
     })
 
     if (index === -1) {
-      this.postContentList.push({pid: pid, obs: new BehaviorSubject<any>(this.placeholderImg)});
+      this.postContentList.push({pid: pid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.postContentList.length - 1;
       this.getPostContentRef(pid).subscribe((response: PostContent) => {
         const ref = this.storage.ref('Post/' + response.name);
