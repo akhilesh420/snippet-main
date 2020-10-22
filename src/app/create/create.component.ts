@@ -1,11 +1,12 @@
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription,forkJoin } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
-import { DataService } from './../shared/data.service';
-import { WindowStateService } from './../shared/window.service';
-import { Post, PostContent, PostDetails, StickerContent, StickerDetails } from './../shared/post.model';
+import { PostContent, PostDetails, StickerContent, StickerDetails } from './../shared/post.model';
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { PostService } from '../shared/post.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivityService } from '../shared/activity.service';
 
 @Component({
   selector: 'app-create',
@@ -18,9 +19,16 @@ export class CreateComponent implements OnInit, OnDestroy {
   @ViewChild('contentInput') contentInput: ElementRef<HTMLElement>;
   @ViewChild('stickerInput') stickerInput: ElementRef<HTMLElement>;
 
-  post: Post;
+  postDetails: PostDetails;
+  postContent: any;
+  stickerDetails: StickerDetails;
+  stickerContent: any;
 
-  uid: string = "proxy";
+  postContent$ = new BehaviorSubject<any>(null);
+  stickerDetails$: Observable<StickerDetails>;
+  stickerContent$ = new BehaviorSubject<any>(null);
+
+  uid: string;
 
   maxSticker = 30;
   minSticker = 1;
@@ -40,9 +48,11 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   userSub: Subscription;
 
-  constructor(private dataService: DataService,
-              private router: Router,
-              private authService: AuthService) { }
+  constructor(private router: Router,
+              private authService: AuthService,
+              private postService: PostService,
+              private activityService: ActivityService,
+              private afs: AngularFirestore) { }
 
   ngOnInit(): void {
     this.userSub =  this.authService.user.subscribe(authRes => {
@@ -54,13 +64,13 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   resetPost() {
-    this.post = new Post(
-      new PostDetails(this.uid,"","",new Date,0),
-      new PostContent(this.postSrc),
-      new StickerContent(this.stickerSrc, '0'),
-      new StickerDetails(0,0,0),
-      [],
-      []);
+    this.postDetails = new PostDetails(this.uid,"","",new Date);
+    this.postContent$.next(this.postSrc);
+    this.stickerContent$.next(this.stickerSrc);
+    this.stickerDetails$ = new Observable(observer => {
+      observer.next(new StickerDetails(0,0));
+      return {unsubscribe(){}}
+    });
   }
 
   amountValidation(amount: number) {
@@ -71,30 +81,30 @@ export class CreateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.isCreating) {
 
-      this.post.postDetails.title.trim();
-      this.post.postDetails.description.trim();
+      this.postDetails.title.trim();
+      this.postDetails.description.trim();
 
-      if (!this.post.postContent || !this.post.postContent.content || this.post.postContent.content === this.postSrc) {
+      if (!this.postContent || !this.postContent || this.postContent === this.postSrc) {
         this.error = "Trust me, click the BIG plus button";
         return;
       }
-      if (!this.post.stickerContent || !this.post.stickerContent.sticker || this.post.stickerContent.sticker === this.stickerSrc) {
+      if (!this.stickerContent || !this.stickerContent || this.stickerContent === this.stickerSrc) {
         this.error = "A sticker is required! Click the plus sign on the bottom right of the post";
         return;
       }
-      if (!this.post.postDetails.title || this.post.postDetails.title === "") {
+      if (!this.postDetails.title || this.postDetails.title === "") {
         this.error = "A title is required!";
         return;
       }
-      if (this.post.postDetails.title && this.post.postDetails.title.length > 19) {
+      if (this.postDetails.title && this.postDetails.title.length > 19) {
         this.error = "The title is too long!";
         return;
       }
-      if (this.post.postDetails.description && this.post.postDetails.description.length > 240) {
+      if (this.postDetails.description && this.postDetails.description.length > 240) {
         this.error = "The description is too long!";
         return;
       }
-      if (!this.post.postDetails.description || this.post.postDetails.description === "") {
+      if (!this.postDetails.description || this.postDetails.description === "") {
         let valid = confirm("You didn't add a description! Are you sure you want to post?");
         if (!valid) {
           return;
@@ -123,22 +133,35 @@ export class CreateComponent implements OnInit, OnDestroy {
         }
       }
 
-
-
       this.isCreating = true;
-      this.post.stickerDetails = new StickerDetails(1, this.amount, 1/this.amount);
-      this.dataService.postCreate(this.post, this.uid).subscribe(responseData => {
-        if (responseData) {
-          this.isCreating = false;
-          alert("Post created successfully");
-          this.router.navigate(['/explore']);
-        } else {
-          this.handleError('Error hogaya kya karen');
-        }
-      }, errorMessage => {
-        this.handleError(errorMessage);
-      });
+      this.stickerDetails = new StickerDetails(this.amount, 0);
+      this.createPost();
     }
+  }
+
+  createPost() {
+    let pid = this.afs.createId();
+    let pcid = this.afs.createId();
+    let scid = this.afs.createId();
+
+    let postSubs =  this.postService.addContent(pcid,this.postContent);
+    let stickerSubs = this.postService.addContent(scid,this.stickerContent);
+
+    forkJoin([postSubs, stickerSubs]).subscribe(results => {
+      console.log(results[0], results[1]); //log
+      if (results[0] === 100 && results[1] === 100) {
+        this.postService.addPostDetails(pid,this.postDetails);
+        this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
+        this.postService.addStickerContentRef(pid, new StickerContent(scid, this.stickerContent.type));
+        this.postService.addStickerDetails(pid, this.stickerDetails);
+       
+        this.activityService.addActivity(pid, 'post');
+        this.activityService.addCollection(pid,this.uid,this.uid);
+      } 
+    });
+    
+    this.router.navigate(['/explore']);
+    this.isCreating = false;
   }
 
   onAddClick(event: any) {
@@ -154,8 +177,9 @@ export class CreateComponent implements OnInit, OnDestroy {
 
       reader.onload = (event:any) => {
         if (file.size < 4*1024*1024) { //Firebase upload max size 10 MB
-          this.error = undefined;
-          this.post.postContent.content = event.target.result;
+          this.error = undefined; 
+          this.postContent = file;
+          this.postContent$.next(event.target.result);
         } else {
           this.error ='Post file size too big! There is a 4 MB limit';
         }
@@ -173,7 +197,8 @@ export class CreateComponent implements OnInit, OnDestroy {
       reader.onload = (event:any) => {
         if (file.size < 4*1024*1024) { //Firebase upload max size 10 MB
           this.error = undefined;
-          this.post.stickerContent.sticker = event.target.result;
+          this.stickerContent = file;
+          this.stickerContent$.next(event.target.result);
         } else {
           this.error ='Sticker file size too big! There is a 4 MB limit';
         }
@@ -183,12 +208,12 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   onTitleChange() {
     this.title.trim();
-    this.post.postDetails.title = this.title;
+    this.postDetails.title = this.title;
   }
 
   onDescriptionChange() {
     this.desc.trim();
-    this.post.postDetails.description = this.desc;
+    this.postDetails.description = this.desc;
   }
 
   handleError(error) {
@@ -200,5 +225,4 @@ export class CreateComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.userSub.unsubscribe();
   }
-
 }

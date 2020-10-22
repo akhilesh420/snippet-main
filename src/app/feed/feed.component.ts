@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit, Input, HostListener, OnChanges } from '@angular/core';
-import { Post, Posts } from './../shared/post.model';
+import { Post, PostDetails, Posts } from './../shared/post.model';
 
 @Component({
   selector: 'app-feed',
@@ -7,10 +8,10 @@ import { Post, Posts } from './../shared/post.model';
   styleUrls: ['./feed.component.css']
 })
 
-export class FeedComponent implements OnInit, OnChanges {
+export class FeedComponent implements OnInit {
 
-  @Input() postsList: Posts[] = [];
-  @Input() isFetching? = false;
+  @Input() postsList: Observable<PostDetails[]>; //must include pid
+  @Input() database?: string; //Only required if data from realtime database
   batch: number = 0;
   maxBatch: number = 0;
   render: number = 2;
@@ -22,13 +23,6 @@ export class FeedComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  ngOnChanges() {
-    // if (this.postsList) {
-    //   this.renderPostsList = this.postsList.slice(0,this.render+1);
-    //   console.log('postsList',this.postsList); //log
-    //   console.log('renderList',this.renderPostsList); //log
-    // }
-  }
 
   @HostListener('window:scroll', ['$event'])
   scrollHandler(event) {

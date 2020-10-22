@@ -1,10 +1,7 @@
-import { Subscription, Subject } from 'rxjs';
-import { PostDataService } from './../shared/postdata.service';
+import { BehaviorSubject } from 'rxjs';
 import { PostService } from './../shared/post.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { ppid } from 'process';
-import { StickerContent } from '../shared/post.model';
 
 @Component({
   selector: 'app-sticker',
@@ -16,34 +13,17 @@ export class StickerComponent implements OnInit {
   @Input() pid: string;
   @Input() size: String = "24px";
 
-  stickerSrc: any;
   stickerSize = {};
-  placeholderImg: string = "/assets/default image/080708 background.png";
   imageProp = {'height':'auto', 'width':'auto'};
 
-  subStickerContent: Subscription;
+  stickerContent: BehaviorSubject<any>;
 
-  stickerContent = new Subject<StickerContent>();
-
-  constructor(private postDataService: PostDataService,
-              private postService: PostService,
+  constructor(private postService: PostService,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.stickerSrc = this.placeholderImg;
-    this.getStickerContent();
+    this.stickerContent = this.postService.getStickerContent(this.pid);
    }
-
-  getStickerContent() {
-    this.subStickerContent = this.postService.getStickerContent(this.pid).subscribe(response => {
-      if (response) {
-        this.stickerSrc = response.sticker;
-      }
-    },
-    errorMessage => {
-      console.log(errorMessage);
-    });
-  }
 
   onLoad(event: any) {
     let width = event.target.width;
@@ -59,9 +39,5 @@ export class StickerComponent implements OnInit {
 
   onClick() {
     this.router.navigate(['/post/', this.pid]);
-  }
-
-  ngOnDestroy() {
-    if(this.subStickerContent) {this.subStickerContent.unsubscribe();}
   }
 }

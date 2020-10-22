@@ -1,7 +1,4 @@
-<app-profile-display [uid]='uid' [profile]='profile' *ngIf="!isFetchingProfile"></app-profile-display>
-<!-- <div *ngIf="isFetchingProfile" style="text-align: center;" class="horizontal-center">
-  <app-loading-spinner></app-loading-spinner>
-</div> -->
-<div  style="margin-top: 40px;">
-  <app-feed [postsList]="postsList" [isFetching]="isFetchingPosts"></app-feed>
+<app-profile-display [uid]='uid'></app-profile-display>
+<div style="margin-top: 40px;">
+  <app-feed [postsList]="postsList" [database]="'db'"></app-feed>
 </div>

@@ -1,10 +1,10 @@
-import { ProfileService } from './../shared/profile.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, tap, take } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 export interface AuthResponseData {
@@ -20,12 +20,11 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
-  APIKey = 'AIzaSyBd54cIG7k7xe7nDry63bsL44-Rxjg5Vck';
+  APIKey = environment.firebaseConfig.apiKey;
   private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient,
-              private router: Router,
-              private profileService: ProfileService) {}
+              private router: Router) {}
 
   signUp(email: string, password: string) {
     return this.http
@@ -87,12 +86,7 @@ export class AuthService {
       );
   }
 
-  logout(isSignedUp: boolean = true) {
-    // if (isSignedUp) {
-    //   this.user.pipe(take(1)).subscribe(response => {
-    //     this.profileService.logout(response.id)
-    //   });
-    // }
+  logout() {
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
@@ -134,9 +128,6 @@ export class AuthService {
   autoLogout(expirationDuration: number) {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
-      // this.user.pipe(take(1)).subscribe(response => {
-      //   this.profileService.logout(response.id)
-      // });
     }, expirationDuration);
   }
 

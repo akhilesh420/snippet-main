@@ -1,13 +1,12 @@
-import { ProfileService } from './../shared/profile.service';
-import { DataService } from './../shared/data.service';
-import { Biography, ProfileDetails, PersonalDetails } from './../shared/profile.model';
-import { ProfileDataService } from './../shared/profiledata.service';
+import { UsersService } from './../shared/users.service';
+import { Biography, ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './../shared/profile.model';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivityService } from '../shared/activity.service';
 
 
 
@@ -40,10 +39,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
 
   constructor(private authService: AuthService,
-              private router: Router,
-              private dataService: DataService,
-              private profileService: ProfileService,
-              private profileDataService: ProfileDataService) {}
+              private userService: UsersService,
+              private activityService: ActivityService,
+              private router: Router) {}
 
   ngOnInit(): void {
      let todayDate = new Date();
@@ -99,7 +97,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       }
     }
 
-
     const email = form.value.email;
     const password = form.value.password;
 
@@ -118,38 +115,24 @@ export class AuthComponent implements OnInit, OnDestroy {
     authObs.subscribe(
       resData => {
         if (this.isLoginMode && !this.isForgetMode) {
-          this.subProfileDetails = this.profileService.getProfileDetails(resData.localId).pipe(take(2)).subscribe(response => {
-          },
-          errorMessage => {
-            console.log(errorMessage);
-          });
-
           form.reset();
           this.router.navigate(['/explore']);
         } else if (!this.isLoginMode && !this.isForgetMode) {
           let profileDetails  = new ProfileDetails(this.username, new Biography("","",""));
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
-          let prid: string;
-          this.profileDataService.fetchUsername(profileDetails.username).subscribe((response) => {
+          this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {
             if (Object.keys(response).length === 0) {
-              this.profileDataService.addProfileDetails(profileDetails, resData.localId).subscribe((response) => {
-                prid = response['name'];
-                this.profileDataService.addUsername(profileDetails.username).subscribe( response => {
-                  this.profileDataService.addPersonalDetails(personalDetails, resData.localId).subscribe(
-                    response => {}, errorMessage => {
-                      this.error = errorMessage;
-                    }
-                  )
-                 }, errorMessage => {
-                   this.error = errorMessage;
-                  })
-              },errorMessage => { this.error = errorMessage;});
+              this.userService.addProfileDetails(resData.localId, profileDetails);
+              this.userService.addPersonalDetails(resData.localId,personalDetails);
+              this.userService.addProfileStickers(resData.localId,[]);
+              this.userService.addDisplayPicture(resData.localId, new DisplayPicture(resData.localId, new Date(), 'image'), null);
+              this.activityService.addActivity(resData.localId, 'user')
               form.reset();
-              this.router.navigate(['/explore']);
+              this.router.navigate(['/profile/' + resData.localId + '/edit']);
             } else {
               this.error = "Username taken";
-              this.authService.deleteUser(resData.idToken).subscribe(response => {
-                this.authService.logout(false);
+              this.authService.deleteUser(resData.idToken).pipe(take(1)).subscribe(response => {
+                this.authService.logout();
               }, errorMessage => {
                 console.log(errorMessage);
               });

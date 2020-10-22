@@ -1,12 +1,5 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <app-profile-display [uid]='uid' [profile]='profile' *ngIf="!isFetchingProfile"></app-profile-display>
-    </div>
-  </div>
-  <div class="row" align="center" style="margin-top: 40px;">
-    <div class="col">
-      <app-feed [postsList]="postsList" [isFetching]="isFetching"></app-feed>
-    </div>
-  </div>
+<app-profile-display [uid]='uid' *ngIf="uid"></app-profile-display>
+<div style="margin-top: 40px;">
+  <app-feed [postsList]="postsList"></app-feed>
 </div>
+

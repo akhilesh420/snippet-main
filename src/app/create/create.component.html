@@ -33,7 +33,11 @@
                     #stickerInput
                     required>
                 </div>
-                <app-post [post]="post" [createPost]="true" (addClick)="onAddClick($event)"></app-post>
+                <app-post [postDetails]="postDetails"
+                          [postContent$]="postContent$"
+                          [stickerContent$]="stickerContent$"
+                          [createPost]="true"
+                          (addClick)="onAddClick($event)"></app-post>
               </div>
             </div>
             <!-- Error message -->

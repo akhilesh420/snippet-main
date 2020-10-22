@@ -1,5 +1,4 @@
 import { UsersService } from './shared/users.service';
-import { ProfileService } from './shared/profile.service';
 import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
 import { Component, HostListener } from '@angular/core';
@@ -17,7 +16,6 @@ export class AppComponent {
 
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
-              private profileService: ProfileService,
               private userService: UsersService,
               private titleService: Title){
   }

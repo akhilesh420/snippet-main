@@ -1,14 +1,12 @@
+import { UsersService } from './../shared/users.service';
+import { DisplayPicture, ProfileSticker, ProfileDetails } from './../shared/profile.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../auth/auth.service';
-import { PostDataService } from './../shared/postdata.service';
-import { PostService } from './../shared/post.service';
-import { map } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
-import { ProfileStickers, ProfileDetails, DisplayPicture } from './../shared/profile.model';
-import { ProfileDataService } from './../shared/profiledata.service';
-import { ProfileService } from './../shared/profile.service';
-import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
-import { Profile } from '../shared/profile.model';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ActivityService } from '../shared/activity.service';
+import { Activity } from '../shared/activity.model';
 
 @Component({
   selector: 'app-profile-display',
@@ -17,45 +15,34 @@ import { Profile } from '../shared/profile.model';
 })
 export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
-  @Input() profile: Profile;
   @Input() uid: string;
 
-  collected: number = 0;
-  views: number = 0;
+  profileDetails$: BehaviorSubject<ProfileDetails>;
+  profileStickers$: BehaviorSubject<ProfileSticker[]>;
+  displayPicture$: BehaviorSubject<any>;
+  activity: Activity;
+
+  isAuthenticated: boolean;
+  notifier$ = new Subject();
+
+  collected: string = '0';
+  views: string = '0';
 
   viewsDisplay: string = '0';
   collectedDisplay: string = '0';
   myUid: string;
   placeholderImg = "assets/default image/blank_image@2x.png";
 
-  fetchingDP: boolean = true;
-  fetchingPS: boolean = true;
-  isAuthenticated: boolean;
-
-  subProfileStickers: Subscription;
-  subDisplayPicture: Subscription;
-  subTotalCollected: Subscription;
-  userSubs: Subscription;
-
-  profileStickers = new Subject<ProfileStickers>();
-  displayPicture = new Subject<any>();
-  totalViews = new Subject<number>();
-  totalCollected = new Subject<number>();
-
   imageProp = {'height':'100%', 'width':'auto'};
-  emptyProfileSticker: number[] = [0,0,0,0,0];
 
-  constructor( private profileService: ProfileService,
-               private profileDataService: ProfileDataService,
-               private postService: PostService,
-               private postDataService: PostDataService,
-               private authService: AuthService,
-               private router: Router,
-               private route: ActivatedRoute) { }
+  constructor( private authService: AuthService,
+               private usersService: UsersService,
+               private activityService: ActivityService,
+               private router: Router) { }
 
   ngOnInit(): void {
 
-    this.userSubs = this.authService.user.subscribe(response => {
+    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
         this.myUid = response.id;
@@ -64,97 +51,21 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       console.log(errorMessage);
     });
 
-    this.setUpViews();
-    this.setUpCollected();
-    this.setUpProfileStickers();
-    this.setUpDisplayPicture();
+    this.setUpProfile();
   }
 
-  ngOnChanges() {
-    this.setUpViews();
-    this.setUpCollected();
-    this.setUpProfileStickers();
-    this.setUpDisplayPicture();
+  setUpProfile() {
+    this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
+    this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
+    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
   }
 
-  setUpProfileStickers() {
-    this.fetchingPS = true;
-
-    this.subProfileStickers = this.profileService.getProfileStickers(this.uid).subscribe(response => {
-      if (response) {
-        if (response.stickers === []) {
-          this.subProfileStickers.unsubscribe();
-          this.setUpProfileStickers();
-        } else {
-          response.stickers.sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime());
-          this.profile.profileStickers = response;
-          this.emptyProfileSticker = this.emptyProfileSticker.slice(0,5 - response.stickers.length);
-          this.fetchingPS = false;
-        }
-      }
-    },
-    errorMessage => {
-      console.log(errorMessage);
-    });
-  }
-
-  setUpDisplayPicture() {
-
-    this.fetchingDP = true;
-
-    this.subDisplayPicture = this.profileService.getDisplayPicture(this.uid).subscribe(response => {
-      if (response) {
-        this.profile.displayPicture = response;
-        this.fetchingDP = true;
-      } else {
-        this.profile.displayPicture = new DisplayPicture('69',this.placeholderImg);
-      }
-    },
-    errorMessage => {
-      console.log(errorMessage);
-    });
-  }
-
-  setUpViews() {
-    this.postDataService.fetchViews('cuid', this.uid).subscribe(response => {
-      this.views = Object.keys(response).length;
-      this.viewsDisplay = this.convertToShort(this.views);
-   }, errorMessage => {
-     console.log(errorMessage);
-   });
-  }
-
-  setUpCollected() {
-
-    this.subTotalCollected = this.totalCollected.subscribe(response => {
-      this.collected = response;
-      this.collectedDisplay= this.convertToShort(this.collected);
-    }, errorMessage => {
-      console.log(errorMessage);
-    })
-
-    let dataArray: string[] = [];
-    this.postDataService.fetchUserPostDetails(this.uid).pipe( map( data => {
-      for (let key in data) {
-        let posts = this.postService.getPosts();
-        let postInfo = posts.find(data => data.pid === key);
-        if (postInfo) {
-          this.postService.updatePostDetails(key, data[key]);
-        }
-        dataArray.push(key);
-      }
-      dataArray.forEach(pid => {
-        this.postDataService.fetchSCL('pid',pid).subscribe(response => {
-           this.totalCollected.next(Object.keys(response).length);
-        }, errorMessage => {
-          console.log(errorMessage);
-        });
-      });
-      return this.collected;
-    }))
-    .subscribe( response => {}, errorMessage => {
-      console.log(errorMessage);
-    })
+  setUpActivity() {
+    this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.activity = response[0];
+      this.views = this.convertToShort(this.activity.views);
+        this.collected = this.convertToShort(this.activity.collected);
+    });;
   }
 
   convertToShort(num: number): string {
@@ -190,10 +101,12 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
+  getEmptySlots(stickers) {
+    return [...Array(5-stickers.length).keys()]; 
+  }
+
   ngOnDestroy() {
-    if (this.subTotalCollected) {this.subTotalCollected.unsubscribe();}
-    if (this.subDisplayPicture) {this.subDisplayPicture.unsubscribe();}
-    if (this.subProfileStickers) {this.subProfileStickers.unsubscribe();}
-    if (this.userSubs) {this.userSubs.unsubscribe();}
+    this.notifier$.next();
+    this.notifier$.complete();
   }
 }

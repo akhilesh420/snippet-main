@@ -1,4 +1,3 @@
-import { ProfileService } from './../shared/profile.service';
 import { AuthService } from './../auth/auth.service';
 import { WindowStateService } from './../shared/window.service';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;

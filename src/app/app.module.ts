@@ -21,7 +21,6 @@ import { FeedComponent } from './feed/feed.component';
 import { PostComponent } from './feed/post/post.component';
 import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
-import { ProfileCreateComponent } from './profile/profile-create/profile-create.component';
 import { CommentsComponent } from './feed/post/comments/comments.component';
 import { CommentComponent } from './feed/post/comments/comment/comment.component';
 import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
@@ -35,6 +34,8 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
 import { environment } from '../environments/environment';
+import { WithLoadingPipe } from './shared/with-loading.pipe';
+import { DateSortPipe } from './shared/date-sort.pipe';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,6 @@ import { environment } from '../environments/environment';
     PostComponent,
     PostEditComponent,
     ProfileEditComponent,
-    ProfileCreateComponent,
     CommentsComponent,
     CommentComponent,
     CommentListComponent,
@@ -59,7 +59,9 @@ import { environment } from '../environments/environment';
     SinglePostComponent,
     AuthComponent,
     LoadingSpinnerComponent,
-    TitleCaseDirective
+    TitleCaseDirective,
+    WithLoadingPipe,
+    DateSortPipe
   ],
   imports: [
     BrowserModule,
@@ -70,7 +72,7 @@ import { environment } from '../environments/environment';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    AngularFirePerformanceModule
+    // AngularFirePerformanceModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},

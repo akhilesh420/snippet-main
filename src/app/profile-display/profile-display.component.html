@@ -1,25 +1,36 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12" align="center">
+    <div class="col-md-12" align="center"  
+        *ngIf="profileDetails$ | async; let details">
       <div class="outerContainer">
-        <div class="row" style="margin-top: 8px; height: 60px; width: 100%">
+        <!-- Profile stickers -->
+        <div class="row" 
+             style="margin-top: 8px; height: 60px; width: 100%"
+             *ngIf="profileStickers$ | async as stickers; else noStickers;">
           <div class="col-2"
             style="padding: 0px; margin-right: 0px;"></div>
-          <div class="col" *ngFor="let i of emptyProfileSticker"
-          style="padding: 0px; margin-left: -8px; margin-right: 8px;">
+          <div class="col" 
+              *ngFor="let i of getEmptySlots(stickers)"
+               style="padding: 0px; margin-left: -8px; margin-right: 8px;">
             </div>
           <div class="col-2"
-            *ngFor="let sticker of profile.profileStickers.stickers"
-            style="padding: 0px; margin-left: -8px; margin-right: 8px;">
+              *ngFor="let sticker of stickers"
+               style="padding: 0px; margin-left: -8px; margin-right: 8px;">
             <app-sticker [pid]="sticker.pid" [size]="'60px'"></app-sticker>
           </div>
         </div>
-        <div class="row" style="width: 100%; margin-top: 16px">
+        <ng-template #noStickers>
+          <div class="row" 
+               style="margin-top: 8px; height: 60px; width: 100%">
+          </div>
+        </ng-template>
+        <div class="row" style="width: 100%; margin-top: 16px" 
+            *ngIf="displayPicture$ | async as content;">
           <div class="col-3" style="padding-left: 9px;">
             <div class="storySignifier">
               <div class="dpBackground">
                 <div class="dpBorder">
-                  <img [src]="profile.displayPicture ? profile.displayPicture.content : placeholderImg"
+                  <img [src]="content"
                        alt="display picture"
                        height="100%"
                       [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
@@ -29,15 +40,17 @@
             </div>
           </div>
           <div class="col-1"></div>
-          <div class="col-5 description" style="padding-left: 0px; padding-right: 0px" align="left">
+          <!-- Bio -->
+          <div class="col-5 description" 
+               style="padding-left: 0px; padding-right: 0px" align="left">
             <div class="div" style="color:#D8B869; font-size: 14px; word-wrap: break-word">
-              {{profile.profileDetails.bio.title ? profile.profileDetails.bio.title : 'Title'}}
+              {{details.bio.title}}
             </div>
             <div class="div" style="color:#FFFFFF; font-size: 14px; word-wrap: break-word">
-              {{profile.profileDetails.bio.location ? profile.profileDetails.bio.location : 'Location'}}
+              {{details.bio.location}}
             </div>
             <div class="div" style="color:#FFFFFF; line-height: 150%; word-wrap: break-word">
-              {{profile.profileDetails.bio.content ? profile.profileDetails.bio.content : 'Content'}}
+              {{details.bio.content}}
             </div>
           </div>
           <div class="col-3">
@@ -77,7 +90,7 @@
           </div>
           <div class="col username" style="height: 30px; padding-right: 17px;">
             <span class="float-right" style="height: 30px;">
-              {{profile.profileDetails.username}}
+              {{details.username}}
             </span>
           </div>
         </div>
