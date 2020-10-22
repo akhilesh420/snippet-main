@@ -37,7 +37,7 @@
         font-family: 'Comfortaa';
     }
      */
-    main {
+    /* main {
         background-color: rgb(8, 7, 8);
         background-image: linear-gradient(to bottom right,  rgba(215, 183, 104, 0.7) 0.08%, rgb(8, 7, 8));
         background-attachment: fixed;
@@ -47,22 +47,24 @@
     }
     
     body {
-        color: rgb(216, 184, 105);
+        color: rgb(216, 184, 105); */
         
-    } 
+    /* } */
     
-    /* .background {
+    /* .back-ground {
         
-        height: 100%;
-        width: 100%;
+        height: 100px;
+        width: 100px;
         background-color: rgb(8, 7, 8);
         background-image: linear-gradient(to bottom right,  rgba(215, 183, 104, 0.7) 0.08%, rgb(8, 7, 8));
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;
-        background-size: cover; */
+        background-size: cover; 
 
-    /* } */
+    } */
+    
+    
     
     .flex-container {
         display: flex;
@@ -72,11 +74,15 @@
         justify-content: center;
         align-items: flex-end;
         
+        
       }
       
       .flex-container > div {
-        width: 450px;
-        margin: 10px;
+        width: 350px;
+        margin-left: 50px;
+        margin-right: 50px;
+        margin-top: 50px;
+        margin-bottom: 50px;
         text-align: center;
         line-height: 28px;
         font-size: 18px;
@@ -86,20 +92,36 @@
       -o-animation: fadein 3s; 
          animation: fadein 3s;
          color: rgb(216, 184, 105);
+         /* background-color: rgb(8, 7, 8);
+        background-image: linear-gradient(to bottom right,  rgba(215, 183, 104, 0.7) 0.08%, rgb(8, 7, 8));
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover; */
       }
+    
+    p .Collect {
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+    }
+    
+    
+    
+    
     
     .pic-Collect {
         position: relative;
         left: -14px;
         top: -25px;
-        width: 450px;
+        width: 350px;
         height: auto;
         
     }
 
     .pic-Create {
         position:relative;
-        width: 420px;
+        width: 320px;
         height: auto;
         top: -25px;
     }
@@ -107,7 +129,7 @@
     .pic-Community {
         position: relative;
         top: -25px;
-        width: 415px;
+        width: 315px;
         height: auto;
         
     }
