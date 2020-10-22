@@ -15,7 +15,8 @@ class CollectionDisplay{
     public pid: string,
     public postDetails: PostDetails,
     public sticker: BehaviorSubject<any>,
-    public colour: string
+    public colour: string,
+    public sortTime: number //milliseconds to compare firestore time and Date() 
   ) {}
 }
 
@@ -30,6 +31,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   displayPicture$: BehaviorSubject<any>;
   notifier$ = new Subject();
+  profileStickerLoad$ = new Subject();
+  counter: number;
 
   collectionList: CollectionDisplay[] = [];
   profileStickers: ProfileSticker[];
@@ -104,11 +107,25 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
     .subscribe((response: ProfileSticker[]) => {
       if (response) {
-        console.log(response); //log
+        this.counter = 0;
         this.profileStickers = response;
         this.getCollectionList(); 
       }
     });
+
+    this.profileStickerLoad$.pipe(takeUntil(this.notifier$)) // Reorder selected stickers from collection by last order
+    .subscribe(response => {
+      this.counter++;
+      if (this.counter === this.profileStickers.length) {
+        this.profileStickers.slice().reverse().forEach(sticker => {
+          const index = this.collectionList.findIndex(collection => {
+            return collection.pid === sticker.pid
+          })
+          const tempDate = new Date();
+          this.collectionList[index].sortTime = tempDate.getTime(); 
+        })
+      }
+    })
 
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
   }
@@ -124,21 +141,27 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
           let tempPostDetails: PostDetails;
           let tempStickerContent: BehaviorSubject<any>;
           let tempColour: string;
+          let tempMilli: number;
           this.postService.getPostDetails(collection.pid).pipe(takeUntil(this.notifier$))
           .subscribe(data => {
-            console.log(data); //log
             tempPostDetails = data;
             tempStickerContent = this.postService.getStickerContent(collection.pid);
             const index = this.profileStickers.findIndex(sticker => {
               return sticker.pid === collection.pid
             })
             if (index === -1) {
+              tempMilli = tempPostDetails.dateCreated.toMillis();
               tempColour = 'transparent'
             } else {
-              tempPostDetails.dateCreated = new Date(); //sort selected stickers to the top  
+              const tempDate = new Date();
+              tempMilli = tempDate.getTime(); //sort selected stickers to the top  
               tempColour = '#53BD9C';
             }
-            this.collectionList.push(new CollectionDisplay(collection.pid, tempPostDetails, tempStickerContent, tempColour));
+            this.collectionList.push(new CollectionDisplay(collection.pid, 
+                                                           tempPostDetails, 
+                                                           tempStickerContent, 
+                                                           tempColour,
+                                                           tempMilli));
           });
         });
       }
