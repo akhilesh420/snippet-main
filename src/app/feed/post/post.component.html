@@ -16,7 +16,7 @@
       <app-loading-spinner class="add-icon"></app-loading-spinner>
   </ng-template>
   <!-- profile tab -->
-  <div class="profileTab" [ngStyle]="{'height': showComments === false ? tabClose : tabOpen}">
+  <div *ngIf="!fetchingWindow" class="profileTab" [ngStyle]="{'height': showComments === false ? tabClose : tabOpen}">
     <!-- Username -->
     <div class="profileDetails">
       <a style = "cursor: pointer;" [routerLink]='profileRoute'>

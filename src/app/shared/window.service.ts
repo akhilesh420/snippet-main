@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WindowStateService {
     
-  public screenWidthValue = new Subject<number>();
+  public screenWidthValue = new BehaviorSubject<number>(null);
 
   constructor() {
       this.checkWidth();

@@ -66,26 +66,30 @@ import { WindowStateService } from 'src/app/shared/window.service';
               private windowService: WindowStateService) { }
 
   ngOnInit(): void {
-    this.restartPost();
+    this.fetchingWindow = true;
+    this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
-      this.windowSize = val;
-      this.fetchingWindow = false;
-      if (val < 560) {
-        this.tabClose = (71*val/560).toString() + 'px';
-        this.tabOpen = (400*val/560).toString() + 'px';
-        this.stickerSize = (24*val/560).toString() + 'px';
-      } else {
-        this.tabClose = '71px';
-        this.tabOpen = '400px';
-        this.stickerSize = '24px'
+      if (val) {
+        console.log(this.postDetails.pid, val)
+        this.windowSize = val;
+        this.fetchingWindow = false;
+        if (val < 560) {
+          this.tabClose = (71*val/560).toString() + 'px';
+          this.tabOpen = (400*val/560).toString() + 'px';
+          this.stickerSize = (24*val/560).toString() + 'px';
+        } else {
+          this.tabClose = '71px';
+          this.tabOpen = '400px';
+          this.stickerSize = '24px'
+        }
       }
     });
+
+    this.restartPost();
   }
 
   restartPost() {
-    this.fetchingWindow = true;
-    this.windowService.checkWidth();
     this.userSubs = this.authService.user.subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
@@ -201,7 +205,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   postView() {
-    if (!this.viewed && !this.createPost) {
+    if (!this.viewed && !this.createPost && this.isAuthenticated) {
       this.viewed = true;
       this.activityService.addViews(this.pid,this.myUid,this.uid);
     }
