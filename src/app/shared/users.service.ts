@@ -1,5 +1,5 @@
-import { Observable, BehaviorSubject, throwError, Subject } from 'rxjs';
-import { catchError, take, takeWhile } from 'rxjs/operators';
+import { BehaviorSubject, throwError} from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';

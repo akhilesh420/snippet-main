@@ -1,7 +1,29 @@
 <div class="container">
-  <div class="row">
-    <div class="col" style="position: relative">
-      <p class="temp" style="position: absolute;left: 50%; top: 50%; transform: translate(-50%,-50%)">Coming soooon!</p>
-    </div>
+  <div class="row" *ngIf="!submitted; else thankyou">
+    <form class="horizontal-center" (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="col-12">
+        <label for="feedback" class="text-left">Feedback</label>
+        <textarea
+          name="feedback"
+          (keydown)="autoGrowTextZone($event)"
+          style="margin-bottom: 8px;"
+          placeholder="Put placeholder text"
+          maxlength="500"
+          [(ngModel)]="feedback"></textarea>
+      </div>
+      <div class="col-12" style="margin-bottom: 0px;" align="right">
+        <button
+          class="btn btn-default"
+          style="margin-top:0px;">Submit</button>
+      </div>
+    </form>
   </div>
+  <ng-template #thankyou>
+    <div class="row" style="height: 100%; position: relative">
+      <div class="col" style="position: absolute;left: 50%; top: 50%; transform: translate(-50%,40px)">
+        <p class="thank" style="text-align: center;">Thank you for your feedback!</p>
+      </div>
+    </div>
+  </ng-template>
 </div>
+

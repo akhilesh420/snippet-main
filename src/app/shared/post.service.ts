@@ -1,6 +1,6 @@
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { PostContent, PostDetails, StickerDetails, StickerContent } from './post.model';
 
 import { Injectable } from '@angular/core';
