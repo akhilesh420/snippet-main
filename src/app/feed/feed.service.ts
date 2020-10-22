@@ -37,6 +37,9 @@ export class FeedService {
     .subscribe((response:Collection[]) => {
       let postDetailsLists: PostDetails[] = [];
       collectionDetails = response;
+      if (response.length === 0) {
+        collectionList.next(postDetailsLists);
+      }
       response.forEach(collection => {
         this.postService.getPostDetails(collection.pid).pipe(map(changes => { //get the post detail for each pid in collection
           return { pid: collection.pid, ...changes};
@@ -46,8 +49,12 @@ export class FeedService {
           })
       });
     });
-
+    
     return collectionList.pipe(map(postsList => { 
+      console.log(postsList);//log
+      if (postsList.length === 0) {
+        return undefined;
+      }
       postsList = postsList.filter(post => { //Filter out users own posts
         return uid != post.uid;
       })

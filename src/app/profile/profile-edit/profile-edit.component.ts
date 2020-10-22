@@ -8,6 +8,7 @@ import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Collection } from 'src/app/shared/activity.model';
 import { takeUntil } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 
 class CollectionDisplay{
 
@@ -72,6 +73,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   constructor(private postService: PostService,
               private usersService: UsersService,
               private activityService: ActivityService,
+              private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -297,7 +299,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   finishUp() {
     this.isSaving = false;
     alert('Profile updated!');
-    this.router.navigate(['/profile/'+this.uid]);
+    this.authService.onBoarding.pipe(takeUntil(this.notifier$)).subscribe(res => {
+      if (res === "Signup") {
+        this.router.navigate(['/tutorial']);
+      } else {
+        this.router.navigate(['/profile/'+this.uid]);
+      }
+    })
   }
 
   handleError() {
