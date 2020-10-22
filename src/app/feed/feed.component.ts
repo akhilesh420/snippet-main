@@ -4,7 +4,7 @@ import { PostDetails } from './../shared/post.model';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css']
@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 export class FeedComponent implements OnInit, OnDestroy {
 
   @Input() postsList$: Observable<PostDetails[]>; 
-  @Input() feedType: string; 
+  @Input() feedType: string = 'afs'; 
 
   feedList$ = new Subject<PostDetails[]>();
   notifier$ = new Subject();
@@ -39,15 +39,16 @@ export class FeedComponent implements OnInit, OnDestroy {
     })
   }
 
-  dateSort() { //sort by date depending onif the data was fetched from cloud firestore or realtime database
-    if (this.feedType === 'afs' || this.feedType === 'afs') {
+  dateSort() { //sort by date depending on if the data was fetched from cloud firestore or realtime database respectively
+    console.log(this.feedType); //log
+    if (this.feedType === 'afs') {
       this.postsList.sort((a, b) => b.dateCreated.toMillis() - a.dateCreated.toMillis())
     } else if (this.feedType === 'db') {
       this.postsList.sort((a, b) => b.dateCreated - a.dateCreated);
     }
   }
 
-  initBatch() {
+  initBatch() { // get initial batch of posts to render
     if (this.postsList.length <= this.batchSize) {
       this.feedList$.next(this.postsList);
       this.done = true;
@@ -58,7 +59,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.batchNumber++;
   }
 
-  more() {
+  more() { // get the next batch of posts
     if ((this.postsList.length - this.batchSize + this.batchNumber) <= 0) {
       this.feedList$.next(this.postsList);
       this.done = true;

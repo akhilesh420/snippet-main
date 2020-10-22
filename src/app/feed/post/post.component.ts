@@ -71,7 +71,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (val) {
-        console.log(this.postDetails.pid, val)
         this.windowSize = val;
         this.fetchingWindow = false;
         if (val < 560) {
