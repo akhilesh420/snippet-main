@@ -19,7 +19,6 @@
  top: 50%;
  left: 50%;
  transform: translate(-50%,-50%);
- min-height: 580px;
 }
 
 .profileTab {
@@ -31,7 +30,7 @@
 
   padding: 0;
 
-  /* rgba used so that opactiy doesn't effect child components */
+  /* rgba used so that opacity doesn't effect child components */
   background: rgba(8,7,8,0.6);
 
   border-bottom-left-radius: 26px;
@@ -291,4 +290,143 @@
   font-size: 24px;
   height: 100%;
   color: #D8B869;
+}
+
+@media screen and (max-width: 560px) {
+  .postContainer {
+    width: 85vw;
+    height: 103.5vw;
+    border-radius: 5.89vw;
+  }
+
+  .profileTab {
+    height: 12.68vw;
+    border-bottom-left-radius: 4.64vw;
+    border-bottom-right-radius: 4.64vw;
+  }
+
+  .profileTab .profileDetails{
+    bottom: 2.14vw;
+    left: 5.26vw;
+    width: 59.64vw;
+    height: 4.46vw;
+  }
+
+  .profileTab .profileDetails .name{
+    bottom: 0.714vw;
+    font-size: 3.93vw;
+  }
+
+  .profileDetails .profileStickers{
+    height: 4.29vw;
+    width: 25.71vw;
+  }
+
+  .profileTab .postSticker {
+    height: 14.64vw;
+    width: 14.64vw;
+    bottom: 4.29vw;
+    right: 1.42vw;
+  }
+
+  .profileTab .engagementBar{
+    bottom: 8.57vw;
+    left: 5.267vw;
+    width: 59.64vw;
+    height: 1.96vw;
+  }
+
+  .profileTab .bar{
+    height: 1.42vw;
+    border-radius: 1.42vw;
+  }
+
+  .profileTab .engagement{
+    height: 1.42vw;
+    border-radius: 1.42vw;
+  }
+
+  .profileTab .commentButton{
+    padding: 0;
+    top: -2.68vw;
+    width: 5.36vw;
+    height: 5.36vw;
+  }
+
+  .commentButton .buttonBackground{
+    width: 5.36vw;
+    height: 5.36vw;
+    border-radius: 2.68vw 2.68vw 0 0;
+  }
+
+  .commentButton .hideExtra{
+    width: 5.36vw;
+    height: 2.68vw;
+  }
+
+  .commentButton img{
+    width: 2.5vw;
+  }
+
+  .postDetails .postTitle{
+    top: 1.43vw;
+    left: 3.39vw;
+    font-size: 4.29vw;
+  }
+
+  .postDetails .showDetails {
+    top: 1.79vw;
+    right:  2.68vw;
+    height: 5.36vw;
+    width: 5.36vw;
+  }
+
+  .showDetails img {
+    width: 3.6vw;
+  }
+
+  .postDetails .holderList{
+    font-size: 3.214vw;
+  }
+
+  .holderList img{
+    height: 3.21vw;
+   }
+
+  .postDetails .metrics{
+    font-size: 2.86vw;
+  }
+
+  .postDetails img {
+    height: 2.86vw;
+  }
+
+  .description {
+    font-size: 3.21vw;
+  }
+
+  .commentsSection{
+    left: 3.57vw;
+    right: 3.57vw;
+    top: 1.79vw;
+    height: 40.18vw;
+  }
+
+  .holderContainer {
+    left: 8.04vw;
+    right: 8.04vw;
+    top: 26.79vw;
+    height: 45.54vw;
+  }
+
+  .holderListContainer {
+    height: 43.75vw;
+    padding-left: 1.79vw;
+    padding-right: 0.89vw;
+    padding-top: 0.54vw;
+  }
+
+  .temp {
+    font-size: 4.3vw;
+  }
 }

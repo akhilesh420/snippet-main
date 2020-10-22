@@ -16,7 +16,7 @@
       <app-loading-spinner class="add-icon"></app-loading-spinner>
   </ng-template>
   <!-- profile tab -->
-  <div class="profileTab" [ngStyle]="{'height': showComments === false ? '71px' : '400px'}">
+  <div class="profileTab" [ngStyle]="{'height': showComments === false ? tabClose : tabOpen}">
     <!-- Username -->
     <div class="profileDetails">
       <a style = "cursor: pointer;" [routerLink]='profileRoute'>
@@ -31,7 +31,7 @@
         <div 
           class="row" 
           style="width: 100%;" 
-          *ngIf="profileStickers$ | async as stickers">
+          *ngIf="!fetchingWindow && profileStickers$ | async as stickers">
           <div class="col" 
             *ngFor="let i of getEmptySlots(stickers)"
             style="padding: 0px; height: 24px">
@@ -39,7 +39,7 @@
           <div class="col"
             *ngFor="let sticker of stickers"
             style="padding: 0px; height: 24px">
-            <app-sticker [pid]="sticker.pid" [size]="'24px'"></app-sticker>
+            <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
         </div>
         </div>
       </div>

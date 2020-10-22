@@ -76,4 +76,9 @@ a { text-decoration: none !important}
   }
 }
 
+@media (max-width: 400px) {
+  .logoMain {
+    margin-right: 0;
+  }
+}
 

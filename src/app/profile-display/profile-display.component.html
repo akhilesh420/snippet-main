@@ -16,7 +16,7 @@
           <div class="col-2"
               *ngFor="let sticker of stickers"
                style="padding: 0px; margin-left: -8px; margin-right: 8px;">
-            <app-sticker [pid]="sticker.pid" [size]="'60px'"></app-sticker>
+            <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
           </div>
         </div>
         <ng-template #noStickers>

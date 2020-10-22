@@ -97,3 +97,42 @@
   left: 50%;
   transform: translate(-50%,-50%);
 }
+
+@media screen and (max-width: 560px) {
+
+  .outerContainer {
+    width: 88.04vw;
+    height: 50.17vw;
+    border-radius: 5.4vw;
+  }
+
+  .storySignifier {
+    width: 23.21vw;
+    height: 23.21vw;
+  }
+
+  .dpBackground {
+    width: 21.43vw;
+    height: 21.43vw;
+  }
+
+  .dpBorder {
+    width: 18.93vw;
+    height: 18.93vw;
+  }
+
+  .description {
+    font-size: 2.14vw;
+    line-height: 2.14vw;
+  }
+
+  .metrics {
+    font-size: 2.86vw;
+    height: 2.86vw;
+  }
+
+  .username {
+    font-size: 5.36vw;
+    height: 5.36vw;
+  }
+}

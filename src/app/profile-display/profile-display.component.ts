@@ -7,6 +7,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
+import { WindowStateService } from '../shared/window.service';
 
 @Component({
   selector: 'app-profile-display',
@@ -30,16 +31,20 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   views: string = '0';
 
   myUid: string;
-  placeholderImg = "assets/default image/blank_image@2x.png";
+  stickerSize: string;
+  fetchingWindow: boolean;
 
   imageProp = {'height':'100%', 'width':'auto'};
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
                private activityService: ActivityService,
-               private router: Router) { }
+               private router: Router,
+               private windowService: WindowStateService) { }
 
   ngOnInit(): void {
+    this.fetchingWindow = true;
+    this.windowService.checkWidth();
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -57,6 +62,15 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
         this.setUpActivity();
       }
     })
+
+    this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      if (val < 560) {
+        // this.tabClose = (71*val/560).toString() + 'px';
+        // this.tabOpen = (400*val/560).toString() + 'px';
+        this.stickerSize = (60*val/560).toString() + 'px';
+      }
+    });
   }
 
   setUpProfile() {

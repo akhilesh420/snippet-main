@@ -29,14 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(){
     this.authService.autoLogin();
     this.titleService.setTitle("Snippet");
-    this.windowService.getMobileStatus().subscribe( isMobile =>{
-      if(isMobile){
-        this.mobileCheck = true;
-      }
-      else{
-        this.mobileCheck = false;
-      }
-    });
+    this.windowService.checkWidth();
     this.onResize();
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;

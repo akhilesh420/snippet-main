@@ -9,6 +9,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity } from 'src/app/shared/activity.model';
+import { WindowStateService } from 'src/app/shared/window.service';
 
 @Component({
   selector: 'app-post',
@@ -50,20 +51,41 @@ import { Activity } from 'src/app/shared/activity.model';
   isAuthenticated: boolean;
   profileRoute: string;
   engagementRatio: number = 0;
-
+  windowSize: number;
+  tabClose: string;
+  tabOpen: string ;
+  stickerSize: string;
   userSubs: Subscription;
+  fetchingWindow: boolean;
 
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
               private activityService: ActivityService,
-              private router: Router) { }
+              private router: Router,
+              private windowService: WindowStateService) { }
 
   ngOnInit(): void {
     this.restartPost();
+    this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      this.windowSize = val;
+      this.fetchingWindow = false;
+      if (val < 560) {
+        this.tabClose = (71*val/560).toString() + 'px';
+        this.tabOpen = (400*val/560).toString() + 'px';
+        this.stickerSize = (24*val/560).toString() + 'px';
+      } else {
+        this.tabClose = '71px';
+        this.tabOpen = '400px';
+        this.stickerSize = '24px'
+      }
+    });
   }
 
   restartPost() {
+    this.fetchingWindow = true;
+    this.windowService.checkWidth();
     this.userSubs = this.authService.user.subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
