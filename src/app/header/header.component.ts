@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
       if (this.currentRoute === '/tutorial') {this.marginBottom = '0px';}
+      else {this.marginBottom = '35px';}
     });
   }
 
