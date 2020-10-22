@@ -34,13 +34,11 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.postsList$.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.postsList = response;
       this.dateSort();
-      console.log(this.postsList); //log
       this.initBatch();
     })
   }
 
   dateSort() { //sort by date depending on if the data was fetched from cloud firestore or realtime database respectively
-    console.log(this.feedType); //log
     if (this.feedType === 'afs') {
       this.postsList.sort((a, b) => b.dateCreated.toMillis() - a.dateCreated.toMillis())
     } else if (this.feedType === 'db') {
@@ -70,14 +68,14 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.batchNumber++;
   }
 
-  @HostListener('window:scroll', ['$event'])
   scrollHandler(event) {
     if (!this.done) {
-      this.batch = Math.floor(window.pageYOffset / 600);
-      if (this.maxBatch < this.batch) {
-        console.log("Scroll Event:", this.batch); //log
+      console.log(event); //log
+      // this.batch = Math.floor(event / 600);
+      if (event === 'bottom') {
+        // console.log("Scroll Event:", this.batch); //log
         this.more();
-        this.maxBatch = this.batch
+        // this.maxBatch = this.batch
       }}
   }
 

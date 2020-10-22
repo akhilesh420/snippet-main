@@ -3,3 +3,7 @@
   left: 50%;
   transform: translate(-50%,0);
 }
+
+.container {
+  overflow-y: scroll;
+}

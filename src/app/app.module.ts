@@ -37,6 +37,7 @@ import { environment } from '../environments/environment';
 import { WithLoadingPipe } from './shared/with-loading.pipe';
 import { DateSortPipe } from './shared/date-sort.pipe';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
+import { ScrollableDirective } from './shared/directives/scrollable.directive';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-pag
     TitleCaseDirective,
     WithLoadingPipe,
     DateSortPipe,
-    TutorialPageComponent
+    TutorialPageComponent,
+    ScrollableDirective
   ],
   imports: [
     BrowserModule,
