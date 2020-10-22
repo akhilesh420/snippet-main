@@ -171,7 +171,6 @@ export class UsersService {
       this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(this.placeholderImg)});
       let secIndex = this.displayPictureList.length - 1;
       this.getDisplayPictureRef(uid).subscribe((response: DisplayPicture) => {
-        console.log(response); //log
         const ref = this.storage.ref('Display picture/' + uid);
         ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
           this.displayPictureList[secIndex].obs.next(response);

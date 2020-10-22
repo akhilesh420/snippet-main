@@ -20,6 +20,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   profileDetails: BehaviorSubject<ProfileDetails>;
   postsList: Observable<PostDetails[]>;
   uid: string;
+  uid$ = new Subject<string>();
   myUid: string;
   isAuthenticated: boolean;
 
@@ -44,6 +45,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
       (params: Params) => {
         this.uid = params['id'];
         if (this.uid === this.myUid) {
+          this.uid$.next(this.uid);
           this.setUp();
         } else {
           this.router.navigate(['/explore']);
@@ -60,6 +62,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
+    this.uid$.complete();
   }
 
 }

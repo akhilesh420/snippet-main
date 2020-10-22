@@ -1,6 +1,6 @@
 import { PostDetails} from './../shared/post.model';
-import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FeedService } from '../feed/feed.service';
 
@@ -9,10 +9,11 @@ import { FeedService } from '../feed/feed.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   postsList: Observable<PostDetails[]>;
   uid: string;
+  uid$ = new Subject<string>();
 
   constructor(private route: ActivatedRoute,
               private feedService: FeedService) {}
@@ -22,8 +23,12 @@ export class ProfileComponent implements OnInit {
     .subscribe(
       (params: Params) => {
         this.uid = params['id'];
+        this.uid$.next(this.uid);
         this.postsList = this.feedService.getProfilePage(this.uid);
       }
     );
+  }
+  ngOnDestroy() {
+    this.uid$.complete();
   }
 }

@@ -15,7 +15,8 @@ import { Activity } from '../shared/activity.model';
 })
 export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
-  @Input() uid: string;
+  @Input() getUid: Subject<string>;
+  uid: string;
 
   profileDetails$: BehaviorSubject<ProfileDetails>;
   profileStickers$: BehaviorSubject<ProfileSticker[]>;
@@ -28,8 +29,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   collected: string = '0';
   views: string = '0';
 
-  viewsDisplay: string = '0';
-  collectedDisplay: string = '0';
   myUid: string;
   placeholderImg = "assets/default image/blank_image@2x.png";
 
@@ -51,7 +50,11 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       console.log(errorMessage);
     });
 
-    this.setUpProfile();
+    this.getUid.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.uid = response;
+      this.setUpProfile();
+      this.setUpActivity();
+    })
   }
 
   setUpProfile() {
@@ -64,7 +67,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.activity = response[0];
       this.views = this.convertToShort(this.activity.views);
-        this.collected = this.convertToShort(this.activity.collected);
+      this.collected = this.convertToShort(this.activity.collected);
     });;
   }
 

@@ -12,7 +12,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class SinglePostComponent implements OnInit, OnDestroy {
   
-  uid: string;
+  uid$ = new Subject<string>();
   pid: string;
   postsList = new Subject<PostDetails[]>(); //must include pid
   postDetailsList: PostDetails[];
@@ -39,10 +39,9 @@ export class SinglePostComponent implements OnInit, OnDestroy {
   setUp() {
     this.postService.getPostDetails(this.pid).pipe(takeUntil(this.notifier$),
       map(changes => { //get the post detail for pid
-        console.log(this.uid); //log
         return { pid: this.pid, ...changes};
     })).subscribe(res => { //Need to be a list for the feed to work
-      this.uid = res.uid;
+      this.uid$.next(res.uid);
       let postDetailsList: PostDetails[] = [];
       postDetailsList.push(res);
       this.postsList.next(postDetailsList);
@@ -52,5 +51,6 @@ export class SinglePostComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
+    this.uid$.complete();
   }
 }
