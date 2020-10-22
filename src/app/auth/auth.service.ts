@@ -23,6 +23,8 @@ export class AuthService {
   APIKey = environment.firebaseConfig.apiKey;
   private tokenExpirationTimer: any;
 
+  onBoarding = new BehaviorSubject<string>(null); //Check if user signed up or logged in
+
   constructor(private http: HttpClient,
               private router: Router) {}
 
@@ -39,6 +41,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
+          this.onBoarding.next('Signup'); 
           this.handleAuthentication(
             resData.email,
             resData.localId,
@@ -76,6 +79,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
+          this.onBoarding.next('Login'); 
           this.handleAuthentication(
             resData.email,
             resData.localId,

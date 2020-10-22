@@ -1,5 +1,5 @@
 import { PostDetails} from './../shared/post.model';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FeedService } from '../feed/feed.service';
@@ -13,7 +13,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   postsList: Observable<PostDetails[]>;
   uid: string;
-  uid$ = new Subject<string>();
+  uid$ = new BehaviorSubject<string>(null);
 
   constructor(private route: ActivatedRoute,
               private feedService: FeedService) {}

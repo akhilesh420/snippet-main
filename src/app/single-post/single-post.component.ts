@@ -1,5 +1,5 @@
 import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { PostService } from './../shared/post.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PostDetails } from './../shared/post.model';
@@ -12,7 +12,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class SinglePostComponent implements OnInit, OnDestroy {
   
-  uid$ = new Subject<string>();
+  uid$ = new BehaviorSubject<string>(null);
   pid: string;
   postsList = new Subject<PostDetails[]>(); //must include pid
   postDetailsList: PostDetails[];

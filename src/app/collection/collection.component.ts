@@ -20,7 +20,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   profileDetails: BehaviorSubject<ProfileDetails>;
   postsList: Observable<PostDetails[]>;
   uid: string;
-  uid$ = new Subject<string>();
+  uid$ = new BehaviorSubject<string>(null);
   myUid: string;
   isAuthenticated: boolean;
 
@@ -40,6 +40,9 @@ export class CollectionComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.uid = this.route.snapshot.params['uid'];
+    this.uid$.next(this.uid);
+    
     this.route.params
     .subscribe(
       (params: Params) => {

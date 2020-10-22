@@ -15,7 +15,7 @@ import { Activity } from '../shared/activity.model';
 })
 export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
-  @Input() getUid: Subject<string>;
+  @Input() getUid: BehaviorSubject<string>;
   uid: string;
 
   profileDetails$: BehaviorSubject<ProfileDetails>;
@@ -51,9 +51,11 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     });
 
     this.getUid.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.uid = response;
-      this.setUpProfile();
-      this.setUpActivity();
+      if (response) {
+        this.uid = response;
+        this.setUpProfile();
+        this.setUpActivity();
+      }
     })
   }
 

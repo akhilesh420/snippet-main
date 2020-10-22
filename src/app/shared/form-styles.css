@@ -1,5 +1,5 @@
 label{
-  font-family: 'Champagne & Limousines';
+  font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 24px;
   color: #D8B869;
@@ -10,7 +10,7 @@ input,
 input:focus,
 textarea,
 textarea:focus {
-  font-family: 'Champagne & Limousines';
+  font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 18px;
   color: #F7F7F7;
@@ -22,7 +22,7 @@ textarea:focus {
 }
 
 .btn {
-  font-family: 'Champagne & Limousines';
+  font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 24px;
   color: #D8B869;
