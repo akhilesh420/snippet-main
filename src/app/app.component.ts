@@ -40,7 +40,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.onResize();
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
-      console.log(this.currentRoute); //log
     });
   }
 
