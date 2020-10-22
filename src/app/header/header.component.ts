@@ -1,7 +1,9 @@
 import { AuthService } from './../auth/auth.service';
 import { WindowStateService } from './../shared/window.service';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,6 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy{
 
-  private userSub: Subscription;
   isAuthenticated = false;
   widthAuth: string =  '313.781px';
 
@@ -27,14 +28,19 @@ export class HeaderComponent implements OnInit, OnDestroy{
   collectionRoute: string;
   profileRoute: string;
 
+  currentRoute: string;
+
+  notifier$ = new Subject();
+
   @ViewChild('dropdown') dropdown: ElementRef;
 
   constructor(private  windowStateService: WindowStateService,
-              private authService: AuthService){
+              private authService: AuthService,
+              private router: Router){
   }
 
   ngOnInit(): void {
-    this.userSub = this.authService.user.subscribe(user => {
+    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(user => {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
         this.uid = user.id;
@@ -48,13 +54,18 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.marginLeft = '0';
       }
     });
+
+    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.currentRoute = this.router.url;
+      if (this.currentRoute === '/tutorial') {this.marginBottom = '0px';}
+    });
   }
 
   onClick() {
     this.collapsed = !this.collapsed;
     if (this.collapsed) {
       setTimeout(value => {
-        this.marginBottom = '35px';
+        this.currentRoute === '/tutorial' ? this.marginBottom = '0px' : this.marginBottom = '35px';
         this.marginLeft = 'calc(50vw - 309.94px -'+ this.widthAuth +')';
       },0.5*1000);
     } else {
@@ -69,7 +80,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-    this.userSub.unsubscribe();
+    this.notifier$.next();
+    this.notifier$.complete();
   }
 }
 

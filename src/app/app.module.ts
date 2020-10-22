@@ -36,6 +36,7 @@ import { TitleCasePipe } from '@angular/common';
 import { environment } from '../environments/environment';
 import { WithLoadingPipe } from './shared/with-loading.pipe';
 import { DateSortPipe } from './shared/date-sort.pipe';
+import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { DateSortPipe } from './shared/date-sort.pipe';
     LoadingSpinnerComponent,
     TitleCaseDirective,
     WithLoadingPipe,
-    DateSortPipe
+    DateSortPipe,
+    TutorialPageComponent
   ],
   imports: [
     BrowserModule,
