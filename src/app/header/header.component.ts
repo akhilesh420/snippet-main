@@ -30,6 +30,12 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   currentRoute: string;
 
+  
+  exploreSymbol: string = "assets/icons/exploreSymbol@2x.png";
+  collectionSymbol: string = "assets/icons/sticker-icon.png";
+  createSymbol: string = "assets/icons/createSymbol@2x.png";
+  dropdownSymbol: string = "assets/icons/dropdownSymbol@2x.png";
+  
   notifier$ = new Subject();
 
   @ViewChild('dropdown') dropdown: ElementRef;

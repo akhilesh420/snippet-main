@@ -86,3 +86,31 @@ a { text-decoration: none !important}
   }
 }
 
+
+.row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: rgb(19, 17, 20);
+  position: fixed;
+  bottom:0;
+  width: 100%;
+}
+
+.Symbol > img {
+  height: 30px;
+  width: auto;
+}
+
+.dpBorder {
+  width: 30px;
+  height: 30px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  border: 1px solid #707070;
+  background:#080708;
+  overflow: hidden;
+}
+
+
+
