@@ -4,6 +4,12 @@
   transform: translate(-50%,0);
 }
 
-.container {
-  overflow-y: scroll;
+.more-post {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.fail-safe{
+  margin-bottom: 35px;
 }

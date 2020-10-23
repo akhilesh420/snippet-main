@@ -1,4 +1,4 @@
-<div class="container" scrollable (scrollPosition)="scrollHandler($event)">
+<div class="container">
   <div class="row" align="center">
     <div class="col-md-12">
       <ng-template #loading style="text-align: center;" class="horizontal-center">
@@ -6,6 +6,9 @@
       </ng-template>
       <div *ngIf="feedList$ | async; else loading; let posts">
         <app-post class="post" *ngFor="let postDetails of posts" [postDetails]="postDetails"> </app-post>
+        <!-- <div *ngIf="!done" class="fail-safe">
+          <img [src]="addIcon" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
+        </div> -->
         <p *ngIf="posts.length === 0;">Thats all folks!</p>
       </div>
     </div>

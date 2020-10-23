@@ -2,6 +2,8 @@ import { Observable, Subject } from 'rxjs';
 import { Component, OnInit, Input, HostListener, OnChanges, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { PostDetails } from './../shared/post.model';
 import { takeUntil } from 'rxjs/operators';
+import { InfiniteScrollService } from '../shared/infinite-scroll.service';
+import { WindowStateService } from '../shared/window.service';
 
 @Component({
   // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,17 +27,32 @@ export class FeedComponent implements OnInit, OnDestroy {
   batchSize: number = 2; //number of posts to load - min batch size is 2
   batchNumber: number = 0;
   done: boolean;
+  postOffset: number; //Trigger next post after this value
+  failSafe: boolean;
 
-  constructor() {
+  addIcon = "assets/icons/add_icon@2x.png";
+
+  constructor(private infiniteScrollService: InfiniteScrollService) {
    }
 
   ngOnInit(): void {
     this.done = false;
+    this.failSafe = true;
+
     this.postsList$.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.postsList = response;
       this.dateSort();
       this.initBatch();
-    })
+      this.infiniteScrollService.getScroll$.pipe(takeUntil(this.notifier$))
+      .subscribe((event:string) => {
+        event === 'error' ? this.failSafe = true : this.failSafe = false;
+        if (!this.done && !this.failSafe) {
+          if (event === 'bottom') {
+            this.moreBatch();
+          }
+        }
+      })
+    });
   }
 
   dateSort() { //sort by date depending on if the data was fetched from cloud firestore or realtime database respectively
@@ -51,32 +68,29 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList);
       this.done = true;
     } else {
-      console.log(this.postsList.slice(0,this.batchSize)); //log
       this.feedList$.next(this.postsList.slice(0,this.batchSize));
     }
     this.batchNumber++;
   }
 
-  more() { // get the next batch of posts
-    if ((this.postsList.length - this.batchSize + this.batchNumber) <= 0) {
+  // more() { // get the next post - used in scroll to maintain a steady flow of posts
+  //   if ((this.postsList.length - this.batchSize+this.batchNumber) <= 0) {
+  //     this.feedList$.next(this.postsList);
+  //     this.done = true;
+  //   } else {
+  //     this.feedList$.next(this.postsList.slice(0,this.batchSize+this.batchNumber));
+  //   }
+  //   this.batchNumber++;
+  // }
+
+  moreBatch() { // get the next batch of posts used for manual render
+    if ((this.postsList.length - this.batchSize*this.batchNumber) <= 0) {
       this.feedList$.next(this.postsList);
       this.done = true;
     } else {
-      console.log(this.postsList.slice(this.batchSize*this.batchNumber)); //log
-      this.feedList$.next(this.postsList.slice(0,this.batchSize+this.batchNumber));
+      this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
     this.batchNumber++;
-  }
-
-  scrollHandler(event) {
-    if (!this.done) {
-      console.log(event); //log
-      // this.batch = Math.floor(event / 600);
-      if (event === 'bottom') {
-        // console.log("Scroll Event:", this.batch); //log
-        this.more();
-        // this.maxBatch = this.batch
-      }}
   }
 
   ngOnDestroy() {

@@ -1,12 +1,11 @@
-import { UsersService } from './shared/users.service';
 import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Biography, ProfileDetails } from './shared/profile.model';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { InfiniteScrollService } from './shared/infinite-scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +20,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
-              private userService: UsersService,
               private titleService: Title,
-              private router: Router){
+              private router: Router,
+              private infiniteScrollService: InfiniteScrollService){
   }
 
   ngOnInit(){
@@ -40,14 +39,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.windowService.checkWidth();
   }
 
-  @HostListener('window:scroll', ['$event'])
   scrollHandler(event) {
-    // console.log("Scroll Event:", window.pageYOffset);
+    this.infiniteScrollService.getScroll$.next(event); //log
   }
 
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
+    this.infiniteScrollService.getScroll$.complete();
   }
 
 }
