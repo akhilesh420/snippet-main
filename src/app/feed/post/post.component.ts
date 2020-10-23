@@ -127,10 +127,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
     this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.activity = response[0];
       this.setUpEngagement();
-      if (this.engagementRatio) {
-        this.views = this.convertToShort(this.activity.views);
-        this.collected = this.convertToShort(this.activity.collected);
-      }
     });;
   }
 
@@ -146,6 +142,10 @@ import { WindowStateService } from 'src/app/shared/window.service';
       let percentage: string = (this.engagementRatio*100).toString() + '%';
       this.engagementProp.width = percentage;
       this.engagementProp.background = colour;
+      if (this.engagementRatio === 1) {
+        this.views = this.convertToShort(this.activity.views);
+        this.collected = this.convertToShort(this.activity.collected);
+      }
     }
   }
 
