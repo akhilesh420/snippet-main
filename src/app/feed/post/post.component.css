@@ -292,6 +292,11 @@
   color: #D8B869;
 }
 
+.sticker-add {
+  width: 57px; 
+  height: 57px;
+}
+
 @media screen and (max-width: 560px) {
   .postContainer {
     width: 85vw;
@@ -428,5 +433,10 @@
 
   .temp {
     font-size: 4.3vw;
+  }
+
+  .sticker-add {
+    width: 10.18vw; 
+    height: 10.18vw;
   }
 }

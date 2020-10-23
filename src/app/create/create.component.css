@@ -30,6 +30,7 @@ textarea:focus {
   border-radius: 20px;
   padding-top: 5px;
   padding-bottom: 5px;
+  margin-top:12px
 }
 
 .btn:enabled:hover{
@@ -90,4 +91,18 @@ input.invalidAmount {
   font-size: 18px;
   color:#891E13;
   width: 100%;
+}
+
+.inputAmount {
+  width: 100px;
+}
+
+.amountField {
+  margin-bottom: 0px;
+}
+
+@media screen and (max-width: 560px) {
+  .inputFields {
+    width: 84.82vw;
+  }
 }

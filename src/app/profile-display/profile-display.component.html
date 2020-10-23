@@ -1,96 +1,86 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12" align="center"  
+<div class="container no-padding">
+  <div class="row no-padding">
+    <div class="col-md-12 no-padding" align="center"  
         *ngIf="profileDetails$ | async; let details">
       <div class="outerContainer">
         <!-- Profile stickers -->
-        <div class="row" 
-             style="margin-top: 8px; height: 60px; width: 100%"
+        <div class="row profile-sticker-row" 
              *ngIf="profileStickers$ | async as stickers; else noStickers;">
-          <div class="col-2"
-            style="padding: 0px; margin-right: 0px;"></div>
-          <div class="col" 
-              *ngFor="let i of getEmptySlots(stickers)"
-               style="padding: 0px; margin-left: -8px; margin-right: 8px;">
+          <div class="col-2 no-margin-no-padding"></div>
+          <div class="col profile-sticker-col" 
+              *ngFor="let i of getEmptySlots(stickers)">
             </div>
-          <div class="col-2"
-              *ngFor="let sticker of stickers"
-               style="padding: 0px; margin-left: -8px; margin-right: 8px;">
+          <div class="col-2 profile-sticker-right-col"
+              *ngFor="let sticker of stickers">
             <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
           </div>
         </div>
         <ng-template #noStickers>
-          <div class="row" 
-               style="margin-top: 8px; height: 60px; width: 100%">
+          <div class="row no-stickers">
           </div>
         </ng-template>
-        <div class="row" style="width: 100%; margin-top: 16px" 
+        <!-- DP -->
+        <div class="row display-picture" 
             *ngIf="displayPicture$ | async as content;">
-          <div class="col-3" style="padding-left: 9px;">
+          <div class="col-3 display-picture-col">
             <div class="storySignifier">
               <div class="dpBackground">
                 <div class="dpBorder">
                   <img [src]="content"
                        alt="display picture"
-                       height="100%"
                       [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
                       (load)="onLoad($event)">
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-1"></div>
           <!-- Bio -->
-          <div class="col-5 description" 
-               style="padding-left: 0px; padding-right: 0px" align="left">
-            <div class="div" style="color:#D8B869; font-size: 14px; word-wrap: break-word">
-              {{details.bio.title}}
+          <div class="col bio" align="left">
+            <div class="row">
+              <div class="col-12 title">
+                {{details.bio.title}}
+              </div>
             </div>
-            <div class="div" style="color:#FFFFFF; font-size: 14px; word-wrap: break-word">
-              {{details.bio.location}}
+            <div class="row">
+              <div class="col-12 location">
+                {{details.bio.location}}
+              </div>
             </div>
-            <div class="div" style="color:#FFFFFF; line-height: 150%; word-wrap: break-word">
-              {{details.bio.content}}
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="row metrics" style="margin-top: 76px;">
-              <div class="col-5" style="padding-left: 0px; padding-right: 0px;">
-                <div class="row">
-                  <div class="col-12" style="height: 16px;">
+            <div class="row">
+              <div class="col-8 description">
+                {{details.bio.content}}
+              </div>
+              <div class="col-4 metrics-align">
+                <div class="row metrics">
+                  <div class="col-6 metric-height" >
                     <span class="alignMetric">{{collected}}</span>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 collect" style="margin-top: 6px; height: 35px">
-                    <img src="https://i.ibb.co/jJVZQ4S/Group-141.png" alt="Stickers collected" style="width: 35px">
-                  </div>
-                </div>
-              </div>
-              <div class="col-5" style="padding-left: 25px; padding-right: 0px;">
-                <div class="row">
-                  <div class="col-12" style="height: 16px;">
-                    <span class="alignMetric">{{views}}</span>
+                  <div class="col-6 metric-height">
+                    <span class="alignMetric-views">{{views}}</span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12 views" style="margin-top: 6px; height: 35px;">
-                    <img src="https://i.ibb.co/hfx6Q6v/Views-Icon.png" alt="Views-Icon" style="width: 30px">
+                  <div class="col-6 collect">
+                    <img src="https://i.ibb.co/jJVZQ4S/Group-141.png" alt="Stickers collected">
+                  </div>
+                  <div class="col-6 views">
+                    <img src="https://i.ibb.co/hfx6Q6v/Views-Icon.png" alt="Views-Icon">
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row bottom-row" style="width: 100%; margin-top: 9px">
-          <div class="col-1" style="margin-left: 10px; padding-left: 0px; height: 30px;">
-            <a style="cursor: pointer;" (click)='editProfile()'>
-              <img src="https://i.ibb.co/fQ2KFj8/icons8-edit.png" alt="icons-edit" width="18px" *ngIf="uid === myUid">
+        <div class="row bottom-row">
+          <div class="col-2">
+            <a style="cursor: pointer;" (click)='editProfile()' *ngIf="uid === myUid">
+              <img class="edit" src="https://i.ibb.co/fQ2KFj8/icons8-edit.png" alt="icons-edit" >
+              <p class="edit-text">Edit</p>
             </a>
           </div>
-          <div class="col username" style="height: 30px; padding-right: 17px;">
-            <span class="float-right" style="height: 30px;">
-              {{details.username}}
+          <div class="col username">
+            <span class="float-right">
+              <div style="cursor: pointer;" (click)="navigateRoute()">{{details.username}}</div>
             </span>
           </div>
         </div>

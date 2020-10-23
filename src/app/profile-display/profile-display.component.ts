@@ -1,9 +1,9 @@
 import { UsersService } from './../shared/users.service';
-import { DisplayPicture, ProfileSticker, ProfileDetails } from './../shared/profile.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ProfileSticker, ProfileDetails } from './../shared/profile.model';
+import { Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
@@ -33,6 +33,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   myUid: string;
   stickerSize: string;
   fetchingWindow: boolean;
+  profileRoute: string;
 
   imageProp = {'height':'100%', 'width':'auto'};
 
@@ -58,6 +59,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.getUid.pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (response) {
         this.uid = response;
+        this.profileRoute = "/profile/" + this.uid;
         this.setUpProfile();
         this.setUpActivity();
       }
@@ -69,6 +71,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
         // this.tabClose = (71*val/560).toString() + 'px';
         // this.tabOpen = (400*val/560).toString() + 'px';
         this.stickerSize = (60*val/560).toString() + 'px';
+      } else {
+        this.stickerSize = '60px';
       }
     });
   }
@@ -122,6 +126,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   getEmptySlots(stickers) {
     return [...Array(5-stickers.length).keys()]; 
+  }
+
+  navigateRoute() {
+    this.router.navigate([this.profileRoute]);
   }
 
   ngOnDestroy() {

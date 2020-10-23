@@ -12,6 +12,10 @@
   background-image: linear-gradient(135deg,#DCB65A ,#131114 70%, transparent 90%);
 }
 
+.no-padding {
+  padding: 0;
+}
+
 .dpBackground {
   width: 120px;
   height: 120px;
@@ -19,7 +23,7 @@
   background: #080708;
   top: 50%;
   left: 50%;
-  transform: translate(0%,5px);
+  transform: translate(0%,4.2%);
 }
 
 .dpBorder {
@@ -31,21 +35,41 @@
   overflow: hidden;
   top: 50%;
   left: 50%;
-  transform: translate(0%,7px);
+  transform: translate(0%,6.6%);
 }
 
 .dpBorder img{
   width: 100%;
 }
 
-.description {
+.bio {
   font-size: 12px;
   line-height: 22px;
   letter-spacing: -0.0003em;
+  padding-left: 25px; 
+  padding-right: 0px;
+
+}
+
+.title {
+  color:#D8B869; 
+  font-size: 14px; 
+  word-wrap: break-word;
+}
+
+.location {
+  color:#FFFFFF; 
+  font-size: 14px; 
+  word-wrap: break-word;
+}
+
+.description {
+  color:#FFFFFF; 
+  line-height: 150%; 
+  word-wrap: break-word;
 }
 
 .metrics {
-  height: auto;
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 16px;
@@ -57,38 +81,93 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-70%);
 }
 
-.collect Img {
+.alignMetric-views {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%,-70%);
+}
+
+.metrics-align {
+  padding: 0px;
+  padding-top: 35px;
+  padding-right: 25px; 
+  margin: 0px;
+}
+
+.collect {
+  margin-top: 0px;
+  height: 35px;
+}
+
+.views {
+  margin-top: 0px; 
+  margin-right: 0px;
+  height: 35px;
+}
+
+.collect > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%); 
+  height: 100%;
+  width: auto;
+}
+
+.views > img {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+  height: 100%;
+  width: 30px;
 }
 
-.views Img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-35%,-50%);
-}
-
-.bottom-row Img {
+.edit {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-35%);
+  width: 18px; 
+  margin-top: 9px;
+  height: auto;
+}
+
+.edit-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(0, 7%);
+  color: #D8B869;
+  font-size: 18.5px;
+  margin: 0px;
+  justify-content: center;
+  padding-left: 18px;
+}
+
+.bottom-row > .col-1 {
+  margin-left: 10px; 
+  padding-left: 0px; 
+  height: 30px;
 }
 
 .username {
-  height: auto;
   font-family: 'Comfortaa';
   font-weight: bold;
   font-size: 30px;
   color: #F7F7F7;
   height: 30px;
   letter-spacing: 0.16em;
+  padding-right: 25px;
+}
+
+.username > span {
+  height: 30px;
+  padding-top: 9px;
 }
 
 .alignName {
@@ -96,6 +175,54 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+}
+
+.profile-sticker-row {
+  padding-right: 3px;
+  margin-top: 8px;
+  height: 60px; 
+  width: 100%;
+}
+
+.no-margin-right-no-padding {
+  padding: 0px; 
+  margin-right: 0px;
+}
+
+.profile-sticker-right-col {
+  padding: 0px; 
+  margin-left: -8px; 
+  margin-right: 8px;
+}
+
+.profile-sticker-col {
+  padding: 0px; 
+  margin-left: -8px; 
+  margin-right: 8px;
+}
+
+.no-stickers {
+  margin-top: 8px; 
+  height: 60px; 
+  width: 100%
+}
+
+.display-picture {
+  width: 100%; 
+  margin-top: 16px;
+}
+
+.display-picture-col {
+  padding-left: 9px;
+}
+
+.metric-height {
+  height: 16px;
+}
+
+.views-container {
+  padding-left: 25px;
+  padding-right: 0px;
 }
 
 @media screen and (max-width: 560px) {
@@ -121,9 +248,13 @@
     height: 18.93vw;
   }
 
-  .description {
+  .bio {
     font-size: 2.14vw;
-    line-height: 2.14vw;
+    line-height: 3.93vw;
+  }
+
+  .title, .location {
+    font-size: 2.5vw; 
   }
 
   .metrics {
@@ -131,8 +262,73 @@
     height: 2.86vw;
   }
 
+  .metrics-align {
+    padding-top: 6.5vw;
+  }
+
+  .collect, .views {
+    height: 6.25vw;
+  }
+
+  .views > img {
+    width: 5.36vw;
+  }
+
+
+  .edit {
+    width: 3.2vw; 
+    margin-top: 1.61vw;
+  }
+
+  .edit-text {
+    font-size: 3.3vw;
+    padding-left: 3.2vw;
+  }
+
+  .bottom-row > .col-1 {
+    margin-left: 1.79vw; 
+    height: 5.56vw;
+  }
+
   .username {
     font-size: 5.36vw;
     height: 5.36vw;
+  }
+
+  .username > span {
+    height: 5.36vw;
+    padding-top: 1.61vw;
+  }
+  
+  .profile-sticker-row {
+    padding-right: 0.54vw;
+    margin-top: 1.43vw;
+    height: 10.71vw; 
+  }
+  
+  .profile-sticker-right-col, .profile-sticker-col {
+    margin-left: -1.43vw; 
+    margin-right: 1.43vw;
+  }
+
+  .no-stickers {
+    margin-top: 1.43vw; 
+    height: 10.7vw; 
+  }
+  
+  .display-picture {
+    margin-top: 2.86vw;
+  }
+  
+  .display-picture-col {
+    padding-left: 1.61vw;
+  }
+  
+  .metric-height {
+    height: 2.86vw;
+  }
+  
+  .views-container {
+    padding-left: 4.46vw;
   }
 }
