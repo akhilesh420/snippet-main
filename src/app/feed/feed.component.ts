@@ -29,6 +29,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   done: boolean;
   postOffset: number; //Trigger next post after this value
   failSafe: boolean;
+  loading: boolean;
 
   addIcon = "assets/icons/add_icon@2x.png";
 
@@ -38,6 +39,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.done = false;
     this.failSafe = true;
+    this.loading = true;
 
     this.postsList$.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.postsList = response;
@@ -48,6 +50,7 @@ export class FeedComponent implements OnInit, OnDestroy {
         event === 'error' ? this.failSafe = true : this.failSafe = false;
         if (!this.done && !this.failSafe) {
           if (event === 'bottom') {
+            this.loading = true;
             this.moreBatch();
           }
         }
@@ -71,6 +74,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize));
     }
     this.batchNumber++;
+    this.loading = false;
   }
 
   // more() { // get the next post - used in scroll to maintain a steady flow of posts
@@ -91,6 +95,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
     this.batchNumber++;
+    this.loading = false;
   }
 
   ngOnDestroy() {

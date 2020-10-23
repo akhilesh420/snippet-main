@@ -1,6 +1,6 @@
 import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { takeUntil,} from 'rxjs/operators';

@@ -1,12 +1,14 @@
-<div (window:resize)="onResize()">
+<div class="scroll" 
+    (window:resize)="onResize()" 
+     scrollable
+    (scrollPosition)="scrollHandler($event)">
+
   <div style="margin-bottom: 0px;">
     <app-header></app-header>
   </div>
 
    <div class="container" 
-        *ngIf="currentRoute != '/tutorial'; else tutorial"  
-        scrollable
-        (scrollPosition)="scrollHandler($event)">
+        *ngIf="currentRoute != '/tutorial'; else tutorial">
     <div class="row">
       <div class="col-md-12">
         <router-outlet></router-outlet>
