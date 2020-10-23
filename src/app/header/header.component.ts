@@ -25,8 +25,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   windowWidth: number;
 
-  collectionRoute: string;
-  profileRoute: string;
+  collectionRoute: string = '/auth';
+  profileRoute: string = '/auth';
+  createRoute: string = '/auth';
 
   currentRoute: string;
   
@@ -46,12 +47,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.uid = user.id;
         this.collectionRoute = "collection/" + this.uid;
         this.profileRoute = "profile/" + this.uid;
-      }
-      this.widthAuth = !!user ?  '313.781px' : '123.6125px';
-      if (this.collapsed) {
-        this.marginLeft = 'calc(50vw - 309.94px - '+ this.widthAuth +')';
+        this.createRoute = "/create";
       } else {
-        this.marginLeft = '0';
+        this.collectionRoute = '/auth';
+        this.profileRoute = '/auth';
+        this.createRoute =  '/auth';
       }
     });
 

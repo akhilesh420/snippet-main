@@ -81,11 +81,11 @@
           <label (click)="onSwitchMode('login')"
                   type="button"
                   style="margin: 0; top: 50%; transform: translate(0,4px);"
-                  [ngStyle]="{'margin-bottom': !this.isLoginMode ? '30px' : '0px'}"
+                  [ngStyle]="{'margin-bottom': !this.isLoginMode ? '100px' : '0px'}"
                   for="switch">
             &nbsp; | &nbsp;{{ isLoginMode ? "Don't have an account?" : 'Already have an account?' }}
           </label>
-          <label *ngIf="isLoginMode" (click)="onSwitchMode('forget')" type="button" style="margin: 0; top: 50%; transform: translate(0,4px); font-size: 20px;">
+          <label *ngIf="isLoginMode" (click)="onSwitchMode('forget')" type="button" style="margin-bottom: 0; top: 50%; transform: translate(0,4px); font-size: 20px;">
             Forgot password?
           </label>
         </div>
@@ -93,3 +93,4 @@
     </div>
   </div>
 </div>
+

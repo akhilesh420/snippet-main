@@ -2,44 +2,30 @@ body{
   letter-spacing: 0.05em;
 }
 
-.navbar {
+.contain {
   border: 0;
-  height: 54px;
+  height: auto;
+  background-color: #131114;
 }
 
-.navbar-nav.content-center {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-.active-link {
+.active-link, .contain a:hover {
   color: #D8B869;
 }
 
-.navbar-nav li a:hover {
-  color: #D8B869;
-}
-
-.navbar-nav li a {
+.contain a {
   color: #707070;
-  padding-top: 20px;
-  margin: 20px;
-}
-
-.navbar .navbar-brand {
-  padding-top: 18px;
 }
 
 .fontHeader {
   font-family: 'ChampagneAndLimousines';
   font-size: 20px;
   font-weight: bold;
+  padding-top: 5px;
 }
 
 .logoMain {
-  font-family: 'Comfortaa';
-  font-size: 30px;
+  padding-left: 15px;
+  font-size: 28px;
   color: #D8B869;
   letter-spacing: 0.160em;
 }
@@ -51,37 +37,14 @@ body{
   color: #707070;
 }
 
-a { text-decoration: none !important}
-
-.custom-toggler.navbar-toggler {
-  border-color: #707070;
-}
-
-.custom-toggler.navbar-toggler:hover {
-  background: #D8B869;
-}
-
-.custom-toggler .navbar-toggler-icon {
-  background-image: url(
-    "data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(112, 112, 112, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-}
-
 .activeRoute {
   color: #D8B869;
 }
 
-@media (max-width: 1230px) {
-  .logoSub {
-      display: none !important;
-  }
-
-  .logoMain {
-    margin-right: calc(309.94px - 155.35px);
-  }
+.login {
+  padding-right: 15px;
 }
 
-@media (max-width: 400px) {
-  .logoMain {
-    margin-right: 0;
-  }
-}
+a {text-decoration: none !important;}
+
+

@@ -3,13 +3,12 @@
      scrollable
     (scrollPosition)="scrollHandler($event)">
 
-  <div style="margin-bottom: 0px;" *ngIf="!mobileCheck">
+  <div *ngIf="!mobileCheck">
     <app-header></app-header>
   </div>
 
-   <div class="container" 
-        *ngIf="currentRoute != '/tutorial'; else tutorial"
-        [ngStyle]="{'margin-top' : mobileCheck ? '20px' : '0'}">
+   <div class="container outlet-margin" 
+        *ngIf="currentRoute != '/tutorial'; else tutorial">
     <div class="row">
       <div class="col-md-12">
         <router-outlet></router-outlet>

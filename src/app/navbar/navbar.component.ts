@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   exploreSymbol: string = "assets/icons/exploreSymbol@2x.png";
   collectionSymbol: string = "assets/icons/sticker-icon.png";
   createSymbol: string = "assets/icons/createSymbol@2x.png";
-  dropdownSymbol: string = "assets/icons/dropdownSymbol@2x.png";
+  logoutSymbol: string = "assets/icons/Login_LogOut@2x.png";
 
   displayPicture$: BehaviorSubject<any>;
   uid: string;
@@ -60,14 +60,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     } else {
       if (this.isAuthenticated) {
         if (event === 'profile') {
-          this.router.navigate(['/profile' + this.uid]);
+          this.router.navigate(['/profile/' + this.uid]);
         } 
         if (event === 'collection') {
-          this.router.navigate(['/collection' + this.uid]);
+          this.router.navigate(['/collection/' + this.uid]);
         } 
         if (event === 'create') {
           this.router.navigate(['/create']);
         } 
+        if (event === 'log') {
+          this.authService.logout();
+        }
       } else {
         this.router.navigate(['/auth']);
       }

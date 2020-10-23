@@ -24,5 +24,9 @@
             </div>
         </a>
     </div>
-    <div class="col text-center dropdownSymbol"><a><img [src]="dropdownSymbol"></a></div>
+    <div class="col text-center dropdownSymbol">
+        <a (click)="navigate('log')">
+            <img [src]="logoutSymbol">
+        </a>
+    </div>
 </div>
