@@ -4,7 +4,7 @@
       <app-loading-spinner></app-loading-spinner>
     </div>
     <form class="horizontal-center" (ngSubmit)="onSubmit()" #f="ngForm" *ngIf="!isCreating">
-      <div class="container">
+      <div class="container" style="margin-bottom: 40px;">
         <div class="row">
           <div class="col-md"></div>
           <div class="col-md">
@@ -84,28 +84,27 @@
             </div>
             <!-- sticker amount -->
             <div class="row">
-              <div class="col-md">
-                <div class="inputFields" style="width: 100px">
+              <div class="col-6">
+                <div class="inputAmount" >
                   <label for="stickerAmount" class="text-left">Amount</label>
                   <input
                     type="number"
                     id="amount"
-                    class="form-control"
+                    class="form-control amountField"
                     ngModel
                     name="amount"
                     required
                     min={{minSticker}}
                     max={{maxSticker}}
+                    style="margin-bottom: 0;"
                     [(ngModel)]="amount"
                     [ngClass]="{'invalidAmount': !amountValidation(amount)}">
                 </div>
               </div>
-
-              <div class="col-md" align="right">
+              <div class="col-6" align="right">
                 <label for="empty"></label>
                 <button
-                class="btn btn-default"
-                style="margin-top:10px;">Create</button>
+                class="btn btn-default">Create</button>
               </div>
             </div>
           </div>

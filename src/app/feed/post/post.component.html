@@ -54,7 +54,7 @@
              (load)="onStickerLoad($event)"
              [ngStyle]="{'height': stickerProp.height, 'width': stickerProp.width}">
         <div *ngIf="createPost">
-          <img [src]="addIcon" alt="add" class="add-icon" (click)="onAddClick('sticker')" style="width: 57px; height: 57px;">
+          <img [src]="addIcon" alt="add" class="add-icon sticker-add" (click)="onAddClick('sticker')">
         </div>
       </div>
     </a>
