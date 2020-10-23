@@ -22,7 +22,8 @@ textarea:focus {
 }
 
 ::-webkit-calendar-picker-indicator {
-  filter: invert(0.5);
+  -webkit-filter: invert(0.5);
+          filter: invert(0.5);
   /* color: rgba(216,184,105,1); */
 }
 
@@ -54,7 +55,9 @@ input.invalidAmount {
 .horizontal-center {
   position: absolute;
   left: 50%;
-  transform: translate(-50%,0);
+  -webkit-transform: translate(-50%,0);
+      -ms-transform: translate(-50%,0);
+          transform: translate(-50%,0);
 }
 
 .danger-alert {
