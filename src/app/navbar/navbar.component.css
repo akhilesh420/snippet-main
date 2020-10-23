@@ -1,0 +1,46 @@
+.row {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: rgb(19, 17, 20);
+    position: fixed;
+    bottom:0;
+    width: 100%;
+  }
+
+  .divider {
+    border-top: solid 2px #D8B869;
+  }
+  
+  .Symbol > a > img {
+    height: 30px;
+    width: auto;
+  }
+  
+  .exploreSymbol > a > img {
+    height: 33px;
+    width: auto;
+  }
+  
+  .dropdownSymbol > a > img {
+    height: 27px;
+    width: auto;
+  }
+  
+  .dpBorder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-55%);
+    width: 30px;
+    height: 30px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px solid #707070;
+    background:#080708;
+    overflow: hidden;
+  }
+  
+  
+  
+  

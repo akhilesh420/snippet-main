@@ -38,6 +38,7 @@ import { WithLoadingPipe } from './shared/with-loading.pipe';
 import { DateSortPipe } from './shared/date-sort.pipe';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
 import { ScrollableDirective } from './shared/directives/scrollable.directive';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ScrollableDirective } from './shared/directives/scrollable.directive';
     WithLoadingPipe,
     DateSortPipe,
     TutorialPageComponent,
-    ScrollableDirective
+    ScrollableDirective,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

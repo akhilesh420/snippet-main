@@ -14,6 +14,7 @@ import { InfiniteScrollService } from './shared/infinite-scroll.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'snippet';
+  windowSize: number;
   mobileCheck: boolean;
   currentRoute: string;
   notifier$ = new Subject();
@@ -29,6 +30,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.autoLogin();
     this.titleService.setTitle("Snippet");
     this.windowService.checkWidth();
+    this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      if (val) {
+        this.windowSize = val;
+        if (val < 560) {
+          this.mobileCheck = true;
+        } else {
+          this.mobileCheck = false;
+        }
+      }
+    })
     this.onResize();
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
