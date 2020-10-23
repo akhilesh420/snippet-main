@@ -91,6 +91,7 @@ a { text-decoration: none !important}
   padding-top: 8px;
   padding-bottom: 8px;
   background-color: rgb(19, 17, 20);
+  background-image: linear-gradient(to bottom right,  rgba(215, 183, 104, 0.2) 0.08%, rgb(8, 7, 8));
   position: fixed;
   bottom:0;
   width: 100%;
