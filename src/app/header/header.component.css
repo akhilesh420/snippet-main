@@ -1,0 +1,50 @@
+body{
+  letter-spacing: 0.05em;
+}
+
+.contain {
+  border: 0;
+  height: auto;
+  background-color: #131114;
+}
+
+.active-link, .contain a:hover {
+  color: #D8B869;
+}
+
+.contain a {
+  color: #707070;
+}
+
+.fontHeader {
+  font-family: 'ChampagneAndLimousines';
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+.logoMain {
+  padding-left: 15px;
+  font-size: 28px;
+  color: #D8B869;
+  letter-spacing: 0.160em;
+}
+
+.logoSub {
+  font-family: 'ChampagneAndLimousines';
+  font-size: 16px;
+  padding-left: 7px;
+  color: #707070;
+}
+
+.activeRoute {
+  color: #D8B869;
+}
+
+.login {
+  padding-right: 15px;
+}
+
+a {text-decoration: none !important;}
+
+

@@ -1,0 +1,15 @@
+.horizontal-center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0);
+}
+
+.more-post {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.fail-safe{
+  margin-bottom: 35px;
+}

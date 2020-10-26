@@ -1,0 +1,91 @@
+<div class="container no-padding">
+  <div class="row no-padding">
+    <div class="col-md-12 no-padding" align="center"  
+        *ngIf="profileDetails$ | async; let details">
+      <div class="outerContainer">
+        <!-- Profile stickers -->
+        <div class="row profile-sticker-row" 
+             *ngIf="profileStickers$ | async as stickers; else noStickers;">
+          <div class="col-2 no-margin-no-padding"></div>
+          <div class="col profile-sticker-col" 
+              *ngFor="let i of getEmptySlots(stickers)">
+            </div>
+          <div class="col-2 profile-sticker-right-col"
+              *ngFor="let sticker of stickers">
+            <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
+          </div>
+        </div>
+        <ng-template #noStickers>
+          <div class="row no-stickers">
+          </div>
+        </ng-template>
+        <!-- DP -->
+        <div class="row display-picture" 
+            *ngIf="displayPicture$ | async as content;">
+          <div class="col-3 display-picture-col">
+            <div class="storySignifier">
+              <div class="dpBackground">
+                <div class="dpBorder">
+                  <img [src]="content"
+                       alt="display picture"
+                      [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
+                      (load)="onLoad($event)">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Bio -->
+          <div class="col bio" align="left">
+            <div class="row">
+              <div class="col-12 title">
+                {{details.bio.title}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 location">
+                {{details.bio.location}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8 description">
+                {{details.bio.content}}
+              </div>
+              <div class="col-4 metrics-align">
+                <div class="row metrics">
+                  <div class="col-6 metric-height" >
+                    <span class="alignMetric">{{collected}}</span>
+                  </div>
+                  <div class="col-6 metric-height">
+                    <span class="alignMetric-views">{{views}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6 collect">
+                    <img src="https://i.ibb.co/jJVZQ4S/Group-141.png" alt="Stickers collected">
+                  </div>
+                  <div class="col-6 views">
+                    <img src="https://i.ibb.co/hfx6Q6v/Views-Icon.png" alt="Views-Icon">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row bottom-row">
+          <div class="col-2">
+            <a style="cursor: pointer;" (click)='editProfile()' *ngIf="uid === myUid">
+              <img class="edit" src="https://i.ibb.co/fQ2KFj8/icons8-edit.png" alt="icons-edit" >
+              <p class="edit-text">Edit</p>
+            </a>
+          </div>
+          <div class="col username">
+            <span class="float-right">
+              <div style="cursor: pointer;" (click)="navigateRoute()">{{details.username}}</div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

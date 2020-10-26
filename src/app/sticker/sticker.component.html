@@ -1,0 +1,11 @@
+<div (click)="onClick()"
+      class="sticker"
+      style="cursor: pointer;"
+     [ngStyle]="{'width': size,'height': size}"
+     *ngIf="stickerContent | async; let content;">
+    <img [src]='content'
+         alt="sticker"
+         [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
+         (load)="onLoad($event)"
+         (click)="onClick()">
+</div>

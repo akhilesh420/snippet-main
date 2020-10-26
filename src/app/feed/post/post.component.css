@@ -1,0 +1,442 @@
+:root {
+  --stickerSpace: 35px;
+}
+
+.postContainer {
+  width: 475px;
+  height: 580px;
+  border: 3px solid #D8B869;
+  border-radius: 33px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 35px;
+}
+
+.backgroundImg {
+ margin: 0 0;
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%,-50%);
+}
+
+.profileTab {
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+  height: 71px;
+
+  padding: 0;
+
+  /* rgba used so that opacity doesn't effect child components */
+  background: rgba(8,7,8,0.6);
+
+  border-bottom-left-radius: 26px;
+  border-bottom-right-radius: 26px;
+}
+
+.profileTab .profileDetails{
+  position: absolute;
+  bottom: 12px;
+  left: 29.5px;
+  width: 334px;
+  height: 25px;
+}
+
+.profileTab .profileDetails .name{
+  position: absolute;
+  bottom: 4px;
+  left: 0px;
+  font-size: 22px;
+  height: 100%;
+  color: #F7F7F7;
+  letter-spacing: 0.160em;
+}
+
+.profileDetails .profileStickers{
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  height: 24px;
+  width: 144px;
+  padding: 0;
+}
+
+.profileTab .postSticker {
+  height: 95px;
+  width: 95px;
+  background-color: #070707;
+  border: 1px solid #707070;
+  border-radius: 50%;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+  bottom: 24px;
+  right: 8px;
+}
+
+.postSticker .sticker-img{
+  padding: 0;
+  margin: 0 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.profileTab .engagementBar{
+  position: absolute;
+  bottom: 48px;
+  left: 29.5px;
+  width: 334px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.profileTab .bar{
+  position: absolute;
+  width: 100%;
+  height: 8px;
+  border-radius: 8px;
+  border: 1px solid #D8B869;
+  overflow: hidden;
+  padding: 0px;
+}
+
+.profileTab .engagement{
+  position: absolute;
+  height: 8px;
+  border-radius: 8px;
+  padding: 0px;
+  width: 50%;
+}
+
+.profileTab .commentButton{
+  padding: 0;
+  position: absolute;
+  top: -15px;
+  left: 0px;
+  width: 30px;
+  height: 30px;
+}
+
+.commentButton .buttonBackground{
+  padding: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 15px 15px 0 0;
+
+  background: rgba(8,7,8,0.6);
+}
+
+.commentButton .hideExtra{
+  padding: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 30px;
+  height: 15px;
+  overflow: hidden;
+}
+
+.commentButton img{
+  padding: 0;
+
+  width: 14px;
+  height: auto;
+
+  margin: 0 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.postDetails {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  pointer-events:none;
+}
+
+.postDetails .postTitle{
+  position: absolute;
+  top: 8px;
+  left: 19px;
+  font-family: 'ChampagneAndLimousines';
+  font-size: 24px;
+  color: #F7F7F7;
+  pointer-events:auto;
+  letter-spacing: 0.05em;
+
+}
+
+.postDetails .showDetails {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  pointer-events:auto;
+}
+
+.showDetails img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 20px;
+  height: auto;
+}
+
+.postDetails .holderList{
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  pointer-events:auto;
+}
+
+.holderList img{
+ position: absolute;
+ top:50%;
+ left: 50%;
+ transform: translate(-20%,-50%);
+ height: 18px;
+ width: auto;
+}
+
+.holderList p {
+  margin: 0;
+  color: #F7F7F7;
+}
+
+.postDetails .metrics{
+  width: auto;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 16px;
+  color: #F7F7F7;
+  margin-bottom: 0;
+}
+
+.postDetails img {
+  height: 16px;
+  width: auto;
+}
+
+.description {
+  font-family: 'ChampagneAndLimousines';
+  font-size: 18px;
+  color: #F7F7F7;
+  letter-spacing: 0.05em;
+}
+
+.commentsSection{
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 10px;
+  height: 225px;
+  width: auto;
+}
+
+.commentsSection .section{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.holderContainer {
+  position: absolute;
+  left: 45px;
+  right:45px;
+  top: 150px;
+  height: 255px;
+  border: 2px solid #D8B869;
+  border-radius: 15px;
+  background: rgba(8,7,8,0.6);
+  pointer-events: auto;
+}
+
+.holderListContainer {
+  height: 245px;
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-top: 3px;
+  overflow-y: auto;
+}
+
+.add-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  cursor: pointer;
+}
+
+.temp {
+  font-weight: bold;
+  font-size: 24px;
+  height: 100%;
+  color: #D8B869;
+}
+
+.sticker-add {
+  width: 57px; 
+  height: 57px;
+}
+
+@media screen and (max-width: 560px) {
+  .postContainer {
+    width: 85vw;
+    height: 103.5vw;
+    border-radius: 5.89vw;
+  }
+
+  .profileTab {
+    height: 12.68vw;
+    border-bottom-left-radius: 4.64vw;
+    border-bottom-right-radius: 4.64vw;
+  }
+
+  .profileTab .profileDetails{
+    bottom: 2.14vw;
+    left: 5.26vw;
+    width: 59.64vw;
+    height: 4.46vw;
+  }
+
+  .profileTab .profileDetails .name{
+    bottom: 0.714vw;
+    font-size: 3.93vw;
+  }
+
+  .profileDetails .profileStickers{
+    height: 4.29vw;
+    width: 25.71vw;
+  }
+
+  .profileTab .postSticker {
+    height: 14.64vw;
+    width: 14.64vw;
+    bottom: 4.29vw;
+    right: 1.42vw;
+  }
+
+  .profileTab .engagementBar{
+    bottom: 8.57vw;
+    left: 5.267vw;
+    width: 59.64vw;
+    height: 1.96vw;
+  }
+
+  .profileTab .bar{
+    height: 1.42vw;
+    border-radius: 1.42vw;
+  }
+
+  .profileTab .engagement{
+    height: 1.42vw;
+    border-radius: 1.42vw;
+  }
+
+  .profileTab .commentButton{
+    padding: 0;
+    top: -2.68vw;
+    width: 5.36vw;
+    height: 5.36vw;
+  }
+
+  .commentButton .buttonBackground{
+    width: 5.36vw;
+    height: 5.36vw;
+    border-radius: 2.68vw 2.68vw 0 0;
+  }
+
+  .commentButton .hideExtra{
+    width: 5.36vw;
+    height: 2.68vw;
+  }
+
+  .commentButton img{
+    width: 2.5vw;
+  }
+
+  .postDetails .postTitle{
+    top: 1.43vw;
+    left: 3.39vw;
+    font-size: 4.29vw;
+  }
+
+  .postDetails .showDetails {
+    top: 1.79vw;
+    right:  2.68vw;
+    height: 5.36vw;
+    width: 5.36vw;
+  }
+
+  .showDetails img {
+    width: 3.6vw;
+  }
+
+  .postDetails .holderList{
+    font-size: 3.214vw;
+  }
+
+  .holderList img{
+    height: 3.21vw;
+   }
+
+  .postDetails .metrics{
+    font-size: 2.86vw;
+  }
+
+  .postDetails img {
+    height: 2.86vw;
+  }
+
+  .description {
+    font-size: 3.21vw;
+  }
+
+  .commentsSection{
+    left: 3.57vw;
+    right: 3.57vw;
+    top: 1.79vw;
+    height: 40.18vw;
+  }
+
+  .holderContainer {
+    left: 8.04vw;
+    right: 8.04vw;
+    top: 26.79vw;
+    height: 45.54vw;
+  }
+
+  .holderListContainer {
+    height: 43.75vw;
+    padding-left: 1.79vw;
+    padding-right: 0.89vw;
+    padding-top: 0.54vw;
+  }
+
+  .temp {
+    font-size: 4.3vw;
+  }
+
+  .sticker-add {
+    width: 10.18vw; 
+    height: 10.18vw;
+  }
+}

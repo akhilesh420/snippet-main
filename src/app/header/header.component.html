@@ -1,0 +1,38 @@
+<div class="row contain">
+  <div class="col-2">
+    <a routerLink="/tutorial">
+      <span class="logoMain">Snippet</span>
+      <!-- <span class="logoSub">Creative Community</span> -->
+    </a>
+  </div>
+  <div class="col-8">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col fontHeader">
+        <a routerLink="/explore">Explore</a>
+      </div>
+      <div class="col fontHeader">
+        <a [routerLink]='collectionRoute'>Collection</a>
+      </div>
+      <div class="col fontHeader">
+        <a [routerLink]='createRoute'>Create</a>
+      </div>
+      <div class="col fontHeader"> 
+        <a [routerLink]='profileRoute'>Profile</a>
+      </div>
+      <div class="col fontHeader">
+        <a routerLink="/feedback">Feedback</a>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+  <div class="col-2 fontHeader login" *ngIf="!isAuthenticated">
+    <a routerLink="/auth">Login/Signup</a>
+  </div>
+  <div class="col-2 fontHeader login" *ngIf="isAuthenticated">
+    <a (click)="onLogout()">Logout</a>
+  </div>
+</div>
+
+
+

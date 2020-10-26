@@ -1,0 +1,4 @@
+<app-profile-display [getUid]='uid$' *ngIf="uid$"></app-profile-display>
+<div style="margin-top: 40px;">
+  <app-feed [postsList$]="postsList" [feedType]="'db'"></app-feed>
+</div>

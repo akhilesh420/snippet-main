@@ -1,0 +1,134 @@
+import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { BehaviorSubject } from 'rxjs';
+import { PostContent, PostDetails, StickerDetails, StickerContent } from './post.model';
+
+import { Injectable } from '@angular/core';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PostService {
+
+  placeholderImg = 'assets/default image/blank_image@2x.png';
+
+  private postDetailsCollection: AngularFirestoreCollection<PostDetails>;
+  private postContentCollection: AngularFirestoreCollection<PostContent>;
+  private stickerDetailsCollection: AngularFirestoreCollection<StickerDetails>;
+  private stickerContentCollection: AngularFirestoreCollection<StickerContent>;
+
+  private stickerContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
+  private postContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
+
+  constructor(private afs: AngularFirestore,
+              private storage: AngularFireStorage) {
+    this.postDetailsCollection = afs.collection<PostDetails>('post details');
+    this.postContentCollection = afs.collection<PostContent>('post content');
+    this.stickerDetailsCollection = afs.collection<StickerDetails>('sticker details');
+    this.stickerContentCollection = afs.collection<StickerContent>('sticker content');
+   }
+
+  //--------------------------------------- Post details ---------------------------------------
+  // Get post details from cloud firestore by PID
+  getPostDetails(pid: string) {
+    return this.afs.doc<PostDetails>('post details/' + pid).valueChanges();
+  }
+
+  // Add post details from cloud firestore
+  addPostDetails(pid: string, details: PostDetails) {
+    const obj = {uid: details.uid, title: details.title, description: details.description, dateCreated: details.dateCreated};
+    this.postDetailsCollection.doc(pid).set(obj);
+  }
+
+  //--------------------------------------- Stickers details ---------------------------------------
+  // Get sticker details from cloud firestore by PID
+  getStickerDetails(pid: string) {
+    return this.afs.doc<StickerDetails>('sticker details/' + pid).valueChanges();
+  }
+
+  // Add sticker details from cloud firestore
+  addStickerDetails(pid: string, details: StickerDetails) {
+    const obj = {amountReleased: details.amountReleased, price: details.price};
+    this.stickerDetailsCollection.doc(pid).set(obj);
+  }
+
+  // --------------------------------------- Post content ---------------------------------------
+  // Get post content from cloud firestore by UID
+  private getPostContentRef(pid: string) {
+    return this.afs.doc<PostContent>('post content/' + pid).valueChanges();
+  }
+
+  // Add post content from cloud firestore
+  addPostContentRef(pid: string, content: PostContent) {
+    const obj = {name: content.name, fileFormat: content.fileFormat}
+    this.postContentCollection.doc(pid).set(obj);
+  }
+
+  // Get post content from firebase storage by UID
+  getPostContent(pid: string) {
+    let index = this.postContentList.findIndex(details => {
+      return details.pid === pid;
+    })
+
+    if (index === -1) {
+      this.postContentList.push({pid: pid, obs: new BehaviorSubject<any>(null)});
+      let secIndex = this.postContentList.length - 1;
+      this.getPostContentRef(pid).subscribe((response: PostContent) => {
+        const ref = this.storage.ref('Post/' + response.name);
+        ref.getDownloadURL().subscribe(response => {
+          this.postContentList[secIndex].obs.next(response);
+        });
+      });
+      return this.postContentList[secIndex].obs
+    } else {
+      return this.postContentList[index].obs
+    }
+  }
+
+  // --------------------------------------- Sticker content ---------------------------------------
+  // Get sticker content from cloud firestore by UID
+  private getStickerContentRef(pid: string) {
+    return this.afs.doc<StickerContent>('sticker content/' + pid).valueChanges();
+  }
+
+  // Add sticker content from cloud firestore
+  addStickerContentRef(pid: string, content: PostContent) {
+    const obj = {name: content.name, fileFormat: content.fileFormat}
+    this.stickerContentCollection.doc(pid).set(obj);
+  }
+
+  // Get sticker content from firebase storage by UID
+  getStickerContent(pid: string) {
+    let index = this.stickerContentList.findIndex(details => {
+      return details.pid === pid;
+    })
+
+    if (index === -1) {
+      this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(this.placeholderImg)});
+      let secIndex = this.stickerContentList.length - 1;
+      this.getStickerContentRef(pid).subscribe((response: StickerContent) => {
+        const ref = this.storage.ref('Post/' + response.name);
+        ref.getDownloadURL().subscribe(response => {
+          if (response) {
+            this.stickerContentList[secIndex].obs.next(response);
+          }
+        });
+      });
+      return this.stickerContentList[secIndex].obs
+    } else {
+      return this.stickerContentList[index].obs
+    }
+  }
+
+  // --------------------------------------- Content storage ---------------------------------------
+  // Add content for post from firebase storage
+  addContent(name: string, content: any) {
+    // Upload to storage
+    const file = content;
+    const filePath = 'Post/'+name;
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file);
+    return task.percentageChanges();
+  }
+}
