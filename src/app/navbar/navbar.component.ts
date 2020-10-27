@@ -12,10 +12,10 @@ import { UsersService } from '../shared/users.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 
-  exploreSymbol: string = "assets/icons/exploreSymbol@2x.png";
-  collectionSymbol: string = "assets/icons/sticker-icon.png";
-  createSymbol: string = "assets/icons/createSymbol@2x.png";
-  logoutSymbol: string = "assets/icons/Login_LogOut@2x.png";
+  exploreSymbol: string = "assets/icons/exploreSymbol_2x.svg";
+  collectionSymbol: string = "assets/icons/sticker-icon.svg";
+  createSymbol: string = "assets/icons/createSymbol_2x.svg";
+  logoutSymbol: string = "assets/icons/Login_LogOut_2x.svg";
 
   displayPicture$: BehaviorSubject<any>;
   uid: string;

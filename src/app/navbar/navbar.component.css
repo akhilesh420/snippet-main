@@ -1,11 +1,12 @@
 .row {
-    padding-top: 8px;
+    padding-top: 6px;
     padding-bottom: 8px;
     background-color: rgba(19, 17, 20, 0.95);
     position: fixed;
     bottom:0;
     width: 100%;
     justify-content: center;
+  
   }
 
   .divider {
@@ -13,12 +14,13 @@
   }
   
   .Symbol > a > img {
-    height: 25px;
+    height: 1.5em;
     width: auto;
+    
   }
   
   .exploreSymbol > a > img {
-    height: 27.5px;
+    height: 1.5em;
     width: auto;
   }
   
