@@ -78,7 +78,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    // AngularFirePerformanceModule
+    AngularFirePerformanceModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
