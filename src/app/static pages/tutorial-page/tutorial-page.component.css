@@ -6,10 +6,6 @@
     }
     
     /* Firefox < 16 */
-    @-moz-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-    }
     
     /* Safari, Chrome and Opera > 12.1 */
     @-webkit-keyframes fadein {
@@ -18,16 +14,8 @@
     }
     
     /* Internet Explorer */
-    @-ms-keyframes fadein {
-        from { opacity: 0; }
-        to   { opacity: 1; }
-    }
     
     /* Opera < 12.1 */
-    @-o-keyframes fadein {
-        from { opacity: 0; }
-        to   { opacity: 1; }
-    }
     
     
     
@@ -68,12 +56,22 @@
     
     
     .flex-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
         height: calc(100vh - 46px);
-        justify-content: center;
-        align-items: flex-end;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: end;
+            -ms-flex-align: end;
+                align-items: flex-end;
         
         
       }
@@ -88,9 +86,6 @@
         line-height: 28px;
         font-size: 18px;
         -webkit-animation: fadein 3s; 
-    -moz-animation: fadein 3s; 
-     -ms-animation: fadein 3s; 
-      -o-animation: fadein 3s; 
          animation: fadein 3s;
          color: rgb(216, 184, 105);
          /* background-color: rgb(8, 7, 8);
@@ -100,6 +95,15 @@
         background-repeat: no-repeat;
         background-size: cover; */
       }
+    
+    p .Collect {
+        width: 100%;
+        height: 100%;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+    
     
     .pic-Collect {
         position: relative;
