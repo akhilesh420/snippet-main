@@ -302,7 +302,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.authService.onBoarding.pipe(takeUntil(this.notifier$)).subscribe(res => {
       if (res === "Signup") {
         this.router.navigate(['/tutorial']);
-        this.authService.onBoarding.next('Login');
       } else {
         this.router.navigate(['/profile/'+this.uid]);
       }
@@ -317,5 +316,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
+    this.authService.onBoarding.next('Login');
   }
 }
