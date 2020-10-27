@@ -33,9 +33,9 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-55%);
-    width: 25px;
-    height: 25px;
+    transform: translate(-50%,-50%);
+    width: 1.5em;
+    height: 1.5em;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;

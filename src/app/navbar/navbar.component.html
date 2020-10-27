@@ -14,7 +14,7 @@
             <img [src]="createSymbol">
         </a>
     </div>
-    <div class="col text-center">
+    <div class="col text-center ">
         <a (click)="navigate('profile')">
             <div class="dpBorder">
                 <img [src]="isAuthenticated ? (displayPicture$ | async) : placeholderImg"
