@@ -1,11 +1,12 @@
 .row {
     padding-top: 6px;
-    padding-bottom: 8px;
-    background-color: rgba(19, 17, 20, 0.95);
+    padding-bottom: 15px;
+    background-color: rgba(19, 17, 20, 0.90);
     position: fixed;
     bottom:0;
     width: 100%;
     justify-content: center;
+    backdrop-filter: blur(8px);
   
   }
 
