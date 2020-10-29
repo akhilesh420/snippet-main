@@ -17,21 +17,16 @@
   .Symbol > a > img {
     height: 1.5em;
     width: auto;
-    filter: grayscale(40%);
-    
-    
   }
   
   .exploreSymbol > a > img {
     height: 1.5em;
     width: auto;
-    filter: grayscale(40%);
   }
   
   .dropdownSymbol > a > img {
     height: 1.5em;
     width: auto;
-    filter: grayscale(40%);
   }
   
   .dpBorder {
@@ -47,6 +42,9 @@
     border: 1px solid #D8B869;
     background:#080708;
     overflow: hidden;
+  }
+
+  .inactive-link { 
     filter: grayscale(40%);
   }
   

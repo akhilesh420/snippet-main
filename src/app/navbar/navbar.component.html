@@ -1,23 +1,23 @@
 <div class="row no-gutters text-center divider">
     <div class="col text-center exploreSymbol">
         <a (click)="navigate('explore')">
-            <img [src]="exploreSymbol">
+            <img [ngClass]="currentRoute != '/explore' ? 'inactive-link' : null" [src]="exploreSymbol">
         </a>
     </div>
     <div class="col text-center Symbol">
         <a (click)="navigate('collection')">
-            <img [src]="collectionSymbol">
+            <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null" [src]="collectionSymbol">
         </a>
     </div>
     <div class="col text-center Symbol">
         <a (click)="navigate('create')">
-            <img [src]="createSymbol">
+            <img [ngClass]="currentRoute != '/create' ? 'inactive-link' : null" [src]="createSymbol">
         </a>
     </div>
     <div class="col text-center ">
         <a (click)="navigate('profile')">
             <div class="dpBorder">
-                <img [src]="isAuthenticated ? (displayPicture$ | async) : placeholderImg"
+                <img [ngClass]="!currentRoute.includes('profile') ? 'inactive-link' : null" [src]="isAuthenticated ? (displayPicture$ | async) : placeholderImg"
                 alt="display picture"
                [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
                (load)="onLoad($event)">
@@ -26,7 +26,7 @@
     </div>
     <div class="col text-center dropdownSymbol">
         <a (click)="navigate('log')">
-            <img [src]="logoutSymbol">
+            <img [ngClass]="currentRoute != '/auth' ? 'inactive-link' : null"  [src]="logoutSymbol">
         </a>
     </div>
 </div>

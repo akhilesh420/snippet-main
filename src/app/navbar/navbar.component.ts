@@ -21,6 +21,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   uid: string;
   isAuthenticated: boolean;
   notifier$ = new Subject();
+  currentRoute: string;
+
 
   imageProp = {'height':'100%', 'width':'auto'};
 
@@ -39,6 +41,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
     }, errorMessage => {
       console.log(errorMessage);
+    });
+  
+    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.currentRoute = this.router.url;
     });
   }
 
