@@ -5,7 +5,7 @@ body{
 .contain {
   border: 0;
   height: auto;
-  background-color: rgb(5, 4, 5);
+  background-color: rgb(5, 4, 5); 
 }
 
 .active-link, .contain a:hover {
@@ -27,7 +27,7 @@ body{
   padding-left: 15px;
   font-size: 28px;
   color: #D8B869;
-  letter-spacing: 0.160em;
+  letter-spacing: 0.180em;
 }
 
 .logoSub {
