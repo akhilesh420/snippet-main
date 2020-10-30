@@ -5,7 +5,7 @@ import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
 import { StickerDetails, PostDetails } from './../../shared/post.model';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef } from '@angular/core';
-import { take, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
@@ -29,6 +29,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   profileDetails$?: Observable<ProfileDetails>;
   profileStickers$?: Observable<ProfileSticker[]>;
   notifier$ = new Subject();
+  collectionList: Collection[] = [];
 
   stickerDetails: StickerDetails;
   activity: Activity;
@@ -238,6 +239,19 @@ import { WindowStateService } from 'src/app/shared/window.service';
     } else {
       this.router.navigate(['/auth']);
     }
+  }
+
+  getHolderList() {
+    this.holderToggle = !this.holderToggle;
+    this.activityService.getHolderList(this.pid).pipe(takeUntil(this.notifier$)).pipe(map(data => {
+      const index = data.findIndex(collection => {
+        return collection.collectorID == this.myUid;
+      });
+      return data.splice(index,1);
+    })).subscribe(response => {
+      this.collectionList = response;
+      console.log(response); //tempLog
+    });
   }
 
   ngOnDestroy() {

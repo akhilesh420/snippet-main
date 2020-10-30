@@ -102,4 +102,8 @@ export class ActivityService {
   getPostCollection(pid: string) {
     return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp', 'desc')).valueChanges();
   }
+
+  getHolderList(pid: string) {
+    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp')).valueChanges();
+  }
 }

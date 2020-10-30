@@ -1,6 +1,7 @@
-import { PostService } from './../../../shared/post.service';
-import { Profile } from '../../../shared/profile.model';
+import { ProfileDetails, ProfileSticker } from '../../../shared/profile.model';
 import { Component, OnInit, Input } from '@angular/core';
+import { UsersService } from 'src/app/shared/users.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-holder',
@@ -9,19 +10,19 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HolderComponent implements OnInit {
 
-  @Input() userId: number;
-  profileDetails: Profile;
-  spacingSticker: String = "0px";
+  @Input() uid: string;
+  profileDetails$?: Observable<ProfileDetails>;
+  profileStickers$?: Observable<ProfileSticker[]>;
 
-  constructor(private postService: PostService) {
+  constructor(private usersService: UsersService) {
    }
 
   ngOnInit(): void {
-    // this.profileDetails = this.profileService.getProfile(this.userId);
-    }
-
-  getProfileSticker(postId: number) {
-    // return this.postService.getPost(postId).sticker;
+    this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
+    this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
   }
 
+  getEmptySlots(stickers) {
+    return [...Array(5-stickers.length).keys()]; 
+  }
 }
