@@ -56,7 +56,7 @@ export class CreateComponent implements OnInit, OnDestroy {
               private afs: AngularFirestore) { }
 
   ngOnInit(): void {
-    this.userSub =  this.authService.user.subscribe(authRes => {
+    this.userSub =  this.authService.user.pipe().subscribe(authRes => {
       this.uid = authRes.id;
     }, errorMessage => {
       this.handleError(errorMessage);
@@ -149,7 +149,6 @@ export class CreateComponent implements OnInit, OnDestroy {
     let stickerSubs = this.postService.addContent(scid,this.stickerContent);
 
     forkJoin([postSubs, stickerSubs]).subscribe(results => {
-      console.log(results[0], results[1]); //log
       if (results[0] === 100 && results[1] === 100) {
         this.postService.addPostDetails(pid,this.postDetails);
         this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
@@ -157,7 +156,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.postService.addStickerDetails(pid, this.stickerDetails);
        
         this.activityService.addActivity(pid, 'post');
-        this.activityService.addCollection(new Collection(pid,this.uid,this.uid,new Date().getTime()));
+        this.activityService.addCollection(new Collection(this.uid,this.uid,pid,new Date().getTime()));
       } 
     });
     

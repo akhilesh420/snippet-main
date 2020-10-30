@@ -20,12 +20,12 @@ export class FeedService {
 
   // get explore page
   getExplorePage() {
-    return this.afs.collection<PostDetails>('post details').valueChanges({idField: 'pid'});
+    return this.afs.collection<PostDetails>('post details', ref => ref.orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
   }
 
   // get profile page
   getProfilePage(uid: string) {
-    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid)).valueChanges({idField: 'pid'});
+    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid).orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
   }
 
   // generate collection page by uid

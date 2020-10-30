@@ -39,6 +39,7 @@ export class ActivityService {
 
   //update activity for view or collection
   updateActivity(type: string, uid: string, pid: string) {
+    console.log('update activity'); //tempLog
     const queryUser = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(uid));
     const queryPost = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(pid));
 
@@ -75,6 +76,7 @@ export class ActivityService {
   // viewerID: UID of the person who viewed the post
   // vieweeID: UID of the person whose post was viewed
   addViews(pid: string, viewerID: string, vieweeID: string) {
+    console.log('view'); //tempLog
     const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
     this.viewsRef.push(obj);
     this.updateActivity('view', vieweeID, pid);
@@ -86,7 +88,6 @@ export class ActivityService {
   // collecteeID: UID of the person whose sticker was collected
   addCollection(collection: Collection) {
     const obj = {...collection};
-    console.log(obj); //log
     const id = this.afs.createId();
     this.collectionCollection.doc(id).set(obj);
     this.updateActivity('collection', collection.collecteeID, collection.pid);
@@ -94,11 +95,11 @@ export class ActivityService {
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('collecteeId','==',uid)).valueChanges();
+    return this.afs.collection<Collection>('collection', ref => ref.where('collecteeID','==',uid).orderBy('timeStamp', 'desc')).valueChanges();
   }
 
   // get collection by pid
   getPostCollection(pid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid)).valueChanges();
+    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp', 'desc')).valueChanges();
   }
 }

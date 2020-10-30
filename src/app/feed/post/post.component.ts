@@ -105,7 +105,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
       this.pid = this.postDetails.pid; //exists because of idfield
       this.setUpPost();
       this.setUpActivity();
-      this.setUpEngagement();
      }
   }
 
@@ -227,7 +226,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
           }
           if (valid) {
             if (this.engagementRatio < 1) {
-                this.activityService.addCollection(new Collection(this.myUid,this.uid,this.pid, new Date().getTime()));
+                this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
                 alert("Sticker collected! Go to My Collection and select Edit to use your new Sticker");
             } else {
               alert("No more Stickers left!");
