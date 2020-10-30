@@ -8,7 +8,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirePerformanceModule } from "@angular/fire/performance";
+import { AngularFirePerformanceModule , PerformanceMonitoringService  } from "@angular/fire/performance";
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -78,12 +78,13 @@ import { NavbarComponent } from './navbar/navbar.component';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    // AngularFirePerformanceModule
+    AngularFirePerformanceModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     TitleCasePipe,
-    Title],
+    Title,
+    PerformanceMonitoringService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
