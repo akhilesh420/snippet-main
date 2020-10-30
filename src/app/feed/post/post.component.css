@@ -297,6 +297,31 @@
   height: 57px;
 }
 
+.detailsbuttonClose {
+  width:  10em;
+	height: 10em;
+  border-top-right-radius: 30%;
+  color: #D8B869;
+}
+.detailsbuttonClose {
+	position: relative;
+	background-color: orange;
+	text-align: left;
+}
+.detailsbuttonClose:before,
+.detailsbuttonClose:after {
+	content: '';
+	position: absolute;
+	background-color: inherit;
+}
+.detailsbuttonClose,
+.detailsbuttonClose:before,
+.detailsbuttonClose:after {
+	width:  10em;
+	height: 10em;
+	border-top-right-radius: 30%;
+}
+
 @media screen and (max-width: 560px) {
   .postContainer {
     width: 85vw;
@@ -440,3 +465,4 @@
     height: 10.18vw;
   }
 }
+

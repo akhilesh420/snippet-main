@@ -151,7 +151,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   getDetailsButton() {
     let close = "https://i.ibb.co/ZmbVSG4/Post-Detail-Button-3x.png";
-    let open = "https://i.ibb.co/p1fcnfh/Post-Detail-Button-open-3x.png"
+    let open = "https://i.ibb.co/p1fcnfh/Post-Detail-Button-open-3x.png";
     return this.showDetails === false ?  close : open;
   }
 
