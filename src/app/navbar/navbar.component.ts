@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 import { UsersService } from '../shared/users.service';
 
 @Component({
@@ -24,6 +25,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   notifier$ = new Subject();
   currentRoute: string = '';
 
+  dropUp: boolean;
+
   imageProp = {'height':'100%', 'width':'auto'};
 
   constructor(private usersService: UsersService,
@@ -31,6 +34,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
+    this.dropUp = false;
+
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
@@ -46,7 +51,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-    onLoad(event: any) {
+  onLoad(event: any) {
     let width = event.target.width;
     let height= event.target.height;
     if (width/height < 1) {
@@ -61,6 +66,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   navigate(event: string) {
     if (event === 'explore') {
       this.router.navigate(['/explore']);
+    } else if (event === 'tutorial'){
+      this.router.navigate(['/tutorial']);
+    } else if (event === 'feedback'){
+      this.router.navigate(['/feedback']);
+    } else if (event === 'login'){
+      this.router.navigate(['/auth']);
     } else {
       if (this.isAuthenticated) {
         if (event === 'profile') {
@@ -72,7 +83,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         if (event === 'create') {
           this.router.navigate(['/create']);
         } 
-        if (event === 'log') {
+        if (event === 'logout') {
           this.authService.logout();
         }
       } else {

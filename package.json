@@ -24,6 +24,7 @@
     "firebase": "^7.23.0",
     "firebase-admin": "^9.2.0",
     "jquery": "^3.5.1",
+    "ng-click-outside": "^7.0.0",
     "pixelmatch": "^5.2.1",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",

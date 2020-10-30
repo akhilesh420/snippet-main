@@ -9,26 +9,21 @@
     backdrop-filter: blur(8px);
   }
 
-<<<<<<< HEAD
-.divider {
-  border-top: solid 0.8px rgb(112, 112, 112);
-}
-=======
   .divider {
     border-top: solid 0.8px rgb(112, 112, 112);
   }
   
-  .Symbol > a > img {
+  .Symbol >  img {
     height: 1.5em;
     width: auto;
   }
   
-  .exploreSymbol > a > img {
+  .exploreSymbol  > img {
     height: 1.5em;
     width: auto;
   }
   
-  .dropupSymbol > a > img {
+  .dropupSymbol > img {
     height: 1.5em;
     width: auto;
   }
@@ -47,19 +42,18 @@
     background:#080708;
     overflow: hidden;
   }
->>>>>>> 9c4b076dce243aeb1bedffc984a5ff6f0b179ce5
 
-.Symbol > a > img {
+.Symbol > img {
   height: 1.5em;
   width: auto;
 }
 
-.exploreSymbol > a > img {
+.exploreSymbol > img {
   height: 1.5em;
   width: auto;
 }
 
-.dropdownSymbol > a > img {
+.dropdownSymbol > img {
   height: 1.5em;
   width: auto;
 }
@@ -87,28 +81,28 @@
   border: 1px solid #C9BC95;
 }
   
-  .box {
-    position: fixed;
-    bottom: 70px;
-    align-self: flex-end;
-    font-size: 5vw;
-    width: 100%;
+.box {
+  position: fixed;
+  bottom: 70px;
+  align-self: flex-end;
+  font-size: 5vw;
+  width: 100%;
 
-  }
+}
 
-  .inBox {
-    border-radius: 8px;
-    border: 2px solid #D8B869;
-    color: #D8B869;
-    font-family: "ChampagneAndLimousines";
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(6vw);
-    
-  }
+.inBox {
+  border-radius: 8px;
+  border: 2px solid #D8B869;
+  color: #D8B869;
+  font-family: "ChampagneAndLimousines";
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6vw);
+  
+}
 
-  .inner {
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
+.inner {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
   
   

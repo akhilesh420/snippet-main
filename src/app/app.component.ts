@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
+import { MiscellaneousService } from './shared/miscellaneous.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private titleService: Title,
               private router: Router,
-              private infiniteScrollService: InfiniteScrollService){
+              private infiniteScrollService: InfiniteScrollService,
+              private miscellaneousService: MiscellaneousService){
   }
 
   ngOnInit(){
@@ -53,6 +55,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   scrollHandler(event) {
     this.infiniteScrollService.getScroll$.next(event); //log
+  }
+
+  onClick() {
+    this.miscellaneousService.onAppClick();
   }
 
   ngOnDestroy() {
