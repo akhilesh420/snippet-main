@@ -1,4 +1,4 @@
-.row {
+.nav{
     padding-top: 6px;
     padding-bottom: 15px;
     background-color: rgba(0, 0, 0, 0.90);
@@ -52,5 +52,28 @@
     border: 1px solid #C9BC95;
   }
   
+  .box {
+    position: fixed;
+    bottom: 70px;
+    align-self: flex-end;
+    font-size: 5vw;
+    width: 100%;
+
+  }
+
+  .inBox {
+    border-radius: 8px;
+    border: 2px solid #D8B869;
+    color: #D8B869;
+    font-family: "ChampagneAndLimousines";
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6vw);
+    
+  }
+
+  .inner {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
   
   

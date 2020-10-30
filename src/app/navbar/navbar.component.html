@@ -1,40 +1,61 @@
-<div class="row no-gutters text-center divider">
-    <div class="col text-center exploreSymbol">
-        <a (click)="navigate('explore')">
-            <img [ngClass]="currentRoute != '/explore' ? 'inactive-link' : null" src="assets/icons/exploreSymbol_2x.svg">
-        </a>
+
+    <div class = "row text-right box">
+        <div class="col"></div>
+        <div class="col"></div>
+        
+        <div class ="col inBox">
+           <div class = "row">
+                <div class="col inner">Feedback</div>
+           </div>
+           <div class=  "row">
+                <div class="col inner">Tutorial</div>
+           </div>
+           <div class=  "row">
+                <div class="col inner">Log-In</div>
+           </div>
+       </div>
     </div>
-    <div class="col text-center Symbol">
-        <a (click)="navigate('collection')">
-            <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null" 
-                  src="assets/icons/sticker-icon.svg">
-        </a>
+    
+    <div class="row no-gutters text-center divider nav">
+        <div class="col text-center exploreSymbol">
+            <a (click)="navigate('explore')">
+                <img [ngClass]="currentRoute != '/explore' ? 'inactive-link' : null" src="assets/icons/exploreSymbol_2x.svg">
+            </a>
+        </div>
+        <div class="col text-center Symbol">
+            <a (click)="navigate('collection')">
+                <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null" 
+                    src="assets/icons/sticker-icon.svg">
+            </a>
+        </div>
+        <div class="col text-center Symbol">
+            <a (click)="navigate('create')">
+                <img [ngClass]="currentRoute != '/create' ? 'inactive-link' : null" src="assets/icons/createSymbol_2x.svg">
+            </a>
+        </div>
+        <div class="col text-center">
+            <a (click)="navigate('profile')">
+                <div class="dpBorder" 
+                    [ngClass]="!currentRoute.includes('profile') ? 'inactive-dp' : null" >
+                    <img *ngIf="isAuthenticated" 
+                        [src]="displayPicture$ | async"
+                        alt="display picture"
+                        [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
+                        (load)="onLoad($event)">
+                    <img *ngIf="!isAuthenticated" 
+                        src='assets/default image/blank_image@2x.png'
+                        alt="display picture"
+                        [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
+                        (load)="onLoad($event)">
+                </div>
+            </a>
+        </div>
+        <div class="col text-center dropdownSymbol">
+            <a (click)="navigate('log')">
+                <img [ngClass]="currentRoute != '/auth' ? 'inactive-link' : null"  src="assets/icons/Login_LogOut_2x.svg">
+            </a>
+        </div>
     </div>
-    <div class="col text-center Symbol">
-        <a (click)="navigate('create')">
-            <img [ngClass]="currentRoute != '/create' ? 'inactive-link' : null" src="assets/icons/createSymbol_2x.svg">
-        </a>
-    </div>
-    <div class="col text-center">
-        <a (click)="navigate('profile')">
-            <div class="dpBorder" 
-                [ngClass]="!currentRoute.includes('profile') ? 'inactive-dp' : null" >
-                <img *ngIf="isAuthenticated" 
-                     [src]="displayPicture$ | async"
-                     alt="display picture"
-                     [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
-                     (load)="onLoad($event)">
-                <img *ngIf="!isAuthenticated" 
-                     src='assets/default image/blank_image@2x.png'
-                     alt="display picture"
-                     [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
-                     (load)="onLoad($event)">
-            </div>
-        </a>
-    </div>
-    <div class="col text-center dropdownSymbol">
-        <a (click)="navigate('log')">
-            <img [ngClass]="currentRoute != '/auth' ? 'inactive-link' : null"  src="assets/icons/Login_LogOut_2x.svg">
-        </a>
-    </div>
-</div>
+
+
+
