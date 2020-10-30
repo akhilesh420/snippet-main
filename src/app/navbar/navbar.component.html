@@ -6,7 +6,8 @@
     </div>
     <div class="col text-center Symbol">
         <a (click)="navigate('collection')">
-            <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null" src="assets/icons/sticker-icon.svg">
+            <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null" 
+                  src="assets/icons/sticker-icon.svg">
         </a>
     </div>
     <div class="col text-center Symbol">
@@ -14,11 +15,11 @@
             <img [ngClass]="currentRoute != '/create' ? 'inactive-link' : null" src="assets/icons/createSymbol_2x.svg">
         </a>
     </div>
-    <div class="col text-center ">
+    <div class="col text-center">
         <a (click)="navigate('profile')">
-            <div class="dpBorder">
+            <div class="dpBorder" 
+                [ngClass]="!currentRoute.includes('profile') ? 'inactive-dp' : null" >
                 <img *ngIf="isAuthenticated" 
-                     [ngClass]="!currentRoute.includes('profile') ? 'inactive-link' : null" 
                      [src]="displayPicture$ | async"
                      alt="display picture"
                      [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"

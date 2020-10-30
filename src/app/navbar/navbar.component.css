@@ -48,6 +48,9 @@
     filter: grayscale(60%);
   }
   
+  .inactive-dp {
+    border: 1px solid #C9BC95;
+  }
   
   
   
