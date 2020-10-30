@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { map, take } from 'rxjs/operators';
 import { Activity, Collection, View } from './activity.model';
 
@@ -10,14 +11,18 @@ import { Activity, Collection, View } from './activity.model';
 })
 export class ActivityService {
 
+  //Realtime database
   private viewsRef: any;
-  private collectionRef: any;
   private activityRef: any;
 
-  constructor(private db: AngularFireDatabase) {
+  //Firestore Collection
+  private collectionCollection: AngularFirestoreCollection<Collection>;
+
+  constructor(private db: AngularFireDatabase,
+              private afs: AngularFirestore) {
     this.viewsRef = db.list<View>('views');
-    this.collectionRef =  db.list<Collection>('collection');
-    this.activityRef =  db.list<Collection>('activity');
+    this.activityRef =  db.list<Activity>('activity');
+    this.collectionCollection =  afs.collection<Collection>('collection');
    }
 
 
@@ -38,13 +43,15 @@ export class ActivityService {
     const queryPost = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(pid));
 
     queryUser.snapshotChanges().pipe( //update old activity for user
-      map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-        ),take(1))
+        map(changes => 
+          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))),
+          take(1)
+        )
       .subscribe((response) => { 
+          console.log(uid,pid,response); //log
           if (type === 'view') {
             this.activityRef.update(response[0].key, {views: response[0].views + 1});
-          } else if(type === 'collection') {
+          } else if (type === 'collection') {
             this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
           }
     })
@@ -64,32 +71,34 @@ export class ActivityService {
   }
 
   // --------------------------------------- Views ---------------------------------------
-  // add view to cloud firestore
+  // add view to realtime db
   // viewerID: UID of the person who viewed the post
   // vieweeID: UID of the person whose post was viewed
   addViews(pid: string, viewerID: string, vieweeID: string) {
     const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
     this.viewsRef.push(obj);
-    this.updateActivity('view',vieweeID,pid);
+    this.updateActivity('view', vieweeID, pid);
   }
 
   // --------------------------------------- Collection ---------------------------------------
   // add collector to cloud firestore
   // collectorID: UID of the person who collected the sticker
   // collecteeID: UID of the person whose sticker was collected
-  addCollection(pid: string, collectorID: string, collecteeID: string) {
-    const obj = {collectorID: collectorID, collecteeID: collecteeID, pid: pid, timeStamp: new Date().getTime()};
-    this.collectionRef.push(obj);
-    this.updateActivity('collection',collecteeID,pid);
+  addCollection(collection: Collection) {
+    const obj = {...collection};
+    console.log(obj); //log
+    const id = this.afs.createId();
+    this.collectionCollection.doc(id).set(obj);
+    this.updateActivity('collection', collection.collecteeID, collection.pid);
   }
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.db.list<Collection>('collection', ref => ref.orderByChild('collectorID').equalTo(uid)).valueChanges();
+    return this.afs.collection<Collection>('collection', ref => ref.where('collecteeId','==',uid)).valueChanges();
   }
 
   // get collection by pid
   getPostCollection(pid: string) {
-    return this.db.list<Collection>('collection', ref => ref.orderByChild('pid').equalTo(pid)).valueChanges();
+    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid)).valueChanges();
   }
 }

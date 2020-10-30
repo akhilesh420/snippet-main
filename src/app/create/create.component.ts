@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
 import { PostService } from '../shared/post.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivityService } from '../shared/activity.service';
+import { Collection } from '../shared/activity.model';
 
 @Component({
   selector: 'app-create',
@@ -156,7 +157,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.postService.addStickerDetails(pid, this.stickerDetails);
        
         this.activityService.addActivity(pid, 'post');
-        this.activityService.addCollection(pid,this.uid,this.uid);
+        this.activityService.addCollection(new Collection(pid,this.uid,this.uid,new Date().getTime()));
       } 
     });
     

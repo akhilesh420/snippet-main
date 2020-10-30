@@ -8,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef }
 import { take, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
-import { Activity } from 'src/app/shared/activity.model';
+import { Activity, Collection } from 'src/app/shared/activity.model';
 import { WindowStateService } from 'src/app/shared/window.service';
 
 @Component({
@@ -227,7 +227,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
           }
           if (valid) {
             if (this.engagementRatio < 1) {
-                this.activityService.addCollection(this.pid,this.myUid,this.uid);
+                this.activityService.addCollection(new Collection(this.myUid,this.uid,this.pid, new Date().getTime()));
                 alert("Sticker collected! Go to My Collection and select Edit to use your new Sticker");
             } else {
               alert("No more Stickers left!");

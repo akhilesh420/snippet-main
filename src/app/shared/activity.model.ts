@@ -14,7 +14,7 @@ export class Collection {
     public collectorID: string,
     public collecteeID: string,
     public pid: string,
-    public timeStamp: Date
+    public timeStamp: number
   ) {}
 
 }

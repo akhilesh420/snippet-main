@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   uid: string;
   isAuthenticated: boolean;
   notifier$ = new Subject();
-  currentRoute: string;
+  currentRoute: string = '';
 
   imageProp = {'height':'100%', 'width':'auto'};
 
