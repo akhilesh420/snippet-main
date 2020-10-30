@@ -97,6 +97,7 @@
       {{postDetails.title}}
     </div>
     <div class="showDetails" (click)="showDetails = !showDetails">
+      <!-- <div class="detailsbuttonClose"></div> -->
       <img src={{getDetailsButton()}} alt="Post-Detail-Button">
     </div>
     <div *ngIf="showDetails === true">

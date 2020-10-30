@@ -4,6 +4,7 @@ import { PostService } from './../shared/post.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PostDetails } from './../shared/post.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AngularFirePerformance, trace } from '@angular/fire/performance';
 
 @Component({
   selector: 'app-single-post',
@@ -19,10 +20,11 @@ export class SinglePostComponent implements OnInit, OnDestroy {
   notifier$ = new Subject();
 
   constructor(private postService: PostService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private performance: AngularFirePerformance) { }
 
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
+   
     this.pid = this.route.snapshot.params['pid'];
     this.setUp();
 
@@ -34,9 +36,12 @@ export class SinglePostComponent implements OnInit, OnDestroy {
         console.log(errorMessage);
       }
     )
+    
   }
 
-  setUp() {
+  async setUp() {
+    const trace = await this.performance.trace('PostDetails-trace');
+    trace.start();
     this.postService.getPostDetails(this.pid).pipe(takeUntil(this.notifier$),
       map(changes => { //get the post detail for pid
         return { pid: this.pid, ...changes};
@@ -45,6 +50,7 @@ export class SinglePostComponent implements OnInit, OnDestroy {
       let postDetailsList: PostDetails[] = [];
       postDetailsList.push(res);
       this.postsList.next(postDetailsList);
+      trace.stop();
     })
   }
 

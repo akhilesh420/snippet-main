@@ -297,6 +297,7 @@
   height: 57px;
 }
 
+
 @media screen and (max-width: 560px) {
   .postContainer {
     width: 85vw;
@@ -440,3 +441,4 @@
     height: 10.18vw;
   }
 }
+

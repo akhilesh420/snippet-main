@@ -1,4 +1,4 @@
-.row {
+.nav{
     padding-top: 6px;
     padding-bottom: 15px;
     background-color: rgba(0, 0, 0, 0.90);
@@ -9,9 +9,45 @@
     backdrop-filter: blur(8px);
   }
 
+<<<<<<< HEAD
 .divider {
   border-top: solid 0.8px rgb(112, 112, 112);
 }
+=======
+  .divider {
+    border-top: solid 0.8px rgb(112, 112, 112);
+  }
+  
+  .Symbol > a > img {
+    height: 1.5em;
+    width: auto;
+  }
+  
+  .exploreSymbol > a > img {
+    height: 1.5em;
+    width: auto;
+  }
+  
+  .dropupSymbol > a > img {
+    height: 1.5em;
+    width: auto;
+  }
+  
+  .dpBorder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 1.5em;
+    height: 1.5em;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px solid #D8B869;
+    background:#080708;
+    overflow: hidden;
+  }
+>>>>>>> 9c4b076dce243aeb1bedffc984a5ff6f0b179ce5
 
 .Symbol > a > img {
   height: 1.5em;
@@ -51,5 +87,28 @@
   border: 1px solid #C9BC95;
 }
   
+  .box {
+    position: fixed;
+    bottom: 70px;
+    align-self: flex-end;
+    font-size: 5vw;
+    width: 100%;
+
+  }
+
+  .inBox {
+    border-radius: 8px;
+    border: 2px solid #D8B869;
+    color: #D8B869;
+    font-family: "ChampagneAndLimousines";
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(6vw);
+    
+  }
+
+  .inner {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
   
   
