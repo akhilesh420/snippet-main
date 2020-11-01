@@ -39,7 +39,7 @@
 }
 
 .dpBorder img{
-  width: 100%;
+  border-radius: 50%;
 }
 
 .bio {
@@ -273,7 +273,6 @@
   .views > img {
     width: 5.36vw;
   }
-
 
   .edit {
     width: 3.2vw; 

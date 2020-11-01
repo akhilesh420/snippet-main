@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 export class HolderComponent implements OnInit {
 
   @Input() uid: string;
+  @Input() stickerSize: string;
   profileDetails$?: Observable<ProfileDetails>;
   profileStickers$?: Observable<ProfileSticker[]>;
 

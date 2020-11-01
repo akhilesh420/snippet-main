@@ -1,19 +1,17 @@
-<div class="row" Style="padding:0; width: 100%; margin-top: 4px;">
-  <div class="col-md-7" [ngStyle]="{'padding-left':'0'}">
-    <span class="float-left Name" *ngIf="profileDetails$ | async as details">
+<div class="row master">
+  <div class="col" style="padding-left: 0">
+    <span class="float-left username" *ngIf="profileDetails$ | async as details">
       {{details.username}}
     </span>
   </div>
    <!-- profile stickers -->
-   <div class="col-md-5" style="padding: 0px">
+   <div class="col" style="padding: 0px">
       <div class="row" style="width: 100%" *ngIf="profileStickers$ | async as stickers">
         <div class="col" 
-          *ngFor="let i of getEmptySlots(stickers)"
-          style="padding: 0px; height: 24px">
+          *ngFor="let i of getEmptySlots(stickers)">
         </div>
         <div class="col"
-          *ngFor="let sticker of stickers"
-          style="padding: 0px; height: 24px">
+          *ngFor="let sticker of stickers">
           <app-sticker [pid]="sticker.pid" [size]="'24px'"></app-sticker>
         </div>
     </div>

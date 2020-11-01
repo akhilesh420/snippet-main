@@ -125,7 +125,7 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.userService.addProfileDetails(resData.localId, profileDetails);
               this.userService.addPersonalDetails(resData.localId,personalDetails);
               this.userService.addProfileStickers(resData.localId,[]);
-              this.userService.addDisplayPicture(resData.localId, new DisplayPicture(resData.localId, new Date(), 'image'), null);
+              this.userService.addDisplayPicture(resData.localId, new DisplayPicture(new Date(), 'null'), null);
               this.activityService.addActivity(resData.localId, 'user')
               form.reset();
               this.router.navigate(['/profile/' + resData.localId + '/edit']);

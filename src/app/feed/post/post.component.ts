@@ -243,14 +243,13 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   getHolderList() {
     this.holderToggle = !this.holderToggle;
-    this.activityService.getHolderList(this.pid).pipe(takeUntil(this.notifier$)).pipe(map(data => {
+    this.activityService.getHolderList(this.pid, this.uid).pipe(takeUntil(this.notifier$)).pipe(map(data => {
       const index = data.findIndex(collection => {
         return collection.collectorID == this.myUid;
       });
       return data.splice(index,1);
     })).subscribe(response => {
       this.collectionList = response;
-      console.log(response); //tempLog
     });
   }
 

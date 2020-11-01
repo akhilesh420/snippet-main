@@ -43,27 +43,20 @@ export class FeedComponent implements OnInit, OnDestroy {
 
     this.postsList$.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.postsList = response;
-      this.dateSort();
-      this.initBatch();
-      this.infiniteScrollService.getScroll$.pipe(takeUntil(this.notifier$))
-      .subscribe((event:string) => {
-        event === 'error' ? this.failSafe = true : this.failSafe = false;
-        if (!this.done && !this.failSafe) {
-          if (event === 'bottom') {
-            this.loading = true;
-            this.moreBatch();
+      if (this.postsList) {
+        this.initBatch();
+        this.infiniteScrollService.getScroll$.pipe(takeUntil(this.notifier$))
+        .subscribe((event:string) => {
+          event === 'error' ? this.failSafe = true : this.failSafe = false;
+          if (!this.done && !this.failSafe) {
+            if (event === 'bottom') {
+              this.loading = true;
+              this.moreBatch();
+            }
           }
-        }
-      })
+        })
+      } else { this.loading = false;}
     });
-  }
-
-  dateSort() { //sort by date depending on if the data was fetched from cloud firestore or realtime database respectively
-    if (this.feedType === 'afs') {
-      this.postsList.sort((a, b) => b.dateCreated.toMillis() - a.dateCreated.toMillis())
-    } else if (this.feedType === 'db') {
-      this.postsList.sort((a, b) => b.dateCreated - a.dateCreated);
-    }
   }
 
   initBatch() { // get initial batch of posts to render

@@ -286,7 +286,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         this.usersService.updateDisplayPicture(this.uid, this.displayPicture).pipe(takeUntil(this.notifier$))
         .subscribe(response => {
           if (response === 100 && this.isSaving) {
-            this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(this.uid, new Date(), this.displayPicture.type));
+            this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(new Date(), this.displayPicture.type));
             this.finishUp();
           }
         })

@@ -25,7 +25,6 @@ export class ProfileSticker {
 export class DisplayPicture {
 
   constructor(
-    public name: string,
     public dateCreated: Date,
     public fileFormat: string
   ) {}

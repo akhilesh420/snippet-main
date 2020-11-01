@@ -90,5 +90,3 @@ import { ClickOutsideModule } from 'ng-click-outside';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-// ab acha lag raha hai

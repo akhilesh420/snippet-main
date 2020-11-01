@@ -7,6 +7,7 @@ import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
 import { MiscellaneousService } from './shared/miscellaneous.service';
+import * as screenfull from 'screenfull';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit, OnDestroy {
   currentRoute: string;
   notifier$ = new Subject();
 
+  elem;
+
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
               private titleService: Title,
@@ -29,6 +32,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(){
+
+    //make app fullscreen
+    if (screenfull.isEnabled) {
+      screenfull.toggle();
+    }
+
     this.authService.autoLogin();
     this.titleService.setTitle("Snippet");
     this.windowService.checkWidth();

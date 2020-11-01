@@ -144,20 +144,16 @@ export class UsersService {
   }
 
   // --------------------------------------- Display Picture ---------------------------------------
-  // Get display picture from cloud firestore by UID
-  private getDisplayPictureRef(uid: string) {
-    return this.afs.doc<DisplayPicture>('display picture/' + uid).valueChanges();
-  }
 
   // Add display picture from cloud firestore
   private addDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
-    const dp = {name: uid, dateCreated: displayPicture.dateCreated}
+    const dp = {dateCreated: displayPicture.dateCreated}
     this.displayPictureCollection.doc(uid).set(dp);
   }
 
   // Update display picture from cloud firestore
   updateDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
-    const dp = {name: uid, dateCreated: displayPicture.dateCreated}
+    const dp = {dateCreated: displayPicture.dateCreated}
     this.displayPictureCollection.doc(uid).update(dp);
   }
 
@@ -170,11 +166,9 @@ export class UsersService {
     if (index === -1) {
       this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(this.placeholderImg)});
       let secIndex = this.displayPictureList.length - 1;
-      this.getDisplayPictureRef(uid).subscribe((response: DisplayPicture) => {
-        const ref = this.storage.ref('Display picture/' + uid);
-        ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
-          this.displayPictureList[secIndex].obs.next(response);
-        });
+      const ref = this.storage.ref('Display picture/' + uid);
+      ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
+        this.displayPictureList[secIndex].obs.next(response);
       });
       return this.displayPictureList[secIndex].obs
     } else {
@@ -214,7 +208,7 @@ export class UsersService {
       // Server-side errors
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    return throwError(errorMessage);
+    return errorMessage;
   }
 
 }

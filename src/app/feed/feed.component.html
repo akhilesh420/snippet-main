@@ -6,7 +6,7 @@
         <!-- <div *ngIf="!done" class="fail-safe">
           <img [src]="addIcon" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
         </div> -->
-        <p *ngIf="posts.length === 0;">Thats all folks!</p>
+        <p *ngIf="posts.length === 0 || !postsList;">Thats all folks!</p>
       </div>
       <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">
         <app-loading-spinner></app-loading-spinner>

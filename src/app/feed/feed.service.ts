@@ -52,17 +52,8 @@ export class FeedService {
     
     return collectionList.pipe(map(postsList => { 
       console.log(postsList);//log
-      if (postsList.length === 0) {
-        return undefined;
-      }
       postsList = postsList.filter(post => { //Filter out users own posts
         return uid != post.uid;
-      })
-      postsList.forEach(post => { //change dateCreated with collection timestamp to sort properly in feed
-        const index = collectionDetails.findIndex(collection => {
-          return collection.pid === post.pid;
-        });
-        post.dateCreated = collectionDetails[index].timeStamp;
       })
       return postsList;
     }));

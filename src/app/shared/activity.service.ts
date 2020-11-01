@@ -95,7 +95,7 @@ export class ActivityService {
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('collecteeID','==',uid).orderBy('timeStamp', 'desc')).valueChanges();
+    return this.afs.collection<Collection>('collection', ref => ref.where('collectorID','==',uid).orderBy('timeStamp', 'desc')).valueChanges();
   }
 
   // get collection by pid
@@ -103,7 +103,10 @@ export class ActivityService {
     return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp', 'desc')).valueChanges();
   }
 
-  getHolderList(pid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp')).valueChanges();
+  getHolderList(pid: string, uid: string) {
+    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid)
+                                                                   .where('collectorID','!=',uid)
+                                                                   .orderBy('collectorID')
+                                                                   .orderBy('timeStamp','desc')).valueChanges();
   }
 }
