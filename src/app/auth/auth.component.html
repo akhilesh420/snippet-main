@@ -84,7 +84,7 @@
                   for="switch">
             &nbsp; | &nbsp;{{ isLoginMode ? "Don't have an account?" : 'Already have an account?' }}
           </label>
-          <label *ngIf="isLoginMode" (click)="onSwitchMode('forget')" >
+          <label *ngIf="isLoginMode" (click)="onSwitchMode('forget')" style="margin-bottom: 0; top: 50%; transform: translate(0,4px); font-size: 20px;">
             Forgot password?
           </label>
         </div>
