@@ -283,6 +283,10 @@
   overflow-y: auto;
 }
 
+.holderContainerPlaceholder {
+  color: #D8B869;
+}
+
 .add-icon {
   position: absolute;
   top: 50%;

@@ -152,6 +152,11 @@
       </div>
       <!-- holder list popup -->
       <div class="holderContainer" *ngIf="holderToggle === true">
+        <div class="holderContainerPlaceholder">
+          <br>
+          <p>No holders</p>
+          <br>
+        </div>
         <div class="holderListContainer">
           <app-holder *ngFor="let holder of collectionList" [uid]="holder.collectorID"></app-holder>
         </div>

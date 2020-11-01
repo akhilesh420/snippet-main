@@ -125,6 +125,12 @@ input.invalidAmount {
   padding-right: 10px;
 }
 
+.placeholder {
+  color: #DCB65A;
+  text-align: center;
+  align-content: center;
+}
+
 .sticker{
   border: 1px solid #707070;
   border-radius: 50%;
