@@ -2,6 +2,7 @@ import { ProfileDetails, ProfileSticker } from '../../../shared/profile.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { UsersService } from 'src/app/shared/users.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-holder',
@@ -15,7 +16,8 @@ export class HolderComponent implements OnInit {
   profileDetails$?: Observable<ProfileDetails>;
   profileStickers$?: Observable<ProfileSticker[]>;
 
-  constructor(private usersService: UsersService) {
+  constructor(private usersService: UsersService,
+              private router: Router) {
    }
 
   ngOnInit(): void {
@@ -25,5 +27,9 @@ export class HolderComponent implements OnInit {
 
   getEmptySlots(stickers) {
     return [...Array(5-stickers.length).keys()]; 
+  }
+
+  navigate() {
+    this.router.navigate(['/profile/' + this.uid]);
   }
 }
