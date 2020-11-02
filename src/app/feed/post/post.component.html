@@ -152,14 +152,19 @@
       </div>
       <!-- holder list popup -->
       <div class="holderContainer" *ngIf="holderToggle === true">
-        <div class="holderContainerPlaceholder">
-          <br>
-          <p>No holders</p>
-          <br>
+        <div *ngIf="collectionList; else holderLoading">
+          <div *ngIf="collectionList.length === 0;" class="holderContainerPlaceholder">
+            <br>
+            <p>No holders</p>
+            <br>
+          </div>
+          <div class="holderListContainer">
+            <app-holder *ngFor="let holder of collectionList" [uid]="holder.collectorID" [stickerSize]="stickerSize"></app-holder>
+          </div>
         </div>
-        <div class="holderListContainer">
-          <app-holder *ngFor="let holder of collectionList" [uid]="holder.collectorID" [stickerSize]="stickerSize"></app-holder>
-        </div>
+        <ng-template #holderLoading> 
+          <app-loading-spinner class="holder-loader"></app-loading-spinner>
+      </ng-template>
       </div>
     </div>
   </div>

@@ -115,36 +115,41 @@
               <div class="row" style="margin-top: 10.8px">
                 <div class="col-12">
                   <div class="stickerSelect">
-                    <div class="placeholder">
-                      <br><br><br>
-                      <p>You have no Stickers</p><br>
-                      <p>Go collect some</p><br>
-                      <p>Then come back here</p>
-                    </div>
-                    <ul class="list-group"
-                        *ngFor="let collection of collectionList | dateSort :'collectionDisplay'">
-                      <li class="list-group-item"
-                          (click)="onStickerClick(collection)"
-                          style="cursor: pointer; display: inline;"
-                          [ngStyle]="{'background': collection.colour}">
-                        <div class="row">
-                          <div class="col-1">
-                            <div class="sticker"
-                             style="width: 30px; height: 30px;">
-                              <img [src]='collection.sticker | async'
-                               alt="sticker"
-                               #sticker
-                               [ngStyle]="setUpStickerSize(sticker)">
+                    <div *ngIf="collectionList; else collectionLoading;">
+                      <div class="placeholder" *ngIf="collectionList.length === 0;">
+                        <br><br><br>
+                        <p>You have no Stickers</p><br>
+                        <p>Go collect some</p><br>
+                        <p>Then come back here</p>
+                      </div>
+                      <ul class="list-group"
+                          *ngFor="let collection of collectionList | dateSort :'collectionDisplay'">
+                        <li class="list-group-item"
+                            (click)="onStickerClick(collection)"
+                            style="cursor: pointer; display: inline;"
+                            [ngStyle]="{'background': collection.colour}">
+                          <div class="row">
+                            <div class="col-1">
+                              <div class="sticker"
+                               style="width: 30px; height: 30px;">
+                                <img [src]='collection.sticker | async'
+                                 alt="sticker"
+                                 #sticker
+                                 [ngStyle]="setUpStickerSize(sticker)">
+                              </div>
+                            </div>
+                            <div class="col-10 stickerTitle" 
+                                 style="padding-left: 30px; word-wrap: break-word"
+                                 *ngIf="collection.postDetails">
+                              {{collection.postDetails.title}}
                             </div>
                           </div>
-                          <div class="col-10 stickerTitle" 
-                               style="padding-left: 30px; word-wrap: break-word"
-                               *ngIf="collection.postDetails">
-                            {{collection.postDetails.title}}
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
+                        </li>
+                      </ul>
+                    </div>
+                    <ng-template #collectionLoading> 
+                      <app-loading-spinner class="collection-loader"></app-loading-spinner>
+                    </ng-template>
                   </div>
                 </div>
               </div>

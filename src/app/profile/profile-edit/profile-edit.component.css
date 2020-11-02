@@ -218,6 +218,13 @@ li:hover {
   width: 100%;
 }
 
+.collection-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(0.7,0.7);
+}
+
 @media screen and (max-width: 560px) {
   .inputFields {
     width: 84.82vw;

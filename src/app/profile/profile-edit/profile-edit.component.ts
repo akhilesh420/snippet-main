@@ -35,7 +35,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   profileStickerLoad$ = new Subject();
   counter: number;
 
-  collectionList: CollectionDisplay[] = [];
+  collectionList: CollectionDisplay[];
   profileStickers: ProfileSticker[];
   displayPicture: any;
   profileDetails: ProfileDetails = new ProfileDetails('proxy', new Biography('','',''));

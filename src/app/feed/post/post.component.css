@@ -287,6 +287,13 @@
   color: #D8B869;
 }
 
+.holder-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
 .add-icon {
   position: absolute;
   top: 50%;

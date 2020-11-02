@@ -29,7 +29,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   profileDetails$?: Observable<ProfileDetails>;
   profileStickers$?: Observable<ProfileSticker[]>;
   notifier$ = new Subject();
-  collectionList: Collection[] = [];
+  collectionList: Collection[];
 
   stickerDetails: StickerDetails;
   activity: Activity;
