@@ -1,8 +1,9 @@
 <div class="row master">
-  <div class="col" style="padding-left: 0">
+  <div class="col" style="padding: 0">
     <span class="float-left username" 
           *ngIf="profileDetails$ | async as details"
-          (click)="navigate()">
+          (click)="navigate()"
+          [ngStyle]="{'font-size': getFontSize(details.username, 9, usernameFontSize)}">
       {{details.username}}
     </span>
   </div>

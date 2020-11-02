@@ -29,7 +29,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   profileDetails$?: Observable<ProfileDetails>;
   profileStickers$?: Observable<ProfileSticker[]>;
   notifier$ = new Subject();
-  collectionList: Collection[];
+  collectionList: Observable<Collection[]>;
 
   stickerDetails: StickerDetails;
   activity: Activity;
@@ -58,6 +58,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   stickerSize: string;
   userSubs: Subscription;
   fetchingWindow: boolean;
+  usernameFontSize: number;
 
   constructor(private postService: PostService,
               private authService: AuthService,
@@ -78,10 +79,12 @@ import { WindowStateService } from 'src/app/shared/window.service';
           this.tabClose = (71*val/560).toString() + 'px';
           this.tabOpen = (400*val/560).toString() + 'px';
           this.stickerSize = (24*val/560).toString() + 'px';
-        } else {
+          this.usernameFontSize = 18*val/560;
+      } else {
           this.tabClose = '71px';
           this.tabOpen = '400px';
           this.stickerSize = '24px'
+          this.usernameFontSize = 18;
         }
       }
     });
@@ -243,14 +246,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   getHolderList() {
     this.holderToggle = !this.holderToggle;
-    this.activityService.getHolderList(this.pid, this.uid).pipe(takeUntil(this.notifier$)).pipe(map(data => {
-      const index = data.findIndex(collection => {
-        return collection.collectorID == this.myUid;
-      });
-      return data.splice(index,1);
-    })).subscribe(response => {
-      this.collectionList = response;
-    });
+    this.collectionList = this.activityService.getHolderList(this.pid, this.uid);
   }
 
   ngOnDestroy() {
