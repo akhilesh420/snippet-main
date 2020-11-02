@@ -21,7 +21,7 @@
     <div class="profileDetails">
       <a style = "cursor: pointer;" [routerLink]='profileRoute'>
         <div class="name"
-             style="width: 180px; overflow-X: scroll; overflow-y: hidden; text-align: left;"
+             style="width: 200px; overflow-X: scroll; overflow-y: hidden; text-align: left;"
              *ngIf="profileDetails$ | async as details">
           {{details.username}}
         </div>
