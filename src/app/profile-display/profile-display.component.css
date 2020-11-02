@@ -123,40 +123,52 @@
   width: 30px;
 }
 
+.edit-group {
+  padding-left: 8%;
+}
+
 .edit {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-60%);
   width: 18px; 
-  margin-top: 9px;
   height: auto;
+  justify-content: left;
 }
 
 .edit-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(0, -13%);
   color: #D8B869;
   font-size: 18.5px;
-  margin: 0px;
-  justify-content: center;
-  padding-left: 18px;
+}
+
+.edit-text-align {
+  padding: 0;
+  padding-top: 5%;
+  margin:0;
 }
 
 .bottom-row {
   width: 100%;
+  margin-top: 15px;
+}
+
+.edit-col {
+  height: 30px;
 }
 
 .username {
+  position: relative;
+  height: 30px;
   font-weight: bold;
   color: #F7F7F7;
   letter-spacing: 0.16em;
   padding-right: 25px;
-  padding-top: 20px;
   text-align: right;
   overflow-y: scroll;
+}
+
+.username-span {
+  position: absolute;
+  top: 50%;
+  right: 25px;
+  transform: translate(0,-50%);
 }
 
 .profile-sticker-row {
@@ -169,6 +181,11 @@
 .no-margin-right-no-padding {
   padding: 0px; 
   margin-right: 0px;
+}
+
+.no-margin-no-padding { 
+  margin: 0px;
+  padding: 0px;
 }
 
 .profile-sticker-right-col {

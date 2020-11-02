@@ -13,7 +13,6 @@ export class HolderComponent implements OnInit {
 
   @Input() uid: string;
   @Input() stickerSize: string;
-  @Input() usernameFontSize: number;
 
   profileDetails$?: Observable<ProfileDetails>;
   profileStickers$?: Observable<ProfileSticker[]>;
@@ -33,12 +32,5 @@ export class HolderComponent implements OnInit {
 
   navigate() {
     this.router.navigate(['/profile/' + this.uid]);
-  }
-
-  getFontSize(value: string, limit: number, fontsize: number) {
-    const len = value.length;
-    const multiply = limit >= len ? 1 : limit/len;
-    const size = multiply * fontsize;
-    return size.toString() + 'px';
   }
 }

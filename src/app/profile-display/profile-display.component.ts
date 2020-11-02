@@ -39,6 +39,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   imageProp = {'height':'100%', 'width':'auto'};
 
   usernameFontSize: number;
+  usernamePadding: string;
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
@@ -138,11 +139,11 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.router.navigate([this.profileRoute]);
   }
 
-  getFontSize(value: string, limit: number, fontsize: number) {
+  getFontStyle(value: string, limit: number, fontsize: number) {
     const len = value.length;
     const multiply = limit >= len ? 1 : limit/len;
     const size = multiply * fontsize;
-    return size.toString() + 'px';
+    return {'font-size': size.toString() + 'px'};
   }
 
   ngOnDestroy() {

@@ -40,6 +40,7 @@ import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-pag
 import { ScrollableDirective } from './shared/directives/scrollable.directive';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { ShortenPipe } from './shared/shorten.pipe';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { ClickOutsideModule } from 'ng-click-outside';
     DateSortPipe,
     TutorialPageComponent,
     ScrollableDirective,
-    NavbarComponent
+    NavbarComponent,
+    ShortenPipe
   ],
   imports: [
     BrowserModule,

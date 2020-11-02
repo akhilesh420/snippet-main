@@ -23,7 +23,7 @@
         <div class="name"
              style="width: 200px; overflow-X: scroll; overflow-y: hidden; text-align: left;"
              *ngIf="profileDetails$ | async as details">
-          {{details.username}}
+          {{details.username | shorten : 7}}
         </div>
       </a>
       <!-- Profile Stickers -->
@@ -159,7 +159,7 @@
             <br>
           </div>
           <div class="holderListContainer">
-            <app-holder *ngFor="let holder of collection" [uid]="holder.collectorID" [stickerSize]="stickerSize" [usernameFontSize]="usernameFontSize"></app-holder>
+            <app-holder *ngFor="let holder of collection" [uid]="holder.collectorID" [stickerSize]="stickerSize"></app-holder>
           </div>
         </div>
         <ng-template #holderLoading> 

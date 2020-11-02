@@ -2,9 +2,8 @@
   <div class="col" style="padding: 0">
     <span class="float-left username" 
           *ngIf="profileDetails$ | async as details"
-          (click)="navigate()"
-          [ngStyle]="{'font-size': getFontSize(details.username, 9, usernameFontSize)}">
-      {{details.username}}
+          (click)="navigate()">
+      {{details.username | shorten : 8}}
     </span>
   </div>
    <!-- profile stickers -->

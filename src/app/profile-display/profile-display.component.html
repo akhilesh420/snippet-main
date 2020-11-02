@@ -71,19 +71,25 @@
             </div>
           </div>
         </div>
-        <div class="row bottom-row">
-          <div class="col-2">
-            <a style="cursor: pointer;" (click)='editProfile()' *ngIf="uid === myUid">
-              <img class="edit" src="https://i.ibb.co/fQ2KFj8/icons8-edit.png" alt="icons-edit" >
-              <p class="edit-text">Edit</p>
-            </a>
+        <div class="row bottom-row" style="position: relative;">
+          <div class="col-3 edit-group" style="cursor: pointer;" (click)='editProfile()' *ngIf="uid === myUid">
+            <div class="row no-margin-no-padding">
+              <div class="col-3 no-margin-no-padding" >
+                <img class="edit" src="https://i.ibb.co/fQ2KFj8/icons8-edit.png" alt="icons-edit" >
+              </div>
+              <div class="col-9 edit-text-align">
+                <span class="edit-text">Edit</span>
+              </div>
+            </div>
           </div>
-          <div class="col-1 no-margin-right-no-padding" ></div>
+          <!-- <div class="col-1 no-margin-no-padding" ></div> -->
           <div class="col-9 username float-right" 
                style="cursor: pointer;" 
-              (click)="navigateRoute()" 
-              [ngStyle]="{'font-size': getFontSize(details.username, 10, usernameFontSize)}">
+              (click)="navigateRoute()"
+              [ngStyle]="getFontStyle(details.username, 10, 30)">
+              <span class="username-span">
                 {{details.username}}
+              </span>  
           </div>
         </div>
       </div>
