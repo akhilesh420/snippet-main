@@ -35,7 +35,7 @@
             </div>
           </div>
           <!-- Bio -->
-          <div class="col bio" align="left">
+          <div class="col-9 bio" align="left">
             <div class="row">
               <div class="col-12 title">
                 {{details.bio.title}}
@@ -78,10 +78,12 @@
               <p class="edit-text">Edit</p>
             </a>
           </div>
-          <div class="col username">
-            <span class="float-right">
-              <div style="cursor: pointer;" (click)="navigateRoute()">{{details.username}}</div>
-            </span>
+          <div class="col-1 no-margin-right-no-padding" ></div>
+          <div class="col-9 username float-right" 
+               style="cursor: pointer;" 
+              (click)="navigateRoute()" 
+              [ngStyle]="{'font-size': getFontSize(details.username, 10, usernameFontSize)}">
+                {{details.username}}
           </div>
         </div>
       </div>

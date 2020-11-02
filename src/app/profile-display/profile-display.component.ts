@@ -8,6 +8,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-profile-display',
@@ -37,11 +38,14 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   imageProp = {'height':'100%', 'width':'auto'};
 
+  usernameFontSize: number;
+
   constructor( private authService: AuthService,
                private usersService: UsersService,
                private activityService: ActivityService,
                private router: Router,
-               private windowService: WindowStateService) { }
+               private windowService: WindowStateService,
+               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.fetchingWindow = true;
@@ -71,8 +75,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
         // this.tabClose = (71*val/560).toString() + 'px';
         // this.tabOpen = (400*val/560).toString() + 'px';
         this.stickerSize = (60*val/560).toString() + 'px';
+        this.usernameFontSize = 30*val/560;
       } else {
         this.stickerSize = '60px';
+        this.usernameFontSize = 30;
       }
     });
   }
@@ -130,6 +136,13 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   navigateRoute() {
     this.router.navigate([this.profileRoute]);
+  }
+
+  getFontSize(value: string, limit: number, fontsize: number) {
+    const len = value.length;
+    const multiply = limit >= len ? 1 : limit/len;
+    const size = multiply * fontsize;
+    return size.toString() + 'px';
   }
 
   ngOnDestroy() {

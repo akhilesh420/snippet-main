@@ -194,12 +194,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 4*1024*1024) { //Firebase upload max size 10 MB
+        if (file.size < 10*1024*1024) { 
           this.error = null;
           this.displayPicture = file;
           this.displayPicture$.next(event.target.result);
         } else {
-          this.error ='Post file size too big! There is a 4 MB limit';
+          this.error ='Post file size too big! There is a 10 MB limit';
         }
       }
     }
@@ -246,13 +246,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   onSubmit(f) {
     if (!this.isSaving) {
-      if (this.title && this.title.length > 15) {
+      if (this.title && this.title.length > 25) {
         return;
       }
-      if (this.location && this.location.length > 15) {
+      if (this.location && this.location.length > 25) {
         return;
       }
-      if (this.content && this.content.length > 90) {
+      if (this.content && this.content.length > 95) {
         return;
       }
 

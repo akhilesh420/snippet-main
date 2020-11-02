@@ -38,17 +38,13 @@
   transform: translate(0%,6.6%);
 }
 
-.dpBorder img{
-  border-radius: 50%;
-}
-
 .bio {
   font-size: 12px;
   line-height: 22px;
   letter-spacing: -0.0003em;
   padding-left: 25px; 
   padding-right: 0px;
-
+  width: 100%;
 }
 
 .title {
@@ -131,7 +127,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-35%);
+  transform: translate(-50%,-60%);
   width: 18px; 
   margin-top: 9px;
   height: auto;
@@ -141,7 +137,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(0, 7%);
+  transform: translate(0, -13%);
   color: #D8B869;
   font-size: 18.5px;
   margin: 0px;
@@ -149,32 +145,18 @@
   padding-left: 18px;
 }
 
-.bottom-row > .col-1 {
-  margin-left: 10px; 
-  padding-left: 0px; 
-  height: 30px;
+.bottom-row {
+  width: 100%;
 }
 
 .username {
-  font-family: 'Comfortaa';
   font-weight: bold;
-  font-size: 30px;
   color: #F7F7F7;
-  height: 30px;
   letter-spacing: 0.16em;
   padding-right: 25px;
-}
-
-.username > span {
-  height: 30px;
-  padding-top: 9px;
-}
-
-.alignName {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  padding-top: 20px;
+  text-align: right;
+  overflow-y: scroll;
 }
 
 .profile-sticker-row {
@@ -284,21 +266,6 @@
     padding-left: 3.2vw;
   }
 
-  .bottom-row > .col-1 {
-    margin-left: 1.79vw; 
-    height: 5.56vw;
-  }
-
-  .username {
-    font-size: 5.36vw;
-    height: 5.36vw;
-  }
-
-  .username > span {
-    height: 5.36vw;
-    padding-top: 1.61vw;
-  }
-  
   .profile-sticker-row {
     padding-right: 0.54vw;
     margin-top: 1.43vw;
@@ -329,5 +296,10 @@
   
   .views-container {
     padding-left: 4.46vw;
+  }
+
+  .username {
+    padding-right: 4.64vw;
+    padding-top: 3.57vw;
   }
 }

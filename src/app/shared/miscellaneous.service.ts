@@ -13,4 +13,5 @@ export class MiscellaneousService {
   onAppClick() {
     setTimeout(func => this.appClick.next(), 2000) ;
   }
+
 }

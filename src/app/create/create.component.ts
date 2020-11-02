@@ -176,12 +176,12 @@ export class CreateComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 4*1024*1024) { //Firebase upload max size 10 MB
+        if (file.size < 10*1024*1024) { 
           this.error = undefined; 
           this.postContent = file;
           this.postContent$.next(event.target.result);
         } else {
-          this.error ='Post file size too big! There is a 4 MB limit';
+          this.error ='Post file size too big! There is a 10 MB limit';
         }
       }
     }
@@ -195,12 +195,12 @@ export class CreateComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 4*1024*1024) { //Firebase upload max size 10 MB
+        if (file.size < 10*1024*1024) { 
           this.error = undefined;
           this.stickerContent = file;
           this.stickerContent$.next(event.target.result);
         } else {
-          this.error ='Sticker file size too big! There is a 4 MB limit';
+          this.error ='Sticker file size too big! There is a 10 MB limit';
         }
       }
     }
