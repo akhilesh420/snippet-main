@@ -81,6 +81,10 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.error = "Username can't have spaces"
           return;
         }
+        if (this.username.length > 21) {
+          this.error = "Username can't be longer than 21"
+          return;
+        }
         if (!this.dob || this.dob <= this.allowedDate) {
           this.error = "Must be at least 13 years old"
           return;
