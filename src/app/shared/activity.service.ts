@@ -107,6 +107,6 @@ export class ActivityService {
     return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid)
                                                                    .where('collectorID','!=',uid)
                                                                    .orderBy('collectorID')
-                                                                   .orderBy('timeStamp','desc')).valueChanges();
+                                                                   .orderBy('timeStamp')).valueChanges();
   }
 }
