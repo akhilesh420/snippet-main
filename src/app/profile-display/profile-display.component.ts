@@ -2,9 +2,9 @@ import { UsersService } from './../shared/users.service';
 import { ProfileSticker, ProfileDetails } from './../shared/profile.model';
 import { Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
@@ -40,13 +40,17 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   usernameFontSize: number;
   usernamePadding: string;
+  maxWidth: number;
+  multiplier: number = 1;
+
+  @ViewChild('usernameRef') usernameSpan : ElementRef;
+
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
                private activityService: ActivityService,
                private router: Router,
-               private windowService: WindowStateService,
-               private miscellaneousService: MiscellaneousService) { }
+               private windowService: WindowStateService) { }
 
   ngOnInit(): void {
     this.fetchingWindow = true;
@@ -73,8 +77,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (val < 560) {
-        // this.tabClose = (71*val/560).toString() + 'px';
-        // this.tabOpen = (400*val/560).toString() + 'px';
         this.stickerSize = (60*val/560).toString() + 'px';
         this.usernameFontSize = 30*val/560;
       } else {
@@ -86,8 +88,24 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   setUpProfile() {
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
+    this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      if (response) {
+       setInterval(this.getMultiplier(response),1000);
+      }
+    })
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+  }
+
+  getMultiplier(value: ProfileDetails) {
+    try {    
+      // const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
+      this.multiplier = 10/value.username.length;
+      return null;
+    } catch(error) {
+      console.log('error'); //tempLog
+      return null;
+    }
   }
 
   setUpActivity() {
@@ -137,13 +155,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   navigateRoute() {
     this.router.navigate([this.profileRoute]);
-  }
-
-  getFontStyle(value: string, limit: number, fontsize: number) {
-    const len = value.length;
-    const multiply = limit >= len ? 1 : limit/len;
-    const size = multiply * fontsize;
-    return {'font-size': size.toString() + 'px'};
   }
 
   ngOnDestroy() {

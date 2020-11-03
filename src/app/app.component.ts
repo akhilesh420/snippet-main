@@ -34,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
     //make app fullscreen
     if (screenfull.isEnabled) {
       screenfull.toggle();
+      screenfull.on('error', event => {return null});
     }
 
     this.authService.autoLogin();

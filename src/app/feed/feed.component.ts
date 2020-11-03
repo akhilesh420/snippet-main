@@ -24,7 +24,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   
   batch: number = 0;
   maxBatch: number = 0;
-  batchSize: number = 2; //number of posts to load - min batch size is 2
+  batchSize: number = 4; //number of posts to load - min batch size is 2
   batchNumber: number = 0;
   done: boolean;
   postOffset: number; //Trigger next post after this value
