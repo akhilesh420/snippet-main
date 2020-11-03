@@ -16,4 +16,15 @@
   margin-bottom: 10px;
 }
 
+@media screen and (max-width: 560px) {
+  .username {
+    font-size: 3.21vw;
+  }
+
+  .master {
+    margin-top: 0.893vw;
+    margin-bottom: 1.785vw;
+  }
+}
+
 

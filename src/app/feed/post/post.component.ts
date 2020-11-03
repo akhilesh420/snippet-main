@@ -60,7 +60,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   fetchingWindow: boolean;
 
   @ViewChild('usernameRef') usernameSpan : ElementRef;
-  maxWidth: number = 191;
+  maxWidth: number;
   usernameCounter: number;
   username: string;
   usernameFetch: boolean;
@@ -88,10 +88,12 @@ import { WindowStateService } from 'src/app/shared/window.service';
           this.tabClose = (71*val/560).toString() + 'px';
           this.tabOpen = (400*val/560).toString() + 'px';
           this.stickerSize = (24*val/560).toString() + 'px';
+          this.maxWidth = 191*val/560;
       } else {
           this.tabClose = '71px';
           this.tabOpen = '400px';
-          this.stickerSize = '24px'
+          this.stickerSize = '24px';
+          this.maxWidth = 191;
         }
       }
     });

@@ -1,5 +1,5 @@
 import { ProfileDetails, ProfileSticker } from '../../../shared/profile.model';
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { UsersService } from 'src/app/shared/users.service';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './holder.component.html',
   styleUrls: ['./holder.component.css']
 })
-export class HolderComponent implements OnInit, OnDestroy {
+export class HolderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() uid: string;
   @Input() stickerSize: string;
@@ -21,7 +21,9 @@ export class HolderComponent implements OnInit, OnDestroy {
   profileStickers$: Observable<ProfileSticker[]>;
 
   @ViewChild('usernameRef') usernameSpan : ElementRef;
-  maxWidth: number = 176;
+  @ViewChild('usernameCol') usernameCol : ElementRef;
+
+  maxWidth: number;
   usernameCounter: number;
   username: string;
   usernameFetch: boolean;
@@ -54,6 +56,10 @@ export class HolderComponent implements OnInit, OnDestroy {
         })}
       });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
+  }
+
+  ngAfterViewInit() {
+    this.maxWidth = this.usernameCol.nativeElement.offsetWidth;
   }
 
   getEmptySlots(stickers) {
