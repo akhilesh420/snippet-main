@@ -139,7 +139,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
         let lastUsername: string;
         let timer = setInterval(func => {
           const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
-          console.log(currentWidth, currentWidth > this.maxWidth); //tempLog
           if (lastUsername != this.username && currentWidth > this.maxWidth) {
             lastUsername = this.profileDetails.username;
             ++this.usernameCounter;
