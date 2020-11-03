@@ -100,7 +100,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   getMultiplier(value: ProfileDetails) {
     try {    
       // const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
-      this.multiplier = this.usernameFontSize === 30 ? 1 : 10/value.username.length;
+      this.multiplier = value.username.length <= 10 ? 1 : 10/value.username.length;
       return null;
     } catch(error) {
       console.log('error'); //tempLog
