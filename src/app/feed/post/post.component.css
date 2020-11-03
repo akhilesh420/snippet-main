@@ -197,8 +197,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  width: 20px;
-  height: auto;
+
 }
 
 .postDetails .holderList{
@@ -405,10 +404,6 @@
     right:  2.68vw;
     height: 5.36vw;
     width: 5.36vw;
-  }
-
-  .showDetails img {
-    width: 3.6vw;
   }
 
   .postDetails .holderList{

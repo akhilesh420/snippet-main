@@ -65,6 +65,8 @@ import { WindowStateService } from 'src/app/shared/window.service';
   username: string;
   usernameFetch: boolean;
 
+  detailsButtonSize: number = 20;
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
@@ -89,11 +91,13 @@ import { WindowStateService } from 'src/app/shared/window.service';
           this.tabOpen = (400*val/560).toString() + 'px';
           this.stickerSize = (24*val/560).toString() + 'px';
           this.maxWidth = 191*val/560;
+          this.detailsButtonSize = 20*val/560;
       } else {
           this.tabClose = '71px';
           this.tabOpen = '400px';
           this.stickerSize = '24px';
           this.maxWidth = 191;
+          this.detailsButtonSize = 20;
         }
       }
     });
@@ -184,6 +188,19 @@ import { WindowStateService } from 'src/app/shared/window.service';
     let close = "https://i.ibb.co/ZmbVSG4/Post-Detail-Button-3x.png";
     let open = "https://i.ibb.co/p1fcnfh/Post-Detail-Button-open-3x.png";
     return this.showDetails === false ?  close : open;
+  }
+
+  getDetailsButtonSize() {
+    let width: string;
+    let height: string;
+    if (!this.showDetails) {
+      width = this.detailsButtonSize.toString() + 'px';
+      height = 'auto'
+    } else {
+      height = this.detailsButtonSize.toString() + 'px';
+      width = 'auto'
+    }
+    return {width: width, height: height};
   }
 
   onLoad(event: any) {

@@ -98,7 +98,9 @@
     </div>
     <div class="showDetails" (click)="showDetails = !showDetails">
       <!-- <div class="detailsbuttonClose"></div> -->
-      <img src={{getDetailsButton()}} alt="Post-Detail-Button">
+      <img src={{getDetailsButton()}} 
+          [ngStyle]="getDetailsButtonSize()" 
+           alt="Post-Detail-Button">
     </div>
     <div *ngIf="showDetails === true">
       <!-- holder list row-->

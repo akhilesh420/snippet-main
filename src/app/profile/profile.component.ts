@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   ngOnDestroy() {
     this.uid$.complete();
   }

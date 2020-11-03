@@ -59,6 +59,10 @@ export class FeedComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnChanges() {
+    this.ngOnInit();
+  }
+
   initBatch() { // get initial batch of posts to render
     if (this.postsList.length <= this.batchSize) {
       this.feedList$.next(this.postsList);
