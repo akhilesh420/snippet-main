@@ -60,7 +60,9 @@ input.invalidAmount {
   position: absolute;
   top:50%;
   left: 50%;
-  transform: translate(-50%,-75px);
+  -webkit-transform: translate(-50%,-75px);
+      -ms-transform: translate(-50%,-75px);
+          transform: translate(-50%,-75px);
   width: 0px;
   height: 0px;
   opacity: 0;
@@ -73,7 +75,9 @@ input.invalidAmount {
 .horizontal-center {
   position: absolute;
   left: 50%;
-  transform: translate(-50%,0);
+  -webkit-transform: translate(-50%,0);
+      -ms-transform: translate(-50%,0);
+          transform: translate(-50%,0);
 }
 
 .danger-alert {
@@ -128,7 +132,8 @@ input.invalidAmount {
 .placeholder {
   color: #DCB65A;
   text-align: center;
-  align-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
 }
 
 .sticker{
@@ -145,7 +150,9 @@ input.invalidAmount {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 
 li {
@@ -169,6 +176,7 @@ li:hover {
   width: 130px;
   height: 130px;
   border-radius: 50%;
+  background-image: -o-linear-gradient(315deg,#DCB65A ,#131114 70%, transparent 90%);
   background-image: linear-gradient(135deg,#DCB65A ,#131114 70%, transparent 90%);
 }
 
@@ -179,7 +187,9 @@ li:hover {
   background: #080708;
   top: 50%;
   left: 50%;
-  transform: translate(5px,5px);
+  -webkit-transform: translate(5px,5px);
+      -ms-transform: translate(5px,5px);
+          transform: translate(5px,5px);
 }
 
 .dpBorder {
@@ -191,14 +201,18 @@ li:hover {
   overflow: hidden;
   top: 50%;
   left: 50%;
-  transform: translate(7px,7px);
+  -webkit-transform: translate(7px,7px);
+      -ms-transform: translate(7px,7px);
+          transform: translate(7px,7px);
 }
 
 .dpBorder img{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
 }
 
 .danger-alert {
@@ -221,7 +235,9 @@ li:hover {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%) scale(0.7,0.7);
+  -webkit-transform: translate(-50%,-50%) scale(0.7,0.7);
+      -ms-transform: translate(-50%,-50%) scale(0.7,0.7);
+          transform: translate(-50%,-50%) scale(0.7,0.7);
 }
 
 @media screen and (max-width: 560px) {
@@ -229,3 +245,7 @@ li:hover {
     width: 84.82vw;
   }
 }
+
+  
+
+

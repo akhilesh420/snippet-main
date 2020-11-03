@@ -1,59 +1,32 @@
 .nav{
-    padding-top: 6px;
-    padding-bottom: 15px;
-    background-color: rgba(0, 0, 0, 0.90);
-    position: fixed;
-    bottom:0;
-    width: 100%;
-    justify-content: center;
-    backdrop-filter: blur(8px);
-  }
+  padding-top: 6px;
+  padding-bottom: 15px;
+  background-color: rgba(0, 0, 0, 0.90);
+  position: fixed;
+  bottom:0;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+}
 
-  .divider {
-    border-top: solid 0.8px rgb(112, 112, 112);
-  }
-  
-  .Symbol >  img {
-    height: 1.5em;
-    width: auto;
-  }
-  
-  .exploreSymbol  > img {
-    height: 1.5em;
-    width: auto;
-  }
-  
-  .dropupSymbol > img {
-    height: 1.5em;
-    width: auto;
-  }
-  
-  .dpBorder {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 1.5em;
-    height: 1.5em;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    border: 1px solid #D8B869;
-    background:#080708;
-    overflow: hidden;
-  }
+.divider {
+  border-top: solid 0.8px rgb(112, 112, 112);
+}
 
-.Symbol > img {
+.Symbol >  img {
   height: 1.5em;
   width: auto;
 }
 
-.exploreSymbol > img {
+.exploreSymbol  > img {
   height: 1.5em;
   width: auto;
 }
 
-.dropdownSymbol > img {
+.dropupSymbol > img {
   height: 1.5em;
   width: auto;
 }
@@ -62,47 +35,82 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
   width: 1.5em;
   height: 1.5em;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
   border-radius: 50%;
   border: 1px solid #D8B869;
   background:#080708;
   overflow: hidden;
 }
 
+.Symbol > img {
+height: 1.5em;
+width: auto;
+}
+
+.exploreSymbol > img {
+height: 1.5em;
+width: auto;
+}
+
+.dropdownSymbol > img {
+height: 1.5em;
+width: auto;
+}
+
+.dpBorder {
+position: absolute;
+top: 50%;
+left: 50%;
+-webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+width: 1.5em;
+height: 1.5em;
+border-radius: 50%;
+border: 1px solid #D8B869;
+background:#080708;
+overflow: hidden;
+}
+
 .inactive-link { 
-  filter: grayscale(60%);
+-webkit-filter: grayscale(60%); 
+        filter: grayscale(60%);
 }
 
 .inactive-dp {
-  border: 1px solid #C9BC95;
+border: 1px solid #C9BC95;
 }
-  
+
 .box {
-  position: fixed;
-  bottom: 70px;
-  align-self: flex-end;
-  font-size: 5vw;
-  width: 100%;
+position: fixed;
+bottom: 70px;
+-ms-flex-item-align: end;
+    align-self: flex-end;
+font-size: 5vw;
+width: 100%;
 
 }
 
 .inBox {
-  border-radius: 8px;
-  border: 2px solid #D8B869;
-  color: #D8B869;
-  font-family: "ChampagneAndLimousines";
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(6vw);
-  
+border-radius: 8px;
+border: 2px solid #D8B869;
+color: #D8B869;
+font-family: "ChampagneAndLimousines";
+background-color: rgba(0, 0, 0, 0.3);
+-webkit-backdrop-filter: blur(6vw);
+        backdrop-filter: blur(6vw);
+
 }
 
 .inner {
-  padding-top: 4px;
-  padding-bottom: 4px;
+padding-top: 4px;
+padding-bottom: 4px;
 }
-  
-  
+
+
+
+
