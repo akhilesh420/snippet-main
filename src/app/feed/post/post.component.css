@@ -53,6 +53,9 @@
   height: 100%;
   color: #F7F7F7;
   letter-spacing: 0.160em;
+  overflow-X: scroll;
+  overflow-y: visible;
+  text-align: left;
 }
 
 .profileDetails .profileStickers{

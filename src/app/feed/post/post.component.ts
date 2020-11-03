@@ -4,7 +4,7 @@ import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
 import { StickerDetails, PostDetails } from './../../shared/post.model';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
@@ -25,8 +25,8 @@ import { WindowStateService } from 'src/app/shared/window.service';
   @Input() stickerContent$?: BehaviorSubject<any>;
 
   @Output() addClick = new EventEmitter();
-
-  profileDetails$?: Observable<ProfileDetails>;
+  
+  profileDetails?: ProfileDetails;
   profileStickers$?: Observable<ProfileSticker[]>;
   notifier$ = new Subject();
   collectionList: Observable<Collection[]>;
@@ -59,14 +59,24 @@ import { WindowStateService } from 'src/app/shared/window.service';
   userSubs: Subscription;
   fetchingWindow: boolean;
 
+  @ViewChild('usernameRef') usernameSpan : ElementRef;
+  maxWidth: number = 191;
+  usernameCounter: number;
+  username: string;
+  usernameFetch: boolean;
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
               private activityService: ActivityService,
               private router: Router,
-              private windowService: WindowStateService) { }
+              private windowService: WindowStateService,
+              private cdRef:ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.usernameFetch = false;
+    this.cdRef.detectChanges();
+
     this.fetchingWindow = true;
     this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
@@ -87,7 +97,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
     });
 
     this.restartPost();
-  }
+  }  
 
   restartPost() {
     this.userSubs = this.authService.user.subscribe(response => {
@@ -119,7 +129,27 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   setUpProfile() {
-    this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
+    this.usersService.getProfileDetails(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.usernameFetch = false;
+      if  (response) {
+        this.profileDetails = response;
+        this.usernameCounter = 0;
+        this.username = response.username;
+
+        let lastUsername: string;
+        let timer = setInterval(func => {
+          const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
+          console.log(currentWidth, currentWidth > this.maxWidth); //tempLog
+          if (lastUsername != this.username && currentWidth > this.maxWidth) {
+            lastUsername = this.profileDetails.username;
+            ++this.usernameCounter;
+            this.username = this.profileDetails.username.slice(0, this.profileDetails.username.length - this.usernameCounter)  + '...';
+          } else {
+            clearInterval(timer);
+            this.usernameFetch = true;
+          }
+        })}
+      });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
   }
 

@@ -21,8 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
   currentRoute: string;
   notifier$ = new Subject();
 
-  elem;
-
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
               private titleService: Title,

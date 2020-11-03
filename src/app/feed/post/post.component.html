@@ -20,11 +20,11 @@
     <!-- Username -->
     <div class="profileDetails">
       <a style = "cursor: pointer;" [routerLink]='profileRoute'>
-        <div class="name"
-             style="width: 200px; overflow-X: scroll; overflow-y: hidden; text-align: left;"
-             *ngIf="profileDetails$ | async as details">
-          {{details.username | shorten : 7}}
-        </div>
+        <span class="name"
+              [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}"
+              #usernameRef>
+          {{username}}
+        </span>
       </a>
       <!-- Profile Stickers -->
       <div class="profileStickers">
