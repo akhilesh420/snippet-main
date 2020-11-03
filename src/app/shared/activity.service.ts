@@ -105,8 +105,8 @@ export class ActivityService {
 
   getHolderList(pid: string, uid: string) {
     return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid)
-                                                                   .where('collectorID','!=',uid)
-                                                                   .orderBy('collectorID')
-                                                                   .orderBy('timeStamp')).valueChanges();
+                                                                   .orderBy('timeStamp')).valueChanges().pipe(map(response => {
+                                                                    return response.filter(collection => collection.collectorID != uid); //remove creator of post
+                                                                  }));
   }
 }

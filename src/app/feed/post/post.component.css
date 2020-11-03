@@ -54,7 +54,7 @@
   color: #F7F7F7;
   letter-spacing: 0.160em;
   overflow-X: scroll;
-  overflow-y: visible;
+  overflow-y: hidden;
   text-align: left;
 }
 

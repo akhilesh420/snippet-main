@@ -5,7 +5,7 @@ import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
 import { StickerDetails, PostDetails } from './../../shared/post.model';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
