@@ -57,7 +57,7 @@ export class FeedbackComponent implements OnInit {
     this.feedback.trim();
     if (!this.submitted && this.feedback && this.feedback.length != 0) {
       if (this.isAuthenticated) {
-        if (this.username && this.fullname && this.email && this.uid) {return}
+        if (!this.username && !this.fullname && !this.email && !this.uid) {return}
         this.data = {uid: this.uid, username: this.username, fullname: this.fullname, email: this.email, dateCreated: new Date(), feedback: this.feedback};
       } else {
         this.data = {dateCreated: new Date(), feedback: this.feedback};
