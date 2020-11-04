@@ -149,7 +149,7 @@
   position: absolute;
   top: 50%;
   left: 0;
-  transform: translateY(-50%);
+  transform: translateY(-65%);
 }
 
 .position-relative {
@@ -159,22 +159,9 @@
 .edit-text {
   color: #D8B869;
   font-size: 18.5px;
-}
-
-.edit-text-align {
-  padding: 0;
-  padding-top: 5%;
+  padding-right: 0;
   padding-left: 3px;
-  margin:0;
-  height: 100%;
-}
 
-.edit-text-align > div {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(3px,-50%);
-  
 }
 
 .height-100 {
@@ -185,10 +172,6 @@
   height: 30px;
   width: 100%;
   margin-top: 15px;
-}
-
-.edit-row {
-  height: 100%;
 }
 
 .edit-col {
