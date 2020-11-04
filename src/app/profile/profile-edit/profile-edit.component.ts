@@ -69,7 +69,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   stickerDelete = new Subject<number>();
 
-
   constructor(private postService: PostService,
               private usersService: UsersService,
               private activityService: ActivityService,
