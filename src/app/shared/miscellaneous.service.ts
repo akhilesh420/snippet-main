@@ -5,13 +5,5 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MiscellaneousService {
-
-  appClick = new Subject();
-
   constructor() { }
-
-  onAppClick() {
-    setTimeout(func => this.appClick.next(), 2000) ;
-  }
-
 }
