@@ -217,7 +217,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   handleError(error) {
-    console.log(error);
     alert("Damn! An error occurred!");
     this.isCreating = false;
   }

@@ -61,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   scrollHandler(event) {
-    this.infiniteScrollService.getScroll$.next(event); //log
+    this.infiniteScrollService.getScroll$.next(event);
   }
 
 

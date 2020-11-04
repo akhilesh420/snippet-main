@@ -51,7 +51,6 @@ export class FeedService {
     });
     
     return collectionList.pipe(map(postsList => { 
-      console.log(postsList);//log
       postsList = postsList.filter(post => { //Filter out users own posts
         return uid != post.uid;
       })

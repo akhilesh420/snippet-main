@@ -137,6 +137,7 @@
 
 .edit-group {
   padding-left: 8%;
+  height: 100%;
 }
 
 .edit {
@@ -145,6 +146,14 @@
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.position-relative {
+  position: relative;
 }
 
 .edit-text {
@@ -155,12 +164,31 @@
 .edit-text-align {
   padding: 0;
   padding-top: 5%;
+  padding-left: 3px;
   margin:0;
+  height: 100%;
+}
+
+.edit-text-align > div {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(3px,-50%);
+  
+}
+
+.height-100 {
+  height: 100%
 }
 
 .bottom-row {
+  height: 30px;
   width: 100%;
   margin-top: 15px;
+}
+
+.edit-row {
+  height: 100%;
 }
 
 .edit-col {
@@ -290,12 +318,10 @@
 
   .edit {
     width: 3.2vw; 
-    margin-top: 1.61vw;
   }
 
   .edit-text {
     font-size: 3.3vw;
-    padding-left: 3.2vw;
   }
 
   .profile-sticker-row {
@@ -342,6 +368,12 @@
   .username-span {
     right: 4.64vw;
   }
+
+  .bottom-row {
+    height: 5.36vw;
+    margin-top: 2.68vw;
+  }
+  
 }
 
 

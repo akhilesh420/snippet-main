@@ -39,7 +39,6 @@ export class ActivityService {
 
   //update activity for view or collection
   updateActivity(type: string, uid: string, pid: string) {
-    console.log('update activity'); //tempLog
     const queryUser = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(uid));
     const queryPost = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(pid));
 
@@ -49,7 +48,6 @@ export class ActivityService {
           take(1)
         )
       .subscribe((response) => { 
-          console.log(uid,pid,response); //log
           if (type === 'view') {
             this.activityRef.update(response[0].key, {views: response[0].views + 1});
           } else if (type === 'collection') {
@@ -76,7 +74,6 @@ export class ActivityService {
   // viewerID: UID of the person who viewed the post
   // vieweeID: UID of the person whose post was viewed
   addViews(pid: string, viewerID: string, vieweeID: string) {
-    console.log('view'); //tempLog
     const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
     this.viewsRef.push(obj);
     this.updateActivity('view', vieweeID, pid);
