@@ -2,7 +2,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -82,8 +82,8 @@ import { ShortenPipe } from './shared/shorten.pipe';
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    AngularFirePerformanceModule, //performance
-    AngularFireAnalyticsModule, //analytics
+    AngularFirePerformanceModule, // performance
+    AngularFireAnalyticsModule, // analytics
     ClickOutsideModule
   ],
   providers: [
