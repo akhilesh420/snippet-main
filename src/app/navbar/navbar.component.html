@@ -1,21 +1,22 @@
-    <div *ngIf="dropUp" class = "row text-right box">
-        <div class="col"></div>
-        <div class="col"></div>
-        
-        <div class ="col inBox">
-           <div class = "row" (click)="navigate('feedback')">
-                <div class="col inner">Feedback</div>
-           </div>
-           <div class=  "row" (click)="navigate('tutorial')">
-                <div class="col inner">Tutorial</div>
-           </div>
-           <div class=  "row" (click)="navigate(isAuthenticated ? 'logout' : 'login')">
-                <div class="col inner">{{isAuthenticated ? 'Logout' : 'Login'}}</div>
-           </div>
-       </div>
-    </div>
+<div *ngIf="dropUp" class = "row text-right box">
+    <div class="col"></div>
+    <div class="col"></div>
     
-    <div class="row no-gutters text-center divider nav">
+    <div class ="col inBox">
+        <div class = "row" (click)="navigate('feedback')">
+            <div class="col inner">Feedback</div>
+        </div>
+        <div class=  "row" (click)="navigate('tutorial')">
+            <div class="col inner">Tutorial</div>
+        </div>
+        <div class=  "row" (click)="navigate(isAuthenticated ? 'logout' : 'login')">
+            <div class="col inner">{{isAuthenticated ? 'Logout' : 'Login'}}</div>
+        </div>
+    </div>
+</div>
+
+<div class='loading-bar' [ngStyle]='{"bottom": navbar.offsetHeight.toString() +"px","width": (loadingPercent$ | async)}'>
+    <div class="row no-gutters text-center divider nav" #navbar>
         <div class="col text-center exploreSymbol" (click)="navigate('explore')">
             <img [ngClass]="currentRoute != '/explore' ? 'inactive-link' : null" src="assets/icons/exploreSymbol_2x.svg">
         </div>
@@ -47,6 +48,8 @@
             <img [ngClass]="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback' ? 'inactive-link' : null"  src="assets/icons/dropupSymbol.svg">
         </div>
     </div>
+</div>
+
 
 
 

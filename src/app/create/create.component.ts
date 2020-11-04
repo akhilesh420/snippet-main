@@ -8,6 +8,7 @@ import { PostService } from '../shared/post.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivityService } from '../shared/activity.service';
 import { Collection } from '../shared/activity.model';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-create',
@@ -53,7 +54,8 @@ export class CreateComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private postService: PostService,
               private activityService: ActivityService,
-              private afs: AngularFirestore) { }
+              private afs: AngularFirestore,
+              private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.userSub =  this.authService.user.pipe().subscribe(authRes => {
@@ -149,6 +151,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     let stickerSubs = this.postService.addContent(scid,this.stickerContent);
 
     forkJoin([postSubs, stickerSubs]).subscribe(results => {
+      console.log(results[0], results[1]); //tempLog
+      this.miscellaneousService.setLoading((results[0] + results[1])/2); //send average percentage to loading bar
       if (results[0] === 100 && results[1] === 100) {
         this.postService.addPostDetails(pid,this.postDetails);
         this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));

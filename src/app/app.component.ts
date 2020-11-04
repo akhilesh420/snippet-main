@@ -25,8 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private titleService: Title,
               private router: Router,
-              private infiniteScrollService: InfiniteScrollService,
-              private miscellaneousService: MiscellaneousService){
+              private infiniteScrollService: InfiniteScrollService){
   }
 
   ngOnInit(){
@@ -63,10 +62,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   scrollHandler(event) {
     this.infiniteScrollService.getScroll$.next(event); //log
-  }
-
-  onClick() {
-    this.miscellaneousService.onAppClick();
   }
 
   ngOnDestroy() {

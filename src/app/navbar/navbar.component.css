@@ -111,6 +111,10 @@ padding-top: 4px;
 padding-bottom: 4px;
 }
 
-
+.loading-bar {
+  border-top: 2px solid #D8B869;
+  position: fixed;
+  bottom:0;
+}
 
 
