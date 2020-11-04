@@ -8,7 +8,6 @@ import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@ang
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
-import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-profile-display',
@@ -103,7 +102,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.multiplier = value.username.length <= 10 ? 1 : 10/value.username.length;
       return null;
     } catch(error) {
-      console.log('error'); //tempLog
       return null;
     }
   }

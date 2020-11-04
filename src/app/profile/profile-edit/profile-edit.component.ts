@@ -69,7 +69,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   stickerDelete = new Subject<number>();
 
-
   constructor(private postService: PostService,
               private usersService: UsersService,
               private activityService: ActivityService,
@@ -94,7 +93,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     // Set up profile 
     this.usersService.getProfileDetails(this.uid).pipe(takeUntil(this.notifier$))
     .subscribe((response: ProfileDetails) => {
-      console.log(response); //log
       if (response) {
         this.title = response.bio.title;
         this.oldTitle = response.bio.title;
@@ -136,7 +134,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     // Set up collection
     this.activityService.getUserCollection(this.uid).pipe(takeUntil(this.notifier$)) //get details of user collection
     .subscribe((response:Collection[]) => {
-      console.log(response); //log
       if (response) {
         this.collectionList = []; //reset collection list
         response.forEach(collection => {

@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MiscellaneousService {
+<<<<<<< HEAD
 
   private loadingBar = new Subject<string>();
 
@@ -23,4 +24,7 @@ export class MiscellaneousService {
   getLoading() {
     return this.loadingBar;
   }
+=======
+  constructor() { }
+>>>>>>> akhilesh
 }

@@ -22,7 +22,6 @@ export class FeedbackService {
    }
   
   addFeedback(feedback: Feedback) {
-    console.log(feedback);
     const id = this.afs.createId();
     const obj = {...feedback};
     this.feedbackCollection.doc(id).set(obj);

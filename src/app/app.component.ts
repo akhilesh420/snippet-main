@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
-import { MiscellaneousService } from './shared/miscellaneous.service';
 import * as screenfull from 'screenfull';
 
 @Component({
@@ -61,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   scrollHandler(event) {
-    this.infiniteScrollService.getScroll$.next(event); //log
+    this.infiniteScrollService.getScroll$.next(event);
   }
 
   ngOnDestroy() {
