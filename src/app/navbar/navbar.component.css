@@ -114,7 +114,14 @@ padding-bottom: 4px;
 .loading-bar {
   border-top: 2px solid #D8B869;
   position: fixed;
-  bottom:0;
+  width: 100vw;
+  animation-name: loadingAnim;
+  animation-duration: 2s;
+  animation-iteration-count:infinite;
+  animation-timing-function: linear;
 }
 
-
+@keyframes loadingAnim {
+  from { width: 0; };
+  to { width: 100vw; };
+}

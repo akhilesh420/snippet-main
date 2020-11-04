@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   imageProp = {'height':'100%', 'width':'auto'};
 
-  loadingPercent$: Subject<string>;
+  loadingBar$: Subject<boolean>;
 
   constructor(private usersService: UsersService,
               private authService: AuthService,
@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dropUp = false;
 
-    this.loadingPercent$ = this.miscellaneousService.getLoading();
+    this.loadingBar$ = this.miscellaneousService.getLoading();
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;

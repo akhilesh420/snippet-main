@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, Subscription,forkJoin } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription,forkJoin, Subject } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
 import { PostContent, PostDetails, StickerContent, StickerDetails } from './../shared/post.model';
@@ -9,6 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivityService } from '../shared/activity.service';
 import { Collection } from '../shared/activity.model';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create',
@@ -48,7 +49,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   postSize = {'height':'116px','width':'116px'};
   stickerSize = {'height':'57px','width':'57px'};
 
-  userSub: Subscription;
+  notifier$ = new Subject();
 
   constructor(private router: Router,
               private authService: AuthService,
@@ -58,7 +59,7 @@ export class CreateComponent implements OnInit, OnDestroy {
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    this.userSub =  this.authService.user.pipe().subscribe(authRes => {
+    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
       this.uid = authRes.id;
     }, errorMessage => {
       this.handleError(errorMessage);
@@ -150,10 +151,10 @@ export class CreateComponent implements OnInit, OnDestroy {
     let postSubs =  this.postService.addContent(pcid,this.postContent);
     let stickerSubs = this.postService.addContent(scid,this.stickerContent);
 
+    this.miscellaneousService.startLoading();
     forkJoin([postSubs, stickerSubs]).subscribe(results => {
-      console.log(results[0], results[1]); //tempLog
-      this.miscellaneousService.setLoading((results[0] + results[1])/2); //send average percentage to loading bar
       if (results[0] === 100 && results[1] === 100) {
+        this.miscellaneousService.endLoading();
         this.postService.addPostDetails(pid,this.postDetails);
         this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
         this.postService.addStickerContentRef(pid, new StickerContent(scid, this.stickerContent.type));
@@ -162,6 +163,8 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.activityService.addActivity(pid, 'post');
         this.activityService.addCollection(new Collection(this.uid,this.uid,pid,new Date().getTime()));
       } 
+    }, error => {
+      this.miscellaneousService.endLoading();
     });
     
     this.router.navigate(['/explore']);
@@ -226,6 +229,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.userSub.unsubscribe();
+    this.notifier$.next();
+    this.notifier$.complete();
   }
 }
