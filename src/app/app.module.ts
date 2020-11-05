@@ -42,6 +42,7 @@ import { ScrollableDirective } from './shared/directives/scrollable.directive';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { ShortenPipe } from './shared/shorten.pipe';
+import { FullscreenDirective } from './shared/directives/fullscreen.directive';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ShortenPipe } from './shared/shorten.pipe';
     TutorialPageComponent,
     ScrollableDirective,
     NavbarComponent,
-    ShortenPipe
+    ShortenPipe,
+    FullscreenDirective
   ],
   imports: [
     BrowserModule,

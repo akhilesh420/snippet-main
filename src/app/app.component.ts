@@ -1,7 +1,7 @@
 import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Title, Meta} from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -23,20 +23,25 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
               private titleService: Title,
+              private metaService: Meta,
               private router: Router,
               private infiniteScrollService: InfiniteScrollService){
   }
 
   ngOnInit(){
 
-    //make app fullscreen
     if (screenfull.isEnabled) {
-      screenfull.toggle();
-      screenfull.on('error', event => {return null});
+      screenfull.request();
+      screenfull.on('error', event => {console.log(event);});
     }
 
     this.authService.autoLogin();
+
     this.titleService.setTitle("Snippet");
+    this.metaService.addTags([
+      {name: 'apple-mobile-web-app-capable', content: 'yes'}
+    ]);
+
     this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
@@ -49,10 +54,16 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       }
     })
+
     this.onResize();
+
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
     });
+  }
+
+  ngAfterViewInit() {
+    window.scrollTo(0,1);
   }
 
   onResize(){

@@ -5,7 +5,7 @@ import { Directive, HostListener, EventEmitter, Output, ElementRef } from '@angu
 })
 export class ScrollableDirective {
 
-  @Output() scrollPosition = new EventEmitter()
+  @Output() scrollPosition = new EventEmitter();
   
   constructor(public el: ElementRef) { }
 
