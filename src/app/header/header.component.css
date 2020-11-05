@@ -5,7 +5,6 @@
   text-align: center;
 }
 
-
 .divider {
   border-bottom: solid 0.8px#D8B869;
 }
@@ -36,7 +35,7 @@
 }
 
 .active-link, .contain a:hover {
-  color: #D8B869;
+  color: #D8B869 !important;
 }
 
 .contain a {
