@@ -30,8 +30,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   profileRoute: string = '/auth';
   createRoute: string = '/auth';
 
-  currentRoute: string;
-  
+  currentRoute: string = '';
+
   notifier$ = new Subject();
   loadingBar$: Subject<boolean>;
 
