@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/co
 import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-header',
@@ -32,15 +33,19 @@ export class HeaderComponent implements OnInit, OnDestroy{
   currentRoute: string;
   
   notifier$ = new Subject();
+  loadingBar$: Subject<boolean>;
 
   @ViewChild('dropdown') dropdown: ElementRef;
 
-  constructor(private  windowStateService: WindowStateService,
-              private authService: AuthService,
-              private router: Router){
+  constructor(private authService: AuthService,
+              private router: Router,
+              private miscellaneousService: MiscellaneousService){
   }
 
   ngOnInit(): void {
+
+    this.loadingBar$ = this.miscellaneousService.getLoading();
+
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(user => {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
