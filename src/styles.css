@@ -9,7 +9,11 @@ html, body {
     font-weight: normal;
     background-color: #080708;
     letter-spacing: 0.1em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+
 
 ::-webkit-scrollbar {
   display: none;
