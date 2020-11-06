@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, Subscription,forkJoin, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, Subject } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
 import { PostContent, PostDetails, StickerContent, StickerDetails } from './../shared/post.model';
@@ -159,14 +159,14 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
         this.postService.addStickerContentRef(pid, new StickerContent(scid, this.stickerContent.type));
         this.postService.addStickerDetails(pid, this.stickerDetails);
-       
+
         this.activityService.addActivity(pid, 'post');
         this.activityService.addCollection(new Collection(this.uid,this.uid,pid,new Date().getTime()));
-      } 
+      }
     }, error => {
       this.miscellaneousService.endLoading();
     });
-    
+
     this.router.navigate(['/explore']);
     this.isCreating = false;
   }
@@ -183,8 +183,8 @@ export class CreateComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 10*1024*1024) { 
-          this.error = undefined; 
+        if (file.size < 10*1024*1024) {
+          this.error = undefined;
           this.postContent = file;
           this.postContent$.next(event.target.result);
         } else {
@@ -202,7 +202,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 10*1024*1024) { 
+        if (file.size < 10*1024*1024) {
           this.error = undefined;
           this.stickerContent = file;
           this.stickerContent$.next(event.target.result);
