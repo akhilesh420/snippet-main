@@ -1,0 +1,29 @@
+.containerPopUp {
+    padding-top: calc(30vh - 100px);
+    color: #D8B869;
+  }
+  
+.button {
+    width: 80px;
+  }
+  
+.box {
+    background-color: rgba(0, 0, 0, 0.60);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-radius: 5%;
+    border: 2px solid #D8B869;
+    text-align: center;
+    height: 200px;
+    width: 300px; 
+  }
+  
+.marginTop {
+    padding-top: 15px;
+    padding-bottom: 20px;
+  }
+  
+.margin {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
