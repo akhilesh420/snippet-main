@@ -3,7 +3,7 @@ import { Biography, ProfileDetails, PersonalDetails, ProfileSticker, DisplayPict
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
@@ -37,20 +37,33 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   isAuthenticated: boolean = false;
 
+  exclusiveId: string;
 
   constructor(private authService: AuthService,
               private userService: UsersService,
               private activityService: ActivityService,
-              private router: Router) {}
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-     let todayDate = new Date();
+    let todayDate = new Date();
     this.allowedDate = new Date(todayDate.getFullYear() - this.minAge, todayDate.getMonth(), todayDate.getDate());
+
+    this.exclusiveId = this.route.snapshot.params['id'];
+    this.route.params
+    .subscribe(
+      (params: Params) => {
+        this.exclusiveId = params['id'];
+        if (this.exclusiveId) {
+
+        }
+      }
+    );
   }
 
   onSwitchMode(event: string) {
     if (event === 'login') {
-      this.isLoginMode = !this.isLoginMode;
+      // this.isLoginMode = !this.isLoginMode;
       this.isForgetMode = false;
       this.error = null;
     } else if (event === 'forget') {
