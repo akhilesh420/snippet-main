@@ -1,7 +1,7 @@
 import { UsersService } from './../shared/users.service';
-import { Biography, ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './../shared/profile.model';
-import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Biography, ProfileDetails, PersonalDetails, DisplayPicture } from './../shared/profile.model';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService, AuthResponseData } from './auth.service';
@@ -38,6 +38,9 @@ export class AuthComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
 
   exclusiveId: string;
+  validID: boolean = false;
+  userNumber: number;
+  notifier$ = new Subject();
 
   constructor(private authService: AuthService,
               private userService: UsersService,
@@ -49,16 +52,40 @@ export class AuthComponent implements OnInit, OnDestroy {
     let todayDate = new Date();
     this.allowedDate = new Date(todayDate.getFullYear() - this.minAge, todayDate.getMonth(), todayDate.getDate());
 
+    this.validID = false;
+
     this.exclusiveId = this.route.snapshot.params['id'];
+    this.isLoginMode = !this.exclusiveId; //switch to signup if id exists
+    if (this.exclusiveId) {
+      this.checkID();
+    }
+
     this.route.params
     .subscribe(
       (params: Params) => {
         this.exclusiveId = params['id'];
+        this.isLoginMode = !this.exclusiveId;
         if (this.exclusiveId) {
-
+          this.checkID();
         }
       }
     );
+  }
+
+  checkID() {
+    this.authService.getIDused(this.exclusiveId).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      if (response) {
+        if (response.used <= 2) {
+          this.userNumber = response.used;
+          this.validID = true;
+        } else {
+          this.validID = false;
+          this.error = "This link can't be used anymore";
+        }
+      } else {
+        this.error = "Invalid link";
+      }
+    });
   }
 
   onSwitchMode(event: string) {
@@ -82,6 +109,11 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     if (!this.isForgetMode) {
       if (!this.isLoginMode) {
+
+        if (!this.validID) { //check for valid exclusive link
+          return;
+        }
+
         if (!this.name || this.name.length === 0) {
           this.error = "Full name is required"
           return;
@@ -143,7 +175,8 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.userService.addPersonalDetails(resData.localId,personalDetails);
               this.userService.addProfileStickers(resData.localId,[]);
               this.userService.addDisplayPicture(resData.localId, new DisplayPicture(new Date(), 'null'), null);
-              this.activityService.addActivity(resData.localId, 'user')
+              this.activityService.addActivity(resData.localId, 'user');
+              this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: resData.localId, username: this.username, fullname: this.name, email: this.email});
               form.reset();
               this.router.navigate(['/profile/' + resData.localId + '/edit']);
             } else {
@@ -178,5 +211,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.notifier$.next();
+    this.notifier$.complete();
   }
 }

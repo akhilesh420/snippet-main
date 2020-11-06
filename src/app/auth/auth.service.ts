@@ -1,3 +1,4 @@
+import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -5,6 +6,7 @@ import { Router } from '@angular/router';
 import { catchError, tap, take } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 
 export interface AuthResponseData {
@@ -17,6 +19,13 @@ export interface AuthResponseData {
   registered?: boolean;
 }
 
+interface ExclusiveID {
+  used: number; //number of times the link has been used
+  user1?: Feedback;
+  user2?: Feedback;
+  user3?: Feedback;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
@@ -26,7 +35,8 @@ export class AuthService {
   onBoarding = new BehaviorSubject<string>(null); //Check if user signed up or logged in
 
   constructor(private http: HttpClient,
-              private router: Router) {}
+              private router: Router,
+              private afs: AngularFirestore) {}
 
   signUp(email: string, password: string) {
     return this.http
@@ -41,7 +51,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
-          this.onBoarding.next('Signup'); 
+          this.onBoarding.next('Signup');
           this.handleAuthentication(
             resData.email,
             resData.localId,
@@ -79,7 +89,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
-          this.onBoarding.next('Login'); 
+          this.onBoarding.next('Login');
           this.handleAuthentication(
             resData.email,
             resData.localId,
@@ -182,5 +192,24 @@ export class AuthService {
         break;
     }
     return throwError(errorMessage);
+  }
+
+  getIDused(id: string) {
+    const idDoc = this.afs.doc<{used: number}>('exclusiveID/'+id);
+    return idDoc.valueChanges();
+  }
+
+  updateIDused(id: string, userNumber: number) {
+    const idCollection = this.afs.collection('exclusiveID');
+    idCollection.doc(id).update({used: userNumber});
+  }
+
+  addExclusiveUser(id: string, userNumber: number, user: any) {
+    const key = 'user' + userNumber.toString();
+    const obj = {...user}
+    const idDoc = this.afs.doc('exclusiveID/'+id);
+    const idUserCollection = idDoc.collection('users');
+    this.updateIDused(id, userNumber);
+    idUserCollection.doc(key).set(obj);
   }
 }
