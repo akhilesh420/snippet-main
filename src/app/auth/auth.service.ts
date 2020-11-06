@@ -195,19 +195,19 @@ export class AuthService {
   }
 
   getIDused(id: string) {
-    const idDoc = this.afs.doc<{used: number}>('exclusiveID/'+id);
+    const idDoc = this.afs.doc<{used: number}>('exclusive ID/'+id);
     return idDoc.valueChanges();
   }
 
   updateIDused(id: string, userNumber: number) {
-    const idCollection = this.afs.collection('exclusiveID');
+    const idCollection = this.afs.collection('exclusive ID');
     idCollection.doc(id).update({used: userNumber});
   }
 
   addExclusiveUser(id: string, userNumber: number, user: any) {
     const key = 'user' + userNumber.toString();
     const obj = {...user}
-    const idDoc = this.afs.doc('exclusiveID/'+id);
+    const idDoc = this.afs.doc('exclusive ID/'+id);
     const idUserCollection = idDoc.collection('users');
     this.updateIDused(id, userNumber);
     idUserCollection.doc(key).set(obj);

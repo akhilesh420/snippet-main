@@ -14,14 +14,13 @@
   position: fixed;
   width: 100vw;
   animation-name: loadingAnim;
-  animation-duration: 2s;
-  animation-iteration-count:infinite;
+  animation-duration: 6s;
   animation-timing-function: linear;
 }
 
 @keyframes loadingAnim {
   from { width: 0; };
-  to { width: 100vw; };
+  to { width: 90vw; };
 }
 
 
@@ -31,7 +30,7 @@
   width: 100vw;
   background-color: rgba(5, 4, 5, 0.70);
   top:0;
-  position:fixed; 
+  position:fixed;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }

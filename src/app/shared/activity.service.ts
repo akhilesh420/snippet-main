@@ -43,29 +43,29 @@ export class ActivityService {
     const queryPost = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(pid));
 
     queryUser.snapshotChanges().pipe( //update old activity for user
-        map(changes => 
+        map(changes =>
           changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))),
           take(1)
         )
-      .subscribe((response) => { 
+      .subscribe((response) => {
           if (type === 'view') {
             this.activityRef.update(response[0].key, {views: response[0].views + 1});
           } else if (type === 'collection') {
             this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
           }
-    })
+    });
 
     queryPost.snapshotChanges().pipe( //update old activity for post
-      map(changes => 
+      map(changes =>
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
         ),take(1))
-      .subscribe((response) => { 
+      .subscribe((response) => {
         if (type === 'view') {
           this.activityRef.update(response[0].key, {views: response[0].views + 1});
         } else if(type === 'collection') {
           this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
         }
-    })
+    });
 
   }
 

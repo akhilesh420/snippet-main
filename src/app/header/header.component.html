@@ -9,18 +9,18 @@
     <div class="row">
       <div class="col"></div>
       <div class="col fontHeader">
-        <a routerLink="/explore" 
+        <a routerLink="/explore"
           [ngClass]="currentRoute === '/explore' ? 'active-link' : null">Explore</a>
       </div>
       <div class="col fontHeader">
-        <a [routerLink]='collectionRoute' 
+        <a [routerLink]='collectionRoute'
            [ngClass]="currentRoute.includes('collection') ? 'active-link' : null">Collection</a>
       </div>
       <div class="col fontHeader">
-        <a [routerLink]='createRoute' 
+        <a [routerLink]='createRoute'
            [ngClass]="currentRoute === '/create' ? 'active-link' : null">Create</a>
       </div>
-      <div class="col fontHeader"> 
+      <div class="col fontHeader">
         <a [routerLink]='profileRoute'
            [ngClass]="currentRoute.includes('profile') ? 'active-link' : null">Profile</a>
       </div>
@@ -33,7 +33,7 @@
   </div>
   <div class="col-2 fontHeader login" *ngIf="!isAuthenticated">
     <a routerLink="/auth"
-      [ngClass]="currentRoute === '/auth' ? 'active-link' : null">Login/Signup</a>
+      [ngClass]="currentRoute === '/auth' ? 'active-link' : null">Login</a>
   </div>
   <div class="col-2 fontHeader login" *ngIf="isAuthenticated">
     <a (click)="onLogout()">Logout</a>

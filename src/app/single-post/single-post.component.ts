@@ -1,7 +1,7 @@
 import { map, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { PostService } from './../shared/post.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostDetails } from './../shared/post.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirePerformance, trace } from '@angular/fire/performance';
@@ -12,7 +12,7 @@ import { AngularFirePerformance, trace } from '@angular/fire/performance';
   styleUrls: ['./single-post.component.css']
 })
 export class SinglePostComponent implements OnInit, OnDestroy {
-  
+
   uid$ = new BehaviorSubject<string>(null);
   pid: string;
   postsList = new Subject<PostDetails[]>(); //must include pid
@@ -21,10 +21,11 @@ export class SinglePostComponent implements OnInit, OnDestroy {
 
   constructor(private postService: PostService,
               private route: ActivatedRoute,
+              private router: Router,
               private performance: AngularFirePerformance) { }
 
   async ngOnInit(): Promise<void> {
-   
+
     this.pid = this.route.snapshot.params['pid'];
     this.setUp();
 
@@ -36,7 +37,7 @@ export class SinglePostComponent implements OnInit, OnDestroy {
         console.log(errorMessage);
       }
     )
-    
+
   }
 
   async setUp() {
@@ -46,10 +47,14 @@ export class SinglePostComponent implements OnInit, OnDestroy {
       map(changes => { //get the post detail for pid
         return { pid: this.pid, ...changes};
     })).subscribe(res => { //Need to be a list for the feed to work
-      this.uid$.next(res.uid);
-      let postDetailsList: PostDetails[] = [];
-      postDetailsList.push(res);
-      this.postsList.next(postDetailsList);
+      if (res.uid) {
+        this.uid$.next(res.uid);
+        let postDetailsList: PostDetails[] = [];
+        postDetailsList.push(res);
+        this.postsList.next(postDetailsList);
+      } else {
+        this.router.navigate(['/explore']);
+      }
       trace.stop();
     })
   }
