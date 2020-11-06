@@ -3,13 +3,13 @@
     <div class="col-md-12">
       <div *ngIf="feedList$ | async; let posts">
         <app-post class="post" *ngFor="let postDetails of posts" [postDetails]="postDetails"> </app-post>
-        <!-- <div *ngIf="!done" class="fail-safe">
-          <img [src]="addIcon" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
-        </div> -->
-        <p *ngIf="posts.length === 0 || !postsList;">Thats all folks!</p>
+        <p *ngIf="done">Thats all folks!</p>
       </div>
       <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">
         <app-loading-spinner></app-loading-spinner>
+      </div>
+      <div *ngIf="!done && !loading" class="fail-safe">
+        <img [src]="addIcon" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
       </div>
     </div>
   </div>

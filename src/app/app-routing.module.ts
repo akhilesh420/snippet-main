@@ -23,6 +23,7 @@ const appRoutes: Routes = [
   { path: 'feedback', component: FeedbackComponent},
   { path: 'post/:pid', component: SinglePostComponent},
   { path: 'auth', component: AuthComponent},
+  { path: 'auth/:id', component: AuthComponent},
   { path: 'tutorial', component: TutorialPageComponent}
 ];
 

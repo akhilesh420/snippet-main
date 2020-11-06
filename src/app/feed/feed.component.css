@@ -13,7 +13,9 @@
 }
 
 .fail-safe{
-  margin-bottom: 35px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
 }
 
 

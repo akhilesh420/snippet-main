@@ -29,9 +29,11 @@
   letter-spacing: 0.05em;
   height: auto;
   width: 100vw;
-  background-color: rgb(5, 4, 5);
+  background-color: rgba(5, 4, 5, 0.70);
   top:0;
   position:fixed; 
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .active-link, .contain a:hover {

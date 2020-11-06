@@ -6,7 +6,7 @@ import { Directive, HostListener, EventEmitter, Output, ElementRef } from '@angu
 export class ScrollableDirective {
 
   @Output() scrollPosition = new EventEmitter();
-  
+
   constructor(public el: ElementRef) { }
 
   @HostListener('scroll', ['$event'])
@@ -17,7 +17,7 @@ export class ScrollableDirective {
       const offset = this.el.nativeElement.offsetHeight
 
       // emit bottom event
-      if (top > height - offset - 20) {
+      if (top > height - offset - 100) {
         this.scrollPosition.emit('bottom')
       }
 

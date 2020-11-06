@@ -149,7 +149,9 @@
   position: absolute;
   top: 50%;
   left: 0;
-  transform: translateY(-65%);
+  -webkit-transform: translateY(-65%);
+      -ms-transform: translateY(-65%);
+          transform: translateY(-65%);
 }
 
 .position-relative {

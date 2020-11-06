@@ -1,7 +1,6 @@
 import { AuthService } from './../auth/auth.service';
-import { WindowStateService } from './../shared/window.service';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
@@ -62,7 +61,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
-      console.log(this.currentRoute); //log
       if (this.currentRoute === '/tutorial') {this.marginBottom = '0px';}
       else {this.marginBottom = '35px';}
     });
