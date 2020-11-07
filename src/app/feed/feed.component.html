@@ -2,9 +2,9 @@
   <div class="row" align="center">
     <div class="col-md-12">
       <div *ngIf="feedList$ | async; let posts">
-        <app-post class="post" *ngFor="let postDetails of posts" [postDetails]="postDetails"> </app-post>
-        <p *ngIf="done">Thats all folks!</p>
+        <app-post *ngFor="let postDetails of posts" [postDetails]="postDetails"> </app-post>
       </div>
+      <p *ngIf="done">Thats all folks!</p>
       <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">
         <app-loading-spinner></app-loading-spinner>
       </div>

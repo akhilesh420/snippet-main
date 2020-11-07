@@ -269,8 +269,8 @@
 }
 
 .holderListRow {
-  margin:0; 
-  margin-top: 72px; 
+  margin:0;
+  margin-top: 72px;
   width: 100%;
 }
 
@@ -325,7 +325,7 @@
 }
 
 .sticker-add {
-  width: 57px; 
+  width: 57px;
   height: 57px;
 }
 
@@ -465,16 +465,16 @@
   }
 
   .sticker-add {
-    width: 10.18vw; 
+    width: 10.18vw;
     height: 10.18vw;
   }
 
   .holderListRow {
-    margin-top: 12.85vw; 
+    margin-top: 12.85vw;
   }
 
   .holderListCol{
-    padding-left: 2.68vw; 
+    padding-left: 2.68vw;
   }
 }
 
