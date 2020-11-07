@@ -118,6 +118,8 @@ export class CreateComponent implements OnInit, OnDestroy {
             this.confirmFirst();
           }
         });
+      } else {
+        this.confirmFirst();
       }
     }
   }
@@ -148,8 +150,9 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.confirmSecond();
         }
       });
+    } else {
+      this.confirmSecond();
     }
-
   }
 
   confirmSecond() {

@@ -66,7 +66,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.popUpVal = this.miscellaneousService.getPopUpSetUp();
-    this.popUpVal.subscribe(response => console.log(response));
   }
 
   ngAfterViewInit() {

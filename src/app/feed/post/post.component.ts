@@ -1,3 +1,4 @@
+import { MiscellaneousService, PopUp } from './../../shared/miscellaneous.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
 import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
@@ -73,7 +74,8 @@ import { WindowStateService } from 'src/app/shared/window.service';
               private activityService: ActivityService,
               private router: Router,
               private windowService: WindowStateService,
-              private cdRef:ChangeDetectorRef) { }
+              private cdRef: ChangeDetectorRef,
+              private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.usernameFetch = false;
@@ -267,7 +269,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
           for (let key in response) {
             if (response[key].collectorID === this.myUid) {
               valid = false;
-              alert("You already collected this sticker!");
+              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Okay'));
               break;
             } else {
               valid = true;
@@ -276,9 +278,9 @@ import { WindowStateService } from 'src/app/shared/window.service';
           if (valid) {
             if (this.engagementRatio < 1) {
                 this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-                alert("Sticker collected! Go to My Collection and select Edit to use your new Sticker");
+                this.miscellaneousService.setPopUp(new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Okay'));
             } else {
-              alert("No more Stickers left!");
+              this.miscellaneousService.setPopUp(new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Okay'));
             }
           }
           this.collectingSticker = false;
