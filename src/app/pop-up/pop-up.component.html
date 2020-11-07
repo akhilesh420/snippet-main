@@ -7,15 +7,19 @@
             <p>{{message}}</p>
           </div>
         </div>
+        <div class = "col">
+          <div class="text-wrap btn alert" 
+              [ngClass]="primaryClass"
+              (click)='onClick(true)'>
+            {{primary}}
+          </div>
+        </div>
         <div class = "row margin">
           <div class = "col" *ngIf='secondary'>
-            <div class="text-wrap btn alert" (click)='onClick(false)'>
+            <div class="text-wrap btn alert" 
+                [ngClass]='secondaryClass'
+                (click)='onClick(false)'>
               {{secondary}}
-            </div>
-          </div>
-          <div class = "col">
-            <div class="text-wrap btn alert" (click)='onClick(true)'>
-              {{primary}}
             </div>
           </div>
         </div>
