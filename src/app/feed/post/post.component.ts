@@ -269,7 +269,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
           for (let key in response) {
             if (response[key].collectorID === this.myUid) {
               valid = false;
-              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Okay',undefined, ['default', 'default']));
+              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']));
               break;
             } else {
               valid = true;

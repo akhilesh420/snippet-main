@@ -53,7 +53,7 @@ export class MiscellaneousService {
   setPopUp(value: PopUp) {
     setTimeout(func=>{
       this.popUpSetup.next(value);
-    },300);
+    },50);
   }
 
   closePopUp() {
