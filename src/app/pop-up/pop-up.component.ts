@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MiscellaneousService } from './../shared/miscellaneous.service';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -12,11 +13,13 @@ export class PopUpComponent implements OnInit {
   @Input() primary: string = 'Okay';
   @Input() secondary: string;
   @Input() active: string[]; //[primary colour, secondary colour] if no colour then default
+  @Input() route?: string;
 
   primaryClass: string;
   secondaryClass: string;
 
-  constructor(private miscellaneousService: MiscellaneousService) { }
+  constructor(private miscellaneousService: MiscellaneousService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.primaryClass = this.active[0];
@@ -26,6 +29,9 @@ export class PopUpComponent implements OnInit {
   onClick(value: boolean) {
     this.miscellaneousService.setPopUpInteraction(value);
     this.miscellaneousService.closePopUp();
+    if (value && this.route) {
+      this.router.navigate([this.route]);
+    }
   }
 
 }

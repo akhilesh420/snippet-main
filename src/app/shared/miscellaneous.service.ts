@@ -6,7 +6,8 @@ export class PopUp {
     public message: string,
     public primary: string,
     public secondary?: string,
-    public active?: string[]
+    public active?: string[],
+    public route?: string
   ) {}
 }
 
