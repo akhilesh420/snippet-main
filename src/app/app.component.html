@@ -1,10 +1,10 @@
-<div class="scroll" 
-  (window:resize)="onResize()" 
+<div class="scroll"
+  (window:resize)="onResize()"
   scrollable
   (scrollPosition)="scrollHandler($event)"
   [ngClass]='mobileCheck ? "mobile-padding" : "desktop-padding"'>
 
-  <div class="container outlet-margin" 
+  <div class="container outlet-margin"
       *ngIf="currentRoute != '/tutorial'; else tutorial">
   <div class="row">
     <div class="col-md-12">
@@ -17,13 +17,19 @@
   <router-outlet></router-outlet>
   </ng-template>
 
+  <div *ngIf="popUpVal | async as value;">
+    <app-pop-up [message]='value.message'
+                [primary]='value.primary'
+                [secondary]='value.secondary'
+                [active]='value.active'></app-pop-up>
+  </div>
 
   <div *ngIf="!mobileCheck">
-  <app-header ></app-header>
+    <app-header ></app-header>
   </div>
 
   <div style="margin-top: 0px;" *ngIf="mobileCheck">
-  <app-navbar></app-navbar>
+    <app-navbar></app-navbar>
   </div>
 </div>
 

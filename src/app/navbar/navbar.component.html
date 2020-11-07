@@ -1,7 +1,8 @@
-<div *ngIf="dropUp" class = "row text-right box">
+<div class="navabr-contain">
+  <div *ngIf="dropUp" class = "row text-right box">
     <div class="col"></div>
     <div class="col"></div>
-    
+
     <div class ="col inBox">
         <div class = "row" (click)="navigate('feedback')">
             <div class="col inner">Feedback</div>
@@ -23,7 +24,7 @@
         <img [ngClass]="currentRoute != '/explore' ? 'inactive-link' : null" src="assets/icons/exploreSymbol_2x.svg">
     </div>
     <div class="col text-center Symbol" (click)="navigate('collection')">
-        <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null" 
+        <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null"
                 src="assets/icons/sticker-icon.svg">
     </div>
     <div class="col text-center Symbol" (click)="navigate('create')">
@@ -31,14 +32,14 @@
     </div>
     <div class="col text-center">
         <a (click)="navigate('profile')">
-            <div class="dpBorder" 
+            <div class="dpBorder"
                 [ngClass]="!currentRoute.includes('profile') ? 'inactive-dp' : null" >
-                <img *ngIf="isAuthenticated" 
+                <img *ngIf="isAuthenticated"
                     [src]="displayPicture$ | async"
                     alt="display picture"
                     [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
                     (load)="onLoad($event)">
-                <img *ngIf="!isAuthenticated" 
+                <img *ngIf="!isAuthenticated"
                     src='assets/default image/blank_image@2x.png'
                     alt="display picture"
                     [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
@@ -49,6 +50,7 @@
     <div class="col text-center dropupSymbol" (click)="dropUp = !dropUp" (clickOutside)="dropUp = false">
         <img [ngClass]="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback' ? 'inactive-link' : null"  src="assets/icons/dropupSymbol.svg">
     </div>
+</div>
 </div>
 
 

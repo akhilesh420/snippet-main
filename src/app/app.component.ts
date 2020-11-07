@@ -1,3 +1,4 @@
+import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -20,12 +21,15 @@ export class AppComponent implements OnInit, OnDestroy {
   currentRoute: string;
   notifier$ = new Subject();
 
+  popUpVal: Subject<PopUp>;
+
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
               private titleService: Title,
               private metaService: Meta,
               private router: Router,
-              private infiniteScrollService: InfiniteScrollService){
+              private infiniteScrollService: InfiniteScrollService,
+              private miscellaneousService: MiscellaneousService){
   }
 
   ngOnInit(){
@@ -60,6 +64,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
     });
+
+    this.popUpVal = this.miscellaneousService.getPopUpSetUp();
+    this.popUpVal.subscribe(response => console.log(response));
   }
 
   ngAfterViewInit() {

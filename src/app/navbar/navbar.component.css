@@ -114,13 +114,17 @@ padding-bottom: 4px;
 .loading-bar {
   border-top: 2px solid #D8B869;
   position: fixed;
-  width: 100vw;
+  width: 90vw;
   animation-name: loadingAnim;
-  animation-duration: 6s;
+  animation-duration: 10s;
   animation-timing-function: linear;
 }
 
 @keyframes loadingAnim {
   from { width: 0; };
   to { width: 90vw; };
+}
+
+.navbar-contain{
+  z-index: 100;
 }

@@ -1,46 +1,48 @@
-<div class="row contain no-gutters" #header>
-  <div class="col-2">
-    <a routerLink="/tutorial">
-      <span class="logoMain">Snippet</span>
-      <!-- <span class="logoSub">Creative Community</span> -->
-    </a>
-  </div>
-  <div class="col-8">
-    <div class="row">
-      <div class="col"></div>
-      <div class="col fontHeader">
-        <a routerLink="/explore"
-          [ngClass]="currentRoute === '/explore' ? 'active-link' : null">Explore</a>
+<div class="header-contain">
+  <div class="row contain no-gutters" #header>
+    <div class="col-2">
+      <a routerLink="/tutorial">
+        <span class="logoMain">Snippet</span>
+        <!-- <span class="logoSub">Creative Community</span> -->
+      </a>
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <div class="col"></div>
+        <div class="col fontHeader">
+          <a routerLink="/explore"
+            [ngClass]="currentRoute === '/explore' ? 'active-link' : null">Explore</a>
+        </div>
+        <div class="col fontHeader">
+          <a [routerLink]='collectionRoute'
+             [ngClass]="currentRoute.includes('collection') ? 'active-link' : null">Collection</a>
+        </div>
+        <div class="col fontHeader">
+          <a [routerLink]='createRoute'
+             [ngClass]="currentRoute === '/create' ? 'active-link' : null">Create</a>
+        </div>
+        <div class="col fontHeader">
+          <a [routerLink]='profileRoute'
+             [ngClass]="currentRoute.includes('profile') ? 'active-link' : null">Profile</a>
+        </div>
+        <div class="col fontHeader">
+          <a routerLink="/feedback"
+            [ngClass]="currentRoute === '/feedback' ? 'active-link' : null">Feedback</a>
+        </div>
+        <div class="col"></div>
       </div>
-      <div class="col fontHeader">
-        <a [routerLink]='collectionRoute'
-           [ngClass]="currentRoute.includes('collection') ? 'active-link' : null">Collection</a>
-      </div>
-      <div class="col fontHeader">
-        <a [routerLink]='createRoute'
-           [ngClass]="currentRoute === '/create' ? 'active-link' : null">Create</a>
-      </div>
-      <div class="col fontHeader">
-        <a [routerLink]='profileRoute'
-           [ngClass]="currentRoute.includes('profile') ? 'active-link' : null">Profile</a>
-      </div>
-      <div class="col fontHeader">
-        <a routerLink="/feedback"
-          [ngClass]="currentRoute === '/feedback' ? 'active-link' : null">Feedback</a>
-      </div>
-      <div class="col"></div>
+    </div>
+    <div class="col-2 fontHeader login" *ngIf="!isAuthenticated">
+      <a routerLink="/auth"
+        [ngClass]="currentRoute === '/auth' ? 'active-link' : null">Login</a>
+    </div>
+    <div class="col-2 fontHeader login" *ngIf="isAuthenticated">
+      <a (click)="onLogout()">Logout</a>
     </div>
   </div>
-  <div class="col-2 fontHeader login" *ngIf="!isAuthenticated">
-    <a routerLink="/auth"
-      [ngClass]="currentRoute === '/auth' ? 'active-link' : null">Login</a>
-  </div>
-  <div class="col-2 fontHeader login" *ngIf="isAuthenticated">
-    <a (click)="onLogout()">Logout</a>
-  </div>
-</div>
 
-<div class="loading-bar" [ngStyle]='{"top": header.offsetHeight.toString() +"px"}' *ngIf="loadingBar$ | async"></div>
+  <div class="loading-bar" [ngStyle]='{"top": header.offsetHeight.toString() +"px"}' *ngIf="loadingBar$ | async"></div>
+</div>
 
 
 

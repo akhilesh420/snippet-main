@@ -8,8 +8,8 @@ import { PostService } from '../shared/post.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivityService } from '../shared/activity.service';
 import { Collection } from '../shared/activity.model';
-import { MiscellaneousService } from '../shared/miscellaneous.service';
-import { takeUntil } from 'rxjs/operators';
+import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create',
@@ -109,38 +109,53 @@ export class CreateComponent implements OnInit, OnDestroy {
         return;
       }
       if (!this.postDetails.description || this.postDetails.description === "") {
-        let valid = confirm("You didn't add a description! Are you sure you want to post?");
-        if (!valid) {
-          return;
-        }
+        this.miscellaneousService.setPopUp(new PopUp("You didn't add a description! Are you sure you want to post?",'Yes','No'));
+        this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+          console.log(response); //tempLog
+          if (!response) {
+            return;
+          } else {
+            this.confirmFirst();
+          }
+        });
       }
-      if (!Number.isInteger(this.amount)) {
-        this.error = "Number of stickers must be whole numbers!";
-        return;
-      }
-      if ((!this.amount || this.amount === null) && this.amount != 0) {
-        this.error = "Choose the number of stickers you want to release!";
-        return;
-      }
-      if (this.amount < this.minSticker) {
-        this.error = "Must release at least "+this.minSticker+" stickers!";
-        return
-      }
-      if (this.amount > this.maxSticker) {
-        this.error = "Can only release "+this.maxSticker+" stickers! For now...";
-        return;
-      }
-      if (this.amount === 1) {
-        let valid = confirm("Are you sure you want to release only 1 sticker? You will receive this sticker, so no collection will be possible!");
-        if (!valid) {
-          return;
-        }
-      }
-
-      this.isCreating = true;
-      this.stickerDetails = new StickerDetails(this.amount, 0);
-      this.createPost();
     }
+  }
+
+  confirmFirst() {
+    if (!Number.isInteger(this.amount)) {
+      this.error = "Number of stickers must be whole numbers!";
+      return;
+    }
+    if ((!this.amount || this.amount === null) && this.amount != 0) {
+      this.error = "Choose the number of stickers you want to release!";
+      return;
+    }
+    if (this.amount < this.minSticker) {
+      this.error = "Must release at least "+this.minSticker+" stickers!";
+      return
+    }
+    if (this.amount > this.maxSticker) {
+      this.error = "Can only release "+this.maxSticker+" stickers! For now...";
+      return;
+    }
+    if (this.amount === 1) {
+      this.miscellaneousService.setPopUp(new PopUp("Are you sure you want to release only 1 sticker? You will receive this sticker, so no collection will be possible!",'Yes','No'));
+      this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+        if (!response) {
+          return;
+        } else {
+          this.confirmSecond();
+        }
+      });
+    }
+
+  }
+
+  confirmSecond() {
+    this.isCreating = true;
+    this.stickerDetails = new StickerDetails(this.amount, 0);
+    this.createPost();
   }
 
   createPost() {

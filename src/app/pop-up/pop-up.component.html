@@ -1,32 +1,25 @@
-<div class= "row no-gutters justify-content-center containerPopUp text-wrap">
-  
-    <div class = "col-fluid align-self-center box no-gutters justify-content-center">
-      
-      <div class = "row marginTop">
-  
-        <div class = "col text-wrap">
-          <p>Statement</p>
+<div class="containerPopUp">
+  <div class="container-fluid">
+    <div class= "row">
+      <div class = "col-lg-3 col-md-6 col-sm-8 col-10 box horizontal-center">
+        <div class = "row marginTop message">
+          <div class = "col text-wrap">
+            <p>{{message}}</p>
+          </div>
         </div>
-  
-      </div>
-  
-      <div class = "row margin">
-  
-        <div class = "col text-wrap button align-self-center">
-          <p>Button-1</p>
+        <div class = "row margin">
+          <div class = "col" *ngIf='secondary'>
+            <div class="text-wrap btn" (click)='onClick(false)'>
+              {{secondary}}
+            </div>
+          </div>
+          <div class = "col">
+            <div class="text-wrap btn" (click)='onClick(true)'>
+              {{primary}}
+            </div>
+          </div>
         </div>
-  
       </div>
-  
-      <div class = "row margin">
-  
-        <div class = "col text-wrap button">
-          <p>Button-2</p>
-        </div>
-  
-      </div>
-      
-      
     </div>
-  
   </div>
+</div>

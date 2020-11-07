@@ -12,9 +12,9 @@
 .loading-bar {
   border-top: 2px solid #D8B869;
   position: fixed;
-  width: 100vw;
+  width: 90vw;
   animation-name: loadingAnim;
-  animation-duration: 6s;
+  animation-duration: 10s;
   animation-timing-function: linear;
 }
 
@@ -76,4 +76,6 @@
 
 a {text-decoration: none !important;}
 
-
+.header-contain {
+  z-index: 100;
+}
