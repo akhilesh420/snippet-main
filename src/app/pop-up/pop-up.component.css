@@ -38,9 +38,9 @@
 }
 
 .btn {
-  color: #D8B869;
+  background: #D8B869;
+  color: #131114;
   border: 2px solid #D8B869;
-  background: #131114;
   border-radius: 20px;
   padding: 5px;
   padding-left: 10px;
