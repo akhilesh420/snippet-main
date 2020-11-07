@@ -1,83 +1,85 @@
 .containerPopUp {
-    color: #D8B869;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.4);
-    z-index: 50;
+  color: #D8B869;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  z-index: 50;
 }
 
 .box {
-    background-color: rgba(0, 0, 0, 0.60);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-radius: 5%;
-    border: 2px solid #D8B869;
-    text-align: center;
-    /* height: 200px; */
-    top:20vh;
-    position: fixed;
-    z-index: 100;
-  }
+  background-color: rgba(0, 0, 0, 0.60);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: 5%;
+  border: 2px solid #D8B869;
+  text-align: center;
+  /* height: 200px; */
+  top:20vh;
+  position: fixed;
+  z-index: 100;
+}
 
 .marginTop {
-    padding-top: 15px;
-    padding-bottom: 20px;
-  }
+  padding-top: 15px;
+  padding-bottom: 20px;
+}
 
 .margin {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 .message {
-  height: 70%;
-  padding-top: 30px;
+height: 70%;
+padding-top: 30px;
 }
 
 .btn {
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
- 
-  border: 2px solid #D8B869;
-  border-radius: 20px;
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-align: center;
-  cursor: pointer;
-  width: auto;
+font-family: 'ChampagneAndLimousines';
+font-weight: bold;
+
+border: 2px solid #D8B869;
+border-radius: 20px;
+padding: 5px;
+padding-left: 10px;
+padding-right: 10px;
+text-align: center;
+cursor: pointer;
+width: auto;
 }
 
 .default {
-  background: #D8B869;
-  color: #131114;
+background: #D8B869;
+color: #131114;
 }
 
 .reject {
-  background: #AD0B0B;
-  color: #f7f7f7;
+background: #AD0B0B;
+color: #f7f7f7;
 }
 
 .confirm {
-  background: #029568;
-  color: #f7f7f7;
+background: #029568;
+color: #f7f7f7;
 }
 
 .routing {
-  background: #131114;
-  color: #D8B869;
+background: #131114;
+color: #D8B869;
 }
 
 .btn:active {
-  color:#131114;
-  background:  #D8B869;
+color:#131114;
+background:  #D8B869;
 }
 
 .horizontal-center {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,0);
+position: absolute;
+left: 50%;
+-webkit-transform: translate(-50%,0);
+    -ms-transform: translate(-50%,0);
+        transform: translate(-50%,0);
 }
