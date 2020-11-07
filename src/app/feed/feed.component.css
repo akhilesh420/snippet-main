@@ -18,5 +18,8 @@
   cursor: pointer;
 }
 
+.no-padding {
+  padding: 0;
+}
 
 

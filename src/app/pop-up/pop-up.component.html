@@ -1,21 +1,21 @@
 <div class="containerPopUp" (click)='onClick(false)'>
   <div class="container-fluid">
     <div class= "row">
-      <div class = "col-lg-4 col-md-6 col-sm-8 col-10 box horizontal-center">
+      <div class = "col-lg-4 col-md-6 col-sm-8 col-11 box horizontal-center">
         <div class = "row marginTop message">
           <div class = "col text-wrap">
             <p>{{message}}</p>
           </div>
         </div>
         <div class = "row margin">
-          <div class = "col">
+          <div class = "col align-self-center">
             <div class="text-wrap btn alert" 
                 [ngClass]="primaryClass"
                 (click)='onClick(true)'>
               {{primary}}
             </div>
           </div>
-          <div class = "col" *ngIf='secondary'>
+          <div class="col align-self-center" *ngIf='secondary'>
             <div class="text-wrap btn alert" 
                 [ngClass]='secondaryClass'
                 (click)='onClick(false)'>
