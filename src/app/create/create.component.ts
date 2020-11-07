@@ -109,7 +109,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         return;
       }
       if (!this.postDetails.description || this.postDetails.description === "") {
-        this.miscellaneousService.setPopUp(new PopUp("You didn't add a description! Are you sure you want to post?",'Yes','No'));
+        this.miscellaneousService.setPopUp(new PopUp("You didn't add a description! Are you sure you want to post?",'Yes','No',['confirm', 'reject']));
         this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
           console.log(response); //tempLog
           if (!response) {
@@ -142,7 +142,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.amount === 1) {
-      this.miscellaneousService.setPopUp(new PopUp("Are you sure you want to release only 1 sticker? You will receive this sticker, so no collection will be possible!",'Yes','No'));
+      this.miscellaneousService.setPopUp(new PopUp("Are you sure you want to release only 1 sticker? You will receive this 1 sticker, so no one else can collect it",'Yes','No', ['confirm', 'reject']));
       this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
         if (!response) {
           return;

@@ -269,7 +269,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
           for (let key in response) {
             if (response[key].collectorID === this.myUid) {
               valid = false;
-              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Okay',undefined, ['default', 'default']));
+              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default']));
               break;
             } else {
               valid = true;
@@ -278,9 +278,9 @@ import { WindowStateService } from 'src/app/shared/window.service';
           if (valid) {
             if (this.engagementRatio < 1) {
                 this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-                this.miscellaneousService.setPopUp(new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Okay',undefined, ['default', 'default']));
+                this.miscellaneousService.setPopUp(new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default']));
             } else {
-              this.miscellaneousService.setPopUp(new PopUp("There are no more stickers left!",'Okay', undefined, ['reject', 'default']));
+              this.miscellaneousService.setPopUp(new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']));
             }
           }
           this.collectingSticker = false;
