@@ -29,10 +29,11 @@ export class FeedComponent implements OnInit, OnDestroy {
   postOffset: number; //Trigger next post after this value
   failSafe: boolean;
   loading: boolean;
+  getScroll$ = new Subject();
 
   addIcon = "assets/icons/add_icon@2x.png";
 
-  constructor(private infiniteScrollService: InfiniteScrollService) {
+  constructor() {
    }
 
   ngOnInit(): void {
@@ -45,7 +46,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postsList = response;
       if (this.postsList) {
         this.initBatch();
-        this.infiniteScrollService.getScroll$.pipe(takeUntil(this.notifier$))
+        this.getScroll$.pipe(takeUntil(this.notifier$))
         .subscribe((event:string) => {
           event === 'error' ? this.failSafe = true : this.failSafe = false;
           if (!this.done && !this.failSafe) {
@@ -84,6 +85,11 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
     this.batchNumber++;
     this.loading = false;
+  }
+
+  scrollHandler(event) {
+    console.log(event);
+    this.getScroll$.next(event);
   }
 
   ngOnDestroy() {

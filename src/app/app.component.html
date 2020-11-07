@@ -1,7 +1,5 @@
 <div class="scroll"
   (window:resize)="onResize()"
-  scrollable
-  (scrollPosition)="scrollHandler($event)"
   [ngClass]='mobileCheck ? "mobile-padding" : "desktop-padding"'>
 
   <div class="container outlet-margin"

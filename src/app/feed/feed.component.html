@@ -1,8 +1,13 @@
 <div class="container-fluid no-gutters no-padding">
   <div class="row" align="center">
     <div class="col-md-12">
-      <div *ngIf="feedList$ | async; let posts">
-        <app-post *ngFor="let postDetails of posts" [postDetails]="postDetails"> </app-post>
+      <div *ngIf="feedList$ | async; let posts" 
+            class="scroll"
+            scrollable
+            (scrollPosition)="scrollHandler($event)">
+        <div class="snap-child" *ngFor="let postDetails of posts" >
+          <app-post  [postDetails]="postDetails" > </app-post>
+        </div>
       </div>
       <p *ngIf="done">Thats all folks!</p>
       <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">

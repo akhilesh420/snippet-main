@@ -76,10 +76,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.windowService.checkWidth();
   }
 
-  scrollHandler(event) {
-    this.infiniteScrollService.getScroll$.next(event);
-  }
-
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();

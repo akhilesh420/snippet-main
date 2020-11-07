@@ -22,4 +22,14 @@
   padding: 0;
 }
 
+.scroll {
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  width: 100vw;
+  height: 100vh;
+}
 
+.snap-child {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
