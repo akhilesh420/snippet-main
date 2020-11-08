@@ -51,7 +51,7 @@ export class FeedComponent implements OnInit, OnDestroy {
           event === 'error' ? this.failSafe = true : this.failSafe = false;
           if (!this.done && !this.failSafe) {
             if (event === 'bottom') {
-              this.moreBatch();
+              // this.moreBatch();
             }
           }
         })

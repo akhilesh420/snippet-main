@@ -35,8 +35,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   fetchingWindow: boolean;
   profileRoute: string;
 
-  imageProp = {'height':'100%', 'width':'auto'};
-
   usernameFontSize: number;
   usernamePadding: string;
   maxWidth: number;
@@ -132,18 +130,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   editProfile() {
     if (this.uid === this.myUid) {
       this.router.navigate(['profile/'+this.myUid+'/edit']);
-    }
-  }
-
-  onLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height < 1) {
-      this.imageProp.width = '100%';
-      this.imageProp.height = 'auto';
-    } else {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '100%';
     }
   }
 

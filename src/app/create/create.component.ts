@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable, forkJoin, Subject } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
-import { PostContent, PostDetails, StickerContent, StickerDetails } from './../shared/post.model';
+import { PostContent, PostDetails, StickerDetails } from './../shared/post.model';
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PostService } from '../shared/post.service';
@@ -28,6 +28,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   stickerContent: any;
 
   postContent$ = new BehaviorSubject<any>(null);
+  postType$ = new Subject<any>();
   stickerDetails$: Observable<StickerDetails>;
   stickerContent$ = new BehaviorSubject<any>(null);
 
@@ -175,7 +176,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.miscellaneousService.endLoading();
         this.postService.addPostDetails(pid,this.postDetails);
         this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
-        this.postService.addStickerContentRef(pid, new StickerContent(scid, this.stickerContent.type));
+        this.postService.addStickerContentRef(pid, new PostContent(scid, this.stickerContent.type));
         this.postService.addStickerDetails(pid, this.stickerDetails);
 
         this.activityService.addActivity(pid, 'post');
@@ -204,6 +205,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         if (file.size < 10*1024*1024) {
           this.error = undefined;
           this.postContent = file;
+          this.postType$.next(file.type);
           this.postContent$.next(event.target.result);
         } else {
           this.error ='Post file size too big! There is a 10 MB limit';

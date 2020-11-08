@@ -46,8 +46,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   dpSrc: string = "/assets/default image/080708 background.png";
   addIcon = "assets/icons/add_icon@2x.png";
 
-  imageProp = {'height':'100%', 'width':'auto'};
-
   oldPsid: string[] = [];
   isSaving = false;
 
@@ -199,18 +197,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
           this.error ='Post file size too big! There is a 10 MB limit';
         }
       }
-    }
-  }
-
-  onLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height < 1) {
-      this.imageProp.width = '100%';
-      this.imageProp.height = 'auto';
-    } else {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '100%';
     }
   }
 

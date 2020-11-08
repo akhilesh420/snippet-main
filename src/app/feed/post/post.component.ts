@@ -4,13 +4,14 @@ import { AuthService } from './../../auth/auth.service';
 import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
-import { StickerDetails, PostDetails } from './../../shared/post.model';
+import { StickerDetails, PostDetails, PostContent } from './../../shared/post.model';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { filter, map, take, takeUntil } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
 import { WindowStateService } from 'src/app/shared/window.service';
+import { on } from 'process';
 
 @Component({
   selector: 'app-post',
@@ -23,12 +24,14 @@ import { WindowStateService } from 'src/app/shared/window.service';
   @Input() createPost?: boolean = false;
   pid: string;
   @Input() postContent$?: BehaviorSubject<any>;
+  @Input() postType$?: Subject<string>;
   @Input() stickerContent$?: BehaviorSubject<any>;
 
   @Output() addClick = new EventEmitter();
   
   profileDetails?: ProfileDetails;
   profileStickers$?: Observable<ProfileSticker[]>;
+  postType: string;
   notifier$ = new Subject();
   collectionList: Observable<Collection[]>;
 
@@ -37,6 +40,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   addIcon = "assets/icons/add_icon@2x.png"
 
+  videoProp = {'height':'100%', 'width':'auto'};
   imageProp = {'height':'auto', 'width':'auto'};
   stickerProp = {'height':'auto', 'width':'auto'};
   engagementProp = {'width': '0','background': '#D8B869'};
@@ -124,11 +128,19 @@ import { WindowStateService } from 'src/app/shared/window.service';
       this.pid = this.postDetails.pid; //exists because of idfield
       this.setUpPost();
       this.setUpActivity();
-     }
+    } else {
+      this.postType$.pipe(takeUntil(this.notifier$)).subscribe(response => {
+        this.postType = response;
+      }, error => console.log(error));
+    }
   }
 
   setUpPost() {
-    this.postContent$ = this.postService.getPostContent(this.pid);
+    this.postService.getPostContentRef(this.pid).pipe(takeUntil(this.notifier$))
+    .subscribe(response => {
+      this.postType = response.fileFormat;
+      this.postContent$ = this.postService.getPostContent(this.pid, response);
+    });
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     this.postService.getStickerDetails(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.stickerDetails = response;
@@ -203,35 +215,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
       width = 'auto'
     }
     return {width: width, height: height};
-  }
-
-  onLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height > 1) {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '100%';
-    }
-    else if (width/height <= 1 && width/height < 475/580) {
-      this.imageProp.width = '100%';
-      this.imageProp.height = 'auto';
-    } else {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '580px';
-    }
-
-  }
-
-  onStickerLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height < 1) {
-      this.stickerProp.width = '100%';
-      this.stickerProp.height = 'auto';
-    } else {
-      this.stickerProp.width = 'auto';
-      this.stickerProp.height = '100%';
-    }
   }
 
   convertToShort(num: number): string {

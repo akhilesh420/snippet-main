@@ -21,8 +21,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   dropUp: boolean;
 
-  imageProp = {'height':'100%', 'width':'auto'};
-
   loadingBar$: Subject<boolean>;
 
   constructor(private usersService: UsersService,
@@ -48,18 +46,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
     });
-  }
-
-  onLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height < 1) {
-      this.imageProp.width = '100%';
-      this.imageProp.height = 'auto';
-    } else {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '100%';
-    }
   }
 
   navigate(event: string) {

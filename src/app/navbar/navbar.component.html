@@ -36,14 +36,10 @@
                 [ngClass]="!currentRoute.includes('profile') ? 'inactive-dp' : null" >
                 <img *ngIf="isAuthenticated"
                     [src]="displayPicture$ | async"
-                    alt="display picture"
-                    [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
-                    (load)="onLoad($event)">
+                    alt="display picture">
                 <img *ngIf="!isAuthenticated"
                     src='assets/default image/blank_image@2x.png'
-                    alt="display picture"
-                    [ngStyle]="{'height': imageProp.height, 'width': imageProp.width}"
-                    (load)="onLoad($event)">
+                    alt="display picture">
             </div>
         </a>
     </div>

@@ -16,13 +16,13 @@
                     type="file"
                     id="contentFile"
                     class="form-control-file"
-                    accept="image/x-png,image/gif,image/jpeg,image/tiff"
+                    accept="image/x-png,image/gif,image/jpeg,image/tiff,video/mp4"
                     ngModel
                     name="content"
                     (change)="onContentChange($event)"
                     #contentInput
                     required>
-                    <input
+                  <input
                     type="file"
                     id="stickerFile"
                     class="form-control-file"
@@ -35,6 +35,7 @@
                 </div>
                 <app-post [postDetails]="postDetails"
                           [postContent$]="postContent$"
+                          [postType$]="postType$"
                           [stickerContent$]="stickerContent$"
                           [createPost]="true"
                           (addClick)="onAddClick($event)"></app-post>
