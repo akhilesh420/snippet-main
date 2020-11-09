@@ -1,5 +1,5 @@
-<div class="navabr-contain">
-  <div *ngIf="dropUp" class = "row text-right box">
+<div class="container-fluid no-padding no-margin drop-up">
+  <div *ngIf="dropUp" class = "row text-right no-margin box">
     <div class="col"></div>
     <div class="col"></div>
 
@@ -14,12 +14,14 @@
             <div class="col inner">{{isAuthenticated ? 'Logout' : 'Login'}}</div>
         </div>
     </div>
+  </div>
 </div>
 
 <div class='loading-bar' [ngStyle]='{"bottom": navbar.offsetHeight.toString() +"px"}' *ngIf="loadingBar$ | async">
 </div>
 
-<div class="row no-gutters text-center divider nav" #navbar>
+<div class="container no-padding no-margin nav">
+  <div class="row no-gutters text-center divider" #navbar>
     <div class="col text-center exploreSymbol" (click)="navigate('explore')">
         <img [ngClass]="currentRoute != '/explore' ? 'inactive-link' : null" src="assets/icons/exploreSymbol_2x.svg">
     </div>
@@ -46,8 +48,9 @@
     <div class="col text-center dropupSymbol" (click)="dropUp = !dropUp" (clickOutside)="dropUp = false">
         <img [ngClass]="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback' ? 'inactive-link' : null"  src="assets/icons/dropupSymbol.svg">
     </div>
+  </div>
 </div>
-</div>
+
 
 
 

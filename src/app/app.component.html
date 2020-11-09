@@ -1,19 +1,13 @@
-<div class="scroll"
-  (window:resize)="onResize()"
-  [ngClass]='mobileCheck ? "mobile-padding" : "desktop-padding"'>
+<div class="master-container"
+  (window:resize)="onResize()">
 
-  <div class="container outlet-margin"
-      *ngIf="currentRoute != '/tutorial'; else tutorial">
-  <div class="row">
-    <div class="col-md-12">
-      <router-outlet></router-outlet>
+  <div class="container-fluid fit-dimension no-margin no-padding">
+    <div class="row fit-dimension no-margin no-padding">
+      <div class="col-12 fit-dimension no-margin no-padding">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
-  </div>
-
-  <ng-template #tutorial>
-  <router-outlet></router-outlet>
-  </ng-template>
 
   <div *ngIf="popUpVal | async as value;">
     <app-pop-up [message]='value.message'
