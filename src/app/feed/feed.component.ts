@@ -50,6 +50,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
 
+  mobileCheck: boolean;
 
   constructor(private windowService: WindowStateService,
               private feedService: FeedService,
@@ -85,6 +86,12 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.postMargin = 35;
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
+      if (val < 850) {
+        this.mobileCheck = true;
+      } else {
+        this.mobileCheck = false;
+      }
+
       if (val < 560) {
         this.postHeight = 580*val/560;
         this.postViewOffset = 71*val/560;
@@ -169,31 +176,32 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  scrollHandler(event) {
-    event === 'error' ? this.failSafe = true : this.failSafe = false;
+  scrollHandler(scrollY) {
+    scrollY === 'error' ? this.failSafe = true : this.failSafe = false;
     if (!this.done && !this.failSafe) {
-      if (event === 'bottom') {
+      if (scrollY === 'bottom') {
         this.moreBatch();
       }
     }
 
-    if (event === 'top') {
+
+    if (this.showProfileDisplay) scrollY = scrollY - this.profileDisplayHeight;
+    if (scrollY <= 0) {
+      this.postNumber = undefined;
+      return;
+    }
+
+    if (scrollY === 'top') {
       this.postNumber = 0;
       return;
     }
 
-    if (event === 'bottom') {
+    if (scrollY === 'bottom') {
       this.postNumber = this.done ? this.postsList.length - 1 : this.batchNumber*this.batchSize - 1;
       return;
     }
 
-    if (this.showProfileDisplay) event - this.profileDisplayHeight;
-    if (event <= 0) {
-      this.postNumber = 0;
-      return;
-    }
-
-    this.postNumber = Math.floor(event/this.viewPort);
+    this.postNumber = Math.floor(scrollY/this.viewPort);
   }
 
   ngOnDestroy() {

@@ -2,9 +2,9 @@
      scrollable
     (scrollPosition)="scrollHandler($event)">
   <div class="row" align="center">
-    <div class="col-md-12">
+    <div class="col-md-12" [ngClass]='mobileCheck ? "padding-mobile" : "padding-desktop"'>
       <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
-      <div *ngIf="feedList$ | async; let posts">
+      <div *ngIf="feedList$ | async; let posts" class='margin-bottom'>
         <div *ngFor="let postDetails of posts; let i = index;" >
           <app-post  [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
         </div>

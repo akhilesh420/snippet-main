@@ -38,3 +38,15 @@
   padding-bottom: 60px;
 }
 
+
+.padding-mobile {
+  padding-top: 2px;
+}
+
+.padding-desktop {
+  padding-top: 42px;
+}
+
+.margin-bottom {
+  margin-bottom: 35px;
+}
