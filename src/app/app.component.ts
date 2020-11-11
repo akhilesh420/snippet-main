@@ -3,7 +3,7 @@ import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Title, Meta} from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(){
 
     if (screenfull.isEnabled) {
-      screenfull.request();
+      screenfull.request().catch(error => console.log(error));
       screenfull.on('error', event => {console.log(event);});
     }
 
@@ -63,6 +63,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
+      if (!(val instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0)
     });
 
     this.popUpVal = this.miscellaneousService.getPopUpSetUp();
@@ -74,10 +78,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onResize(){
     this.windowService.checkWidth();
-  }
-
-  scrollHandler(event) {
-    this.infiniteScrollService.getScroll$.next(event);
   }
 
   ngOnDestroy() {

@@ -1,7 +1,7 @@
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { PostContent, PostDetails, StickerDetails, StickerContent } from './post.model';
+import { PostContent, PostDetails, StickerDetails } from './post.model';
 
 import { Injectable } from '@angular/core';
 
@@ -16,7 +16,7 @@ export class PostService {
   private postDetailsCollection: AngularFirestoreCollection<PostDetails>;
   private postContentCollection: AngularFirestoreCollection<PostContent>;
   private stickerDetailsCollection: AngularFirestoreCollection<StickerDetails>;
-  private stickerContentCollection: AngularFirestoreCollection<StickerContent>;
+  private stickerContentCollection: AngularFirestoreCollection<PostContent>;
 
   private stickerContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
   private postContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
@@ -26,7 +26,7 @@ export class PostService {
     this.postDetailsCollection = afs.collection<PostDetails>('post details');
     this.postContentCollection = afs.collection<PostContent>('post content');
     this.stickerDetailsCollection = afs.collection<StickerDetails>('sticker details');
-    this.stickerContentCollection = afs.collection<StickerContent>('sticker content');
+    this.stickerContentCollection = afs.collection<PostContent>('sticker content');
    }
 
   //--------------------------------------- Post details ---------------------------------------
@@ -55,30 +55,28 @@ export class PostService {
 
   // --------------------------------------- Post content ---------------------------------------
   // Get post content from cloud firestore by UID
-  private getPostContentRef(pid: string) {
+  getPostContentRef(pid: string) {
     return this.afs.doc<PostContent>('post content/' + pid).valueChanges();
   }
 
   // Add post content from cloud firestore
   addPostContentRef(pid: string, content: PostContent) {
-    const obj = {name: content.name, fileFormat: content.fileFormat}
+    const obj = {...content}
     this.postContentCollection.doc(pid).set(obj);
   }
 
   // Get post content from firebase storage by UID
-  getPostContent(pid: string) {
+  getPostContent(pid: string, postContentRef: PostContent) {
     let index = this.postContentList.findIndex(details => {
       return details.pid === pid;
     })
 
     if (index === -1) {
-      this.postContentList.push({pid: pid, obs: new BehaviorSubject<any>(null)});
+      this.postContentList.push({pid: pid, obs: new BehaviorSubject<any>(undefined)});
       let secIndex = this.postContentList.length - 1;
-      this.getPostContentRef(pid).subscribe((response: PostContent) => {
-        const ref = this.storage.ref('Post/' + response.name);
-        ref.getDownloadURL().subscribe(response => {
-          this.postContentList[secIndex].obs.next(response);
-        });
+      const ref = this.storage.ref('Post/' + postContentRef.name);
+      ref.getDownloadURL().subscribe(response => {
+        this.postContentList[secIndex].obs.next(response);
       });
       return this.postContentList[secIndex].obs
     } else {
@@ -89,12 +87,12 @@ export class PostService {
   // --------------------------------------- Sticker content ---------------------------------------
   // Get sticker content from cloud firestore by UID
   private getStickerContentRef(pid: string) {
-    return this.afs.doc<StickerContent>('sticker content/' + pid).valueChanges();
+    return this.afs.doc<PostContent>('sticker content/' + pid).valueChanges();
   }
 
   // Add sticker content from cloud firestore
   addStickerContentRef(pid: string, content: PostContent) {
-    const obj = {name: content.name, fileFormat: content.fileFormat}
+    const obj = {...content}
     this.stickerContentCollection.doc(pid).set(obj);
   }
 
@@ -107,7 +105,7 @@ export class PostService {
     if (index === -1) {
       this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(this.placeholderImg)});
       let secIndex = this.stickerContentList.length - 1;
-      this.getStickerContentRef(pid).subscribe((response: StickerContent) => {
+      this.getStickerContentRef(pid).subscribe((response: PostContent) => {
         const ref = this.storage.ref('Post/' + response.name);
         ref.getDownloadURL().subscribe(response => {
           if (response) {

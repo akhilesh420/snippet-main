@@ -116,7 +116,8 @@ export class UsersService {
     if (index === -1) {
       this.profileStickersList.push({uid: uid, obs: new BehaviorSubject<ProfileSticker[]>(undefined)});
       let secIndex = this.profileStickersList.length - 1;
-      this.afs.doc<{stickers: ProfileSticker[]}>('profile stickers/' + uid).valueChanges().subscribe(response => {
+      this.afs.doc<{stickers: ProfileSticker[]}>('profile stickers/' + uid).valueChanges().pipe(catchError(this.handleError)).subscribe(response => {
+        if (!response) return;
         this.profileStickersList[secIndex].obs.next(response.stickers);
       });;
       return this.profileStickersList[secIndex].obs;
@@ -134,7 +135,7 @@ export class UsersService {
     this.profileStickersCollection.doc(uid).set({stickers: stickerArray});
   }
 
-  // Update profile stickers from 
+  // Update profile stickers from
   updateProfileSticker(uid: string, profileSticker: ProfileSticker[]) {
     const stickerArray = [];
     profileSticker.forEach(sticker => {
@@ -193,7 +194,7 @@ export class UsersService {
       const ref = this.storage.ref(filePath);
       const task = ref.put(file);
       return task.percentageChanges();
-    } 
+    }
   }
 
    // Update display picture from firebase storage

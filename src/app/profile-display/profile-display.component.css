@@ -42,6 +42,18 @@
           transform: translate(0%,6.6%);
 }
 
+.dpBorder > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .bio {
   font-size: 12px;
   line-height: 22px;

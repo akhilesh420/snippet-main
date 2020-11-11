@@ -43,20 +43,7 @@ export class SinglePostComponent implements OnInit, OnDestroy {
   async setUp() {
     const trace = await this.performance.trace('PostDetails-trace');
     trace.start();
-    this.postService.getPostDetails(this.pid).pipe(takeUntil(this.notifier$),
-      map(changes => { //get the post detail for pid
-        return { pid: this.pid, ...changes};
-    })).subscribe(res => { //Need to be a list for the feed to work
-      if (res.uid) {
-        this.uid$.next(res.uid);
-        let postDetailsList: PostDetails[] = [];
-        postDetailsList.push(res);
-        this.postsList.next(postDetailsList);
-      } else {
-        this.router.navigate(['/explore']);
-      }
-      trace.stop();
-    })
+    trace.stop();
   }
 
   ngOnDestroy() {

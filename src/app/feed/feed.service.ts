@@ -49,12 +49,18 @@ export class FeedService {
           })
       });
     });
-    
-    return collectionList.pipe(map(postsList => { 
+
+    return collectionList.pipe(map(postsList => {
       postsList = postsList.filter(post => { //Filter out users own posts
         return uid != post.uid;
       })
       return postsList;
+    }));
+  }
+
+  getPostPage(pid: string) {
+    return this.postService.getPostDetails(pid).pipe(map(changes => { //get the post detail for pid
+      return [{ pid: pid, ...changes}];
     }));
   }
 }

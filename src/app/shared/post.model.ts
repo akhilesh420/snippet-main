@@ -26,14 +26,6 @@ export class StickerDetails {
   ) {}
 }
 
-export class StickerContent {
-
-  constructor(
-    public name: string,
-    public fileFormat: string = 'image'
-  ) {}
-}
-
 export class Comment {
 
   constructor(
@@ -56,7 +48,7 @@ export class Post {
   constructor(
     public postDetails?: PostDetails,
     public postContent?: PostContent,
-    public stickerContent? : StickerContent,
+    public stickerContent? : PostContent,
     public stickerDetails? : StickerDetails,
     public holderList?: Holder[],
     public commentList?: Comment[]

@@ -30,7 +30,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   dob: Date;
   allowedDate: Date;
   minAge: number = 13;
-  passwordValidator = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+  passwordValidator = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$";
 
   userSubs: Subscription;
   subProfileDetails: Subscription;

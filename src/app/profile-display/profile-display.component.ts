@@ -4,7 +4,7 @@ import { Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
@@ -14,9 +14,9 @@ import { WindowStateService } from '../shared/window.service';
   templateUrl: './profile-display.component.html',
   styleUrls: ['./profile-display.component.css']
 })
-export class ProfileDisplayComponent implements OnInit, OnDestroy {
+export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() getUid: BehaviorSubject<string>;
+  @Input() uid$: BehaviorSubject<string>;
   uid: string;
 
   profileDetails$: BehaviorSubject<ProfileDetails>;
@@ -34,8 +34,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   stickerSize: string;
   fetchingWindow: boolean;
   profileRoute: string;
-
-  imageProp = {'height':'100%', 'width':'auto'};
 
   usernameFontSize: number;
   usernamePadding: string;
@@ -64,14 +62,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       console.log(errorMessage);
     });
 
-    this.getUid.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      if (response) {
-        this.uid = response;
-        this.profileRoute = "/profile/" + this.uid;
-        this.setUpProfile();
-        this.setUpActivity();
-      }
-    })
+    this.setUp();
 
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
@@ -83,6 +74,22 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
         this.usernameFontSize = 30;
       }
     });
+  }
+
+  ngOnChanges() {
+    console.log(this.uid);
+    this.setUp();
+  }
+
+  setUp() {
+    this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{
+      if (uid) {
+        this.uid = uid;
+        this.profileRoute = "/profile/" + this.uid;
+        this.setUpProfile();
+        this.setUpActivity();
+      }
+    })
   }
 
   setUpProfile() {
@@ -97,7 +104,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   getMultiplier(value: ProfileDetails) {
-    try {    
+    try {
       // const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
       this.multiplier = value.username.length <= 10 ? 1 : 10/value.username.length;
       return null;
@@ -111,7 +118,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.activity = response[0];
       this.views = this.convertToShort(this.activity.views);
       this.collected = this.convertToShort(this.activity.collected);
-    });;
+    });
   }
 
   convertToShort(num: number): string {
@@ -135,20 +142,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
-  onLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height < 1) {
-      this.imageProp.width = '100%';
-      this.imageProp.height = 'auto';
-    } else {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '100%';
-    }
-  }
-
   getEmptySlots(stickers) {
-    return [...Array(5-stickers.length).keys()]; 
+    return [...Array(5-stickers.length).keys()];
   }
 
   navigateRoute() {

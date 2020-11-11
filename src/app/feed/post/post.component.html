@@ -1,13 +1,21 @@
 <div class="postContainer" (click)='postView()'>
   <!-- post content -->
-  <div *ngIf="postContent$ | async as content; else loading">
-    <img
-    class="backgroundImg"
-    src={{content}}
-    alt="post content"
-    [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%', 'height': imageProp.height, 'width': imageProp.width}"
-    (click)="showComments ? showDetails = false : showDetails = !showDetails; showComments = false; holderToggle = false;"
-    (load)="onLoad($event)">
+  <div *ngIf="(postContent$ | async) as content; else loading">
+    <img  class="backgroundImg"
+          src={{content}}
+          alt="post content"
+          [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%'}"
+          (click)="showComments ? showDetails = false : showDetails = !showDetails; showComments = false; holderToggle = false;"
+          *ngIf='postType != "video/mp4"'>
+    <video class='backgroundImg'
+           src={{content}}
+           loop
+           playsinline
+           #videoPlayer
+           [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%'}"
+           (click)="showComments ? showDetails = false : showDetails = !showDetails; showComments = false; holderToggle = false;"
+           *ngIf='postType === "video/mp4"'>
+    </video>
     <div *ngIf="createPost">
       <img [src]="addIcon" alt="add" class="add-icon" (click)="onAddClick('content')" style="width: 116px; height: 116px;">
     </div>
@@ -28,11 +36,11 @@
       </a>
       <!-- Profile Stickers -->
       <div class="profileStickers">
-        <div 
-          class="row" 
-          style="width: 100%;" 
+        <div
+          class="row"
+          style="width: 100%;"
           *ngIf="!fetchingWindow && profileStickers$ | async as stickers">
-          <div class="col" 
+          <div class="col"
             *ngFor="let i of getEmptySlots(stickers)"
             style="padding: 0px; height: 24px">
           </div>
@@ -50,9 +58,7 @@
         *ngIf="stickerContent$ | async as stickerContent">
         <img class="sticker-img"
              src={{stickerContent}}
-             width="100%" alt="post content"
-             (load)="onStickerLoad($event)"
-             [ngStyle]="{'height': stickerProp.height, 'width': stickerProp.width}">
+             width="100%" alt="post content">
         <div *ngIf="createPost">
           <img [src]="addIcon" alt="add" class="add-icon sticker-add" (click)="onAddClick('sticker')">
         </div>
@@ -98,8 +104,8 @@
     </div>
     <div class="showDetails" (click)="showDetails = !showDetails">
       <!-- <div class="detailsbuttonClose"></div> -->
-      <img src={{getDetailsButton()}} 
-          [ngStyle]="getDetailsButtonSize()" 
+      <img src={{getDetailsButton()}}
+          [ngStyle]="getDetailsButtonSize()"
            alt="Post-Detail-Button">
     </div>
     <div *ngIf="showDetails === true">
@@ -164,7 +170,7 @@
             <app-holder *ngFor="let holder of collection" [uid]="holder.collectorID" [stickerSize]="stickerSize"></app-holder>
           </div>
         </div>
-        <ng-template #holderLoading> 
+        <ng-template #holderLoading>
           <app-loading-spinner class="holder-loader"></app-loading-spinner>
       </ng-template>
       </div>

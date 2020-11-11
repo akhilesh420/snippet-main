@@ -12,9 +12,11 @@ export class ScrollableDirective {
   @HostListener('scroll', ['$event'])
   onScroll(event) {
     try {
-      const top = event.target.scrollTop
-      const height = this.el.nativeElement.scrollHeight
-      const offset = this.el.nativeElement.offsetHeight
+      const top = event.target.scrollTop;
+      const height = this.el.nativeElement.scrollHeight;
+      const offset = this.el.nativeElement.offsetHeight;
+
+      this.scrollPosition.emit(top);
 
       // emit bottom event
       if (top > height - offset - 100) {
@@ -30,18 +32,5 @@ export class ScrollableDirective {
       console.log(err);
     }
   }
-
-  //Used for continuos infinite scroll
-  // @HostListener('scroll', ['$event'])
-  // onScroll(event) {
-  //   try {
-  //     const yVal = event.target.scrollTop;
-  //     this.scrollPosition.emit(yVal);
-
-  //   } catch (err) {
-  //     console.log(err);
-  //     this.scrollPosition.emit('yVal');
-  //   }
-  // }
 
 }

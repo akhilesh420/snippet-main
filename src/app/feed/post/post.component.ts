@@ -4,31 +4,35 @@ import { AuthService } from './../../auth/auth.service';
 import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
-import { StickerDetails, PostDetails } from './../../shared/post.model';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
+import { StickerDetails, PostDetails, PostContent } from './../../shared/post.model';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef, OnChanges, AfterViewChecked } from '@angular/core';
+import { filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
 import { WindowStateService } from 'src/app/shared/window.service';
+import { on } from 'process';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-  export class PostComponent implements OnInit, OnDestroy {
+  export class PostComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @Input() postDetails: PostDetails;
   @Input() createPost?: boolean = false;
   pid: string;
   @Input() postContent$?: BehaviorSubject<any>;
+  @Input() postType$?: Subject<string>;
   @Input() stickerContent$?: BehaviorSubject<any>;
+  @Input() playVideo: boolean;
 
   @Output() addClick = new EventEmitter();
-  
+
   profileDetails?: ProfileDetails;
   profileStickers$?: Observable<ProfileSticker[]>;
+  postType: string;
   notifier$ = new Subject();
   collectionList: Observable<Collection[]>;
 
@@ -37,6 +41,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   addIcon = "assets/icons/add_icon@2x.png"
 
+  videoProp = {'height':'100%', 'width':'auto'};
   imageProp = {'height':'auto', 'width':'auto'};
   stickerProp = {'height':'auto', 'width':'auto'};
   engagementProp = {'width': '0','background': '#D8B869'};
@@ -67,6 +72,8 @@ import { WindowStateService } from 'src/app/shared/window.service';
   usernameFetch: boolean;
 
   detailsButtonSize: number = 20;
+
+  @ViewChild('videoPlayer') videoPlayer : ElementRef;
 
   constructor(private postService: PostService,
               private authService: AuthService,
@@ -105,7 +112,11 @@ import { WindowStateService } from 'src/app/shared/window.service';
     });
 
     this.restartPost();
-  }  
+  }
+
+  ngAfterViewChecked() {
+    this.videoToggle();
+  }
 
   restartPost() {
     this.userSubs = this.authService.user.subscribe(response => {
@@ -124,11 +135,20 @@ import { WindowStateService } from 'src/app/shared/window.service';
       this.pid = this.postDetails.pid; //exists because of idfield
       this.setUpPost();
       this.setUpActivity();
-     }
+    } else {
+      this.postType$.pipe(takeUntil(this.notifier$)).subscribe(response => {
+        this.postType = response;
+      }, error => console.log(error));
+    }
   }
 
   setUpPost() {
-    this.postContent$ = this.postService.getPostContent(this.pid);
+    this.postService.getPostContentRef(this.pid).pipe(takeUntil(this.notifier$))
+    .subscribe(response => {
+      this.postType = response.fileFormat;
+      this.postContent$ = this.postService.getPostContent(this.pid, response);
+    });
+
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     this.postService.getStickerDetails(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.stickerDetails = response;
@@ -168,7 +188,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   getEmptySlots(stickers) {
-    return [...Array(5-stickers.length).keys()]; 
+    return [...Array(5-stickers.length).keys()];
   }
 
   setUpEngagement(){
@@ -203,35 +223,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
       width = 'auto'
     }
     return {width: width, height: height};
-  }
-
-  onLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height > 1) {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '100%';
-    }
-    else if (width/height <= 1 && width/height < 475/580) {
-      this.imageProp.width = '100%';
-      this.imageProp.height = 'auto';
-    } else {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '580px';
-    }
-
-  }
-
-  onStickerLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height < 1) {
-      this.stickerProp.width = '100%';
-      this.stickerProp.height = 'auto';
-    } else {
-      this.stickerProp.width = 'auto';
-      this.stickerProp.height = '100%';
-    }
   }
 
   convertToShort(num: number): string {
@@ -269,7 +260,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
           for (let key in response) {
             if (response[key].collectorID === this.myUid) {
               valid = false;
-              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default'],'collection/'+this.uid));
+              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default'],'collection/'+this.myUid));
               break;
             } else {
               valid = true;
@@ -278,7 +269,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
           if (valid) {
             if (this.engagementRatio < 1) {
                 this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-                this.miscellaneousService.setPopUp(new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default'], 'profile/'+this.uid+'/edit'));
+                this.miscellaneousService.setPopUp(new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default'], 'profile/'+this.myUid+'/edit'));
             } else {
               this.miscellaneousService.setPopUp(new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']));
             }
@@ -294,6 +285,19 @@ import { WindowStateService } from 'src/app/shared/window.service';
   getHolderList() {
     this.holderToggle = !this.holderToggle;
     this.collectionList = this.activityService.getHolderList(this.pid, this.uid);
+  }
+
+  videoToggle() {
+    try {
+      if (this.postType != 'video/mp4') return;
+      if (this.playVideo) {
+        this.videoPlayer.nativeElement.play();
+      } else {
+        this.videoPlayer.nativeElement.pause();
+      }
+    } catch (error) {
+      return;
+    }
   }
 
   ngOnDestroy() {
