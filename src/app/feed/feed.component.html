@@ -3,9 +3,10 @@
     (scrollPosition)="scrollHandler($event)">
   <div class="row" align="center">
     <div class="col-md-12">
+      <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
       <div *ngIf="feedList$ | async; let posts">
-        <div *ngFor="let postDetails of posts" >
-          <app-post  [postDetails]="postDetails" > </app-post>
+        <div *ngFor="let postDetails of posts; let i = index;" >
+          <app-post  [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
         </div>
       </div>
       <p *ngIf="done">Thats all folks!</p>

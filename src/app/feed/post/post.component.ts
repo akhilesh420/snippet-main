@@ -5,8 +5,8 @@ import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
 import { StickerDetails, PostDetails, PostContent } from './../../shared/post.model';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef, OnChanges, AfterViewChecked } from '@angular/core';
+import { filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
@@ -18,7 +18,7 @@ import { on } from 'process';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-  export class PostComponent implements OnInit, OnDestroy {
+  export class PostComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @Input() postDetails: PostDetails;
   @Input() createPost?: boolean = false;
@@ -26,9 +26,10 @@ import { on } from 'process';
   @Input() postContent$?: BehaviorSubject<any>;
   @Input() postType$?: Subject<string>;
   @Input() stickerContent$?: BehaviorSubject<any>;
+  @Input() playVideo: boolean;
 
   @Output() addClick = new EventEmitter();
-  
+
   profileDetails?: ProfileDetails;
   profileStickers$?: Observable<ProfileSticker[]>;
   postType: string;
@@ -72,6 +73,8 @@ import { on } from 'process';
 
   detailsButtonSize: number = 20;
 
+  @ViewChild('videoPlayer') videoPlayer : ElementRef;
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
@@ -109,7 +112,11 @@ import { on } from 'process';
     });
 
     this.restartPost();
-  }  
+  }
+
+  ngAfterViewChecked() {
+    this.videoToggle();
+  }
 
   restartPost() {
     this.userSubs = this.authService.user.subscribe(response => {
@@ -141,6 +148,7 @@ import { on } from 'process';
       this.postType = response.fileFormat;
       this.postContent$ = this.postService.getPostContent(this.pid, response);
     });
+
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     this.postService.getStickerDetails(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.stickerDetails = response;
@@ -180,7 +188,7 @@ import { on } from 'process';
   }
 
   getEmptySlots(stickers) {
-    return [...Array(5-stickers.length).keys()]; 
+    return [...Array(5-stickers.length).keys()];
   }
 
   setUpEngagement(){
@@ -277,6 +285,19 @@ import { on } from 'process';
   getHolderList() {
     this.holderToggle = !this.holderToggle;
     this.collectionList = this.activityService.getHolderList(this.pid, this.uid);
+  }
+
+  videoToggle() {
+    try {
+      if (this.postType != 'video/mp4') return;
+      if (this.playVideo) {
+        this.videoPlayer.nativeElement.play();
+      } else {
+        this.videoPlayer.nativeElement.pause();
+      }
+    } catch (error) {
+      return;
+    }
   }
 
   ngOnDestroy() {

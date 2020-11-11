@@ -1,4 +1,4 @@
-sw<div class="postContainer" (click)='postView()'>
+<div class="postContainer" (click)='postView()'>
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="backgroundImg"
@@ -11,10 +11,10 @@ sw<div class="postContainer" (click)='postView()'>
            src={{content}}
            loop
            playsinline
+           #videoPlayer
            [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%'}"
            (click)="showComments ? showDetails = false : showDetails = !showDetails; showComments = false; holderToggle = false;"
            *ngIf='postType === "video/mp4"'>
-      <!-- <source src={{content}} type='video/mp4'> -->
     </video>
     <div *ngIf="createPost">
       <img [src]="addIcon" alt="add" class="add-icon" (click)="onAddClick('content')" style="width: 116px; height: 116px;">

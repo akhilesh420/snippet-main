@@ -12,9 +12,9 @@ export class ScrollableDirective {
   @HostListener('scroll', ['$event'])
   onScroll(event) {
     try {
-      const top = event.target.scrollTop
-      const height = this.el.nativeElement.scrollHeight
-      const offset = this.el.nativeElement.offsetHeight
+      const top = event.target.scrollTop;
+      const height = this.el.nativeElement.scrollHeight;
+      const offset = this.el.nativeElement.offsetHeight;
 
       this.scrollPosition.emit(top);
 
