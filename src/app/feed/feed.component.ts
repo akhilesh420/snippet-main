@@ -88,9 +88,11 @@ export class FeedComponent implements OnInit, OnDestroy {
       if (val < 560) {
         this.postHeight = 580*val/560;
         this.postViewOffset = 71*val/560;
+        this.profileDisplayHeight = 281*val/560;
       } else {
         this.postHeight = 580;
         this.postViewOffset = 71;
+        this.profileDisplayHeight = 281;
       }
     });
 
@@ -168,16 +170,30 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   scrollHandler(event) {
-    this.postNumber = Math.floor(event/this.viewPort);
-    if (event === 'top') {this.postNumber = 0};
-    if (event === 'bottom') {this.postNumber = this.batchNumber*this.batchSize - 1};
-
     event === 'error' ? this.failSafe = true : this.failSafe = false;
     if (!this.done && !this.failSafe) {
       if (event === 'bottom') {
         this.moreBatch();
       }
     }
+
+    if (event === 'top') {
+      this.postNumber = 0;
+      return;
+    }
+
+    if (event === 'bottom') {
+      this.postNumber = this.done ? this.postsList.length - 1 : this.batchNumber*this.batchSize - 1;
+      return;
+    }
+
+    if (this.showProfileDisplay) event - this.profileDisplayHeight;
+    if (event <= 0) {
+      this.postNumber = 0;
+      return;
+    }
+
+    this.postNumber = Math.floor(event/this.viewPort);
   }
 
   ngOnDestroy() {
