@@ -66,6 +66,7 @@ import { on } from 'process';
   fetchingWindow: boolean;
 
   @ViewChild('usernameRef') usernameSpan : ElementRef;
+  @ViewChild('usernameCol') usernameCol : ElementRef;
   maxWidth: number;
   usernameCounter: number;
   username: string;
@@ -74,6 +75,8 @@ import { on } from 'process';
   detailsButtonSize: number = 20;
 
   @ViewChild('videoPlayer') videoPlayer : ElementRef;
+
+  viewHeight: any;
 
   constructor(private postService: PostService,
               private authService: AuthService,
@@ -85,6 +88,8 @@ import { on } from 'process';
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
+    this.viewHeight = window.innerHeight - 47;
+    console.log(this.viewHeight);//temp log
     this.usernameFetch = false;
     this.cdRef.detectChanges();
 
@@ -98,14 +103,10 @@ import { on } from 'process';
         if (val < 560) {
           this.tabClose = (71*val/560).toString() + 'px';
           this.tabOpen = (400*val/560).toString() + 'px';
-          this.stickerSize = (24*val/560).toString() + 'px';
-          this.maxWidth = 191*val/560;
           this.detailsButtonSize = 20*val/560;
       } else {
           this.tabClose = '71px';
           this.tabOpen = '400px';
-          this.stickerSize = '24px';
-          this.maxWidth = 191;
           this.detailsButtonSize = 20;
         }
       }
@@ -115,6 +116,7 @@ import { on } from 'process';
   }
 
   ngAfterViewChecked() {
+    this.maxWidth = this.usernameCol.nativeElement.offsetWidth;
     this.videoToggle();
   }
 
@@ -132,7 +134,7 @@ import { on } from 'process';
     this.setUpProfile();
 
     if (!this.createPost) {
-      this.pid = this.postDetails.pid; //exists because of idfield
+      this.pid = this.postDetails.pid; //exists because of id field
       this.setUpPost();
       this.setUpActivity();
     } else {
@@ -166,6 +168,7 @@ import { on } from 'process';
 
         let lastUsername: string;
         let timer = setInterval(func => {
+          this.stickerSize = this.usernameSpan.nativeElement.offsetHeight.toString() + 'px';
           const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
           if (lastUsername != this.username && currentWidth > this.maxWidth) {
             lastUsername = this.profileDetails.username;
@@ -291,7 +294,7 @@ import { on } from 'process';
     try {
       if (this.postType != 'video/mp4') return;
       if (this.playVideo) {
-        this.videoPlayer.nativeElement.play();
+        this.videoPlayer.nativeElement.pause();
       } else {
         this.videoPlayer.nativeElement.pause();
       }

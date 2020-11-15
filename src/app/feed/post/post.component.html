@@ -1,13 +1,13 @@
-<div class="postContainer" (click)='postView()'>
+<div class="postContainer" (click)='postView()' [ngStyle]="{'height': viewHeight.toString()+ 'px'}">
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
-    <img  class="backgroundImg"
+    <img  class="post-content "
           src={{content}}
           alt="post content"
           [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%'}"
           (click)="showComments ? showDetails = false : showDetails = !showDetails; showComments = false; holderToggle = false;"
           *ngIf='postType != "video/mp4"'>
-    <video class='backgroundImg'
+    <video class='post-content '
            src={{content}}
            loop
            playsinline
@@ -23,32 +23,42 @@
   <ng-template #loading>
       <app-loading-spinner class="add-icon"></app-loading-spinner>
   </ng-template>
-  <!-- profile tab -->
-  <div *ngIf="!fetchingWindow" class="profileTab" [ngStyle]="{'height': showComments === false ? tabClose : tabOpen}">
-    <!-- Username -->
-    <div class="profileDetails">
-      <a style = "cursor: pointer;" [routerLink]='profileRoute'>
-        <span class="name"
-              [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}"
-              #usernameRef>
-          {{username}}
-        </span>
-      </a>
-      <!-- Profile Stickers -->
-      <div class="profileStickers">
-        <div
-          class="row"
-          style="width: 100%;"
-          *ngIf="!fetchingWindow && profileStickers$ | async as stickers">
-          <div class="col"
-            *ngFor="let i of getEmptySlots(stickers)"
-            style="padding: 0px; height: 24px">
-          </div>
-          <div class="col"
-            *ngFor="let sticker of stickers"
-            style="padding: 0px; height: 24px">
-            <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
+  <!-- profile tab information -->
+  <div *ngIf="!fetchingWindow" class="profileTab bkgrd-opc" [ngStyle]="{'height': showComments === false ? tabClose : tabOpen}">
+    <div class="post-info">
+      <!-- Engagement Bar -->
+      <div  class="engagementBar">
+        <div class="bar"></div>
+        <div class="engagement"
+          [ngStyle]='engagementProp'>
         </div>
+      </div>
+      <!-- Profile details -->
+      <div class="user-details" [ngStyle]='{"height": stickerSize}'>
+        <div class="row no-margin no-padding">
+          <div class="col-6 no-margin no-padding" #usernameCol>
+             <!-- Username -->
+            <a style = "cursor: pointer;" [routerLink]='profileRoute'>
+              <span [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}" #usernameRef>
+                {{username}}
+              </span>
+            </a>
+          </div>
+          <div class="col-6 no-margin no-padding">
+            <div class="row no-margin no-padding"
+                 *ngIf="!fetchingWindow && profileStickers$ | async as stickers">
+              <div class="col"
+                *ngFor="let i of getEmptySlots(stickers)"
+                style="padding: 0px; height: 24px">
+              </div>
+              <div class="col"
+                  *ngFor="let sticker of stickers"
+                   style="padding: 0px; height: 24px"
+                   align='right'>
+                <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -64,14 +74,6 @@
         </div>
       </div>
     </a>
-    <!-- Engagement Bar -->
-    <div  class="engagementBar">
-      <div class="bar">
-      </div>
-      <div class="engagement"
-        [ngStyle]='engagementProp'>
-      </div>
-    </div>
     <!-- comment button -->
     <div *ngIf="!createPost">
       <div class="commentButton"
@@ -94,6 +96,8 @@
     </div>
     </div>
   </div>
+  <!-- profile tab -->
+
   <!-- post details -->
   <div class="postDetails">
     <div

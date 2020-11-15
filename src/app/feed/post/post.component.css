@@ -1,20 +1,17 @@
-
-:root {
-  --stickerSpace: 35px;
-}
+a { color: inherit; }
 
 .postContainer {
-  width: 475px;
-  height: 580px;
-  border: 3px solid #D8B869;
-  border-radius: 25px;
+  width: 100vw;
+  /* height: calc(100vw*16/9); */
+  /* border-top:  3px solid #D8B869;
+  border-bottom: 3px solid #D8B869; */
   padding: 0;
   position: relative;
   overflow: hidden;
-  margin-top: 35px;
+  margin-bottom: 35px;
 }
 
-.backgroundImg {
+.post-content {
   margin: 0 0;
   position: absolute;
   top: 50%;
@@ -32,43 +29,77 @@
   bottom: 0;
 
   width: 100%;
-  height: 71px;
+  height: 12.5%;
 
   padding: 0;
+}
 
+.bkgrd-opc {
   /* rgba used so that opacity doesn't effect child components */
   background: rgba(8,7,8,0.6);
-
-  border-bottom-left-radius: 26px;
-  border-bottom-right-radius: 26px;
 }
 
-.profileTab .profileDetails{
-  position: absolute;
-  bottom: 12px;
-  left: 29.5px;
-  width: 334px;
-  height: 25px;
-}
-
-.profileTab .profileDetails .name{
-  position: absolute;
-  bottom: 4px;
-  left: 0px;
-  font-size: 22px;
-  height: 100%;
+.post-info {
+  font-size: 2.5vh;
   color: #F7F7F7;
   letter-spacing: 0.160em;
   text-align: left;
+
+  padding: 2% 0 0 8%;
+  height: 100%;
+  width: 70%;
+
+  position: absolute;
+  bottom: 0;
 }
 
-.profileDetails .profileStickers{
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  height: 24px;
-  width: 144px;
+.no-margin {
+  margin: 0;
+}
+
+.no-padding {
   padding: 0;
+}
+
+.engagementBar{
+  width: 100%;
+  height: 17%;
+  overflow: hidden;
+
+  margin-bottom: 2%;
+
+  position: relative;
+}
+
+.bar{
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #D8B869;
+  padding: 0px;
+  overflow: hidden;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.engagement{
+  height: 100%;
+  border-radius: 8px;
+  padding: 0px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.user-details {
+  width: 100%;
+}
+
+.user-details > .row, .user-details > .row > .col-6 {
+  height: 100%;
 }
 
 .profileTab .postSticker {
@@ -96,33 +127,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.profileTab .engagementBar{
-  position: absolute;
-  bottom: 48px;
-  left: 29.5px;
-  width: 334px;
-  height: 12px;
-  overflow: hidden;
-}
-
-.profileTab .bar{
-  position: absolute;
-  width: 100%;
-  height: 8px;
-  border-radius: 8px;
-  border: 1px solid #D8B869;
-  overflow: hidden;
-  padding: 0px;
-}
-
-.profileTab .engagement{
-  position: absolute;
-  height: 8px;
-  border-radius: 8px;
-  padding: 0px;
-  width: 50%;
 }
 
 .profileTab .commentButton{
@@ -335,19 +339,8 @@
   height: 57px;
 }
 
-
+/*
 @media screen and (max-width: 560px) {
-  .postContainer {
-    width: 85vw;
-    height: 103.5vw;
-    border-radius: 4.49vw;
-  }
-
-  .profileTab {
-    height: 12.68vw;
-    border-bottom-left-radius: 4.64vw;
-    border-bottom-right-radius: 4.64vw;
-  }
 
   .profileTab .profileDetails{
     bottom: 2.14vw;
@@ -482,7 +475,7 @@
   .holderListCol{
     padding-left: 2.68vw;
   }
-}
+} */
 
 
 

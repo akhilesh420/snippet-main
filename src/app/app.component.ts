@@ -43,7 +43,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.titleService.setTitle("Snippet");
     this.metaService.addTags([
-      {name: 'apple-mobile-web-app-capable', content: 'yes'}
+      {name: 'apple-mobile-web-app-capable', content: 'yes'},
+      {name:"viewport", content:"width=device-width, minimal-ui"}
     ]);
 
     this.windowService.checkWidth();

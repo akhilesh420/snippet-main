@@ -11,6 +11,8 @@ html, body {
     letter-spacing: 0.1em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
 }
 
 
