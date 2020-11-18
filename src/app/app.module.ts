@@ -13,22 +13,18 @@ import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService 
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ExploreComponent } from './explore/explore.component';
-import { CollectionComponent } from './collection/collection.component';
 import { CreateComponent } from './create/create.component';
-import { ProfileComponent } from './profile/profile.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedComponent } from './feed/feed.component';
 import { PostComponent } from './feed/post/post.component';
 import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
-import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { CommentsComponent } from './feed/post/comments/comments.component';
 import { CommentComponent } from './feed/post/comments/comment/comment.component';
 import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
 import { HolderComponent } from './feed/post/holder/holder.component';
 import { StickerComponent } from './sticker/sticker.component';
 import { ProfileDisplayComponent } from './profile-display/profile-display.component';
-import { SinglePostComponent } from './single-post/single-post.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
@@ -49,10 +45,7 @@ import { PopUpComponent } from './pop-up/pop-up.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    ExploreComponent,
-    CollectionComponent,
     CreateComponent,
-    ProfileComponent,
     FeedbackComponent,
     FeedComponent,
     PostComponent,
@@ -64,7 +57,6 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     HolderComponent,
     StickerComponent,
     ProfileDisplayComponent,
-    SinglePostComponent,
     AuthComponent,
     LoadingSpinnerComponent,
     TitleCaseDirective,

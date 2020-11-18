@@ -1,12 +1,8 @@
 import { FeedComponent } from './feed/feed.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthComponent } from './auth/auth.component';
-import { SinglePostComponent } from './single-post/single-post.component';
-import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { CreateComponent } from './create/create.component';
-import { CollectionComponent } from './collection/collection.component';
-import { ExploreComponent } from './explore/explore.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 
 import { NgModule } from '@angular/core';
