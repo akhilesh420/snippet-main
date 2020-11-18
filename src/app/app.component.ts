@@ -34,6 +34,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(){
 
+    window.scroll(0,100);
+
     if (screenfull.isEnabled) {
       screenfull.request().catch(error => console.log(error));
       screenfull.on('error', event => {console.log(event);});

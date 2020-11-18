@@ -5,13 +5,12 @@ import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
 import { PostService } from './../../shared/post.service';
 import { StickerDetails, PostDetails, PostContent } from './../../shared/post.model';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef, OnChanges, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, OnChanges, AfterViewChecked } from '@angular/core';
 import { filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
 import { WindowStateService } from 'src/app/shared/window.service';
-import { on } from 'process';
 
 @Component({
   selector: 'app-post',
@@ -84,19 +83,17 @@ import { on } from 'process';
               private activityService: ActivityService,
               private router: Router,
               private windowService: WindowStateService,
-              private cdRef: ChangeDetectorRef,
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.viewHeight = window.innerHeight - 47;
-    console.log(this.viewHeight);//temp log
     this.usernameFetch = false;
-    this.cdRef.detectChanges();
 
     this.fetchingWindow = true;
     this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
+      this.viewHeight = window.innerHeight - 47;
       if (val) {
         this.windowSize = val;
         this.fetchingWindow = false;
@@ -287,7 +284,7 @@ import { on } from 'process';
 
   getHolderList() {
     this.holderToggle = !this.holderToggle;
-    this.collectionList = this.activityService.getHolderList(this.pid, this.uid);
+    if (this.holderToggle) this.collectionList = this.activityService.getHolderList(this.pid, this.uid);
   }
 
   videoToggle() {
@@ -301,6 +298,10 @@ import { on } from 'process';
     } catch (error) {
       return;
     }
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 
   ngOnDestroy() {

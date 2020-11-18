@@ -29,9 +29,14 @@ a { color: inherit; }
   bottom: 0;
 
   width: 100%;
-  height: 12.5%;
+}
 
-  padding: 0;
+.close-comment {
+  height: 8%;
+}
+
+.open-comment {
+  height: 70%;
 }
 
 .bkgrd-opc {
@@ -40,7 +45,6 @@ a { color: inherit; }
 }
 
 .post-info {
-  font-size: 2.5vh;
   color: #F7F7F7;
   letter-spacing: 0.160em;
   text-align: left;
@@ -94,28 +98,40 @@ a { color: inherit; }
   left: 0;
 }
 
-.user-details {
+.width-100 {
   width: 100%;
 }
 
-.user-details > .row, .user-details > .row > .col-6 {
+.width-100 > .row, .width-100 > .row > .col-6 {
   height: 100%;
 }
 
-.profileTab .postSticker {
-  height: 95px;
-  width: 95px;
+.post-sticker-container {
+  height: 30vw;
+  width: 30vw;
+  position: absolute;
+  right: 0;
+  bottom: calc(100% - 15vw);
+  /* padding is top right bottom left ->
+    sum of top and bottom padding must equal the sum of left and right padding for circular post sticker */
+  /* padding: 4vw 0 0 6vw; */
+}
+
+.postSticker {
+  height: 20vw;
+  width: 20vw;
   background-color: #070707;
   border: 1px solid #707070;
   border-radius: 50%;
   padding: 0;
-  position: absolute;
   overflow: hidden;
-  bottom: 24px;
-  right: 8px;
+  position: absolute;
+  top:0;
+  left: 75%;
+  transform: translateY(-50%);
 }
 
-.postSticker .sticker-img{
+.sticker-img{
   padding: 0;
   margin: 0 0;
   position: absolute;
@@ -127,44 +143,44 @@ a { color: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
-.profileTab .commentButton{
+.commentButton{
   padding: 0;
   position: absolute;
-  top: -15px;
+  top: -4vw;
   left: 0px;
-  width: 30px;
-  height: 30px;
+  width: 8vw;
+  height: 8vw;
+  z-index: 1;
 }
 
-.commentButton .buttonBackground{
-  padding: 0;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-
-  width: 30px;
-  height: 30px;
-  border-radius: 15px 15px 0 0;
-
-  background: rgba(8,7,8,0.6);
-}
-
-.commentButton .hideExtra{
+.buttonBackground{
   padding: 0;
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 30px;
-  height: 15px;
+
+  width: 8vw;
+  height: 8vw;
+  border-radius: 4vw 4vw 0 0;
+}
+
+.hideExtra{
+  padding: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 8vw;
+  height: 4vw;
   overflow: hidden;
 }
 
-.commentButton img{
+.commentButton > img{
   padding: 0;
 
-  width: 14px;
+  width: 3.5vw;
   height: auto;
 
   margin: 0 0;
@@ -178,153 +194,123 @@ a { color: inherit; }
 
 .postDetails {
   width: 100%;
-  height: auto;
+  height: 100%;
   position: absolute;
   top: 0px;
   left: 0px;
-  pointer-events:none;
-}
+  padding: 2% 6% 15% 6%;
 
-.postDetails .postTitle{
-  position: absolute;
-  top: 8px;
-  left: 19px;
   font-family: 'ChampagneAndLimousines';
-  font-size: 24px;
-  color: #F7F7F7;
-  pointer-events:auto;
+  font-size: 2.5vh;
   letter-spacing: 0.05em;
-
+  color: #F7F7F7;
 }
 
-.postDetails .showDetails {
-  position: absolute;
-  top: 10px;
-  right: 15px;
+.postTitle{
+  font-size: 4vh;
+
+  width:auto;
+  text-align: left;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.showDetails {
   height: 30px;
   width: 30px;
-  cursor: pointer;
-  pointer-events:auto;
+  position: relative;
 }
 
-.showDetails img {
+.showDetails > img {
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
-
+  width: 100%;
+  height: 100%;
 }
 
-.postDetails .holderList{
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  pointer-events:auto;
+.post-metrics {
+  margin-top: 10%;
+  width: 100%;
+  height: auto;
 }
 
-.holderList img{
- position: absolute;
- top:50%;
- left: 50%;
- -webkit-transform: translate(-20%,-50%);
-     -ms-transform: translate(-20%,-50%);
-         transform: translate(-20%,-50%);
- height: 18px;
- width: auto;
+.inline {
+  display: inline-block;
 }
 
-.holderList p {
-  margin: 0;
-  color: #F7F7F7;
+.block {
+  display: block;
 }
 
-.postDetails .metrics{
-  width: auto;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  font-size: 16px;
-  color: #F7F7F7;
-  margin-bottom: 0;
+.metrics {
+  position: relative;
 }
 
-.postDetails img {
-  height: 16px;
-  width: auto;
+.height-auto {
+  height: auto;
 }
 
-.description {
-  font-family: 'ChampagneAndLimousines';
-  font-size: 18px;
-  color: #F7F7F7;
-  letter-spacing: 0.05em;
-}
-
-.commentsSection{
+.metrics > img {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 10px;
-  height: 225px;
-  width: auto;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.commentsSection .section{
-  position: absolute;
-  left: 0px;
-  top: 0px;
+.post-metrics > div:nth-child(2), .post-metrics > div:nth-child(1) {
+  font-weight: bold;
 }
 
-.holderListRow {
-  margin:0;
-  margin-top: 72px;
+.post-metrics > div:nth-child(2) > div:nth-child(2) {
+  margin-top: 1vh;
+}
+
+.engaged {
+  padding-top: 4vh;
+}
+
+.reached {
+  padding-top: 8vh;
+}
+
+/* temp for comment section placeholder */
+.profileTab.bkgrd-opc > div, .profileTab.bkgrd-opc > div > div:nth-child(2), .profileTab.bkgrd-opc > div > div:nth-child(2) > .row{
+  height: 100%;
   width: 100%;
 }
 
-.holderContainer {
-  position: absolute;
-  left: 45px;
-  right:45px;
-  top: 150px;
-  height: 255px;
+.holder-list-container {
+  position: relative;
+  width: 90%;
+  height: 40%;
   border: 2px solid #D8B869;
   border-radius: 15px;
   background: rgba(8,7,8,0.6);
-  pointer-events: auto;
+  padding: 2% 2% 2% 3%;
+  margin-top: 45%;
 }
 
-.holderListContainer {
-  height: 245px;
-  padding-left: 10px;
-  padding-right: 5px;
-  padding-top: 3px;
-  overflow-y: auto;
-}
-
-.holderContainerPlaceholder {
+.no-holders {
   color: #D8B869;
 }
 
-.holder-loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
+.holder-list {
+  width:100%;
+  height: auto;
 }
 
-.add-icon {
+.center-absolute {
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
-  cursor: pointer;
 }
 
 .temp {
@@ -338,145 +324,3 @@ a { color: inherit; }
   width: 57px;
   height: 57px;
 }
-
-/*
-@media screen and (max-width: 560px) {
-
-  .profileTab .profileDetails{
-    bottom: 2.14vw;
-    left: 5.26vw;
-    width: 59.64vw;
-    height: 4.46vw;
-  }
-
-  .profileTab .profileDetails .name{
-    bottom: 0.714vw;
-    font-size: 3.93vw;
-  }
-
-  .profileDetails .profileStickers{
-    height: 4.29vw;
-    width: 25.71vw;
-  }
-
-  .profileTab .postSticker {
-    height: 14.64vw;
-    width: 14.64vw;
-    bottom: 4.29vw;
-    right: 1.42vw;
-  }
-
-  .profileTab .engagementBar{
-    bottom: 8.57vw;
-    left: 5.267vw;
-    width: 59.64vw;
-    height: 1.96vw;
-  }
-
-  .profileTab .bar{
-    height: 1.42vw;
-    border-radius: 1.42vw;
-  }
-
-  .profileTab .engagement{
-    height: 1.42vw;
-    border-radius: 1.42vw;
-  }
-
-  .profileTab .commentButton{
-    padding: 0;
-    top: -2.68vw;
-    width: 5.36vw;
-    height: 5.36vw;
-  }
-
-  .commentButton .buttonBackground{
-    width: 5.36vw;
-    height: 5.36vw;
-    border-radius: 2.68vw 2.68vw 0 0;
-  }
-
-  .commentButton .hideExtra{
-    width: 5.36vw;
-    height: 2.68vw;
-  }
-
-  .commentButton img{
-    width: 2.5vw;
-  }
-
-  .postDetails .postTitle{
-    top: 1.43vw;
-    left: 3.39vw;
-    font-size: 4.29vw;
-  }
-
-  .postDetails .showDetails {
-    top: 1.79vw;
-    right:  2.68vw;
-    height: 5.36vw;
-    width: 5.36vw;
-  }
-
-  .postDetails .holderList{
-    font-size: 3.214vw;
-  }
-
-  .holderList img{
-    height: 3.21vw;
-   }
-
-  .postDetails .metrics{
-    font-size: 2.86vw;
-  }
-
-  .postDetails img {
-    height: 2.86vw;
-  }
-
-  .description {
-    font-size: 3.21vw;
-  }
-
-  .commentsSection{
-    left: 3.57vw;
-    right: 3.57vw;
-    top: 1.79vw;
-    height: 40.18vw;
-  }
-
-  .holderContainer {
-    left: 8.04vw;
-    right: 8.04vw;
-    top: 26.79vw;
-    height: 45.54vw;
-  }
-
-  .holderListContainer {
-    height: 43.75vw;
-    padding-left: 1.79vw;
-    padding-right: 0.89vw;
-    padding-top: 0.54vw;
-  }
-
-  .temp {
-    font-size: 4.3vw;
-  }
-
-  .sticker-add {
-    width: 10.18vw;
-    height: 10.18vw;
-  }
-
-  .holderListRow {
-    margin-top: 12.85vw;
-  }
-
-  .holderListCol{
-    padding-left: 2.68vw;
-  }
-} */
-
-
-
-
