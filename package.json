@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~9.1.7",
     "@angular/router": "~9.1.7",
     "angular-snapscroll": "^1.3.1",
+    "angular-swipe": "^0.4.0",
     "bootstrap": "^4.5.2",
     "firebase": "^7.23.0",
     "firebase-admin": "^9.2.0",

@@ -1,3 +1,4 @@
+import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -67,7 +68,8 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     NavbarComponent,
     ShortenPipe,
     FullscreenDirective,
-    PopUpComponent
+    PopUpComponent,
+    SnapscrollDirective
   ],
   imports: [
     BrowserModule,

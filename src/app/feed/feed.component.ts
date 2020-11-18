@@ -1,10 +1,9 @@
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Component, OnInit, Input, HostListener, OnChanges, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, HostListener, OnChanges, OnDestroy, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
 import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
-import { InfiniteScrollService } from '../shared/infinite-scroll.service';
 import { WindowStateService } from '../shared/window.service';
 import { FeedService } from './feed.service';
 
@@ -37,7 +36,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   //Video auto play and pause
   postHeight: number; //height of the posts
   postMargin: number; //margin on each post;
-  postViewOffset: number; //increase play area for each post;
   postNumber: number = 0; //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
   profileDisplayHeight: number; //height of the posts
@@ -49,8 +47,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   myUid: string; //Authenticated user uid
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
-
+  inSnap: boolean;
+  lastScroll: number;
   mobileCheck: boolean;
+
+  // angular: any;
+
+  @ViewChild('scrollContainer') scrollContainer: ElementRef;
 
   constructor(private windowService: WindowStateService,
               private feedService: FeedService,
@@ -58,6 +61,7 @@ export class FeedComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private authService: AuthService) {
    }
+
 
   ngOnInit(): void {
 
@@ -71,6 +75,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.done = false;
     this.failSafe = true;
     this.loading = true;
+    this.inSnap = false;
 
     this.getPosts(this.router.url);
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
@@ -83,7 +88,8 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.uid$.next(params['id']);
       });
 
-    this.postMargin = 35;
+    this.postMargin = 0;
+    this.postHeight = window.innerHeight - 47;
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (val < 850) {
@@ -93,12 +99,8 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
 
       if (val < 560) {
-        this.postHeight = 580*val/560;
-        this.postViewOffset = 71*val/560;
         this.profileDisplayHeight = 281*val/560;
       } else {
-        this.postHeight = 580;
-        this.postViewOffset = 71;
         this.profileDisplayHeight = 281;
       }
     });
@@ -177,6 +179,17 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   scrollHandler(scrollY) {
+    if (this.showProfileDisplay) scrollY = scrollY - this.profileDisplayHeight;
+
+    // this.lastScroll = scrollY;
+
+    // let ratio = scrollY/this.viewPort;
+
+    // if (Number.isInteger(ratio)) this.inSnap = false;
+    // if (!this.inSnap && scrollY != 'bottom') {
+    //   // this.snapScroll(scrollY-this.lastScroll);
+    // }
+
     scrollY === 'error' ? this.failSafe = true : this.failSafe = false;
     if (!this.done && !this.failSafe) {
       if (scrollY === 'bottom') {
@@ -184,8 +197,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
     }
 
-
-    if (this.showProfileDisplay) scrollY = scrollY - this.profileDisplayHeight;
     if (scrollY <= 0) {
       this.postNumber = undefined;
       return;
@@ -202,6 +213,19 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
 
     this.postNumber = Math.floor(scrollY/this.viewPort);
+  }
+
+  snapScroll(scrollDiff) {
+    console.log(scrollDiff);
+    const snapActivate: number = 0.2;
+    let i = this.postNumber;
+    if (scrollDiff >= this.viewPort*snapActivate) {
+      ++i;
+    } else if (scrollDiff <= -this.viewPort*snapActivate){
+      if (i > 0) --i;
+    }
+    this.inSnap = true;
+    this.scrollContainer.nativeElement.scroll(0,i*this.viewPort);
   }
 
   ngOnDestroy() {

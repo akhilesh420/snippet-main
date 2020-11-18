@@ -1,11 +1,20 @@
-<div class="container-fluid no-gutters no-padding scroll"
-     scrollable
-    (scrollPosition)="scrollHandler($event)">
+<div class="container-fluid no-gutters no-padding">
   <div class="row" align="center">
-    <div class="col-md-12" [ngClass]='mobileCheck ? "padding-mobile" : "padding-desktop"'>
-      <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
+    <div class="col-md-12 scroll" [ngClass]='mobileCheck ? "padding-mobile" : "padding-desktop"'
+         [ngStyle]="{'height': viewPort.toString() + 'px'}"
+         scrollable
+         (scrollPosition)="scrollHandler($event)"
+          ng-init="snapIndex=0"
+          snapscroll=""
+          snap-height="viewPort.toString() + 'px"
+          snap-index="snapIndex"
+          ng-swipe-up="snapIndex=snapIndex+1"
+          ng-swipe-down="snapIndex=snapIndex-1"
+          enable-arrow-keys=""
+         #scrollContainer>
+      <!-- <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display> -->
       <div *ngIf="feedList$ | async; let posts" class='margin-bottom'>
-        <div *ngFor="let postDetails of posts; let i = index;" >
+        <div *ngFor="let postDetails of posts; let i = index;">
           <app-post  [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
         </div>
       </div>
