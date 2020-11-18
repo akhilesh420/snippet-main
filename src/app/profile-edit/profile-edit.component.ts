@@ -1,7 +1,7 @@
-import { PostService } from './../../shared/post.service';
+import { PostService } from './../shared/post.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ProfileDetails, Biography, ProfileSticker, DisplayPicture } from './../../shared/profile.model';
+import { ProfileDetails, Biography, ProfileSticker, DisplayPicture } from './../shared/profile.model';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { PostDetails } from 'src/app/shared/post.model';
 import { UsersService } from 'src/app/shared/users.service';
@@ -17,7 +17,7 @@ class CollectionDisplay{
     public postDetails: PostDetails,
     public sticker: BehaviorSubject<any>,
     public colour: string,
-    public sortTime: number //milliseconds to compare firestore time and Date() 
+    public sortTime: number //milliseconds to compare firestore time and Date()
   ) {}
 }
 
@@ -88,7 +88,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   setUp() {
-    // Set up profile 
+    // Set up profile
     this.usersService.getProfileDetails(this.uid).pipe(takeUntil(this.notifier$))
     .subscribe((response: ProfileDetails) => {
       if (response) {
@@ -107,7 +107,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       if (response) {
         this.counter = 0;
         this.profileStickers = response;
-        this.getCollectionList(); 
+        this.getCollectionList();
       }
     });
 
@@ -120,7 +120,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
             return collection.pid === sticker.pid
           })
           const tempDate = new Date();
-          this.collectionList[index].sortTime = tempDate.getTime(); 
+          this.collectionList[index].sortTime = tempDate.getTime();
         })
       }
     })
@@ -151,12 +151,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
               tempColour = 'transparent'
             } else {
               const tempDate = new Date();
-              tempMilli = tempDate.getTime(); //sort selected stickers to the top  
+              tempMilli = tempDate.getTime(); //sort selected stickers to the top
               tempColour = '#53BD9C';
             }
-            this.collectionList.push(new CollectionDisplay(collection.pid, 
-                                                           tempPostDetails, 
-                                                           tempStickerContent, 
+            this.collectionList.push(new CollectionDisplay(collection.pid,
+                                                           tempPostDetails,
+                                                           tempStickerContent,
                                                            tempColour,
                                                            tempMilli));
           });
@@ -189,7 +189,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 10*1024*1024) { 
+        if (file.size < 10*1024*1024) {
           this.error = null;
           this.displayPicture = file;
           this.displayPicture$.next(event.target.result);
@@ -259,7 +259,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       //Update required field
       if (this.changedProfileStickers) {
         this.usersService.updateProfileSticker(this.uid,this.profileStickers);
-      } 
+      }
 
       if (this.changedProfileDetails) {
         this.usersService.updateProfileDetails(this.uid, this.profileDetails);
