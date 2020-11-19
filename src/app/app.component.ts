@@ -1,13 +1,15 @@
+import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Title, Meta} from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
 import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
 import * as screenfull from 'screenfull';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   notifier$ = new Subject();
 
   popUpVal: Subject<PopUp>;
+  elem: any;
 
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
@@ -29,24 +32,24 @@ export class AppComponent implements OnInit, OnDestroy {
               private metaService: Meta,
               private router: Router,
               private infiniteScrollService: InfiniteScrollService,
-              private miscellaneousService: MiscellaneousService){
+              private miscellaneousService: MiscellaneousService,
+              private scrollService: ScrollService){
   }
 
   ngOnInit(){
-
-    window.scroll(0,100);
-
     if (screenfull.isEnabled) {
       screenfull.request().catch(error => console.log(error));
       screenfull.on('error', event => {console.log(event);});
     }
 
+    this.elem = document.documentElement;
+    this.openFullscreen();
     this.authService.autoLogin();
 
     this.titleService.setTitle("Snippet");
     this.metaService.addTags([
       {name: 'apple-mobile-web-app-capable', content: 'yes'},
-      {name:"viewport", content:"width=device-width, minimal-ui"}
+      {name:"viewport", content:"width=device-width, minimal-ui,  initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"},
     ]);
 
     this.windowService.checkWidth();
@@ -81,6 +84,23 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onResize(){
     this.windowService.checkWidth();
+  }
+
+  openFullscreen() {
+   if (this.elem.mozRequestFullScreen) {
+      /* Firefox */
+      this.elem.mozRequestFullScreen();
+    } else if (this.elem.webkitRequestFullscreen) {
+      /* Chrome, Safari and Opera */
+      this.elem.webkitRequestFullscreen();
+    } else if (this.elem.msRequestFullscreen) {
+      /* IE/Edge */
+      this.elem.msRequestFullscreen();
+    }
+  }
+
+  onWindowScroll($event){
+    this.scrollService.setScroll();
   }
 
   ngOnDestroy() {

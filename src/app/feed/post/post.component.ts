@@ -86,7 +86,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    this.viewHeight = window.innerHeight - 47;
+    this.viewHeight = window.innerHeight - 46.5;
     this.usernameFetch = false;
 
     this.fetchingWindow = true;
@@ -291,7 +291,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
     try {
       if (this.postType != 'video/mp4') return;
       if (this.playVideo) {
-        this.videoPlayer.nativeElement.play();
+        this.videoPlayer.nativeElement.pause();
       } else {
         this.videoPlayer.nativeElement.pause();
       }

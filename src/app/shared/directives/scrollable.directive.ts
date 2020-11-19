@@ -1,4 +1,4 @@
-import { Directive, HostListener, EventEmitter, Output, ElementRef } from '@angular/core';
+import { Directive, HostListener, EventEmitter, Output, ElementRef, Input } from '@angular/core';
 
 @Directive({
   selector: '[scrollable]'
@@ -6,6 +6,7 @@ import { Directive, HostListener, EventEmitter, Output, ElementRef } from '@angu
 export class ScrollableDirective {
 
   @Output() scrollPosition = new EventEmitter();
+  @Input() postHeight: number;
 
   constructor(public el: ElementRef) { }
 
@@ -19,7 +20,7 @@ export class ScrollableDirective {
       this.scrollPosition.emit(top);
 
       // emit bottom event
-      if (top > height - offset - 100) {
+      if (top > height - offset - this.postHeight) {
         this.scrollPosition.emit('bottom')
       }
 

@@ -1,30 +1,18 @@
-<div class="container-fluid no-gutters no-padding">
-  <div class="row" align="center">
-    <div class="col-md-12 scroll" [ngClass]='mobileCheck ? "padding-mobile" : "padding-desktop"'
-         [ngStyle]="{'height': viewPort.toString() + 'px'}"
-         scrollable
-         (scrollPosition)="scrollHandler($event)"
-          ng-init="snapIndex=0"
-          snapscroll=""
-          snap-height="viewPort.toString() + 'px"
-          snap-index="snapIndex"
-          ng-swipe-up="snapIndex=snapIndex+1"
-          ng-swipe-down="snapIndex=snapIndex-1"
-          enable-arrow-keys=""
-         #scrollContainer>
-      <!-- <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display> -->
-      <div *ngIf="feedList$ | async; let posts" class='margin-bottom'>
-        <div *ngFor="let postDetails of posts; let i = index;">
-          <app-post  [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
-        </div>
+<div class="row no-padding no-margin" align="center" [ngStyle]="{'margin-bottom': navbarHeight.toString() + 'px'}">
+  <div class="col-md-12 no-padding no-margin"
+       #scrollContainer>
+    <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
+    <div *ngIf="feedList$ | async; let posts">
+      <div *ngFor="let postDetails of posts; let i = index;">
+        <app-post [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
       </div>
-      <p *ngIf="done">Thats all folks!</p>
-      <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">
-        <app-loading-spinner></app-loading-spinner>
-      </div>
-      <div *ngIf="!done && !loading" class="fail-safe">
-        <img [src]="addIcon" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
-      </div>
+    </div>
+    <!-- <p *ngIf="done">Thats all folks!</p> -->
+    <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!done && !loading" class="fail-safe">
+      <img [src]="addIcon" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
     </div>
   </div>
 </div>

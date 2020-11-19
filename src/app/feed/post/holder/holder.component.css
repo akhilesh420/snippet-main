@@ -1,5 +1,5 @@
 .username {
-  font-size: 18px;
+  font-size: 2.5vh;
   color: #F7F7F7;
   letter-spacing: 0.16em;
   position: absolute;
@@ -13,21 +13,11 @@
 
 .master {
   padding:0;
-  width: 100%; 
+  width: 100%;
   margin-top: 5px;
   margin-bottom: 10px;
 }
 
-@media screen and (max-width: 560px) {
-  .username {
-    font-size: 3.21vw;
-  }
-
-  .master {
-    margin-top: 0.893vw;
-    margin-bottom: 1.785vw;
-  }
-}
 
 
 
