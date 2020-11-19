@@ -41,3 +41,7 @@
 .row {
   width: 100vw;
 }
+
+.col-12 {
+  padding: 0 0 47px 0;
+}

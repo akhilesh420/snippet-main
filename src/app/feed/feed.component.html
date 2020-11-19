@@ -1,9 +1,9 @@
 <div class="row no-padding no-margin" align="center" [ngStyle]="{'margin-bottom': navbarHeight.toString() + 'px'}">
-  <div class="col-md-12 no-padding no-margin"
+  <div class="col-12 no-margin"
        #scrollContainer>
     <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
     <div *ngIf="feedList$ | async; let posts">
-      <div *ngFor="let postDetails of posts; let i = index;">
+      <div *ngFor="let postDetails of posts; let i = index; trackBy: trackByFn" #post>
         <app-post [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
       </div>
     </div>

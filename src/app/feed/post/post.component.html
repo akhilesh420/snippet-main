@@ -1,4 +1,4 @@
-<div class="postContainer" (click)='postView()' [ngStyle]="{'height': viewHeight.toString()+ 'px'}">
+<div class="postContainer" (click)='postView()'>
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="post-content "
@@ -108,10 +108,10 @@
     <div class="post-info" [ngStyle]="{'font-size': (0.025*viewHeight).toString() + 'px'}">
       <!-- Engagement Bar -->
       <div  class="engagementBar">
-        <div class="bar"></div>
         <div class="engagement"
           [ngStyle]='engagementProp'>
         </div>
+        <div class="bar"></div>
       </div>
       <!-- Profile details -->
       <div class="width-100" [ngStyle]='{"height": stickerSize}'>
@@ -145,8 +145,7 @@
     <!-- Post Sticker -->
     <a style="cursor: pointer;" (click)='collectSticker()'>
       <div class="postSticker"
-        *ngIf="stickerContent$ | async as stickerContent"
-        [ngStyle]='{"max-height": 0.14*viewHeight.toString() + "px", "max-width": 0.14*viewHeight.toString() + "px"}'>
+        *ngIf="stickerContent$ | async as stickerContent">
         <img class="sticker-img"
              src={{stickerContent}}
              width="100%" alt="post content">
