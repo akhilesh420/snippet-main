@@ -14,8 +14,8 @@
 
 .fail-safe{
   margin: 0;
-  padding: 0;
-  cursor: pointer;
+  padding: 10px 0 10px 0;
+  height: 50px;
 }
 
 .no-padding {
@@ -36,18 +36,6 @@
 .snap-child {
   scroll-snap-align: center;
   scroll-snap-stop: always;
-}
-
-.padding-mobile {
-  padding-top: 2px;
-}
-
-.padding-desktop {
-  padding-top: 42px;
-}
-
-.margin-bottom {
-  margin-bottom: 35px;
 }
 
 .test {

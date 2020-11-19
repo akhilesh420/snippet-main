@@ -1,4 +1,3 @@
-import { ScrollService } from './../shared/scroll.service';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -7,9 +6,7 @@ import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { WindowStateService } from '../shared/window.service';
 import { FeedService } from './feed.service';
-import * as screenfull from 'screenfull';
-import * as snapscroll from 'angular-snapscroll';
-import * as swipe from 'angular-swipe';
+import { ScrollService } from '../shared/scroll.service';
 
 @Component({
   selector: 'app-feed',
@@ -115,8 +112,8 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.viewPort = (this.postHeight+this.postMargin);
 
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      console.log(scrollY, this.scrollContainer.nativeElement.offsetHeight - this.viewPort*2); //temp log
-      this.infiniteScroll(scrollY === (this.scrollContainer.nativeElement.offsetHeight - this.viewPort));
+      console.log(scrollY, this.scrollContainer.nativeElement.offsetHeight - this.viewPort); //temp log
+      this.infiniteScroll(scrollY);
       this.postFocus(scrollY);
     })
   }
@@ -191,24 +188,16 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  infiniteScroll(bottom: boolean) {
-    console.log(bottom); //temp log
-    if (!this.done && !this.failSafe) {
-      if (bottom) {
-        this.moreBatch();
-      }
-    }
+  infiniteScroll(scrollY: number) {
+
+    // if (!this.done && !this.failSafe) {
+    //   if (bottom) {
+    //     this.moreBatch();
+    //   }
+    // }
   }
 
-  postFocus(scrollY) {
-    if (scrollY === 'top') {
-      return;
-    }
-
-    if (scrollY === 'bottom') {
-      return;
-    }
-
+  postFocus(scrollY: number) {
     //Don't play while on profile display box
     if (this.showProfileDisplay) scrollY = scrollY - this.profileDisplayHeight;
     if (scrollY < 0) {
