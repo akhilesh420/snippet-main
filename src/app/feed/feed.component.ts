@@ -26,7 +26,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   batch: number = 0;
   maxBatch: number = 0;
   batchSize: number = 4; //number of posts to load - min batch size is 2
-  batchNumber: number = 0;
+  batchNumber: number = 1;
   done: boolean;
   postOffset: number; //Trigger next post after this value
   failSafe: boolean;
@@ -54,7 +54,10 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   navbarHeight: number = 47;
 
+  lastHeight: number = 0;
+
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  @ViewChild('post') post: ElementRef;
 
   constructor(private windowService: WindowStateService,
               private feedService: FeedService,
@@ -67,8 +70,6 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.postNumber = this.showProfileDisplay ? undefined : 0;
-
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
@@ -77,12 +78,14 @@ export class FeedComponent implements OnInit, OnDestroy {
     });
 
     this.done = false;
-    this.failSafe = true;
+    this.failSafe = false;
     this.loading = true;
     this.inSnap = false;
+    this.postNumber = this.showProfileDisplay ? undefined : 0;
 
     this.getPosts(this.router.url);
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.lastHeight = 0;
       this.getPosts(this.router.url);
     });
 
@@ -92,9 +95,7 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.uid$.next(params['id']);
       });
 
-    this.postMargin = 0;
-    this.postHeight = window.innerHeight - this.navbarHeight;
-    this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
+     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (val < 850) {
         this.mobileCheck = true;
@@ -109,19 +110,22 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.viewPort = (this.postHeight+this.postMargin);
-
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      console.log(scrollY, this.scrollContainer.nativeElement.offsetHeight - this.viewPort); //temp log
       this.infiniteScroll(scrollY);
       this.postFocus(scrollY);
+      this.snapScroll(scrollY);
     })
+  }
+
+  getViewport() {
+    this.postMargin = 0;
+    this.postHeight = this.post.nativeElement.offsetHeight;
+    this.viewPort = (this.postHeight+this.postMargin);
   }
 
   getPosts(currentRoute: string) {
     if (currentRoute === this.lastRoute) {return}
     this.lastRoute = currentRoute;
-    console.log(currentRoute.split('/')); //log
     currentRoute = currentRoute.split('/')[1]; //get parent route
     this.showProfileDisplay = false;
     if (currentRoute === 'explore') {
@@ -174,6 +178,9 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
     this.batchNumber++;
     this.loading = false;
+    setTimeout(() => {
+      this.getViewport();
+    }, 100);
   }
 
   moreBatch() { // get the next batch of posts used for manual render
@@ -184,17 +191,22 @@ export class FeedComponent implements OnInit, OnDestroy {
     } else {
       this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
+    console.log(this.postsList.slice(0,this.batchSize*this.batchNumber));
     this.batchNumber++;
     this.loading = false;
   }
 
   infiniteScroll(scrollY: number) {
-
-    // if (!this.done && !this.failSafe) {
-    //   if (bottom) {
-    //     this.moreBatch();
-    //   }
-    // }
+    // console.log(scrollY, this.scrollContainer.nativeElement.offsetHeight - 2*this.viewPort); //temp log
+    if (!this.done && !this.failSafe) {
+      const height = this.scrollContainer.nativeElement.offsetHeight;
+      const triggerBatch = height - 2*this.viewPort;
+      if (scrollY >= triggerBatch && height > this.lastHeight) {
+        this.lastHeight = height;
+        console.log('next batch'); //temp log
+        this.moreBatch();
+      }
+    }
   }
 
   postFocus(scrollY: number) {
@@ -208,17 +220,29 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.postNumber = Math.floor(scrollY/this.viewPort);
   }
 
-  snapScroll(scrollDiff) {
-    // console.log(scrollDiff);
-    // const snapActivate: number = 0.2;
-    // let i = this.postNumber;
-    // if (scrollDiff >= this.viewPort*snapActivate) {
-    //   ++i;
-    // } else if (scrollDiff <= -this.viewPort*snapActivate){
-    //   if (i > 0) --i;
-    // }
-    // this.inSnap = true;
-    // this.scrollContainer.nativeElement.scroll(0,i*this.viewPort);
+  //get rid of postFocus and instead use this for postNumber calculation
+  snapScroll(scrollY) {
+    // console.log('scroll:', scrollY, 'diff:', scrollY - this.postNumber*this.viewPort); //temp log
+    if (true) return; //should be inSnap
+    this.inSnap = true;
+    const diff = scrollY - this.postNumber*this.viewPort;
+    const triggerArea = 0.05*this.viewPort;
+    console.log(diff, triggerArea); //temp log
+    let i: number = 0;
+    if (diff > triggerArea) {
+      i  = this.postNumber + 1;
+    } else if (diff < -triggerArea) {
+      i = this.postNumber - 1;
+    } else {
+      i = this.postNumber;
+    }
+    console.log(i);
+    window.scrollTo({top:i*this.viewPort, left: 0, behavior: 'smooth'});
+    setTimeout(() => this.inSnap = false, 1000);
+  }
+
+  trackByFn(index, item) {
+    return index; // or item.id
   }
 
   ngOnDestroy() {

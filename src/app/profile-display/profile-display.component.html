@@ -1,13 +1,13 @@
 <div class="container no-padding">
-  <div class="row no-padding">
-    <div class="col-md-12 no-padding" align="center"  
+  <div class="row no-padding view-width">
+    <div class="col-md-12 no-padding" align="center"
         *ngIf="profileDetails$ | async; let details">
       <div class="outerContainer">
         <!-- Profile stickers -->
-        <div class="row profile-sticker-row" 
+        <div class="row profile-sticker-row"
              *ngIf="profileStickers$ | async as stickers; else noStickers;">
           <div class="col-2 no-margin-no-padding"></div>
-          <div class="col profile-sticker-col" 
+          <div class="col profile-sticker-col"
               *ngFor="let i of getEmptySlots(stickers)">
             </div>
           <div class="col-2 profile-sticker-right-col"
@@ -20,7 +20,7 @@
           </div>
         </ng-template>
         <!-- DP -->
-        <div class="row display-picture" 
+        <div class="row display-picture"
             *ngIf="displayPicture$ | async as content;">
           <div class="col-3 display-picture-col">
             <div class="storySignifier">
@@ -70,9 +70,9 @@
           </div>
         </div>
         <div class="row bottom-row" style="position: relative;">
-          <div class="col-3 height-100 edit-group" 
-               style="cursor: pointer;" 
-               (click)='editProfile()' 
+          <div class="col-3 height-100 edit-group"
+               style="cursor: pointer;"
+               (click)='editProfile()'
                *ngIf="uid === myUid">
             <div class="row no-margin-no-padding height-100 ">
               <div class="col-3 height-100 no-margin-no-padding" >
@@ -84,24 +84,24 @@
             </div>
           </div>
           <!-- <div class="col-1 no-margin-no-padding" ></div> -->
-          <div class="col-9 username float-right" 
-               style="cursor: pointer;" 
+          <div class="col-9 username float-right"
+               style="cursor: pointer;"
               (click)="navigateRoute()"
               [ngStyle]="{'font-size': (usernameFontSize*multiplier).toString() + 'px'}"
               *ngIf="uid === myUid">
               <span class="username-span"  #usernameRef>
                 {{details.username}}
-              </span>  
+              </span>
           </div>
-          <div class="col-12 username float-right" 
-              style="cursor: pointer;" 
+          <div class="col-12 username float-right"
+              style="cursor: pointer;"
              (click)="navigateRoute()"
              *ngIf="uid != myUid">
-              <span class="username-span" 
-                    [ngStyle]="{'font-size': (usernameFontSize*multiplier).toString() + 'px'}" 
+              <span class="username-span"
+                    [ngStyle]="{'font-size': (usernameFontSize*multiplier).toString() + 'px'}"
                     #usernameRef>
                 {{details.username}}
-              </span>  
+              </span>
           </div>
         </div>
       </div>

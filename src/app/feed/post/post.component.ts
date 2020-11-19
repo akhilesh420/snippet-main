@@ -291,7 +291,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
     try {
       if (this.postType != 'video/mp4') return;
       if (this.playVideo) {
-        this.videoPlayer.nativeElement.pause();
+        this.videoPlayer.nativeElement.play();
       } else {
         this.videoPlayer.nativeElement.pause();
       }

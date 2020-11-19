@@ -1,7 +1,7 @@
 .outerContainer {
   width: 493px;
   height: 281px;
-  
+
 }
 
 .storySignifier {
@@ -57,26 +57,26 @@
   font-size: 12px;
   line-height: 22px;
   letter-spacing: -0.0003em;
-  padding-left: 25px; 
+  padding-left: 25px;
   padding-right: 0px;
   width: 100%;
 }
 
 .title {
-  color:#D8B869; 
-  font-size: 14px; 
+  color:#D8B869;
+  font-size: 14px;
   word-wrap: break-word;
 }
 
 .location {
-  color:#FFFFFF; 
-  font-size: 14px; 
+  color:#FFFFFF;
+  font-size: 14px;
   word-wrap: break-word;
 }
 
 .description {
-  color:#FFFFFF; 
-  line-height: 150%; 
+  color:#FFFFFF;
+  line-height: 150%;
   word-wrap: break-word;
 }
 
@@ -109,7 +109,7 @@
 .metrics-align {
   padding: 0px;
   padding-top: 35px;
-  padding-right: 25px; 
+  padding-right: 25px;
   margin: 0px;
 }
 
@@ -119,7 +119,7 @@
 }
 
 .views {
-  margin-top: 0px; 
+  margin-top: 0px;
   margin-right: 0px;
   height: 35px;
 }
@@ -130,7 +130,7 @@
   left: 50%;
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%); 
+          transform: translate(-50%,-50%);
   height: 100%;
   width: auto;
 }
@@ -152,7 +152,7 @@
 }
 
 .edit {
-  width: 18px; 
+  width: 18px;
   height: auto;
   -webkit-box-pack: left;
       -ms-flex-pack: left;
@@ -213,40 +213,40 @@
 .profile-sticker-row {
   padding-right: 3px;
   margin-top: 8px;
-  height: 60px; 
+  height: 60px;
   width: 100%;
 }
 
 .no-margin-right-no-padding {
-  padding: 0px; 
+  padding: 0px;
   margin-right: 0px;
 }
 
-.no-margin-no-padding { 
+.no-margin-no-padding {
   margin: 0px;
   padding: 0px;
 }
 
 .profile-sticker-right-col {
-  padding: 0px; 
-  margin-left: -8px; 
+  padding: 0px;
+  margin-left: -8px;
   margin-right: 8px;
 }
 
 .profile-sticker-col {
-  padding: 0px; 
-  margin-left: -8px; 
+  padding: 0px;
+  margin-left: -8px;
   margin-right: 8px;
 }
 
 .no-stickers {
-  margin-top: 8px; 
-  height: 60px; 
+  margin-top: 8px;
+  height: 60px;
   width: 100%
 }
 
 .display-picture {
-  width: 100%; 
+  width: 100%;
   margin-top: 16px;
 }
 
@@ -261,6 +261,10 @@
 .views-container {
   padding-left: 25px;
   padding-right: 0px;
+}
+
+.view-width {
+  width: 100vw;
 }
 
 @media screen and (max-width: 560px) {
@@ -292,7 +296,7 @@
   }
 
   .title, .location {
-    font-size: 2.5vw; 
+    font-size: 2.5vw;
   }
 
   .metrics {
@@ -313,7 +317,7 @@
   }
 
   .edit {
-    width: 3.2vw; 
+    width: 3.2vw;
   }
 
   .edit-text {
@@ -323,31 +327,31 @@
   .profile-sticker-row {
     padding-right: 0.54vw;
     margin-top: 1.43vw;
-    height: 10.71vw; 
+    height: 10.71vw;
   }
-  
+
   .profile-sticker-right-col, .profile-sticker-col {
-    margin-left: -1.43vw; 
+    margin-left: -1.43vw;
     margin-right: 1.43vw;
   }
 
   .no-stickers {
-    margin-top: 1.43vw; 
-    height: 10.7vw; 
+    margin-top: 1.43vw;
+    height: 10.7vw;
   }
-  
+
   .display-picture {
     margin-top: 2.86vw;
   }
-  
+
   .display-picture-col {
     padding-left: 1.61vw;
   }
-  
+
   .metric-height {
     height: 2.86vw;
   }
-  
+
   .views-container {
     padding-left: 4.46vw;
   }
@@ -355,7 +359,7 @@
   .edit-col {
     height: 5.36vw;
   }
-  
+
   .username {
     height: 5.36vw;
     padding-right: 4.64vw;
@@ -369,11 +373,11 @@
     height: 5.36vw;
     margin-top: 2.68vw;
   }
-  
+
 }
 
 
 
-  
+
 
 
