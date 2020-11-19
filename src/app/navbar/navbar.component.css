@@ -17,10 +17,6 @@
   width:100%;
 }
 
-.divider {
-  border-top: solid 0.8px rgb(112, 112, 112);
-}
-
 .Symbol >  img {
   height: 1.5em;
   width: auto;
