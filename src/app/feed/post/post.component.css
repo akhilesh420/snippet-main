@@ -41,7 +41,8 @@ a { color: inherit; }
 
 .bkgrd-opc {
   /* rgba used so that opacity doesn't effect child components */
-  background: rgba(8,7,8,0.6);
+  background: rgba(19, 17, 20, 0.6);
+  backdrop-filter: blur(4px);
 }
 
 .post-info {
