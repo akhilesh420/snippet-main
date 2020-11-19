@@ -106,17 +106,6 @@ a { color: inherit; }
   height: 100%;
 }
 
-.post-sticker-container {
-  height: 30vw;
-  width: 30vw;
-  position: absolute;
-  right: 0;
-  bottom: calc(100% - 15vw);
-  /* padding is top right bottom left ->
-    sum of top and bottom padding must equal the sum of left and right padding for circular post sticker */
-  /* padding: 4vw 0 0 6vw; */
-}
-
 .postSticker {
   height: 20vw;
   width: 20vw;

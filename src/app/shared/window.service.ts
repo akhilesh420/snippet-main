@@ -5,16 +5,16 @@ import { BehaviorSubject} from "rxjs";
   providedIn: 'root'
 })
 export class WindowStateService {
-    
+
   public screenWidthValue = new BehaviorSubject<number>(null);
 
   constructor() {
-      this.checkWidth();
+    this.checkWidth();
   }
 
   public checkWidth() {
-      var width = window.innerWidth;
-      this.screenWidthValue.next(width);
+    var width = window.innerWidth;
+    this.screenWidthValue.next(width);
   }
 
 }

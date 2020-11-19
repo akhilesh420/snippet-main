@@ -1,3 +1,4 @@
+import { ScrollService } from './../shared/scroll.service';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -6,6 +7,9 @@ import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { WindowStateService } from '../shared/window.service';
 import { FeedService } from './feed.service';
+import * as screenfull from 'screenfull';
+import * as snapscroll from 'angular-snapscroll';
+import * as swipe from 'angular-swipe';
 
 @Component({
   selector: 'app-feed',
@@ -36,7 +40,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   //Video auto play and pause
   postHeight: number; //height of the posts
   postMargin: number; //margin on each post;
-  postNumber: number = 0; //the index of the post thats being viewed
+  postNumber: number; //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
   profileDisplayHeight: number; //height of the posts
 
@@ -51,7 +55,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   lastScroll: number;
   mobileCheck: boolean;
 
-  // angular: any;
+  navbarHeight: number = 47;
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
 
@@ -59,11 +63,14 @@ export class FeedComponent implements OnInit, OnDestroy {
               private feedService: FeedService,
               private router: Router,
               private route: ActivatedRoute,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private scrollService: ScrollService) {
    }
 
 
   ngOnInit(): void {
+
+    this.postNumber = this.showProfileDisplay ? undefined : 0;
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -89,7 +96,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       });
 
     this.postMargin = 0;
-    this.postHeight = window.innerHeight - 47;
+    this.postHeight = window.innerHeight - this.navbarHeight;
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (val < 850) {
@@ -106,6 +113,12 @@ export class FeedComponent implements OnInit, OnDestroy {
     });
 
     this.viewPort = (this.postHeight+this.postMargin);
+
+    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
+      console.log(scrollY, this.scrollContainer.nativeElement.offsetHeight - this.viewPort*2); //temp log
+      this.infiniteScroll(scrollY === (this.scrollContainer.nativeElement.offsetHeight - this.viewPort));
+      this.postFocus(scrollY);
+    })
   }
 
   getPosts(currentRoute: string) {
@@ -178,37 +191,28 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  scrollHandler(scrollY) {
-    if (this.showProfileDisplay) scrollY = scrollY - this.profileDisplayHeight;
-
-    // this.lastScroll = scrollY;
-
-    // let ratio = scrollY/this.viewPort;
-
-    // if (Number.isInteger(ratio)) this.inSnap = false;
-    // if (!this.inSnap && scrollY != 'bottom') {
-    //   // this.snapScroll(scrollY-this.lastScroll);
-    // }
-
-    scrollY === 'error' ? this.failSafe = true : this.failSafe = false;
+  infiniteScroll(bottom: boolean) {
+    console.log(bottom); //temp log
     if (!this.done && !this.failSafe) {
-      if (scrollY === 'bottom') {
+      if (bottom) {
         this.moreBatch();
       }
     }
+  }
 
-    if (scrollY <= 0) {
-      this.postNumber = undefined;
-      return;
-    }
-
+  postFocus(scrollY) {
     if (scrollY === 'top') {
-      this.postNumber = 0;
       return;
     }
 
     if (scrollY === 'bottom') {
-      this.postNumber = this.done ? this.postsList.length - 1 : this.batchNumber*this.batchSize - 1;
+      return;
+    }
+
+    //Don't play while on profile display box
+    if (this.showProfileDisplay) scrollY = scrollY - this.profileDisplayHeight;
+    if (scrollY < 0) {
+      this.postNumber = undefined;
       return;
     }
 
@@ -216,16 +220,16 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   snapScroll(scrollDiff) {
-    console.log(scrollDiff);
-    const snapActivate: number = 0.2;
-    let i = this.postNumber;
-    if (scrollDiff >= this.viewPort*snapActivate) {
-      ++i;
-    } else if (scrollDiff <= -this.viewPort*snapActivate){
-      if (i > 0) --i;
-    }
-    this.inSnap = true;
-    this.scrollContainer.nativeElement.scroll(0,i*this.viewPort);
+    // console.log(scrollDiff);
+    // const snapActivate: number = 0.2;
+    // let i = this.postNumber;
+    // if (scrollDiff >= this.viewPort*snapActivate) {
+    //   ++i;
+    // } else if (scrollDiff <= -this.viewPort*snapActivate){
+    //   if (i > 0) --i;
+    // }
+    // this.inSnap = true;
+    // this.scrollContainer.nativeElement.scroll(0,i*this.viewPort);
   }
 
   ngOnDestroy() {

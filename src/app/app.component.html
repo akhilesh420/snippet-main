@@ -1,5 +1,6 @@
 <div class="master-container"
-  (window:resize)="onResize()">
+  (window:resize)="onResize()"
+  (window:scroll)="onWindowScroll($event)">
 
   <div class="container-fluid fit-dimension no-margin no-padding">
     <div class="row fit-dimension no-margin no-padding">
@@ -21,7 +22,7 @@
     <app-header ></app-header>
   </div>
 
-  <div style="margin-top: 0px;" *ngIf="mobileCheck">
+  <div *ngIf="mobileCheck" style='z-index: 3'>
     <app-navbar></app-navbar>
   </div>
 </div>

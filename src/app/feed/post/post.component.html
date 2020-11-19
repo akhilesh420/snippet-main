@@ -129,11 +129,11 @@
                  *ngIf="!fetchingWindow && profileStickers$ | async as stickers">
               <div class="col"
                 *ngFor="let i of getEmptySlots(stickers)"
-                style="padding: 0px; height: 24px">
+                style="padding: 0px;">
               </div>
               <div class="col"
                   *ngFor="let sticker of stickers"
-                   style="padding: 0px; height: 24px"
+                   style="padding: 0px;"
                    align='right'>
                 <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
               </div>

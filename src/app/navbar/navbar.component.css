@@ -11,7 +11,7 @@
   height: auto;
 }
 
-.nav .row {
+.nav > .row {
   padding-top: 6px;
   padding-bottom: 15px;
   width:100%;

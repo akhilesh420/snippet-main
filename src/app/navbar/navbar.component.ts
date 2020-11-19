@@ -29,6 +29,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
+    window.addEventListener("load", function() {
+      setTimeout(function() {
+        var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        if (scrollPos < 1) {
+          window.scrollTo(0,1);
+        }
+      }, 0);
+    });
+
     this.dropUp = false;
 
     this.loadingBar$ = this.miscellaneousService.getLoading();
@@ -42,7 +51,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }, errorMessage => {
       console.log(errorMessage);
     });
-  
+
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
     });
@@ -61,13 +70,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if (this.isAuthenticated) {
         if (event === 'profile') {
           this.router.navigate(['/profile/' + this.uid]);
-        } 
+        }
         if (event === 'collection') {
           this.router.navigate(['/collection/' + this.uid]);
-        } 
+        }
         if (event === 'create') {
           this.router.navigate(['/create']);
-        } 
+        }
         if (event === 'logout') {
           this.authService.logout();
         }
