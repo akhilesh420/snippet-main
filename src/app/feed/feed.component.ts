@@ -55,6 +55,9 @@ export class FeedComponent implements OnInit, OnDestroy {
   navbarHeight: number = 47;
 
   lastHeight: number = 0;
+  currentScroll: number = 0;
+  triggerMultiplier = 0.05;
+  triggerArea: number;
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
@@ -110,17 +113,23 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.setUpScroll();
+  }
+
+  setUpScroll() {
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
       this.infiniteScroll(scrollY);
-      this.postFocus(scrollY);
+      // this.postFocus(scrollY);
       this.snapScroll(scrollY);
-    })
+      this.setScroll(scrollY);
+    });
   }
 
   getViewport() {
     this.postMargin = 0;
     this.postHeight = this.post.nativeElement.offsetHeight;
     this.viewPort = (this.postHeight+this.postMargin);
+    this.triggerArea = this.triggerMultiplier*this.viewPort;
   }
 
   getPosts(currentRoute: string) {
@@ -220,25 +229,27 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.postNumber = Math.floor(scrollY/this.viewPort);
   }
 
+  setScroll(scrollY) {
+    // if (Math.abs(scrollY - this.postNumber*this.viewPort) > this.triggerArea) return;
+    console.log(this.postNumber); //temp log
+    if (this.currentScroll != scrollY) return;
+    window.scrollTo({top:this.postNumber*this.viewPort, left: 0, behavior: 'smooth'});
+  }
+
   //get rid of postFocus and instead use this for postNumber calculation
   snapScroll(scrollY) {
-    // console.log('scroll:', scrollY, 'diff:', scrollY - this.postNumber*this.viewPort); //temp log
-    if (true) return; //should be inSnap
+    if (this.inSnap) return;
     this.inSnap = true;
     const diff = scrollY - this.postNumber*this.viewPort;
-    const triggerArea = 0.05*this.viewPort;
-    console.log(diff, triggerArea); //temp log
-    let i: number = 0;
-    if (diff > triggerArea) {
-      i  = this.postNumber + 1;
-    } else if (diff < -triggerArea) {
-      i = this.postNumber - 1;
-    } else {
-      i = this.postNumber;
+    console.log(diff, this.triggerArea); //temp log
+    if (diff > this.triggerArea) {
+      ++this.postNumber;
+    } else if (diff < -this.triggerArea) {
+      --this.postNumber;
     }
-    console.log(i);
-    window.scrollTo({top:i*this.viewPort, left: 0, behavior: 'smooth'});
-    setTimeout(() => this.inSnap = false, 1000);
+    setTimeout(() => this.inSnap = false, 500);
+    this.currentScroll = this.postNumber*this.viewPort;
+    // this.setScroll();
   }
 
   trackByFn(index, item) {
