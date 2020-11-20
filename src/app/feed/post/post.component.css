@@ -333,7 +333,9 @@ a { color: inherit; }
   line-height: 0%;
 }
 
-
+.username-col {
+  overflow: hidden
+}
 
 /* Animations */
 

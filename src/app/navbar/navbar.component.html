@@ -23,14 +23,16 @@
 <div class="container no-padding no-margin nav">
   <div class="row no-gutters text-center divider" #navbar>
     <div class="col text-center exploreSymbol" (click)="navigate('explore')">
-        <img [ngClass]="currentRoute != '/explore' ? 'inactive-link' : null" src="assets/icons/NavBar icons/White (Inactive)/exploreSymbol.svg">
+      <img *ngIf="currentRoute != '/explore'" src='assets/icons/NavBar icons/White (Inactive)/exploreSymbol.svg'>
+      <img *ngIf="currentRoute === '/explore'" src='assets/icons/NavBar icons/Gold (Active)/exploreSymbol.svg'>
     </div>
     <div class="col text-center collectionSymbol" (click)="navigate('collection')">
-        <img [ngClass]="!currentRoute.includes('collection') ? 'inactive-link' : null"
-                src="assets/icons/NavBar icons/White (Inactive)/collectionSymbol.svg">
+        <img *ngIf="!currentRoute.includes('collection')" src="assets/icons/NavBar icons/White (Inactive)/collectionSymbol.svg">
+        <img *ngIf="currentRoute.includes('collection')" src="assets/icons/NavBar icons/Gold (Active)/collectionSymbol.svg">
     </div>
     <div class="col text-center createSymbol" (click)="navigate('create')">
-        <img [ngClass]="currentRoute != '/create' ? 'inactive-link' : null" src="assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
+        <img *ngIf="currentRoute != '/create'" src="assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
+        <img *ngIf="currentRoute === '/create'" src="assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
     </div>
     <div class="col text-center">
         <a (click)="navigate('profile')">
@@ -46,7 +48,8 @@
         </a>
     </div>
     <div class="col text-center dropupSymbol" (click)="dropUp = !dropUp" (clickOutside)="dropUp = false">
-        <img [ngClass]="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback' ? 'inactive-link' : null"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
+        <img *ngIf="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
+        <img *ngIf="currentRoute === '/auth' || currentRoute === '/tutorial' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg">
     </div>
   </div>
 </div>

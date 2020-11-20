@@ -1,6 +1,6 @@
 .nav{
   background: linear-gradient(90.65deg, #080708 28.65%, #121012 76.04%);
-  box-shadow: 0px -0.5px 0px rgba(255, 255, 255, 0.16); 
+  box-shadow: 0px -0.5px 0px rgba(255, 255, 255, 0.16);
   position: fixed;
   bottom:0;
   width: 100%;
@@ -67,7 +67,7 @@ left: 50%;
 width: 3.2vh;
 height: 3.2vh;
 border-radius: 50%;
-border: 1px solid #D8B869;
+border: 1px solid #E2B33D;
 background:#080708;
 overflow: hidden;
 }
