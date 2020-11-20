@@ -60,12 +60,12 @@ export class FeedComponent implements OnInit, OnDestroy {
   triggerMultiplier = 0.05;
   triggerArea: number;
   scrolling: boolean;
+  touchDown: boolean = false;
+
+  scrollTimer: any;
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
-
-  // constant for swipe action: up or down
-  SWIPE_ACTION = { UP: 'swipeleft', DOWN: 'swiperight' };
 
   constructor(private windowService: WindowStateService,
               private feedService: FeedService,
@@ -118,7 +118,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
     });
 
-    // this.setUpScroll();
+    this.setUpScroll();
 
     this.postNumber$.pipe(takeUntil(this.notifier$)).subscribe(newNum => {
       this.postNumber = newNum;
@@ -128,11 +128,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   setUpScroll() {
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      // this.infiniteScroll(scrollY);
-      // // this.postFocus(scrollY);
-      // this.snapScroll(scrollY);
-      // // this.setScroll(scrollY);
-      this.snapTrigger(scrollY);
+      this.checkUserInteraction(scrollY);
+      this.snapLimiter(scrollY);
     });
   }
 
@@ -229,23 +226,32 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
   }
 
-  postFocus(scrollY: number) {
-    //Don't play while on profile display box
-    if (this.showProfileDisplay) scrollY = scrollY - this.profileDisplayHeight;
-    if (scrollY < 0) {
-      this.postNumber = undefined;
-      return;
-    }
-
-    this.postNumber = Math.floor(scrollY/this.viewPort);
-  }
-
   checkUserInteraction(scrollY: number) {
-
+    if (this.scrollTimer) clearTimeout(this.scrollTimer);
+    this.scrollTimer = setTimeout(() => {
+      this.snapTrigger(scrollY);
+      this.setScroll();
+    }, 250);
   }
 
   snapTrigger(scrollY: number) {
+    const diff = scrollY - this.postNumber*this.viewPort;
+    if (diff > this.triggerArea) {
+      this.postNumber$.next(this.postNumber+1);
+    } else if (diff < -this.triggerArea) {
+      this.postNumber$.next(this.postNumber-1);
+    }
+    console.log(this.postNumber,diff);
+  }
 
+  snapLimiter(scrollY: number) {
+
+  }
+
+  getTouch(touchDown: boolean) {
+    console.log('touchstart');
+    // this.touchDown = touchDown;
+    // if (touchDown) {this.setScroll();}
   }
 
   setScroll() {
@@ -262,9 +268,9 @@ export class FeedComponent implements OnInit, OnDestroy {
     const diff = scrollY - this.postNumber*this.viewPort;
     console.log(diff, this.triggerArea); //temp log
     if (diff > this.triggerArea) {
-      ++this.postNumber;
+      this.postNumber$.next(this.postNumber+1);
     } else if (diff < -this.triggerArea) {
-      --this.postNumber;
+      this.postNumber$.next(this.postNumber-1);
     }
     setTimeout(() => this.inSnap = false, 500);
     this.currentScroll = this.postNumber*this.viewPort;
@@ -273,10 +279,6 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   trackByFn(index, item) {
     return index; // or item.id
-  }
-
-  swipe(currentIndex: number, action = this.SWIPE_ACTION.UP) {
-    console.log();
   }
 
   ngOnDestroy() {
