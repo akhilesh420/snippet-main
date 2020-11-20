@@ -28,28 +28,26 @@
     <div class="postTitle inline float-left pointer">
         {{postDetails.title}}
     </div>
-    <div class="showDetails pointer inline float-right">
-      <img src={{getDetailsButton()}}
-          [ngStyle]="getDetailsButtonSize()"
-           alt="Post-Detail-Button">
+    <div class="showDetails pointer inline float-right rotate-90-cw">
+      <img src='/assets/icons/Post Icons/postdetailDropdown.svg'>
     </div>
     <div *ngIf="showDetails === true">
       <div class="post-metrics float-left">
         <!-- Holder List Button -->
-        <div class="metrics pointer inline float-left height-auto" (click)="getHolderList(); stopPropagation($event); ">
-          <img src="/assets/icons/sticker-icon.svg" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
+        <div class="metrics pointer inline float-left height-auto textFontSize" (click)="getHolderList(); stopPropagation($event); ">
+          <img src="assets/icons/Post Icons/holderlistSymbol.svg" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
           <span #holderText [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">Holder List</span>
         </div>
         <!-- Metrics -->
         <div *ngIf="engagementRatio === 1  && !createPost" class="float-right">
           <!-- Views -->
-          <div class="metrics height-auto ">
-            <img src="https://i.ibb.co/pWGZ1k4/views-3x.png" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
+          <div class="metrics height-auto">
+            <img src=" /assets/icons/Post Icons/viewcounterSymbol.svg" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
             <span [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">{{views}}</span>
           </div>
           <!-- Collection -->
           <div class="metrics float-left height-auto">
-            <img src="/assets/icons/sticker-icon.svg" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
+            <img src="/assets/icons/Post Icons/collectedSymbol.svg" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
             <span [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">{{collected}}</span>
           </div>
         </div>
