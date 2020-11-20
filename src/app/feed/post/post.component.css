@@ -334,7 +334,8 @@ a { color: inherit; }
 }
 
 .username-col {
-  overflow: hidden
+  overflow: hidden;
+  padding-top: 0.5%;
 }
 
 /* Animations */
