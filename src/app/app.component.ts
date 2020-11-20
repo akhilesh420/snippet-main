@@ -46,12 +46,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.openFullscreen();
     this.authService.autoLogin();
 
-    this.titleService.setTitle("Snippet");
-    this.metaService.addTags([
-      {name: 'apple-mobile-web-app-capable', content: 'yes'},
-      {name:"viewport", content:"width=device-width, minimal-ui,  initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"},
-    ]);
-
     this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {

@@ -1,5 +1,7 @@
 <div class="row no-padding no-margin" align="center" [ngStyle]="{'margin-bottom': navbarHeight.toString() + 'px'}">
   <div class="col-12 no-margin"
+      (swipeup)="swipe(idx, $event.type)"
+      (swipedown)="swipe(idx, $event.type)"
        #scrollContainer>
     <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
     <div *ngIf="feedList$ | async; let posts">

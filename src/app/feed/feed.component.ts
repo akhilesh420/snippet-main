@@ -38,6 +38,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   postHeight: number; //height of the posts
   postMargin: number; //margin on each post;
   postNumber: number; //the index of the post thats being viewed
+  postNumber$ = new Subject<number>(); //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
   profileDisplayHeight: number; //height of the posts
 
@@ -58,9 +59,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   currentScroll: number = 0;
   triggerMultiplier = 0.05;
   triggerArea: number;
+  scrolling: boolean;
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
+
+  // constant for swipe action: up or down
+  SWIPE_ACTION = { UP: 'swipeleft', DOWN: 'swiperight' };
 
   constructor(private windowService: WindowStateService,
               private feedService: FeedService,
@@ -113,15 +118,21 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.setUpScroll();
+    // this.setUpScroll();
+
+    this.postNumber$.pipe(takeUntil(this.notifier$)).subscribe(newNum => {
+      this.postNumber = newNum;
+
+    })
   }
 
   setUpScroll() {
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      this.infiniteScroll(scrollY);
-      // this.postFocus(scrollY);
-      this.snapScroll(scrollY);
-      this.setScroll(scrollY);
+      // this.infiniteScroll(scrollY);
+      // // this.postFocus(scrollY);
+      // this.snapScroll(scrollY);
+      // // this.setScroll(scrollY);
+      this.snapTrigger(scrollY);
     });
   }
 
@@ -229,10 +240,18 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.postNumber = Math.floor(scrollY/this.viewPort);
   }
 
-  setScroll(scrollY) {
+  checkUserInteraction(scrollY: number) {
+
+  }
+
+  snapTrigger(scrollY: number) {
+
+  }
+
+  setScroll() {
     // if (Math.abs(scrollY - this.postNumber*this.viewPort) > this.triggerArea) return;
     console.log(this.postNumber); //temp log
-    if (this.currentScroll != scrollY) return;
+    // if (this.currentScroll != scrollY) return;
     window.scrollTo({top:this.postNumber*this.viewPort, left: 0, behavior: 'smooth'});
   }
 
@@ -249,11 +268,15 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
     setTimeout(() => this.inSnap = false, 500);
     this.currentScroll = this.postNumber*this.viewPort;
-    // this.setScroll();
+    this.setScroll();
   }
 
   trackByFn(index, item) {
     return index; // or item.id
+  }
+
+  swipe(currentIndex: number, action = this.SWIPE_ACTION.UP) {
+    console.log();
   }
 
   ngOnDestroy() {
