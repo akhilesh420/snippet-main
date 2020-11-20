@@ -28,10 +28,8 @@
     <div class="postTitle inline float-left pointer">
         {{postDetails.title}}
     </div>
-    <div class="showDetails pointer inline float-right">
-      <img src={{getDetailsButton()}}
-          [ngStyle]="getDetailsButtonSize()"
-           alt="Post-Detail-Button">
+    <div class="showDetails pointer inline float-right rotate-90-cw">
+      <img src='/assets/icons/Post Icons/postdetailDropdown.svg'>
     </div>
     <div *ngIf="showDetails === true">
       <div class="post-metrics float-left">
