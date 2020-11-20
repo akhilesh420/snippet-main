@@ -55,7 +55,7 @@ a { color: inherit; }
   letter-spacing: 0.120em;
   text-align: left;
 
-  padding: 2% 0 0 8%;
+  padding: 0.7vh 0 0 8%;
   height: 100%;
   width: 78%;
 
@@ -76,6 +76,7 @@ a { color: inherit; }
   height: 1.08vh;
   margin-bottom: 2%;
   position: relative;
+  backdrop-filter: blur(10px);
 }
 
 .bar{
@@ -243,6 +244,9 @@ a { color: inherit; }
 
 .metrics {
   position: relative;
+  height: 2.8vh;
+  width: auto;
+
 }
 
 .height-auto {
@@ -322,6 +326,13 @@ a { color: inherit; }
   font-size: 2.9vh;
   font-weight: 700;
 }
+
+.stickerMargin {
+  padding-top: 0.3vh;
+  padding-bottom: 0.3vh;
+  line-height: 0%;
+}
+
 
 
 /* Animations */
