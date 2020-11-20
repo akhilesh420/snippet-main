@@ -81,11 +81,7 @@ a { color: inherit; }
 .bar{
   width: 100%;
   height: 100%;
-<<<<<<< HEAD
   border-radius: 100px;
-=======
-  border-radius: 50%;
->>>>>>> ee5d64dda5c8d9163b05da1349597220a1962ba8
   border: 1px solid #D8B869;
   padding: 0px;
   position: absolute;
