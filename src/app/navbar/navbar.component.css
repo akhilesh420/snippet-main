@@ -109,8 +109,9 @@ padding-right: 15px;
 .inBox {
 border-radius: 8px;
 border: 2px solid #D8B869;
-color: #D8B869;
+color: #C9BC95;
 font-family: "ChampagneAndLimousines";
+font-weight: 700;
 background-color: rgba(0, 0, 0, 0.3);
 -webkit-backdrop-filter: blur(6vw);
         backdrop-filter: blur(6vw);
