@@ -1,15 +1,17 @@
 .outerContainer {
   width: 493px;
   height: 281px;
-
+  border: 2px solid #E3B33D;
+  border-radius: 30px;
+  margin-top: 15px;
 }
 
 .storySignifier {
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  background-image: -o-linear-gradient(315deg,#DCB65A ,#131114 70%, transparent 90%);
-  background-image: linear-gradient(135deg,#DCB65A ,#131114 70%, transparent 90%);
+  background-image: -o-linear-gradient(315deg,#E3B33D ,#131114 70%, transparent 90%);
+  background-image: linear-gradient(135deg,#E3B33D,#131114 70%, transparent 90%);
 }
 
 .no-padding {
