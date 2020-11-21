@@ -146,12 +146,7 @@
         </div>
       </div>
 
-      <div class = "row justify-content-center nextArrow rotate-center">
-        <div class = "col-1 text-center">
-            <img src="assets/icons/nextArrow.svg">
-        </div>
-      </div>
-    
+      
     </div>
   </div>
 </div> -->
@@ -165,8 +160,41 @@
       </div>
 
       <div class = "row justify-content-left s-titleInputPosition">
-        <div class = "col-3 s-titleInput">
-          <span>Title<sup>*</sup></span>
+        <div class = "col-11 s-titleInput">
+          
+          <label for="postTitle" class="text-left">
+            <span>Title<sup>*</sup></span>
+          </label>
+          <input
+            type="text"
+            id="title"
+            [(ngModel)]="title"
+            (input)="onTitleChange()"
+            name="title"
+            required
+            maxlength="19">
+
+          <label for="postDesc" class="text-left">
+            <span>Description</span>
+          </label>
+          <input
+            type="text"
+            id="description"
+            [(ngModel)]="desc"
+            (input)="onDescriptionChange()"
+            name="description"
+            maxlength="240"
+            required>
+
         </div>
       </div>
 
+      <div class = "row justify-content-center nextArrow rotate-center">
+        <div class = "col-1 text-center">
+            <img src="assets/icons/nextArrow.svg">
+        </div>
+      </div>
+        
+    </div>
+  </div>
+</div>
