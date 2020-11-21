@@ -6,9 +6,7 @@ a { color: inherit; }
 
 .postContainer {
   width: 100vw;
-  height: calc(100vh - 47px);;
-  /* border-top:  3px solid #D8B869;
-  border-bottom: 3px solid #D8B869; */
+  height: calc(100vh - 7.24vh);
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -51,6 +49,7 @@ a { color: inherit; }
 
 .post-info {
   color: #FFFFFF;
+  font-size: calc(0.025(100vh - 7.24vh));
   font-weight: 700;
   letter-spacing: 0.120em;
   text-align: left;
@@ -347,22 +346,22 @@ a { color: inherit; }
 
 @-webkit-keyframes rotate-90-ccw {
   0% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
   }
   100% {
-    -webkit-transform: rotate(-90deg);
-            transform: rotate(-90deg);
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
   }
 }
 @keyframes rotate-90-ccw {
   0% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
   }
   100% {
-    -webkit-transform: rotate(-90deg);
-            transform: rotate(-90deg);
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
   }
 }
 

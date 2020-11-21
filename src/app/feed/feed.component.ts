@@ -1,12 +1,13 @@
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Component, OnInit, Input, HostListener, OnChanges, OnDestroy, ChangeDetectionStrategy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { WindowStateService } from '../shared/window.service';
 import { FeedService } from './feed.service';
 import { ScrollService } from '../shared/scroll.service';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-feed',
@@ -36,7 +37,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   //Video auto play and pause
   postHeight: number; //height of the posts
-  postMargin: number; //margin on each post;
+  postMarginTop: number; //margin on each post;
   postNumber: number; //the index of the post thats being viewed
   postNumber$ = new Subject<number>(); //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
@@ -53,16 +54,14 @@ export class FeedComponent implements OnInit, OnDestroy {
   lastScroll: number;
   mobileCheck: boolean;
 
-  navbarHeight: number = 47;
-
   lastHeight: number = 0;
   currentScroll: number = 0;
-  triggerMultiplier = 0.05;
+  triggerMultiplier = 0.03;
   triggerArea: number;
-  scrolling: boolean;
+  scrolled: boolean; //scroll completed
+  scrolling: boolean;//scroll in progress
   touchDown: boolean = false;
-
-  scrollTimer: any;
+  maxPostNumber: number = -2;
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
@@ -89,7 +88,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.failSafe = false;
     this.loading = true;
     this.inSnap = false;
-    this.postNumber = this.showProfileDisplay ? undefined : 0;
 
     this.getPosts(this.router.url);
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
@@ -119,24 +117,23 @@ export class FeedComponent implements OnInit, OnDestroy {
     });
 
     this.setUpScroll();
-
+    this.resetPostNumber();
     this.postNumber$.pipe(takeUntil(this.notifier$)).subscribe(newNum => {
       this.postNumber = newNum;
-
+      this.infiniteScroll();
     })
   }
 
   setUpScroll() {
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      this.checkUserInteraction(scrollY);
-      this.snapLimiter(scrollY);
+      this.postFocus(scrollY);
     });
   }
 
   getViewport() {
-    this.postMargin = 0;
+    this.postMarginTop = 0;
     this.postHeight = this.post.nativeElement.offsetHeight;
-    this.viewPort = (this.postHeight+this.postMargin);
+    this.viewPort = (this.postHeight+this.postMarginTop);
     this.triggerArea = this.triggerMultiplier*this.viewPort;
   }
 
@@ -145,6 +142,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.lastRoute = currentRoute;
     currentRoute = currentRoute.split('/')[1]; //get parent route
     this.showProfileDisplay = false;
+    this.resetPostNumber();
     if (currentRoute === 'explore') {
       this.postsList$ = this.feedService.getExplorePage();
     } else if (currentRoute === 'collection') {
@@ -171,6 +169,11 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
 
     this.setUpPosts();
+  }
+
+  resetPostNumber() {
+    this.postNumber = this.showProfileDisplay ? -1 : 0;
+    this.postNumber$.next(this.postNumber);
   }
 
   setUpPosts() {
@@ -213,55 +216,48 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  infiniteScroll(scrollY: number) {
-    // console.log(scrollY, this.scrollContainer.nativeElement.offsetHeight - 2*this.viewPort); //temp log
-    if (!this.done && !this.failSafe) {
-      const height = this.scrollContainer.nativeElement.offsetHeight;
-      const triggerBatch = height - 2*this.viewPort;
-      if (scrollY >= triggerBatch && height > this.lastHeight) {
-        this.lastHeight = height;
-        console.log('next batch'); //temp log
+  infiniteScroll() {
+    if (!this.done && this.postNumber > this.maxPostNumber) {
+      if (this.postNumber === (this.batchNumber-1)*this.batchSize - 2) {
         this.moreBatch();
       }
+      this.maxPostNumber = this.postNumber;
     }
   }
 
-  checkUserInteraction(scrollY: number) {
-    if (this.scrollTimer) clearTimeout(this.scrollTimer);
-    this.scrollTimer = setTimeout(() => {
-      this.snapTrigger(scrollY);
-      this.setScroll();
-    }, 250);
+  //user interactions
+  userTouchStart() {
+    this.touchDown = true;
+    this.scrolled = false;
+  }
+
+  userTouchEnd() {
+    this.touchDown = false;
+    if (!this.scrolled) {
+      this.postNumber$.next(this.postNumber);
+      this.scrolled = true;
+    }
   }
 
   snapTrigger(scrollY: number) {
+    if (this.inSnap) return;
+    this.inSnap = true;
     const diff = scrollY - this.postNumber*this.viewPort;
     if (diff > this.triggerArea) {
       this.postNumber$.next(this.postNumber+1);
     } else if (diff < -this.triggerArea) {
       this.postNumber$.next(this.postNumber-1);
     }
+    setTimeout(() => this.inSnap = false, 1000);
     console.log(this.postNumber,diff);
   }
 
-  snapLimiter(scrollY: number) {
-
-  }
-
-  getTouch(touchDown: boolean) {
-    console.log('touchstart');
-    // this.touchDown = touchDown;
-    // if (touchDown) {this.setScroll();}
-  }
-
   setScroll() {
-    // if (Math.abs(scrollY - this.postNumber*this.viewPort) > this.triggerArea) return;
-    console.log(this.postNumber); //temp log
-    // if (this.currentScroll != scrollY) return;
+    if (this.touchDown) return;
     window.scrollTo({top:this.postNumber*this.viewPort, left: 0, behavior: 'smooth'});
+    this.scrolling = true;
   }
 
-  //get rid of postFocus and instead use this for postNumber calculation
   snapScroll(scrollY) {
     if (this.inSnap) return;
     this.inSnap = true;
@@ -274,7 +270,26 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
     setTimeout(() => this.inSnap = false, 500);
     this.currentScroll = this.postNumber*this.viewPort;
-    this.setScroll();
+  }
+
+  snapLimiter(scrollY: number) {
+    if (this.scrolling) return;
+    if (scrollY != this.postNumber*this.viewPort) {
+      // this.setScroll();
+      window.scrollTo(0,this.postNumber*this.viewPort);
+    }
+  }
+
+  scrollComplete(scrollY) {
+    if (scrollY === this.postNumber*this.viewPort) {
+      this.scrolling = false;
+    }
+  }
+
+  //temp
+  postFocus(scrollY) {
+    const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
+    this.postNumber$.next(Math.floor(scroll/this.viewPort));
   }
 
   trackByFn(index, item) {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,21 +23,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   loadingBar$: Subject<boolean>;
 
+  @ViewChild('navbar') navbar: ElementRef;
+
   constructor(private usersService: UsersService,
               private authService: AuthService,
               private router: Router,
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    window.addEventListener("load", function() {
-      setTimeout(function() {
-        var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-        if (scrollPos < 1) {
-          window.scrollTo(0,1);
-        }
-      }, 0);
-    });
-
     this.dropUp = false;
 
     this.loadingBar$ = this.miscellaneousService.getLoading();

@@ -1,10 +1,11 @@
-<div class="row no-padding no-margin" align="center" [ngStyle]="{'margin-bottom': navbarHeight.toString() + 'px'}">
+<div class="row no-padding no-margin" align="center">
   <div class="col-12 no-margin"
-      (touchstart)='getTouch(true)'
+      (touchstart)='userTouchStart()'
+      (touchend)='userTouchEnd()'
        #scrollContainer>
     <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
     <div *ngIf="feedList$ | async; let posts">
-      <div *ngFor="let postDetails of posts; let i = index; trackBy: trackByFn" #post>
+      <div class="post-margin" *ngFor="let postDetails of posts; let i = index; trackBy: trackByFn" #post>
         <app-post [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
       </div>
     </div>
@@ -15,5 +16,10 @@
     <div *ngIf="!done && !loading" class="fail-safe">
       <img [src]="addIcon" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
     </div>
+    <!-- <div style="position: fixed; top: 0; color: white;">
+      <p>Touch: {{touchDown}}</p>
+      <p>Postnumber: {{postNumber}}</p>
+      <p>max post number: {{maxPostNumber}}</p>
+    </div> -->
   </div>
 </div>

@@ -28,7 +28,7 @@
     <div class="postTitle inline float-left pointer">
         {{postDetails.title}}
     </div>
-    <div class="showDetails pointer inline float-right rotate-90-cw">
+    <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
       <img src='/assets/icons/Post Icons/postdetailDropdown.svg'>
     </div>
     <div *ngIf="showDetails === true">
@@ -103,7 +103,7 @@
   </div>
   <!-- profile tab information -->
   <div *ngIf="!fetchingWindow" class="profileTab close-comment">
-    <div class="post-info" [ngStyle]="{'font-size': (0.025*viewHeight).toString() + 'px'}">
+    <div class="post-info">
       <!-- Engagement Bar -->
       <div  class="engagementBar">
         <div class="engagement"

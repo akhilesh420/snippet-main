@@ -43,7 +43,7 @@
 }
 
 .col-12 {
-  padding: 0 0 47px 0;
+  padding: 0 0 7.24vh 0;
 }
 
 .scroll {
@@ -59,4 +59,8 @@
 .scroll-child {
   scroll-snap-align: start;
   scroll-snap-stop: always
+}
+
+.post-margin {
+  margin-top: 15px;
 }

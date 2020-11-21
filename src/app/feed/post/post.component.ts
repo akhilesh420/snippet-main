@@ -75,8 +75,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   @ViewChild('videoPlayer') videoPlayer : ElementRef;
 
-  viewHeight: any;
-
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
@@ -86,14 +84,12 @@ import { WindowStateService } from 'src/app/shared/window.service';
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    this.viewHeight = window.innerHeight - 46.5;
     this.usernameFetch = false;
 
     this.fetchingWindow = true;
     this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
-      this.viewHeight = window.innerHeight - 47;
       if (val) {
         this.windowSize = val;
         this.fetchingWindow = false;

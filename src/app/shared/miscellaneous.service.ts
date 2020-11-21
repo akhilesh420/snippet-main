@@ -21,6 +21,8 @@ export class MiscellaneousService {
   private userPopUp = new Subject<boolean>();
   private popUpSetup = new Subject<PopUp>();
 
+  public navbarHeight: number = 47;
+
   constructor() { }
 
   ngOnInit() {
