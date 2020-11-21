@@ -1,3 +1,5 @@
+<!-- OLD
+
 <div class="container-fluid">
   <div class="row">
     <div *ngIf="isCreating" style="text-align: center;" class="horizontal-center">
@@ -7,9 +9,9 @@
       <div class="container" style="margin-bottom: 40px;">
         <div class="row">
           <div class="col-md"></div>
-          <div class="col-md">
+          <div class="col-md"> -->
              <!-- realtime post -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md" style="position: relative;">
                 <div class="file-input-container">
                   <input
@@ -40,17 +42,17 @@
                           [createPost]="true"
                           (addClick)="onAddClick($event)"></app-post>
               </div>
-            </div>
+            </div> -->
             <!-- Error message -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md">
                 <div class="danger-alert" *ngIf="error">
                   {{ error }}
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- title -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md">
                 <div class="inputFields">
                   <label for="postTitle" class="text-left">Title</label>
@@ -65,9 +67,9 @@
                     maxlength="19">
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- description -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md">
                 <div class="inputFields">
                   <label for="postDesc" class="text-left">Description</label>
@@ -82,9 +84,9 @@
                     required>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- sticker amount -->
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-6">
                 <div class="inputAmount" >
                   <label for="stickerAmount" class="text-left">Amount</label>
@@ -114,7 +116,57 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->
+
+<!-- NEW -->
 
 
+
+<div class = "container-fluid screen">
+  <div class = "row screen">
+    <div class = "col-12 col-sm-12 col-md-12 col-lg-12 screen">
+        
+<!-- First Page -->
+
+      <!-- <div class = "row no-gutters justify-content-center titlePosition">
+        <div class = "col-4 title">
+          <span>Create</span>
+        </div>
+      </div>
+
+      <div class = "row no-gutters justify-content-left headingPosition">
+        <div class = "col-10 heading">
+          <span>Add a Picture or Video</span>
+        </div>
+      </div>
+      
+      
+      <div class = "row no-gutters justify-content-left postPosition">
+        <div class = "col-12 post">  
+        </div>
+      </div>
+
+      <div class = "row justify-content-center nextArrow rotate-center">
+        <div class = "col-1 text-center">
+            <img src="assets/icons/nextArrow.svg">
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</div> -->
+
+<!-- Second page -->
+
+      <div class = "row justify-content-left s-titlePosition">
+        <div class = "col-8 s-title">
+          <span>Describe your content</span>
+        </div>
+      </div>
+
+      <div class = "row justify-content-left s-titleInputPosition">
+        <div class = "col-3 s-titleInput">
+          <span>Title<sup>*</sup></span>
+        </div>
+      </div>
 
