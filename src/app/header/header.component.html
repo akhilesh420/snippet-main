@@ -19,7 +19,7 @@
         </div>
         <div class="col fontHeader">
           <a [routerLink]='createRoute'
-             [ngClass]="currentRoute === '/create' ? 'active-link' : null">Create</a>
+             [ngClass]="currentRoute.includes('/create') ? 'active-link' : null">Create</a>
         </div>
         <div class="col fontHeader">
           <a [routerLink]='profileRoute'

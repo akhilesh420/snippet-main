@@ -1,4 +1,4 @@
-<div class="containerPopUp" (click)='onClick(false)'>
+<div class="containerPopUp" (click)='onClick(secondaryRoute ? true : false)'>
   <div class="container-fluid">
     <div class= "row">
       <div class = "col-lg-4 col-md-6 col-sm-8 col-11 box horizontal-center">
@@ -9,14 +9,14 @@
         </div>
         <div class = "row margin">
           <div class = "col align-self-center">
-            <div class="text-wrap btn alert" 
+            <div class="text-wrap btn alert"
                 [ngClass]="primaryClass"
                 (click)='onClick(true)'>
               {{primary}}
             </div>
           </div>
           <div class="col align-self-center" *ngIf='secondary'>
-            <div class="text-wrap btn alert" 
+            <div class="text-wrap btn alert"
                 [ngClass]='secondaryClass'
                 (click)='onClick(false)'>
               {{secondary}}

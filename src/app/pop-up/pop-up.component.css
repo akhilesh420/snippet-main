@@ -52,8 +52,8 @@ width: auto;
 }
 
 .default {
-background: #D8B869;
-color: #131114;
+  background: #131114;
+  color: #D8B869;
 }
 
 .reject {
@@ -67,8 +67,8 @@ color: #f7f7f7;
 }
 
 .routing {
-background: #131114;
-color: #D8B869;
+background: #D8B869;
+color: #131114;
 }
 
 .btn:active {

@@ -68,7 +68,8 @@ export class AppComponent implements OnInit, OnDestroy {
       if (!(val instanceof NavigationEnd)) {
         return;
       }
-      window.scrollTo(0, 0)
+
+      window.scrollTo(0, 1);
     });
 
     this.popUpVal = this.miscellaneousService.getPopUpSetUp();

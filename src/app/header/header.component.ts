@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.uid = user.id;
         this.collectionRoute = "collection/" + this.uid;
         this.profileRoute = "profile/" + this.uid;
-        this.createRoute = "/create";
+        this.createRoute = "/create/content";
       } else {
         this.collectionRoute = '/auth';
         this.profileRoute = '/auth';

@@ -51,7 +51,7 @@ a { color: inherit; }
 
 .post-info {
   color: #FFFFFF;
-  font-size: calc(0.025(100vh - 7.24vh));
+  font-size: calc(0.025*(100vh - 7.24vh));
   font-weight: 700;
   letter-spacing: 0.120em;
   text-align: left;

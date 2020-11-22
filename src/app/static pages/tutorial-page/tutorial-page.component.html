@@ -36,21 +36,22 @@
   <div class = "row justify-content-center paraTop">
 
       <div class = "col-lg-8 col-md-10 col-sm-12 col-12 para text-wrap focus-in-expand">
-          <p>If you were lucky, and got a sticker, you can display it !<br>
-              </p>
+        <p>{{messageTop1}}<br>
+          {{messageTop2}}</p>
       </div>
 
   </div>
 
   <div class='post'>
-    <app-post *ngIf='onBoardingStep === 2 && !loadingPost' [postDetails]="postDetails" [playVideo]="true" [tutorial]="true"> </app-post>
+    <app-post *ngIf='(onBoardingStep === 2 || onBoardingStep === 4) && !loadingPost' [postDetails]="postDetails" [playVideo]="true" [tutorial]="true"> </app-post>
+    <img *ngIf='onBoardingStep === 7' src="assets/icons/nextArrow.svg">
   </div>
 
   <div class = "row justify-content-center no-gutters paraBottom">
 
       <div class = "col-lg-8 col-md-10 col-sm-12 col-12 no-gutters para focus-in-expand">
-          <p>Displayed stickers always appear next to your username.<br>
-              When clicked by anyone, they lead to the post that sticker represents.</p>
+          <p>{{messageBottom1}}<br>
+              {{messageBottom2}}</p>
       </div>
 
   </div>

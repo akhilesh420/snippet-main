@@ -14,6 +14,7 @@ export class PopUpComponent implements OnInit {
   @Input() secondary: string;
   @Input() active: string[]; //[primary colour, secondary colour] if no colour then default
   @Input() route?: string;
+  @Input() secondaryRoute?: boolean;
 
   primaryClass: string;
   secondaryClass: string;
@@ -29,6 +30,9 @@ export class PopUpComponent implements OnInit {
   onClick(value: boolean) {
     this.miscellaneousService.setPopUpInteraction(value);
     this.miscellaneousService.closePopUp();
+    if (!this.secondary) {
+      value = true;
+    }
     if (value && this.route) {
       this.router.navigate([this.route]);
     }

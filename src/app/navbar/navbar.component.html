@@ -31,8 +31,8 @@
         <img *ngIf="currentRoute.includes('collection')" src="assets/icons/NavBar icons/Gold (Active)/collectionSymbol.svg">
     </div>
     <div class="col text-center createSymbol" (click)="navigate('create')">
-        <img *ngIf="currentRoute != '/create'" src="assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
-        <img *ngIf="currentRoute === '/create'" src="assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
+        <img *ngIf="!currentRoute.includes('/create')" src="assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
+        <img *ngIf="currentRoute.includes('/create')" src="assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
     </div>
     <div class="col text-center">
         <a (click)="navigate('profile')">
