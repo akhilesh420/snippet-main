@@ -1,10 +1,10 @@
-<div class="header-contain">
+<!-- <div class="header-contain">
   <div class="row contain no-gutters" #header>
     <div class="col-2">
       <a routerLink="/tutorial">
-        <span class="logoMain">Snippet</span>
+        <span class="logoMain">Snippet</span> -->
         <!-- <span class="logoSub">Creative Community</span> -->
-      </a>
+      <!-- </a>
     </div>
     <div class="col-8">
       <div class="row">
@@ -42,7 +42,43 @@
   </div>
 
   <div class="loading-bar" [ngStyle]='{"top": header.offsetHeight.toString() +"px"}' *ngIf="loadingBar$ | async"></div>
+</div> -->
+
+<div class="header-contain">
+    <div class = "row no-gutters headerPosition">
+      <div class = "col-5 align-self-start headerLogo">
+        <span>Snippet</span>
+      </div>
+
+
+      <div class = "col-2 createSymbol">
+        <img src = "assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
+      </div>
+
+      <div class = "col-3"></div>
+
+      <div class = "col-2 height leftSymbols">
+        
+        <div class = "row height">
+          
+          <div class = "col-3 height myProfile">
+          </div>
+
+          <div class = "col-3 height myCollection">
+            <img src = "assets/icons/Header Icons/collectionSymbol.svg">
+          </div>
+
+          <div class = "col-3 height exploreSymbol">
+            <img src = "assets/icons/Header Icons/exploreSymbol.svg">
+          </div>
+        
+          <div class = "col-3 height dropdownSymbol">
+            <img src="assets/icons/Header Icons/dropdownSymbol.svg">
+          </div>
+        
+        </div>
+
+      </div>
+
+    </div>
 </div>
-
-
-

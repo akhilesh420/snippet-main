@@ -20,6 +20,8 @@
 <div class='loading-bar' [ngStyle]='{"bottom": navbar.offsetHeight.toString() +"px"}' *ngIf="loadingBar$ | async">
 </div>
 
+
+
 <div class="container no-padding no-margin nav">
   <div class="row no-gutters text-center divider" #navbar>
     <div class="col text-center exploreSymbol" (click)="navigate('explore')">
