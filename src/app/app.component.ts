@@ -26,6 +26,8 @@ export class AppComponent implements OnInit, OnDestroy {
   popUpVal: Subject<PopUp>;
   elem: any;
 
+  onBoarding: boolean = false;
+
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
               private titleService: Title,
@@ -70,6 +72,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.popUpVal = this.miscellaneousService.getPopUpSetUp();
+
+    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.onBoarding = val;
+    });
   }
 
   ngAfterViewInit() {

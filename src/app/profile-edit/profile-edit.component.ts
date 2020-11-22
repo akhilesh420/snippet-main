@@ -282,13 +282,14 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   finishUp() {
     this.isSaving = false;
     alert('Profile updated!');
-    this.authService.onBoarding.pipe(takeUntil(this.notifier$)).subscribe(res => {
-      if (res === "Signup") {
-        this.router.navigate(['/tutorial']);
-      } else {
-        this.router.navigate(['/profile/'+this.uid]);
-      }
-    })
+    this.router.navigate(['/profile/'+this.uid]);
+    // this.authService.onBoarding.pipe(takeUntil(this.notifier$)).subscribe(res => {
+    //   if (res === "Signup") {
+    //     this.router.navigate(['/tutorial']);
+    //   } else {
+
+    //   }
+    // })
   }
 
   handleError() {

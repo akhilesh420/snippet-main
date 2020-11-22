@@ -26,6 +26,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   @Input() postType$?: Subject<string>;
   @Input() stickerContent$?: BehaviorSubject<any>;
   @Input() playVideo: boolean;
+  @Input() tutorial?: boolean = false;
 
   @Output() addClick = new EventEmitter();
 
@@ -84,6 +85,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
+    console.log(this.tutorial); //temp log
     this.usernameFetch = false;
 
     this.fetchingWindow = true;

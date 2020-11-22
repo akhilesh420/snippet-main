@@ -61,6 +61,8 @@
   scroll-snap-stop: always
 }
 
-.post-margin {
+.post-container {
+  width: 100vw;
+  height: calc(100vh - 7.24vh);
   margin-top: 15px;
 }

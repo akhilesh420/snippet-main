@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export class PopUp {
    constructor(
@@ -22,6 +22,10 @@ export class MiscellaneousService {
   private popUpSetup = new Subject<PopUp>();
 
   public navbarHeight: number = 47;
+
+  public onBoardingStep$ = new BehaviorSubject<number>(0);
+  public onBoarding$= new BehaviorSubject<boolean>(false);
+  public exclusiveId: string;
 
   constructor() { }
 
