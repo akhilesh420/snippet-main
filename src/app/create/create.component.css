@@ -165,7 +165,7 @@ input.invalidAmount {
 
 /* Second Page */
 
-.s-titlePosition {
+/* .s-titlePosition {
   padding-top: 19.2vh;
   padding-left: 4.8vw;
 }
@@ -190,7 +190,7 @@ textarea {
   font-weight: bold;
   font-size: 3.2vh;
   outline: none;
-  color: #131114;
+  color: #0b0b0b;
   border: none;
   background: #9A9696;
   padding-left: 3vw;
@@ -203,7 +203,8 @@ textarea {
 input:focus,
 textarea:focus {
   border: 2px solid #EAB430;
-  background: #C4C4C4;
+  background: #0B0B0B;
+  color: #EAB430
 }
 
 
@@ -214,13 +215,105 @@ label {
   letter-spacing: 0em;
   color: rgba(255, 255, 255, 0.7);;
   font-weight: bold;
+} */
+
+/* Third Page */
+
+.t-titlePosition {
+  padding-top: 11.95vh;
 }
 
+
+.t-title {
+  font-family: 'ChampagneAndLimousines';
+  font-size: 3.2vh;
+  letter-spacing: 0em;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.t-headingOnePosition {
+  padding-top: 9.42vh;
+}
+
+.t-headingOne {
+  font-family: 'ChampagneAndLimousines';
+  font-size: 2.6vh;
+  letter-spacing: 0em;
+  color: rgba(255, 255, 255, 0.7);;
+  font-weight: bold;
+  text-align: center; 
+}
+
+.addStickerPosition {
+  padding-top: 2.6vh;
+}
+
+.addSticker {
+  height: 26.667vw;
+  width: 26.667vw;
+  background-color: #0b0b0b;
+  border-radius: 50%;
+  position: relative;
+}
+
+.addSticker > img {
+  height: 9.04vh;
+  width: auto;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+
+}
+
+.t-headingTwoPosition {
+  padding-top: 5.7vh;
+}
+
+input,
+textarea {
+  font-family: 'ChampagneAndLimousines';
+  letter-spacing: 0em;
+  font-weight: bold;
+  font-size: 2.5vh;
+  outline: none;
+  color: #0b0b0b;
+  border: none;
+  background: #9A9696;
+  padding-left: 3vw;
+  box-shadow: inset 0 2px 4px 0 hsla(0, 0%, 0%, 0.08);
+  margin-bottom: 9.6vh;
+  border-radius: 1.8vh;
+  width: 100%;
+  height: 4.3vh;
+  text-align: center;
+}
+
+input:focus,
+textarea:focus {
+  border: 2px solid #EAB430;
+  color: #EAB430;
+  background: #0B0B0B;
+}
+
+
+label {
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 2.6vh;
+  letter-spacing: 0em;
+  color: rgba(255, 255, 255, 0.7);;
+  font-weight: bold;
+  text-align: center;
+} 
 
 /* Constants */
 
 .nextArrow {
-  padding-top: 2.5vh ;
   height: auto;
 }
 
