@@ -58,26 +58,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.createRoute =  '/auth';
       }
     });
-
-    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.currentRoute = this.router.url;
-      if (this.currentRoute === '/tutorial') {this.marginBottom = '0px';}
-      else {this.marginBottom = '35px';}
-    });
-  }
-
-  onClick() {
-    this.collapsed = !this.collapsed;
-    if (this.collapsed) {
-      setTimeout(value => {
-        this.currentRoute === '/tutorial' ? this.marginBottom = '0px' : this.marginBottom = '35px';
-        this.marginLeft = 'calc(50vw - 309.94px -'+ this.widthAuth +')';
-      },0.5*1000);
-    } else {
-      this.marginBottom = '206px';
-      this.marginLeft= '0';
-    }
-
   }
 
   onLogout() {

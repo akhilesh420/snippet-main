@@ -7,6 +7,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 
 
@@ -42,17 +43,25 @@ export class AuthComponent implements OnInit, OnDestroy {
   userNumber: number;
   notifier$ = new Subject();
 
+  onBoarding: boolean = false;
+  onBoardingStep: number;
+
   constructor(private authService: AuthService,
               private userService: UsersService,
               private activityService: ActivityService,
               private router: Router,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private miscellaneousService: MiscellaneousService) {}
 
   ngOnInit(): void {
     let todayDate = new Date();
     this.allowedDate = new Date(todayDate.getFullYear() - this.minAge, todayDate.getMonth(), todayDate.getDate());
 
     this.validID = false;
+
+    this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+      this.onBoardingStep = step;
+    });
 
     this.exclusiveId = this.route.snapshot.params['id'];
     this.isLoginMode = !this.exclusiveId; //switch to signup if id exists
@@ -73,6 +82,14 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   checkID() {
+    //Put after valid id is checked after testing
+    if (this.onBoardingStep === 0) {
+      this.miscellaneousService.onBoarding$.next(true);
+      this.miscellaneousService.exclusiveId = this.exclusiveId;
+      this.router.navigate(['/tutorial']);
+    }
+    // testing
+
     this.authService.getIDused(this.exclusiveId).pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (response) {
         if (response.used <= 2) {
@@ -101,6 +118,16 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+
+    //Temp for testing
+    if (!this.isForgetMode) {
+      if (!this.isLoginMode) {
+        this.miscellaneousService.onBoardingStep$.next(2);
+        this.router.navigate(['/tutorial']);
+        return;
+      }
+    }
+    //Temp for testing
 
     if (!this.email || this.email.length === 0) {
       this.error = "Email is required"
@@ -178,7 +205,9 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.activityService.addActivity(resData.localId, 'user');
               this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: resData.localId, username: this.username, fullname: this.name, email: this.email});
               form.reset();
-              this.router.navigate(['/profile/' + resData.localId + '/edit']);
+              // this.router.navigate(['/profile/' + resData.localId + '/edit']);
+              this.miscellaneousService.onBoardingStep$.next(2);
+              this.router.navigate(['/tutorial']);
             } else {
               this.error = "Username taken";
               this.authService.deleteUser(resData.idToken).pipe(take(1)).subscribe(response => {
@@ -187,7 +216,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                 console.log(errorMessage);
               });
             }
-          })
+          });
         } else if (this.isForgetMode) {
           alert("An email has been sent to your account");
         }

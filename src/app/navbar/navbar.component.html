@@ -7,9 +7,9 @@
         <div class = "row" (click)="navigate('feedback')">
             <div class="col inner">Feedback</div>
         </div>
-        <div class=  "row" (click)="navigate('tutorial')">
+        <!-- <div class=  "row" (click)="navigate('tutorial')">
             <div class="col inner">Tutorial</div>
-        </div>
+        </div> -->
         <div class=  "row" (click)="navigate(isAuthenticated ? 'logout' : 'login')">
             <div class="col inner">{{isAuthenticated ? 'Logout' : 'Login'}}</div>
         </div>
@@ -50,8 +50,10 @@
         </a>
     </div>
     <div class="col text-center dropupSymbol" (click)="dropUp = !dropUp" (clickOutside)="dropUp = false">
-        <img *ngIf="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
-        <img *ngIf="currentRoute === '/auth' || currentRoute === '/tutorial' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg">
+        <!-- <img *ngIf="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
+        <img *ngIf="currentRoute === '/auth' || currentRoute === '/tutorial' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg"> -->
+        <img *ngIf="currentRoute != '/auth' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
+        <img *ngIf="currentRoute === '/auth' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg">
     </div>
   </div>
 </div>

@@ -5,7 +5,7 @@
        #scrollContainer>
     <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
     <div *ngIf="feedList$ | async; let posts">
-      <div class="post-margin" *ngFor="let postDetails of posts; let i = index; trackBy: trackByFn" #post>
+      <div class="post-container" *ngFor="let postDetails of posts; let i = index; trackBy: trackByFn" #post>
         <app-post [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
       </div>
     </div>
