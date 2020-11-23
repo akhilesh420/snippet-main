@@ -1,39 +1,4 @@
-/* Shared */
-.file-input {
-  position: absolute;
-  top:50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-  width: 0px;
-  height: 0px;
-  opacity: 0;
-}
 
-.danger-alert {
-  border: 2px solid #891E13;
-  background: #131114;
-  margin-bottom: 35px;
-  border-radius: 10px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  font-size: 18px;
-  color:#891E13;
-  width: 100%;
-}
-
-.no-margin {
-  margin:0;
-}
-
-.no-padding {
-  padding: 0;
-}
 
 /* First Page */
 
@@ -256,6 +221,7 @@ label {
 
 .nextArrow {
   height: auto;
+  padding-bottom: 12vh;
 }
 
 .col-1 > img {
@@ -271,3 +237,90 @@ label {
   padding: 0%;
   background-color: #000000;
 }
+
+.backButton {
+  position: absolute;
+  top: 2.9vh;
+  left: 3vw;  
+}
+
+.backButton > img {
+  padding-left: 3vw;
+  height: 2.5vh;
+  width: auto;
+  top: 150%;
+  transform: rotate(180deg);
+}
+
+.file-input {
+  position: absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
+
+.danger-alertPosition {
+  padding-left: 10.9vw;
+  width: 100%;
+}
+
+.danger-alert {
+  margin-bottom: 2vh;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 2.0vh;
+  color:#891E13;
+  width: 100%;
+}
+
+.no-margin {
+  margin:0;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+/* Animations */
+
+/* Pulsate */
+
+.pulsate-bck {
+	-webkit-animation: pulsate-bck 1s ease-in-out infinite both;
+	        animation: pulsate-bck 1s ease-in-out infinite both;
+}
+
+@-webkit-keyframes pulsate-bck {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes pulsate-bck {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.9);
+            transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
