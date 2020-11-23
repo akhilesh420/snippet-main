@@ -1,9 +1,10 @@
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
+import { UsersService } from '../shared/users.service';
 
 @Component({
   selector: 'app-header',
@@ -36,8 +37,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   @ViewChild('dropdown') dropdown: ElementRef;
 
+  displayPicture$: BehaviorSubject<any>;
+
   constructor(private authService: AuthService,
               private router: Router,
+              private usersService: UsersService,
               private miscellaneousService: MiscellaneousService){
   }
 
@@ -52,11 +56,17 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.collectionRoute = "collection/" + this.uid;
         this.profileRoute = "profile/" + this.uid;
         this.createRoute = "/create/content";
+        this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
       } else {
         this.collectionRoute = '/auth';
         this.profileRoute = '/auth';
         this.createRoute =  '/auth';
       }
+    });
+
+    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.currentRoute = this.router.url;
+      console.log(this.currentRoute, this.profileRoute);
     });
   }
 

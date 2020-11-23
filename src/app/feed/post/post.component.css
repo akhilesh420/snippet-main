@@ -1,12 +1,4 @@
-/* :root {
-  --heightContainer:
-} */
-
-a { color: inherit; }
-
 .postContainer {
-  /* width: 100vw;
-  height: calc(100vh - 7.24vh); */
   width: 100%;
   height: 100%;
   padding: 0;
@@ -393,5 +385,16 @@ a { color: inherit; }
   100% {
     -webkit-transform: rotate(90deg);
             transform: rotate(90deg);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .postContainer {
+    border-radius: 1.67vh;
+  }
+
+  .profileTab{
+    border-bottom-left-radius: 1.5vh;
+    border-bottom-right-radius: 1.5vh;
   }
 }
