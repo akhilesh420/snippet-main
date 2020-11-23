@@ -5,11 +5,10 @@
        #scrollContainer>
     <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
     <div *ngIf="feedList$ | async; let posts">
-      <div class="post-container" *ngFor="let postDetails of posts; let i = index; trackBy: trackByFn" #post>
+      <div class="post-container" *ngFor="let postDetails of posts; let i = index;" #post>
         <app-post [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
       </div>
     </div>
-    <!-- <p *ngIf="done">Thats all folks!</p> -->
     <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">
       <app-loading-spinner></app-loading-spinner>
     </div>
