@@ -100,7 +100,7 @@ a {text-decoration: none !important;}
   width: 100vw;
   background: linear-gradient(90.65deg, #080708 28.65%, #121012 76.04%);
   box-shadow: 0px -0.5px 0px rgba(255, 255, 255, 0.16);
-  
+
 }
 
 .headerLogo {
@@ -118,7 +118,7 @@ a {text-decoration: none !important;}
   height: 4.44vh;
 }
 
-.col-3 > img {
+.col-3 > a > img, .col-3 > img {
   height: 2.22vh;
   width: auto;
   position: absolute;
@@ -129,7 +129,33 @@ a {text-decoration: none !important;}
           transform: translate(-50%,-50%);
 }
 
-.col-2 > img {
+.col-3 > a > div {
+  height: 2.22vh;
+  width: 2.22vh;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.col-3 > a > div > img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.col-2 > a > img {
   height: 2.66vh;
   width: auto;
   position: absolute;
@@ -143,3 +169,26 @@ a {text-decoration: none !important;}
 .leftSymbols {
   padding-right: 1.944vw;
 }
+
+.loading-bar {
+  border-top: 2px solid #D8B869;
+  position: fixed;
+  width: 90vw;
+  animation-name: loadingAnim;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+}
+
+@keyframes loadingAnim {
+  from { width: 0; };
+  to { width: 90vw; };
+}
+
+.dp-active {
+  border: 1px solid #E2B33D;
+}
+
+.dp-inactive {
+  border: 1px solid #ffffff;
+}
+

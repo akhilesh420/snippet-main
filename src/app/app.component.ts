@@ -9,7 +9,6 @@ import { takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
 import * as screenfull from 'screenfull';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
     .subscribe(val => {
       if (val) {
         this.windowSize = val;
-        if (val < 850) {
+        if (val < 768) {
           this.mobileCheck = true;
         } else {
           this.mobileCheck = false;
@@ -69,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
         return;
       }
 
-      window.scrollTo(0, 1);
+      // window.scrollTo(0, 1);
     });
 
     this.popUpVal = this.miscellaneousService.getPopUpSetUp();
