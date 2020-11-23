@@ -43,13 +43,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   isCreating = false;
   error: string = null;
 
-  postSrc = "assets/default image/blank_image@2x.png";
-  stickerSrc = "assets/default image/blank_image@2x.png";
-  addIcon = "assets/icons/add_icon@2x.png";
-
-  postSize = {'height':'116px','width':'116px'};
-  stickerSize = {'height':'57px','width':'57px'};
-
   notifier$ = new Subject();
 
   currentStep: string;
@@ -148,7 +141,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     if (this.isCreating) return;
 
     if (this.currentStep === 'content') {
-      if (!this.postContent || !this.postContent || this.postContent === this.postSrc) {
+      if (!this.postContent || !this.postContent) {
         this.error = "Trust me, click the BIG plus button";
         return;
       }
@@ -185,7 +178,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       }
     }
     if (this.currentStep == 'sticker') {
-      if (!this.stickerContent || !this.stickerContent || this.stickerContent === this.stickerSrc) {
+      if (!this.stickerContent || !this.stickerContent) {
         this.error = "A sticker is required! Click the plus sign on the bottom right of the post";
         return;
       }
