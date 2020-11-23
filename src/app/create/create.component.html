@@ -1,13 +1,15 @@
 <div class = "container-fluid screen">
-  <div class = "row screen">
-    <div class = "col-12 col-sm-12 col-md-12 col-lg-12 screen">
+  <div class = "row justify-content-center screen">
+    <div class = "col-12 col-sm-12 col-md-8 col-lg-6 screen">
       <form class="horizontal-center" (ngSubmit)="nextClick()" #f="ngForm" *ngIf="!isCreating">
         <!-- First Page -->
         <div *ngIf='currentStep === "content"'>
           <div class = "row no-gutters justify-content-center titlePosition">
+          
             <div class = "col-4 title">
               <span>Create</span>
             </div>
+          
           </div>
 
           <div class = "row no-gutters justify-content-left headingPosition">
@@ -127,8 +129,8 @@
         </div>
 
         <!-- Error message -->
-        <div class="row">
-          <div class="col-10 no-margin no-padding">
+        <div class="row justify-content-left danger-alertPosition alert">
+          <div class="col-10">
             <div class="danger-alert" *ngIf="error">
               {{ error }}
             </div>
@@ -136,12 +138,19 @@
         </div>
 
         <!-- Next arrow -->
-        <div class = "row align-items-end justify-content-center nextArrow rotate-center">
+        <div class = "row fixed-bottom justify-content-center nextArrow rotate-center">
           <div class = "col-2 text-center" (click)='nextClick()'>
-              <img src="assets/icons/nextArrow.svg">
+              <img class = "pulsate-bck" src="assets/icons/nextArrow.svg">
           </div>
         </div>
-      </form>
+
+        <!-- Back Button -->
+        <div class = "backButton">
+          <img src="assets/icons/nextArrow.svg">
+        </div>
+        
+        
+      </form>   
     </div>
   </div>
 </div>
