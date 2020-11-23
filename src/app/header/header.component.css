@@ -118,7 +118,7 @@
   width: 100%;
 }
 
-.dropDown > .row > .col {
+.dropDown > .row > .col-12 {
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   color: #ffffff;
