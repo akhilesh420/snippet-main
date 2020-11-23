@@ -1,89 +1,3 @@
-/* OLD */
-
-/* .col {
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  text-align: center;
-}
-
-.divider {
-  border-bottom: solid 0.8px#D8B869;
-}
-
-.loading-bar {
-  border-top: 2px solid #D8B869;
-  position: fixed;
-  width: 90vw;
-  animation-name: loadingAnim;
-  animation-duration: 10s;
-  animation-timing-function: linear;
-}
-
-@keyframes loadingAnim {
-  from { width: 0; };
-  to { width: 90vw; };
-}
-
-
-.contain {
-  letter-spacing: 0.05em;
-  height: auto;
-  width: 100vw;
-  background-color: rgba(5, 4, 5, 0.70);
-  top:0;
-  position:fixed;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-.active-link, .contain a:hover {
-  color: #D8B869 !important;
-}
-
-.contain a {
-  color: #707070;
-}
-
-.fontHeader {
-  font-family: 'ChampagneAndLimousines';
-  font-size: 20px;
-  font-weight: bold;
-  padding-top: 5px;
-  text-align: center;
-}
-
-.logoMain {
-  padding-left: 15px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #D8B869;
-  letter-spacing: 0.180em;
-}
-
-.logoSub {
-  font-family: 'ChampagneAndLimousines';
-  font-size: 16px;
-  padding-left: 7px;
-  color: #707070;
-}
-
-.activeRoute {
-  color: #D8B869;
-}
-
-.login {
-  padding-right: 5px;
-  text-align: center;
-}
-
-a {text-decoration: none !important;}
-
-.header-contain {
-  z-index: 100;
-} */
-
-
 /* NEW */
 
 
@@ -204,12 +118,12 @@ a {text-decoration: none !important;}
   width: 100%;
 }
 
-.dropDown > .row > .col { 
+.dropDown > .row > .col {
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   color: #ffffff;
   font-size: 1.4vw;
-  text-align: right; 
+  text-align: right;
 }
 
 .dropDown > .row {
