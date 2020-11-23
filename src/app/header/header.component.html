@@ -1,8 +1,13 @@
 <!-- <div class="header-contain">
   <div class="row contain no-gutters" #header>
     <div class="col-2">
+<<<<<<< HEAD
       <a routerLink="/explore">
         <span class="logoMain">Snippet</span>
+=======
+      <a routerLink="/tutorial">
+        <span class="logoMain">Snippet</span> -->
+>>>>>>> 3372080223116eced8d9a7e138d20e29828eac8b
         <!-- <span class="logoSub">Creative Community</span> -->
       <!-- </a>
     </div>
@@ -43,65 +48,105 @@
 
   <div class="loading-bar" [ngStyle]='{"top": header.offsetHeight.toString() +"px"}' *ngIf="loadingBar$ | async"></div>
 </div> -->
+<div class = "container-fluid screen">
+  <div class = "row justify-content-center screen">
+    <div class = "col-12 col-sm-12 col-md-12 col-lg-12 screen">
+      
+      
+      <div class="header-contain">
+          <div class = "row no-gutters headerPosition" #header>
+            <div class = "col-5 align-self-start headerLogo">
+              <a routerLink="/explore">
+                <span>Snippet</span>
+              </a>
+            </div>
 
-<div class="header-contain">
-    <div class = "row no-gutters headerPosition" #header>
-      <div class = "col-5 align-self-start headerLogo">
-        <a routerLink="/explore">
-          <span>Snippet</span>
-         </a>
-      </div>
 
+            <div class = "col-2 createSymbol">
+              <a [routerLink]='createRoute'>
+                <img *ngIf='!currentRoute.includes(createRoute)' src = "assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
+                <img *ngIf='currentRoute.includes(createRoute)' src = "assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
+              </a>
+            </div>
 
-      <div class = "col-2 createSymbol">
-        <a [routerLink]='createRoute'>
-          <img *ngIf='!currentRoute.includes(createRoute)' src = "assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
-          <img *ngIf='currentRoute.includes(createRoute)' src = "assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
-        </a>
-      </div>
+            <div class = "col-3"></div>
 
-      <div class = "col-3"></div>
+            <div class = "col-2 height leftSymbols">
 
-      <div class = "col-2 height leftSymbols">
+              <div class = "row height">
 
-        <div class = "row height">
+                <div class = "col-3 height myProfile">
+                  <a [routerLink]='profileRoute'>
+                    <div [ngClass]='currentRoute.includes(profileRoute) ? "dp-active" : "dp-inactive"'>
+                      <img *ngIf="isAuthenticated && (displayPicture$ | async) as dp"
+                            [src]="dp"
+                            alt="display picture">
+                    </div>
+                  </a>
+                </div>
 
-          <div class = "col-3 height myProfile">
-            <a [routerLink]='profileRoute'>
-              <div [ngClass]='currentRoute.includes(profileRoute) ? "dp-active" : "dp-inactive"'>
-                <img *ngIf="isAuthenticated && (displayPicture$ | async) as dp"
-                      [src]="dp"
-                      alt="display picture">
+                <div class = "col-3 height myCollection">
+                  <a [routerLink]='collectionRoute'>
+                    <img *ngIf="!currentRoute.includes(collectionRoute)" src="assets/icons/NavBar icons/White (Inactive)/collectionSymbol.svg">
+                    <img *ngIf="currentRoute.includes(collectionRoute)" src="assets/icons/NavBar icons/Gold (Active)/collectionSymbol.svg">
+                  </a>
+                </div>
+
+                <div class = "col-3 height exploreSymbol">
+                  <a routerLink="/explore">
+                    <img *ngIf="currentRoute != '/explore'" src='assets/icons/NavBar icons/White (Inactive)/exploreSymbol.svg'>
+                    <img *ngIf="currentRoute === '/explore'" src='assets/icons/NavBar icons/Gold (Active)/exploreSymbol.svg'>
+                  </a>
+                </div>
+
+                <div class = "col-3 height dropdownSymbol">
+                  <img src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
+                </div>
+
               </div>
-            </a>
-          </div>
 
-          <div class = "col-3 height myCollection">
-            <a [routerLink]='collectionRoute'>
-              <img *ngIf="!currentRoute.includes(collectionRoute)" src="assets/icons/NavBar icons/White (Inactive)/collectionSymbol.svg">
-              <img *ngIf="currentRoute.includes(collectionRoute)" src="assets/icons/NavBar icons/Gold (Active)/collectionSymbol.svg">
-            </a>
-          </div>
+            </div>
 
-          <div class = "col-3 height exploreSymbol">
-            <a routerLink="/explore">
-              <img *ngIf="currentRoute != '/explore'" src='assets/icons/NavBar icons/White (Inactive)/exploreSymbol.svg'>
-              <img *ngIf="currentRoute === '/explore'" src='assets/icons/NavBar icons/Gold (Active)/exploreSymbol.svg'>
-            </a>
-          </div>
+            <div class="loading-bar"
+                [ngStyle]='{"top": header.offsetHeight.toString() +"px"}'
+                *ngIf="loadingBar$ | async">
+            </div>
 
+<<<<<<< HEAD
           <div class = "col-3 height dropdownSymbol">
             <img *ngIf="currentRoute != '/auth' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
             <img *ngIf="currentRoute === '/auth' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg">
           </div>
+=======
+            <div class = "row justify-content-right dropDownPosition slide-in-top">
+            
+              <div class = "col-11">
+>>>>>>> 3372080223116eced8d9a7e138d20e29828eac8b
 
-        </div>
+              </div>
+            
+              <div class = "col-1 dropDown">
+                
+                <div class = "row">
+                  <div class = "col">
+                    Feedback
+                  </div>
+                </div>
 
+                <div class = "row">
+                  <div class = "col">
+                    Log-In
+                  </div>
+                </div>
+              
+              </div>
+
+            </div>
+
+          </div>
       </div>
+  
 
-      <div class="loading-bar"
-          [ngStyle]='{"top": header.offsetHeight.toString() +"px"}'
-          *ngIf="loadingBar$ | async"></div>
-
-    </div>
+    </div>  
+  </div>
 </div>
