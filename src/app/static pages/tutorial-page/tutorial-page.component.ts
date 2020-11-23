@@ -3,7 +3,7 @@ import { PostDetails } from './../../shared/post.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
+import { MiscellaneousService, PopUp } from 'src/app/shared/miscellaneous.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
 
@@ -24,8 +24,10 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
   loadingPost: boolean;
 
-  messageTop: string;
-  messageBottom: string;
+  messageTop1: string;
+  messageTop2: string;
+  messageBottom1: string;
+  messageBottom2: string;
 
   constructor(private miscellaneousService: MiscellaneousService,
               private authService: AuthService,
@@ -54,11 +56,44 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
           this.postDetails = details[0];
           this.loadingPost = false;
         });
-        this.messageTop = 'Each post has a unique sticker that go along with it. The bar shows how many stickers are left';
-        this.messageBottom = null;
+        this.messageTop1 = 'Each post has a unique sticker that go along with it.'
+        this.messageTop2 ='The bar shows how many stickers are left';
+        this.messageBottom1 = null;
+        this.messageBottom2 = null;
+        this.miscellaneousService.onBoardingStickerCollection$.pipe(takeUntil(this.notifier$)).subscribe(collected => {
+          if (!collected) return;
+          this.miscellaneousService.setPopUp(new PopUp("Congratulations! You just collected your first sticker!",
+                                                      'Continue',
+                                                      undefined,
+                                                      ['routing', 'default'],
+                                                      undefined,
+                                                      true));
+        });
+        this.miscellaneousService.getPopUpInteraction().pipe(takeUntil(this.notifier$)).subscribe(interaction => {
+          this.miscellaneousService.onBoardingStep$.next(3);
+        });
       }
-      if (step === 3) {
+      if (step === 3 || step == 5 || step == 6) {
         this.router.navigate(['/profile/' + this.uid + '/edit']);
+      }
+      if (step === 4) {
+        this.feedService.getPostPage('OVci0pYOjC2UZ1fPAaTc').pipe(takeUntil(this.notifier$)).subscribe(details => {
+          this.postDetails = details[0];
+          this.loadingPost = false;
+        });
+        this.messageTop1 = 'If you were lucky, and got a sticker, you can display it!'
+        this.messageTop2 = null;
+        this.messageBottom1 = 'Displayed stickers always appear next to your username.';
+        this.messageBottom2 = 'When clicked by anyone, they lead to the post that sticker represents.';
+      }
+      if (step === 7) {
+        this.messageTop1 = "Each post has it's own holder list";
+        this.messageTop2 = null;
+        this.messageBottom1 = 'If you have a posts sticker,';
+        this.messageBottom2 = 'you become one of the few people on its holder list';
+      }
+      if (step == 8) {
+        this.router.navigate(['/create']);
       }
     });
   }
@@ -66,6 +101,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
 
   clickNext() {
     this.miscellaneousService.onBoardingStep$.next(++this.onBoardingStep);
+    console.log(this.onBoardingStep);
   }
 
   ngOnDestroy() {

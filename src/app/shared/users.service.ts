@@ -27,6 +27,7 @@ export class UsersService {
   private profileStickersList: {uid: string, obs: BehaviorSubject<ProfileSticker[]>}[] = [];
   private displayPictureList: {uid: string, obs: BehaviorSubject<any>}[] = [];
 
+  private dpLoadCheck = new BehaviorSubject<boolean>(false);
 
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage) {
@@ -175,12 +176,17 @@ export class UsersService {
         const ref = this.storage.ref('Display picture/' + uid);
         ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
           this.displayPictureList[secIndex].obs.next(response);
+          this.dpLoadCheck.next(true);
         });
       });
       return this.displayPictureList[secIndex].obs
     } else {
       return this.displayPictureList[index].obs
     }
+  }
+
+  displayPictureLoaded() {
+    return this.dpLoadCheck;
   }
 
   // Add display picture from firebase storage

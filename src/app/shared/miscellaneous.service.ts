@@ -7,7 +7,8 @@ export class PopUp {
     public primary: string,
     public secondary?: string,
     public active?: string[],
-    public route?: string
+    public route?: string,
+    public secondaryRoute?: boolean
   ) {}
 }
 
@@ -24,8 +25,9 @@ export class MiscellaneousService {
   public navbarHeight: number = 47;
 
   public onBoardingStep$ = new BehaviorSubject<number>(0);
-  public onBoarding$= new BehaviorSubject<boolean>(false);
+  public onBoarding$ = new BehaviorSubject<boolean>(false);
   public exclusiveId: string;
+  public onBoardingStickerCollection$ = new BehaviorSubject<boolean>(false);
 
   constructor() { }
 

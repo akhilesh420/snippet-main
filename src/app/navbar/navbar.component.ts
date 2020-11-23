@@ -68,7 +68,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.router.navigate(['/collection/' + this.uid]);
         }
         if (event === 'create') {
-          this.router.navigate(['/create']);
+          this.router.navigate(['/create/content']);
         }
         if (event === 'logout') {
           this.authService.logout();

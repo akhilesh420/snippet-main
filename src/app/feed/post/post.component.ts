@@ -76,6 +76,9 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   @ViewChild('videoPlayer') videoPlayer : ElementRef;
 
+  onBoarding: boolean = false;
+  onBoardingStep: number;
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
@@ -108,6 +111,14 @@ import { WindowStateService } from 'src/app/shared/window.service';
     });
 
     this.restartPost();
+
+    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.onBoarding = val;
+    });
+
+    this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+      this.onBoardingStep = step;
+    });
   }
 
   ngAfterViewChecked() {
@@ -251,14 +262,15 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   collectSticker() {
     if (this.isAuthenticated) {
-      if (!this.collectingSticker && !this.createPost) {
+      if (!this.collectingSticker) {
         this.collectingSticker = true;
+        let popUpObj: PopUp;
         this.activityService.getPostCollection(this.pid).pipe(take(1)).subscribe(response => {
           let valid: boolean = false;
           for (let key in response) {
             if (response[key].collectorID === this.myUid) {
               valid = false;
-              this.miscellaneousService.setPopUp(new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default'],'collection/'+this.myUid));
+              popUpObj = new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default'],'collection/'+this.myUid);
               break;
             } else {
               valid = true;
@@ -267,11 +279,33 @@ import { WindowStateService } from 'src/app/shared/window.service';
           if (valid) {
             if (this.engagementRatio < 1) {
                 this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-                this.miscellaneousService.setPopUp(new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default'], 'profile/'+this.myUid+'/edit'));
+
+                if (this.onBoarding && this.onBoardingStep === 2) {
+                  //For onBoarding
+                  this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+                    if (val) {
+                      this.miscellaneousService.onBoardingStickerCollection$.next(true);
+                    }
+                  });
+                }
+                popUpObj = new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default'], 'profile/'+this.myUid+'/edit');
             } else {
-              this.miscellaneousService.setPopUp(new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']));
+              popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
             }
           }
+          if (!(this.onBoarding && this.onBoardingStep === 2)) {
+            this.miscellaneousService.setPopUp(popUpObj);
+          }
+          //testing
+          if (this.onBoarding && this.onBoardingStep === 2) {
+            //For onBoarding
+            this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+              if (val) {
+                this.miscellaneousService.onBoardingStickerCollection$.next(true);
+              }
+            });
+          }
+          // testing
           this.collectingSticker = false;
         });
       }

@@ -209,21 +209,6 @@ li {
   object-fit: cover;
 }
 
-.danger-alert {
-  border: 2px solid #891E13;
-  background: #131114;
-  margin-bottom: 35px;
-  border-radius: 10px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  font-size: 18px;
-  color:#891E13;
-  width: 100%;
-}
 
 .collection-loader {
   position: absolute;
@@ -234,12 +219,50 @@ li {
           transform: translate(-50%,-50%) scale(0.7,0.7);
 }
 
+.nextArrow-2 {
+  padding-top: 0.5vh ;
+  height: calc(100vh / 14);
+}
+
+/* Animations */
+
+/* nextArrow Animation */
+
+.rotate-center {
+	-webkit-animation: rotate-center 1.4s cubic-bezier(0.645, 0.045, 0.355, 1.000) 0.1s both;
+	        animation: rotate-center 1.4s cubic-bezier(0.645, 0.045, 0.355, 1.000) 0.1s both;
+}
+
+@-webkit-keyframes rotate-center {
+    0% {
+      -webkit-transform: rotate(0);
+              transform: rotate(0);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+    }
+  }
+
+@keyframes rotate-center {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+
+/* Media query */
 @media screen and (max-width: 560px) {
   .inputFields {
     width: 84.82vw;
   }
 }
 
-  
+
 
 

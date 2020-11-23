@@ -9,6 +9,7 @@ import { ActivityService } from 'src/app/shared/activity.service';
 import { Collection } from 'src/app/shared/activity.model';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
+import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 
 class CollectionDisplay{
 
@@ -67,12 +68,18 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   stickerDelete = new Subject<number>();
 
+  onBoardingStep: number;
+  onBoarding: boolean;
+
+  dpCheck$: BehaviorSubject<boolean>;
+
   constructor(private postService: PostService,
               private usersService: UsersService,
               private activityService: ActivityService,
               private authService: AuthService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
 
@@ -85,6 +92,49 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         console.log(errorMessage);
         this.handleError();
       });
+
+    this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+      this.onBoardingStep = step;
+      if (step != 3 && step != 5 && step != 6) {
+        this.router.navigate(['/tutorial']);
+      }
+      if (step === 3) {
+        this.miscellaneousService.onBoardingStickerCollection$.pipe(takeUntil(this.notifier$)).subscribe(collected => {
+          setTimeout(() => {
+            this.miscellaneousService.setPopUp(new PopUp("Lets add a profile picture real quick",
+                                                        'Continue',
+                                                        undefined,
+                                                        ['routing', 'default']));
+          }, 500);
+        });
+      }
+      if (step === 5) {
+        this.miscellaneousService.onBoardingStickerCollection$.pipe(takeUntil(this.notifier$)).subscribe(collected => {
+          setTimeout(() => {
+            this.miscellaneousService.setPopUp(new PopUp("Remember that sticker you collected? Try displaying it",
+                                                        'Continue',
+                                                        undefined,
+                                                        ['routing', 'default']));
+          }, 500);
+        });
+      }
+      if (step === 6) {
+        this.miscellaneousService.onBoardingStickerCollection$.pipe(takeUntil(this.notifier$)).subscribe(collected => {
+          setTimeout(() => {
+            this.miscellaneousService.setPopUp(new PopUp("What kind of creative are you? Tell us a little about yourself",
+                                                        'Continue',
+                                                        undefined,
+                                                        ['routing', 'default']));
+          }, 500);
+        });
+      }
+    });
+
+    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.onBoarding = val;
+    });
+
+    this.dpCheck$ = this.usersService.displayPictureLoaded();
   }
 
   setUp() {
@@ -295,6 +345,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   handleError() {
     alert("An error occurred! It is what it is...");
     this.isSaving = false;
+  }
+
+  clickNext() {
+    this.miscellaneousService.onBoardingStep$.next(++this.onBoardingStep);
   }
 
   ngOnDestroy() {
