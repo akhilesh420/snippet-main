@@ -1,132 +1,142 @@
 <div class = "container-fluid screen">
   <div class = "row justify-content-center screen">
-    <div class = "col-12 col-sm-12 col-md-8 col-lg-6 screen">
-      <form class="horizontal-center" (ngSubmit)="nextClick()" #f="ngForm" *ngIf="!isCreating">
+    <div class = "col-12 col-sm-12 col-md-8 col-lg-6 screen" *ngIf="!isCreating">
         <!-- First Page -->
-        <div *ngIf='currentStep === "content"'>
-          <div class = "row no-gutters justify-content-center titlePosition">
-          
-            <div class = "col-4 title">
-              <span>Create</span>
-            </div>
-          
-          </div>
+        <form #first='ngForm'>
+          <div *ngIf='currentStep === "content"'>
+            <div class = "row no-gutters justify-content-center titlePosition">
 
-          <div class = "row no-gutters justify-content-left headingPosition">
-            <div class = "col-10 heading">
-              <span>Add a Picture or Video</span>
-            </div>
-          </div>
-
-
-          <div class = "row no-gutters justify-content-left postPosition">
-            <div class = "col-12 post">
-              <div *ngIf='(postType$ | async) as type;'>
-                <img *ngIf='type != "video/mp4"' class='post-content center-absolute' [src]='postContent$ | async'>
-                <video *ngIf='type === "video/mp4"' class='post-content center-absolute' [src]='postContent$ | async' loop autoplay></video>
+              <div class = "col-4 title">
+                <span>Create</span>
               </div>
-              <img class='post-add center-absolute' src="assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
-              <input
-                type="file"
-                id="contentFile"
-                class="file-input"
-                accept="image/x-png,image/gif,image/jpeg,image/tiff,video/mp4"
-                ngModel
-                name="content"
-                (change)="onContentChange($event)"
-                #contentInput>
+
+            </div>
+
+            <div class = "row no-gutters justify-content-left headingPosition">
+              <div class = "col-10 heading">
+                <span>Add a Picture or Video</span>
+              </div>
+            </div>
+
+
+            <div class = "row no-gutters justify-content-left postPosition">
+              <div class = "col-12 post">
+                <div *ngIf='(postType$ | async) as type;'>
+                  <img *ngIf='type != "video/mp4"' class='post-content center-absolute' [src]='postContent$ | async'>
+                  <video *ngIf='type === "video/mp4"' class='post-content center-absolute' [src]='postContent$ | async' loop autoplay></video>
+                </div>
+                <img class='post-add center-absolute' src="assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
+                <input
+                  type="file"
+                  id="contentFile"
+                  class="file-input"
+                  accept="image/x-png,image/gif,image/jpeg,image/tiff,video/mp4"
+                  ngModel
+                  name="content"
+                  (change)="onContentChange($event)"
+                  required
+                  #contentInput>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
+
 
         <!-- Second page -->
-        <div *ngIf='currentStep === "description"'>
-            <div class = "row justify-content-left s-titlePosition">
-              <div class = "col-8 s-title">
-                <span>Describe your content</span>
+        <form #second='ngForm'>
+          <div *ngIf='currentStep === "description"'>
+              <div class = "row justify-content-left s-titlePosition">
+                <div class = "col-8 s-title">
+                  <span>Describe your content</span>
+                </div>
               </div>
-            </div>
 
-            <div class = "row justify-content-left s-titleInputPosition">
-              <div class = "col-11 s-titleInput">
+              <div class = "row justify-content-left s-titleInputPosition">
+                <div class = "col-11 s-titleInput">
 
-                <label for="postTitle" class="text-left">
-                  <span>Title<sup>*</sup></span>
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  [(ngModel)]="title"
-                  name="title"
-                  required
-                  maxlength="19">
+                  <label for="postTitle" class="text-left label-second">
+                    <span>Title<sup>*</sup></span>
+                  </label>
+                  <input
+                    type="text"
+                    id="title"
+                    class='input-second'
+                    [(ngModel)]="title"
+                    name="title"
+                    required
+                    maxlength="19"
+                    autocomplete="off">
 
-                <label for="postDesc" class="text-left">
-                  <span>Description</span>
-                </label>
-                <input
-                  type="text"
-                  id="description"
-                  [(ngModel)]="desc"
-                  name="description"
-                  maxlength="240"
-                  required>
+                  <label for="postDesc" class="text-left label-second">
+                    <span>Description</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="description"
+                    class='input-second'
+                    [(ngModel)]="desc"
+                    name="description"
+                    maxlength="240"
+                    autocomplete="off">
+                </div>
               </div>
-            </div>
-        </div>
+          </div>
+        </form>
 
         <!-- Third Page -->
-
-        <div *ngIf='currentStep === "sticker"'>
-          <div class = "row justify-content-center t-titlePosition">
-            <div class = "col-8 t-title">
-              <span>Last Step: Add a Sticker</span>
+        <form #third='ngForm'>
+          <div *ngIf='currentStep === "sticker"'>
+            <div class = "row justify-content-center t-titlePosition">
+              <div class = "col-8 t-title">
+                <span>Last Step: Add a Sticker</span>
+              </div>
             </div>
-          </div>
 
-          <div class = "row justify-content-center t-headingOnePosition">
-            <div class = "col-8 t-headingOne">
-              <span>Sticker: Add an Image or GIF <sup>*</sup></span>
+            <div class = "row justify-content-center t-headingOnePosition">
+              <div class = "col-8 t-headingOne">
+                <span>Sticker: Add an Image or GIF<sup>*</sup></span>
+              </div>
             </div>
-          </div>
 
-          <div class = "row justify-content-center addStickerPosition">
-            <div class = "col-8" align = "center">
-              <div class = "addSticker">
-                <img class='post-content center-absolute' [src]='stickerContent$ | async'>
-                <img class='sticker-plus' src="assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
-                <input
-                      type="file"
-                      id="stickerFile"
-                      class="file-input"
-                      accept="image/x-png,image/gif,image/jpeg,image/tiff"
-                      ngModel
-                      name="sticker"
-                      (change)="onStickerChange($event)"
-                      #stickerInput>
+            <div class = "row justify-content-center addStickerPosition">
+              <div class = "col-8" align = "center">
+                <div class = "addSticker">
+                  <img *ngIf="(stickerContent$ | async) as content" class='post-content center-absolute' [src]='content'>
+                  <img class='sticker-plus' src="assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
+                  <input
+                        type="file"
+                        id="stickerFile"
+                        class="file-input"
+                        accept="image/x-png,image/gif,image/jpeg,image/tiff"
+                        ngModel
+                        name="sticker"
+                        (change)="onStickerChange($event)"
+                        required
+                        #stickerInput>
+                </div>
+              </div>
+            </div>
+
+            <div class = "row justify-content-center t-headingTwoPosition">
+              <div class = "col-8 t-headingTwo">
+                <div class="inputAmount" align = "center" >
+                  <label for="stickerAmount" class='label-third'>How many Stickers<sup>*</sup> :</label>
+                  <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    class='input-third'
+                    required
+                    min={{minSticker}}
+                    max={{maxSticker}}
+                    style="margin-bottom: 0;"
+                    [(ngModel)]="amount"
+                    [ngClass]="{'invalidAmount': !amountValidation(amount)}">
+                </div>
               </div>
             </div>
           </div>
-
-          <div class = "row justify-content-center t-headingTwoPosition">
-            <div class = "col-8 t-headingTwo">
-              <div class="inputAmount" align = "center" >
-                <label for="stickerAmount">How many Stickers <sup>*</sup> :</label>
-                <input
-                  type="number"
-                  id="amount"
-                  ngModel
-                  name="amount"
-                  required
-                  min={{minSticker}}
-                  max={{maxSticker}}
-                  style="margin-bottom: 0;"
-                  [(ngModel)]="amount"
-                  [ngClass]="{'invalidAmount': !amountValidation(amount)}">
-              </div>
-            </div>
-          </div>
-        </div>
+        </form>
 
         <!-- Error message -->
         <div class="row justify-content-left danger-alertPosition alert">
@@ -138,19 +148,17 @@
         </div>
 
         <!-- Next arrow -->
-        <div class = "row fixed-bottom justify-content-center nextArrow rotate-center">
+        <div class = "row justify-content-center nextArrow rotate-center">
           <div class = "col-2 text-center" (click)='nextClick()'>
-              <img class = "pulsate-bck" src="assets/icons/nextArrow.svg">
+              <img [ngClass]='(first.valid && currentStep === "content") || (second.valid && currentStep === "description")  || (third.valid && currentStep === "sticker")? "pulsate-bck" : "inactive"'
+                    src="assets/icons/nextArrow.svg" >
           </div>
         </div>
 
         <!-- Back Button -->
-        <div class = "backButton">
+        <div class = "backButton" (click)='previousClick()' *ngIf="currentStep != 'content'">
           <img src="assets/icons/nextArrow.svg">
         </div>
-        
-        
-      </form>   
     </div>
   </div>
 </div>
