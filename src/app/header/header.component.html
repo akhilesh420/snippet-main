@@ -1,8 +1,8 @@
 <div class = "container-fluid screen">
   <div class = "row justify-content-center screen">
-    <div class = "col-12 screen">
-      <div class="header-contain headerPosition">
-          <div class = "row no-gutters" #header>
+    <div class = "col-12 col-sm-12 col-md-12 col-lg-12 screen">
+      <div class="header-contain">
+          <div class = "row no-gutters headerPosition" #header>
             <div class = "col-5 align-self-start headerLogo">
               <a routerLink="/explore">
                 <span>Snippet</span>
@@ -47,11 +47,8 @@
                   </a>
                 </div>
 
-                <div class = "col-3 height dropdownSymbol" style='cursor: pointer;'>
-                  <div (click)='dropdown = !dropdown'>
-                    <img *ngIf="currentRoute != '/auth' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
-                    <img *ngIf="currentRoute === '/auth' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg">
-                  </div>
+                <div class = "col-3 height dropdownSymbol">
+                  <img src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
                 </div>
 
               </div>
@@ -64,23 +61,20 @@
             </div>
 
           </div>
+          <div class = "col-1 dropDown">
 
-          <div class = "row no-gutters float-right" [ngClass]='dropdown ? "slide-in-top" : "slide-out"'>
-            <div class = "col-12 dropDown">
-
-              <div class = "row">
-                <div class = "col-12">
-                  Feedback
-                </div>
+            <div class = "row">
+              <div class = "col">
+                Feedback
               </div>
-
-              <div class = "row">
-                <div class = "col-12">
-                  Log-In
-                </div>
-              </div>
-
             </div>
+
+            <div class = "row">
+              <div class = "col">
+                Log-In
+              </div>
+            </div>
+
           </div>
       </div>
     </div>
