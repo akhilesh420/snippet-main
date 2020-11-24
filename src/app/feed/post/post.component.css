@@ -424,6 +424,7 @@
 
 /* Opacity in for opeening post details */
 
+
 .opacity-in-details {
 	-webkit-animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -431,21 +432,21 @@
 
 @-webkit-keyframes opacity-in{
   0% {
-    opacity: 100%;
+    opacity: 1;
   }
   100% {
-    opacity: 50%;
+    opacity: 0.5;
   }
 }
 
 
 @keyframes opacity-in {
   0% {
-    opacity: 100%;
+    opacity: 1;
   }
 
   100% {
-    opacity: 50%;
+    opacity: 0.5;
   }
 }
 
@@ -456,25 +457,29 @@
 
 @-webkit-keyframes opacity-out{
   0% {
-    opacity: 50%;
+    opacity: 0.5;
   }
   100% {
-    opacity: 100%;
+    opacity: 1;
   }
 }
 
 
 @keyframes opacity-out {
   0% {
-    opacity: 50%;
+    opacity: 0.5;
   }
 
   100% {
-    opacity: 100%;
+    opacity: 1;
   }
 }
 
 @media screen and (min-width: 768px) {
+
+  .postContainer {
+    border-top: 1.5vh solid #e2b33d;
+  }
 
 
   .profileTab{

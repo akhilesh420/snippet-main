@@ -4,14 +4,14 @@
     <img  class="post-content "
           src={{content}}
           alt="post content"
-          [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opactiy-in-details'"
+          [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opacity-in-details'"
           *ngIf='postType != "video/mp4"'>
     <video class='post-content '
            src={{content}}
            loop
            playsinline
            #videoPlayer
-           [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opactiy-in-details'"
+           [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opacity-in-details'"
            *ngIf='postType === "video/mp4"'>
     </video>
     <div *ngIf="createPost">
