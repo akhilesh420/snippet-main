@@ -105,13 +105,13 @@
 
 .headerdropDown {
   position: fixed;
-  height: 14vh;
+  height: 8vw;
   width: 7.7vw;
   top: 6.84vh;
   right: 1vw;
   font-family: 'ChampagneAndLimousines';
   color: #ffffff;
-  font-size: 1.38;
+  font-size: 1.1vw;
   font-weight: bold;
   text-align: left;
   padding-left: 1vw;
@@ -121,8 +121,12 @@
   border-radius: 0.8vh;
 }
 
+.extra-padding {
+  padding-top: 1vw;
+}
+
 .headerdropDown > .row {
-  padding-top: 2vh;
+  padding-top: 1vw;
 }
 
 
