@@ -35,6 +35,7 @@
                   accept="image/x-png,image/gif,image/jpeg,image/tiff,video/mp4"
                   name="content"
                   (change)="onContentChange($event)"
+                  (click)="stopPropagation($event);"
                   required
                   #contentInput>
               </div>
@@ -113,6 +114,7 @@
                         accept="image/x-png,image/gif,image/jpeg,image/tiff"
                         name="sticker"
                         (change)="onStickerChange($event)"
+                        (click)="stopPropagation($event);"
                         required
                         #stickerInput>
                 </div>

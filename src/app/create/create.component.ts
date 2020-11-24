@@ -10,6 +10,8 @@ import { ActivityService } from '../shared/activity.service';
 import { Collection } from '../shared/activity.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { take, takeUntil } from 'rxjs/operators';
+// import { faststart } from 'moov-faststart';
+// import * as fs from 'fs';
 
 @Component({
   selector: 'app-create',
@@ -48,7 +50,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   currentStep: string;
   stepCounter: number = 0;
   nextActive: boolean = false;
-
   constructor(private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
@@ -103,6 +104,7 @@ export class CreateComponent implements OnInit, OnDestroy {
           });
         }
       });
+
   }
 
   amountValidation(amount: number) {
@@ -295,6 +297,10 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.router.navigate(['/create/description']);
       return;
     }
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 
   ngOnDestroy() {
