@@ -193,3 +193,15 @@
       opacity: 0;
     }
   }
+
+.active-dropdown {
+  opacity: 100%;
+}
+
+.inactive-dropdown {
+  opacity: 80%;
+}
+
+.headerdropDown > .row > .col-12:hover, .headerdropDown > .row > a > .col-12:hover {
+  opacity: 100%;
+}

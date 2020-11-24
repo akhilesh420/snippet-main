@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(user => {
       this.isAuthenticated = !!user;
+      console.log(this.isAuthenticated); //templog
       if (this.isAuthenticated) {
         this.uid = user.id;
         this.collectionRoute = "collection/" + this.uid;
@@ -69,8 +70,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
     });
   }
 
-  onLogout() {
-    this.authService.logout();
+  clickAuth() {
+    this.isAuthenticated ? this.authService.logout() : this.router.navigate(['/auth']);
   }
 
   ngOnDestroy() {
