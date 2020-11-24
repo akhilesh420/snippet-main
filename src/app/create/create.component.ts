@@ -10,6 +10,8 @@ import { ActivityService } from '../shared/activity.service';
 import { Collection } from '../shared/activity.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { take, takeUntil } from 'rxjs/operators';
+// import { faststart } from 'moov-faststart';
+// import * as fs from 'fs';
 
 @Component({
   selector: 'app-create',
@@ -48,7 +50,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   currentStep: string;
   stepCounter: number = 0;
   nextActive: boolean = false;
-
   constructor(private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
@@ -103,6 +104,7 @@ export class CreateComponent implements OnInit, OnDestroy {
           });
         }
       });
+
   }
 
   amountValidation(amount: number) {
@@ -259,24 +261,26 @@ export class CreateComponent implements OnInit, OnDestroy {
     let scid = this.afs.createId();
     let dateCreated = new Date();
 
+    this.createStream(this.postContent); //temp log
+
     let postSubs =  this.postService.addContent(pcid,this.postContent);
     let stickerSubs = this.postService.addContent(scid,this.stickerContent);
 
-    this.miscellaneousService.startLoading();
-    forkJoin([postSubs, stickerSubs]).subscribe(results => {
-      if (results[0] === 100 && results[1] === 100) {
-        this.miscellaneousService.endLoading();
-        this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
-        this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
-        this.postService.addStickerContentRef(pid, new PostContent(scid, this.stickerContent.type));
-        this.postService.addStickerDetails(pid, new StickerDetails(this.amount, 0));
+    // this.miscellaneousService.startLoading();
+    // forkJoin([postSubs, stickerSubs]).subscribe(results => {
+    //   if (results[0] === 100 && results[1] === 100) {
+    //     this.miscellaneousService.endLoading();
+    //     this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
+    //     this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
+    //     this.postService.addStickerContentRef(pid, new PostContent(scid, this.stickerContent.type));
+    //     this.postService.addStickerDetails(pid, new StickerDetails(this.amount, 0));
 
-        this.activityService.addActivity(pid, 'post');
-        this.activityService.addCollection(new Collection(this.uid,this.uid,pid,dateCreated.getTime()));
-      }
-    }, error => {
-      this.miscellaneousService.endLoading();
-    });
+    //     this.activityService.addActivity(pid, 'post');
+    //     this.activityService.addCollection(new Collection(this.uid,this.uid,pid,dateCreated.getTime()));
+    //   }
+    // }, error => {
+    //   this.miscellaneousService.endLoading();
+    // });
 
     this.router.navigate(['/explore']);
     this.isCreating = false;
@@ -295,6 +299,23 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.router.navigate(['/create/description']);
       return;
     }
+  }
+
+  createStream(content: any) {
+    var faststart = require('faststart');
+
+    console.log(typeof(faststart.createReadStream(content)));
+    // const file = fs.readFileSync(content);
+
+    // const faststartedFile = faststart(file);
+
+    // return fs.writeFileSync(content, faststartedFile);
+
+
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 
   ngOnDestroy() {
