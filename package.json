@@ -23,6 +23,7 @@
     "angular-snapscroll": "^1.3.1",
     "angular-swipe": "^0.4.0",
     "bootstrap": "^4.5.2",
+    "faststart": "^1.0.0",
     "firebase": "^7.23.0",
     "firebase-admin": "^9.2.0",
     "hammerjs": "^2.0.8",
