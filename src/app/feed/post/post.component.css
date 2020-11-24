@@ -145,7 +145,8 @@
   position: absolute;
   top: 0px;
   left: 0px;
-
+  background: rgba(19, 17, 20, 0.6);
+  backdrop-filter: blur(4px);
   width: 8vw;
   height: 8vw;
   border-radius: 4vw 4vw 0 0;
@@ -331,6 +332,8 @@
   padding-top: 0.5%;
 }
 
+
+
 /* Animations */
 
 /* Rotate Down for postDetails Button */
@@ -388,13 +391,149 @@
   }
 }
 
-@media screen and (min-width: 768px) {
-  .postContainer {
-    border-radius: 1.67vh;
-  }
+/* fade-in-top for postDetails and opacity */
 
-  .profileTab{
-    border-bottom-left-radius: 1.5vh;
-    border-bottom-right-radius: 1.5vh;
+.fade-in-top {
+	-webkit-animation: fade-in-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: fade-in-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes fade-in-top {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
   }
 }
+@keyframes fade-in-top {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Opacity in for opeening post details */
+
+
+.opacity-in-details {
+	-webkit-animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes opacity-in{
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+
+@keyframes opacity-in {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.opacity-out-details {
+	-webkit-animation: opacity-out 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-out 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes opacity-out{
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+@keyframes opacity-out {
+  0% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+  .postContainer {
+    border-top: 3vh solid rgba(196, 196, 196, 0.05);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    border-top-left-radius: 1.5vh;
+    border-top-right-radius: 1.5vh;
+  }
+
+  .postSticker {
+    height: 0;
+    width: 21.3%;
+    padding-bottom: 21.3%;
+  }
+
+  .postDetails {
+    padding: 4.8% 4% 15% 4%;
+    
+  }
+
+  .commentButton{
+    padding: 0;
+    position: absolute;
+    top: -1.5294vw;
+    left: 0px;
+    width: 2.6vw;
+    height: 2.6vw;
+    z-index: 1;
+  }
+  
+  .buttonBackground{
+    padding: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 2.6vw;
+    height: 2.6vw;
+    border-radius: 1.5294vw 1.5294vw 0 0;
+  }
+  
+  .hideExtra{
+    padding: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 3.059vw;
+    height: 1.5294vw;
+    overflow: hidden;
+  }
+  
+  .commentButton > img{
+    padding: none;
+  
+    width: 1vw;
+    height: auto;
+
+  }
+
+}
+
+  
