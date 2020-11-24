@@ -3,7 +3,7 @@
     <div *ngIf="isLoading" style="text-align: center;" class="horizontal-center">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <div class="col-xs-12 col-md-6 horizontal-center">
+    <div class="col-xs-12 col-lg-4 col-md-6 horizontal-center">
       <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
         <div class="form-group" *ngIf="!isLoginMode && !isForgetMode">
           <label for="name">Full Name</label>
