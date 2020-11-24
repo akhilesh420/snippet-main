@@ -44,7 +44,7 @@
             required
           />
         </div>
-        <div class="form-group topPadding">
+        <div class="form-group" [ngClass]='isLoginMode ? "topPadding" : null'>
           <label for="email">Email</label>
           <input
             type="email"
