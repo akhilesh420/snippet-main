@@ -269,6 +269,10 @@
   width: 100vw;
 }
 
+.no-margin {
+  margin: 0;
+}
+
 @media screen and (max-width: 560px) {
 
   .outerContainer {

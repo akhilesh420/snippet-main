@@ -29,4 +29,15 @@ a, a:hover, a:visited, a:link, a:active {
   text-decoration: none;
 }
 
+/* Re */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
