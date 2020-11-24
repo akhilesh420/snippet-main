@@ -22,7 +22,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: #080708;
+  background: #000000;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(0%,4.2%);
@@ -34,7 +34,7 @@
   width: 106px;
   height: 106px;
   border-radius: 50%;
-  background:#080708;
+  background: #000000;;
   overflow: hidden;
   top: 50%;
   left: 50%;
@@ -65,7 +65,7 @@
 }
 
 .title {
-  color:#D8B869;
+  color:#E3B33D;
   font-size: 14px;
   word-wrap: break-word;
 }

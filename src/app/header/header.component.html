@@ -9,8 +9,8 @@
 
             <div class = "col-2 createSymbol">
               <a [routerLink]='createRoute'>
-                <img *ngIf='!currentRoute.includes(createRoute)' src = "assets/icons/NavBar icons/White (Inactive)/createSymbol.svg">
-                <img *ngIf='currentRoute.includes(createRoute)' src = "assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
+                <img *ngIf='!currentRoute.includes(createRoute)' src = "assets/icons/Header Icons/White (Inactive)/createSymbol.svg">
+                <img *ngIf='currentRoute.includes(createRoute)' src = "assets/icons/Header Icons/Gold (Active)/createSymbol.svg">
               </a>
             </div>
 
@@ -19,6 +19,20 @@
             <div class = "col-2 height leftSymbols">
 
               <div class = "row height">
+
+                <div class = "col-3 height exploreSymbol">
+                  <a routerLink="/explore">
+                    <img *ngIf="currentRoute != '/explore'" src='assets/icons/Header Icons/White (Inactive)/exploreSymbol.svg'>
+                    <img *ngIf="currentRoute === '/explore'" src='assets/icons/Header Icons/Gold (Active)/exploreSymbol.svg'>
+                  </a>
+                </div>
+
+                <div class = "col-3 height myCollection">
+                  <a [routerLink]='collectionRoute'>
+                    <img *ngIf="!currentRoute.includes(collectionRoute)" src="assets/icons/Header Icons/White (Inactive)/collectionSymbol.svg">
+                    <img *ngIf="currentRoute.includes(collectionRoute)" src="assets/icons/Header Icons/Gold (Active)/collectionSymbol.svg">
+                  </a>
+                </div>
 
                 <div class = "col-3 height myProfile">
                   <a [routerLink]='profileRoute'>
@@ -30,22 +44,8 @@
                   </a>
                 </div>
 
-                <div class = "col-3 height myCollection">
-                  <a [routerLink]='collectionRoute'>
-                    <img *ngIf="!currentRoute.includes(collectionRoute)" src="assets/icons/NavBar icons/White (Inactive)/collectionSymbol.svg">
-                    <img *ngIf="currentRoute.includes(collectionRoute)" src="assets/icons/NavBar icons/Gold (Active)/collectionSymbol.svg">
-                  </a>
-                </div>
-
-                <div class = "col-3 height exploreSymbol">
-                  <a routerLink="/explore">
-                    <img *ngIf="currentRoute != '/explore'" src='assets/icons/NavBar icons/White (Inactive)/exploreSymbol.svg'>
-                    <img *ngIf="currentRoute === '/explore'" src='assets/icons/NavBar icons/Gold (Active)/exploreSymbol.svg'>
-                  </a>
-                </div>
-
                 <div class = "col-3 height dropdownSymbol">
-                  <img src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
+                  <img src="assets/icons/Header Icons/White (Inactive)/optionsSymbol.svg">
                 </div>
 
               </div>
@@ -60,30 +60,21 @@
           </div>
           
           
-        <div class = "row headerdropDownPosition">
+        <div class = "headerdropDown slide-in-top">
           
-            <div class = "col-11">
-
+          <div class = "row">
+            <div class = "col-12">
+              Feedback
             </div>
-            
-          
-            <!-- <div class = "col-1 headerdropDown">
-
-              <div class = "row">
-                <div class = "col">
-                  Feedback
-                </div>
-              </div>
-
-              <div class = "row">
-                <div class = "col">
-                  Log-In
-                </div>
-              </div>
-            
-            </div> -->
-        
           </div>
+
+          <div class = "row">
+            <div class = "col-12">
+              Login
+            </div>
+          </div>
+                     
+        </div>
       
       
       

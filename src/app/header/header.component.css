@@ -103,28 +103,32 @@
   border: 1px solid #ffffff;
 }
 
-.headerdropDownPosition {
-  width: 100vw;
-  padding-top: 0.8vh;
-  position: fixed;
-}
-
 .headerdropDown {
-  height: 100%;
-  width: 100%;
+  position: fixed;
+  height: 8vw;
+  width: 7.7vw;
+  top: 6.84vh;
+  right: 1vw;
+  font-family: 'ChampagneAndLimousines';
+  color: #ffffff;
+  font-size: 1.1vw;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 1vw;
+  background-color: rgba(196, 196, 196, 0.05);
+  border-top: 1.5vh solid #E2B33D;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 0.8vh;
 }
 
-.headerdropDown > .row > .col {
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  color: #ffffff;
-  font-size: 1.4vw;
-  text-align: left; 
+.extra-padding {
+  padding-top: 1vw;
 }
 
 .headerdropDown > .row {
-  padding-top: 0.8vh;
+  padding-top: 1vw;
 }
+
 
 /* Animation */
 
