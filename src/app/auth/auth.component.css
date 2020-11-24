@@ -54,7 +54,7 @@ textarea:focus {
 }
 
 .btn:enabled:hover{
-  background: #D8B869;
+  background: #EAB430;
   color: #080708;
 }
 
@@ -73,18 +73,12 @@ input.invalidAmount {
 }
 
 .danger-alert {
-  border: 2px solid #891E13;
-  background: #131114;
-  margin-bottom: 35px;
-  border-radius: 10px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  margin-bottom: 2vh;
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
-  font-size: 18px;
+  font-size: 2.0vh;
   color:#891E13;
+  width: 100%;
 }
 
 .topPadding {
