@@ -331,6 +331,8 @@
   padding-top: 0.5%;
 }
 
+
+
 /* Animations */
 
 /* Rotate Down for postDetails Button */
@@ -388,13 +390,109 @@
   }
 }
 
-@media screen and (min-width: 768px) {
-  .postContainer {
-    border-radius: 1.67vh;
+/* fade-in-top for postDetails and opacity */
+
+.fade-in-top {
+	-webkit-animation: fade-in-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: fade-in-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes fade-in-top {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+    opacity: 0;
   }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-in-top {
+  0% {
+    -webkit-transform: translateY(-50px);
+            transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Opacity in for opeening post details */
+
+.opacity-in-details {
+	-webkit-animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes opacity-in{
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 50%;
+  }
+}
+
+
+@keyframes opacity-in {
+  0% {
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 50%;
+  }
+}
+
+.opacity-out-details {
+	-webkit-animation: opacity-out 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-out 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes opacity-out{
+  0% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+
+@keyframes opacity-out {
+  0% {
+    opacity: 50%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+
 
   .profileTab{
     border-bottom-left-radius: 1.5vh;
     border-bottom-right-radius: 1.5vh;
   }
+
+  .postSticker {
+    height: 0;
+    width: 21.3%;
+    padding-bottom: 21.3%;
+  }
+
+  .postDetails {
+    padding: 4.8% 4% 15% 4%;
+    
+  }
+
 }
+
+  

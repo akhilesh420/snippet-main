@@ -4,14 +4,14 @@
     <img  class="post-content "
           src={{content}}
           alt="post content"
-          [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%'}"
+          [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opactiy-in-details'"
           *ngIf='postType != "video/mp4"'>
     <video class='post-content '
            src={{content}}
            loop
            playsinline
            #videoPlayer
-           [ngStyle]="{'opacity': this.showDetails === true ? '50%' : '100%'}"
+           [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opactiy-in-details'"
            *ngIf='postType === "video/mp4"'>
     </video>
     <div *ngIf="createPost">
@@ -31,7 +31,7 @@
     <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
       <img src='/assets/icons/Post Icons/postdetailDropdown.svg'>
     </div>
-    <div *ngIf="showDetails === true">
+    <div class = "fade-in-top" *ngIf="showDetails === true">
       <div class="post-metrics float-left">
         <!-- Holder List Button -->
         <div class="metrics pointer inline float-left height-auto textFontSize"
