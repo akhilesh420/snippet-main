@@ -28,7 +28,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   stickerContent: any;
 
   postContent$ = new BehaviorSubject<any>(null);
-  postType$ = new Subject<any>();
+  postType$ = new BehaviorSubject<any>(null);
   stickerDetails$: Observable<StickerDetails>;
   stickerContent$ = new BehaviorSubject<any>(null);
 
@@ -47,6 +47,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   currentStep: string;
   stepCounter: number = 0;
+  nextActive: boolean = false;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -67,7 +68,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     .subscribe(
       (params: Params) => {
         this.currentStep = params['step'];
-        console.log(this.currentStep);
+        this.nextActive = false;
+        this.error = undefined;
+
         if (!(this.currentStep === 'content' || this.currentStep === 'description' || this.currentStep === 'sticker')) {
           this.router.navigate(['/create/content']);
         }
@@ -80,6 +83,25 @@ export class CreateComponent implements OnInit, OnDestroy {
         if (this.stepCounter === 2) {
           this.router.navigate(['/create/sticker']);
         }
+        if (this.currentStep === 'content') {
+          this.nextActive = !!this.postContent$.value;
+          this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
+            this.nextActive = !!value;
+          });
+        }
+        if (this.currentStep === 'description') {
+          this.nextActive = true;
+        }
+        if (this.currentStep === 'sticker') {
+          this.stickerContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
+            if (value) {
+              const valid = this.amount >= this.minSticker && this.amount <= this.maxSticker;
+              this.nextActive = valid;
+            } else {
+              this.nextActive = false;
+            }
+          });
+        }
       });
   }
 
@@ -87,7 +109,6 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.amountValid = amount < this.minSticker || amount > this.maxSticker ? false : true;
     return this.amountValid;
   }
-
 
   onAddClick(event: any) {
     event === 'content' ? this.contentInput.nativeElement.click() : this.stickerInput.nativeElement.click();
@@ -129,6 +150,14 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.error ='Sticker file size too big! There is a 10 MB limit';
         }
       }
+    }
+  }
+
+  stickerAmountChange() {
+    if (this.amount >= this.minSticker && this.amount <= this.maxSticker) {
+      this.nextActive = !!this.stickerContent$.value;
+    } else {
+      this.nextActive = false;
     }
   }
 
@@ -251,6 +280,21 @@ export class CreateComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['/explore']);
     this.isCreating = false;
+  }
+
+  previousClick() {
+    if (this.isCreating) return;
+
+    if (this.currentStep === 'description') {
+      this.stepCounter = 0;
+      this.router.navigate(['/create/content']);
+      return;
+    }
+    if (this.currentStep === 'sticker') {
+      this.stepCounter = 1;
+      this.router.navigate(['/create/description']);
+      return;
+    }
   }
 
   ngOnDestroy() {
