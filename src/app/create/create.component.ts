@@ -84,16 +84,21 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.router.navigate(['/create/sticker']);
         }
         if (this.currentStep === 'content') {
+          this.nextActive = !!this.postContent$.value;
           this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
-            if (value) {
-              this.nextActive = true;
-            }
+            this.nextActive = !!value;
           });
+        }
+        if (this.currentStep === 'description') {
+          this.nextActive = true;
         }
         if (this.currentStep === 'sticker') {
           this.stickerContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
             if (value) {
-              this.nextActive = true;
+              const valid = this.amount >= this.minSticker && this.amount <= this.maxSticker;
+              this.nextActive = valid;
+            } else {
+              this.nextActive = false;
             }
           });
         }
@@ -145,6 +150,14 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.error ='Sticker file size too big! There is a 10 MB limit';
         }
       }
+    }
+  }
+
+  stickerAmountChange() {
+    if (this.amount >= this.minSticker && this.amount <= this.maxSticker) {
+      this.nextActive = !!this.stickerContent$.value;
+    } else {
+      this.nextActive = false;
     }
   }
 

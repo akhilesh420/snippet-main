@@ -294,7 +294,8 @@ textarea:focus {
 
 .pulsate-bck {
 	-webkit-animation: pulsate-bck 1s ease-in-out infinite both;
-	        animation: pulsate-bck 1s ease-in-out infinite both;
+          animation: pulsate-bck 1s ease-in-out infinite both;
+  cursor:pointer;
 }
 
 @-webkit-keyframes pulsate-bck {
