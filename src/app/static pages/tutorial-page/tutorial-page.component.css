@@ -78,9 +78,14 @@
 }
 
 .nextArrow-2 {
-    padding-top: 0.5vh ;
-    height: calc(100vh / 14);
+  position: absolute;
+  top: 95vh;
+  left: 50%;
 }
+.nextArrow-2 > img {
+  height: 3vh;
+}
+
 
 .col-1 > img {
     height: 3vh;
@@ -90,7 +95,7 @@
 
 .post {
   width: 100vw;
-  height: 50vh;
+  height: 55vh;
 }
 
 
