@@ -75,14 +75,11 @@ export class CreateComponent implements OnInit, OnDestroy {
         if (!(this.currentStep === 'content' || this.currentStep === 'description' || this.currentStep === 'sticker')) {
           this.router.navigate(['/create/content']);
         }
-        if (this.stepCounter === 0) {
+        if (this.stepCounter === 0  && !(this.currentStep === 'content')) {
           this.router.navigate(['/create/content']);
         }
-        if (this.stepCounter === 1) {
-          this.router.navigate(['/create/description']);
-        }
-        if (this.stepCounter === 2) {
-          this.router.navigate(['/create/sticker']);
+        if (this.stepCounter === 1 && this.currentStep === 'sticker') {
+          this.router.navigate(['/create/content']);
         }
         if (this.currentStep === 'content') {
           this.nextActive = !!this.postContent$.value;
