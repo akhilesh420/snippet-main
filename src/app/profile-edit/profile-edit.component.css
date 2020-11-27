@@ -2,7 +2,7 @@ label{
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 24px;
-  color: #D8B869;
+  color: #E2B33D;
   width: 100%;
 }
 
@@ -13,7 +13,7 @@ textarea:focus {
   font-family: 'ChampagneAndLimousines';
   font-size: 18px;
   color: #F7F7F7;
-  border: 2px solid #D8B869;
+  border: 2px solid #E2B33D;
   background: #131114;
   margin-bottom: 35px;
   border-radius: 10px;
@@ -52,7 +52,7 @@ input.invalidAmount {
 }
 
 .form-control-file .btn {
-  border: 2px solid #D8B869;
+  border: 2px solid #E2B33D;
   background: #131114;
 }
 
@@ -71,6 +71,7 @@ input.invalidAmount {
 .inputFields {
   width: 475px;
 }
+
 
 .horizontal-center {
   position: absolute;
@@ -113,7 +114,7 @@ input.invalidAmount {
 }
 
 .stickerSelect {
-  border: 2px solid #D8B869;
+  border: 2px solid #E2B33D;
   border-radius: 20px;
   width: 100%;
   height: 377px;
@@ -125,7 +126,7 @@ input.invalidAmount {
 }
 
 .placeholder {
-  color: #DCB65A;
+  color: #E2B33D;
   text-align: center;
   -ms-flex-line-pack: center;
       align-content: center;
@@ -167,8 +168,8 @@ li {
   width: 130px;
   height: 130px;
   border-radius: 50%;
-  background-image: -o-linear-gradient(315deg,#DCB65A ,#131114 70%, transparent 90%);
-  background-image: linear-gradient(135deg,#DCB65A ,#131114 70%, transparent 90%);
+  background-image: -o-linear-gradient(315deg,#e2b33d ,#000000 70%, transparent 90%);
+  background-image: linear-gradient(135deg,#e2b33d ,#000000 70%, transparent 90%);
 }
 
 .dpBackground {
