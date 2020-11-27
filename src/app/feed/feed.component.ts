@@ -12,7 +12,7 @@ import { MiscellaneousService } from '../shared/miscellaneous.service';
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.css']
+  styleUrls: ['./feed.component.css'],
 })
 
 export class FeedComponent implements OnInit, OnDestroy {
