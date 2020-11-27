@@ -6,7 +6,7 @@
     <div class="col-md"></div>
     <div class="col-md">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-lg-10">
           <!-- Account details -->
           <div class="row" *ngIf="!onBoarding || onBoardingStep === 3">
             <div class="col-md">
@@ -46,7 +46,7 @@
           </div>
           <!-- Description -->
           <div class="row" style="margin-top: 30px;" *ngIf="!onBoarding || onBoardingStep === 6">
-            <div class="col-12">
+            <div class="col-12 inputFields">
               <div class="form-group">
                 <div class="row">
                   <div class="col">
@@ -172,11 +172,11 @@
       </div>
     </div>
     <!-- Next arrow -->
-    <div *ngIf='(dpCheck$ | async) && onBoarding' class = "row nextArrow-2 justify-content-center">
-      <div class = "col-1 rotate-center text-center" (click)='clickNext()'>
-          <img src="assets/icons/nextArrow.svg">
-      </div>
+    
+    <div *ngIf='(dpCheck$ | async) && onBoarding' class = "nextArrow-2" (click)='clickNext()'> 
+          <img src="assets/icons/nextArrow.svg"> 
     </div>
+    
     <div class="col-md" style="margin-bottom: 100px;"></div>
   </div>
 </form>

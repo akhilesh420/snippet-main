@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row" *ngIf="!submitted; else thankyou">
+  <div class="row heading" *ngIf="!submitted; else thankyou">
     <form class="horizontal-center" (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="col-12">
         <label for="feedback" class="text-left">Feedback</label>

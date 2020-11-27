@@ -1,5 +1,5 @@
 .containerPopUp {
-  color: #D8B869;
+  color: #E2b33d;
   position: fixed;
   top: 0;
   left: 0;
@@ -13,8 +13,8 @@
   background-color: rgba(0, 0, 0, 0.60);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  border-radius: 5%;
-  border: 2px solid #D8B869;
+  border-radius: 15px;
+  border-top: 15px solid #E2b33d;
   text-align: center;
   /* height: 200px; */
   top:20vh;
@@ -41,7 +41,7 @@ padding-top: 30px;
 font-family: 'ChampagneAndLimousines';
 font-weight: bold;
 
-border: 2px solid #D8B869;
+border: 2px solid #E2b33d;
 border-radius: 20px;
 padding: 5px;
 padding-left: 10px;
@@ -53,7 +53,7 @@ width: auto;
 
 .default {
   background: #131114;
-  color: #D8B869;
+  color: #E2b33d;
 }
 
 .reject {
@@ -67,13 +67,13 @@ color: #f7f7f7;
 }
 
 .routing {
-background: #D8B869;
+background: #E2b33d;
 color: #131114;
 }
 
 .btn:active {
 color:#131114;
-background:  #D8B869;
+background:  #E2b33d;
 }
 
 .horizontal-center {

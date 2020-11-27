@@ -7,9 +7,10 @@
 }
 
 .more-post {
-  width: 30px;
+  width: auto;
   height: 30px;
   cursor: pointer;
+  transform: rotate(90deg);
 }
 
 .fail-safe{

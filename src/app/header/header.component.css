@@ -7,7 +7,7 @@
 .headerPosition {
   top: 0;
   position: fixed;
-  height: 4.44vh;
+  height: 5.44vh;
   width: 100%;
   background: linear-gradient(90.65deg, #080708 28.65%, #121012 76.04%);
   box-shadow: 0px -0.5px 0px rgba(255, 255, 255, 0.16);
@@ -15,22 +15,22 @@
 }
 
 .headerLogo {
-  font-size: 3vh;
+  font-size: 3.6vh;
   font-family: 'Comfortaa';
   color: #E2B33D;
   font-style: normal;
   font-weight: bold;
   letter-spacing: 0.1em;
   text-align: left;
-  padding-left: 1.944vw;
+  padding-left: 1.0vw;
 }
 
 .height {
-  height: 4.44vh;
+  height: 5.44vh;
 }
 
 .col-3 > a > img, .col-3 > img {
-  height: 2.22vh;
+  height: 2.66vh;
   width: auto;
   position: absolute;
   top:50%;
@@ -41,8 +41,8 @@
 }
 
 .col-3 > a > div {
-  height: 2.22vh;
-  width: 2.22vh;
+  height: 2.66vh;
+  width: 2.66vh;
   position: absolute;
   top:50%;
   left: 50%;
@@ -105,13 +105,13 @@
 
 .headerdropDown {
   position: fixed;
-  height: 8vw;
+  height: 7.6vw;
   width: 7.7vw;
   top: 6.84vh;
   right: 1vw;
   font-family: 'ChampagneAndLimousines';
   color: #ffffff;
-  font-size: 1.1vw;
+  font-size: 1.2vw;
   font-weight: bold;
   text-align: left;
   padding-left: 1vw;
