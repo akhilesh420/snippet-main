@@ -24,6 +24,7 @@
                 <div *ngIf='(postType$ | async) as type;'>
                   <img *ngIf='type.includes("image")' class='post-content center-absolute' [src]='postContent$ | async'>
                   <video *ngIf='type.includes("video")' class='post-content center-absolute' [src]='postContent$ | async' loop autoplay></video>
+                  <!-- <embed *ngIf='type === "video/quicktime"' Pluginspage="https://support.apple.com/quicktime" class='post-content center-absolute' [src]='postContent$ | async' LOOP="true" AUTOPLAY='true'> -->
                 </div>
                 <img class='post-add center-absolute'
                      style='cursor:pointer'
@@ -166,4 +167,8 @@
         </div>
     </div>
   </div>
+</div>
+
+<div style='position: fixed; top:10px; left: 10px; color: white;'>
+  <p *ngIf='(postType$ | async) as type'>Type: {{type}}</p>
 </div>

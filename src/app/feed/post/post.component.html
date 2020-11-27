@@ -2,16 +2,17 @@
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="post-content "
-          src={{content}}
+          [src]='content'
           alt="post content"
           [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opacity-in-details'"
           *ngIf='postType.includes("image")'>
     <video class='post-content '
-           src={{content}}
+           [src]='content'
            loop
            playsinline
            #videoPlayer
            [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opacity-in-details'"
+           type='video/mp4'
            *ngIf='postType.includes("video")'>
     </video>
     <div *ngIf="createPost">
