@@ -172,11 +172,11 @@
       </div>
     </div>
     <!-- Next arrow -->
-    <div *ngIf='(dpCheck$ | async) && onBoarding' class = "row nextArrow-2 justify-content-center">
-      <div class = "col-1 rotate-center text-center" (click)='clickNext()'>
-          <img src="assets/icons/nextArrow.svg">
-      </div>
+    
+    <div *ngIf='(dpCheck$ | async) && onBoarding' class = "nextArrow-2" (click)='clickNext()'> 
+          <img src="assets/icons/nextArrow.svg"> 
     </div>
+    
     <div class="col-md" style="margin-bottom: 100px;"></div>
   </div>
 </form>
