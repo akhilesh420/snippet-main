@@ -10,6 +10,7 @@ import { ActivityService } from '../shared/activity.service';
 import { Collection } from '../shared/activity.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { take, takeUntil } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 // import { faststart } from 'moov-faststart';
 // import * as fs from 'fs';
 
@@ -56,7 +57,8 @@ export class CreateComponent implements OnInit, OnDestroy {
               private postService: PostService,
               private activityService: ActivityService,
               private afs: AngularFirestore,
-              private miscellaneousService: MiscellaneousService) { }
+              private miscellaneousService: MiscellaneousService,
+              protected sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
@@ -81,6 +83,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         if (this.stepCounter === 1 && this.currentStep === 'sticker') {
           this.router.navigate(['/create/content']);
         }
+
         if (this.currentStep === 'content') {
           this.nextActive = !!this.postContent$.value;
           this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
@@ -125,6 +128,7 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.error = undefined;
           this.postContent = file;
           this.postType$.next(file.type);
+          console.log(file.type); //temp log
           this.postContent$.next(event.target.result);
         } else {
           this.error ='Post file size too big! There is a 10 MB limit';
