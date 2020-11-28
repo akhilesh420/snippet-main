@@ -204,6 +204,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.batchNumber++;
     this.loading = false;
     setTimeout(() => {
+      if (this.postsList.length === 0) return;
       this.getViewport();
     }, 100);
   }

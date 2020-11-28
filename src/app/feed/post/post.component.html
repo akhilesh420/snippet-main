@@ -14,9 +14,6 @@
            [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opacity-in-details'"
            *ngIf='postType.includes("video")'>
     </video>
-    <div *ngIf="createPost">
-      <img [src]="addIcon" alt="add" class="add-icon pointer" (click)="onAddClick('content')" style="width: 116px; height: 116px;">
-    </div>
   </div>
   <!-- loading spinner -->
   <ng-template #loading>
@@ -145,13 +142,10 @@
     <!-- Post Sticker -->
     <a style="cursor: pointer;" (click)='collectSticker()'>
       <div class="postSticker"
-        *ngIf="stickerContent$ | async as stickerContent">
+          [ngClass]="onBoarding && onBoardingStep === 2 ? 'pulsate-sticker' : null"
+          *ngIf="stickerContent$ | async as stickerContent">
         <img class="sticker-img"
-             src={{stickerContent}}
-             width="100%" alt="post content">
-        <div *ngIf="createPost">
-          <img [src]="addIcon" alt="add" class="center-absolute sticker-add" (click)="onAddClick('sticker')">
-        </div>
+             src={{stickerContent}}>
       </div>
     </a>
   </div>

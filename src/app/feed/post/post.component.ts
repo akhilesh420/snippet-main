@@ -88,7 +88,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    console.log(this.tutorial); //temp log
     this.usernameFetch = false;
 
     this.fetchingWindow = true;
@@ -114,10 +113,11 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
     this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.onBoarding = val;
-    });
-
-    this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-      this.onBoardingStep = step;
+      if (val) {
+        this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+          this.onBoardingStep = step;
+        });
+      }
     });
   }
 
@@ -155,7 +155,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
     .subscribe(response => {
       this.postType = response.fileFormat;
       this.postContent$ = this.postService.getPostContent(this.pid, response);
-      this.postContent$.subscribe(res => console.log(res));
     });
 
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
@@ -264,6 +263,9 @@ import { WindowStateService } from 'src/app/shared/window.service';
   collectSticker() {
     if (this.isAuthenticated) {
       if (!this.collectingSticker) {
+        if (this.onBoarding && this.onBoardingStep != 2) {
+          return;
+        }
         this.collectingSticker = true;
         let popUpObj: PopUp;
         this.activityService.getPostCollection(this.pid).pipe(take(1)).subscribe(response => {

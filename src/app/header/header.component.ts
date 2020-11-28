@@ -50,7 +50,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(user => {
       this.isAuthenticated = !!user;
-      console.log(this.isAuthenticated); //templog
       if (this.isAuthenticated) {
         this.uid = user.id;
         this.collectionRoute = "collection/" + this.uid;
@@ -66,7 +65,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
-      console.log(this.currentRoute, this.profileRoute);
     });
   }
 

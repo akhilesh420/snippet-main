@@ -26,11 +26,14 @@ export class AppComponent implements OnInit, OnDestroy {
   elem: any;
 
   onBoarding: boolean = false;
+  onBoardingStep: number;
+  failSafeTimer: any;
+  allowFailSafe: boolean = true;
+  isAuthenticated: boolean = false;
+  uid: string;
 
   constructor(private windowService: WindowStateService,
               private authService: AuthService,
-              private titleService: Title,
-              private metaService: Meta,
               private router: Router,
               private infiniteScrollService: InfiniteScrollService,
               private miscellaneousService: MiscellaneousService,
@@ -62,20 +65,39 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.onResize();
 
+    this.popUpVal = this.miscellaneousService.getPopUpSetUp();
+
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
-      if (!(val instanceof NavigationEnd)) {
-        return;
-      }
-
-      // window.scrollTo(0, 1);
+      this.onBoardingFailSafe();
     });
-
-    this.popUpVal = this.miscellaneousService.getPopUpSetUp();
 
     this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.onBoarding = val;
+      if (val) {
+        this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+          this.onBoardingStep = step;
+        });
+        this.onBoardingFailSafe();
+      } else {
+        this.allowFailSafe = true;
+      }
     });
+
+    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(user => {
+      this.isAuthenticated = !!user;
+      if (this.isAuthenticated) {
+        this.uid = user.id;
+      }
+    });
+  }
+
+  onBoardingFailSafe() {
+    if (!this.allowFailSafe) return;
+    if (this.onBoarding && !(this.currentRoute.includes('tutorial') || this.currentRoute.includes('edit') || this.currentRoute.includes('auth/'))) {
+      this.allowFailSafe = false;
+      this.router.navigate(['tutorial']);
+    }
   }
 
   ngAfterViewInit() {
@@ -101,6 +123,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onWindowScroll($event){
     this.scrollService.setScroll();
+  }
+
+  @HostListener('window:beforeunload')
+  setOnBoardingStep() {
+    if (this.onBoarding && this.onBoardingStep >= 2) {
+      this.miscellaneousService.setOnBoardingStep(this.uid);
+    }
   }
 
   ngOnDestroy() {

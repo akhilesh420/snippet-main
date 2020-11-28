@@ -71,15 +71,29 @@ export class UsersService {
   // Add profile details from cloud firestore
   addProfileDetails(uid: string, details: ProfileDetails) {
     const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
-    const obj = {username : details.username, bio: bio};
+    let obj;
+    if (details.onBoarding) {
+      obj = {username : details.username, bio: bio, onBoarding: details.onBoarding, onBoardingStep : details.onBoardingStep};
+    } else {
+      obj = {username : details.username, bio: bio};
+    }
     this.profileDetailsCollection.doc(uid).set(obj);
   }
 
   // Update profile details from cloud firestore
   updateProfileDetails(uid: string, details: ProfileDetails) {
     const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
-    const obj = {username : details.username, bio: bio};
+    let obj;
+    if (details.onBoarding) {
+      obj = {username : details.username, bio: bio, onBoarding: details.onBoarding, onBoardingStep : details.onBoardingStep};
+    } else {
+      obj = {username : details.username, bio: bio};
+    }
     this.profileDetailsCollection.doc(uid).update(obj);
+  }
+
+  updateOnBoarding(uid: string, onBoarding: boolean, onBoardingStep: number) {
+    this.profileDetailsCollection.doc(uid).update({onBoarding: onBoarding, onBoardingStep: onBoardingStep});
   }
 
   //--------------------------------------- Personal Details ---------------------------------------

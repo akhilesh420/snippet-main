@@ -1,3 +1,4 @@
+import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
@@ -36,7 +37,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private afs: AngularFirestore) {}
+              private afs: AngularFirestore,
+              private miscellaneousService: MiscellaneousService) {}
 
   signUp(email: string, password: string) {
     return this.http
@@ -137,6 +139,7 @@ export class AuthService {
         new Date().getTime();
       this.autoLogout(expirationDuration);
     }
+    this.miscellaneousService.startOnBoarding(loadedUser.id);
   }
 
   autoLogout(expirationDuration: number) {

@@ -7,7 +7,7 @@ import { PostDetails } from 'src/app/shared/post.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Collection } from 'src/app/shared/activity.model';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 
@@ -69,9 +69,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   stickerDelete = new Subject<number>();
 
   onBoardingStep: number;
-  onBoarding: boolean;
+  onBoarding: boolean = true;
 
-  dpCheck$: BehaviorSubject<boolean>;
+  activeNext: boolean = false;
 
   constructor(private postService: PostService,
               private usersService: UsersService,
@@ -82,7 +82,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-
     this.route.params
     .subscribe(
       (params: Params) => {
@@ -98,6 +97,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       if (val) {
         this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
           this.onBoardingStep = step;
+          this.activeNext = false;
           if (step != 3 && step != 5 && step != 6) {
             this.router.navigate(['/tutorial']);
           }
@@ -136,7 +136,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.dpCheck$ = this.usersService.displayPictureLoaded();
   }
 
   setUp() {
@@ -160,6 +159,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         this.counter = 0;
         this.profileStickers = response;
         this.getCollectionList();
+        if (response.length > 0 && this.onBoardingStep === 5) {
+            this.activeNext = true;
+        }
       }
     });
 
@@ -178,6 +180,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     })
 
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+
+    this.usersService.displayPictureLoaded().pipe(takeUntil(this.notifier$)) // Reorder selected stickers from collection by last order
+    .subscribe(value  => {
+      if (value && this.onBoardingStep === 3) {
+        this.activeNext = true;
+      };
+    });
   }
 
   getCollectionList() {
@@ -185,6 +194,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.activityService.getUserCollection(this.uid).pipe(takeUntil(this.notifier$)) //get details of user collection
     .subscribe((response:Collection[]) => {
       if (response) {
+        if (response.length === 0) {
+          if (this.onBoardingStep === 5) {
+            this.activeNext = true;
+          }
+        }
         this.collectionList = []; //reset collection list
         response.forEach(collection => {
           let tempPostDetails: PostDetails;
@@ -219,6 +233,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   onStickerClick(collection: CollectionDisplay) {
     this.changedProfileStickers = true;
+    if (this.onBoardingStep === 5) {
+      this.activeNext = true;
+    }
     let pid = collection.pid;
     let index = this.profileStickers.findIndex(sticker => {
       return sticker.pid === pid;
@@ -245,6 +262,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
           this.error = null;
           this.displayPicture = file;
           this.displayPicture$.next(event.target.result);
+          this.activeNext = true;
         } else {
           this.error ='Post file size too big! There is a 10 MB limit';
         }
@@ -279,7 +297,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     this.dpInput.nativeElement.click();
   }
 
-  onSubmit(f) {
+  onSubmit() {
     if (!this.isSaving) {
       if (this.title && this.title.length > 25) {
         return;
@@ -332,25 +350,33 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   finishUp() {
-    this.isSaving = false;
-    alert('Profile updated!');
-    this.router.navigate(['/profile/'+this.uid]);
-    // this.authService.onBoarding.pipe(takeUntil(this.notifier$)).subscribe(res => {
-    //   if (res === "Signup") {
-    //     this.router.navigate(['/tutorial']);
-    //   } else {
-
-    //   }
-    // })
+    this.miscellaneousService.setPopUp(new PopUp('Profile updated!','okay', undefined, ['default', 'reject']));
+    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+      this.isSaving = false;
+      if (!this.onBoarding) {
+        this.router.navigate(['/profile/'+this.uid]);
+      } else {
+        this.miscellaneousService.onBoardingStep$.next(++this.onBoardingStep);
+      }
+    });
   }
 
   handleError() {
-    alert("An error occurred! It is what it is...");
-    this.isSaving = false;
+    this.miscellaneousService.setPopUp(new PopUp("An unexpected error occurred! It is what it is...",'okay', undefined, ['default', 'reject']));
+    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+      this.isSaving = false;
+    });
   }
 
   clickNext() {
-    this.miscellaneousService.onBoardingStep$.next(++this.onBoardingStep);
+    if (!this.activeNext) return;
+    this.onSubmit();
+  }
+
+  onDescriptionChange() {
+    if (this.onBoardingStep === 6 && this.title.length != 0 && this.location.length != 0 && this.content.length != 0) {
+      this.activeNext = true;
+    }
   }
 
   ngOnDestroy() {

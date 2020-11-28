@@ -52,6 +52,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   nextActive: boolean = false;
 
   storageFile: File;
+
+  onBoarding: boolean = false;
+  onBoardingStep: number;
   constructor(private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
@@ -67,6 +70,16 @@ export class CreateComponent implements OnInit, OnDestroy {
     }, errorMessage => {
       this.handleError(errorMessage);
     });
+
+    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.onBoarding = val;
+      this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+        this.onBoardingStep = step;
+        if (step != 8) {
+          this.router.navigate(['/tutorial']);
+        }
+      })
+    })
 
     this.route.params
     .subscribe(
@@ -86,6 +99,9 @@ export class CreateComponent implements OnInit, OnDestroy {
         }
 
         if (this.currentStep === 'content') {
+          if (this.onBoarding) {
+            this.miscellaneousService.setPopUp(new PopUp("It's time to make your first post !",'Okay',undefined, ['default', 'reject']));
+          }
           this.nextActive = !!this.postContent$.value;
           this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
             this.nextActive = !!value;
@@ -191,8 +207,11 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   handleError(error) {
-    alert("Damn! An error occurred!");
-    this.isCreating = false;
+    this.miscellaneousService.setPopUp(new PopUp("An unexpected error occurred! It is what it is...",'okay', undefined, ['default', 'reject']));
+    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+      this.isCreating = false;
+
+    });
   }
 
   nextClick() {
@@ -287,24 +306,30 @@ export class CreateComponent implements OnInit, OnDestroy {
     let postSubs =  this.postService.addContent(pcid,this.storageFile);
     let stickerSubs = this.postService.addContent(scid,this.stickerContent);
 
+    this.miscellaneousService.endOnBoarding(this.uid); //end on boarding for local machine
     this.miscellaneousService.startLoading();
     forkJoin([postSubs, stickerSubs]).subscribe(results => {
       if (results[0] === 100 && results[1] === 100) {
         this.miscellaneousService.endLoading();
+        this.miscellaneousService.updateOnBoarding(this.uid); //end on boarding on server
+
         this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
         this.postService.addPostContentRef(pid, new PostContent(pcid, this.storageFile.type));
         this.postService.addStickerContentRef(pid, new PostContent(scid, this.stickerContent.type));
         this.postService.addStickerDetails(pid, new StickerDetails(this.amount, 0));
 
         this.activityService.addActivity(pid, 'post');
-        this.activityService.addCollection(new Collection(this.uid,this.uid,pid,dateCreated.getTime()));
+        this.activityService.addCollection(new Collection(this.uid,this.uid,pid,dateCreated.getTime())); //add your own collection
       }
     }, error => {
       this.miscellaneousService.endLoading();
     });
 
-    this.router.navigate(['/explore']);
-    this.isCreating = false;
+    this.miscellaneousService.setPopUp(new PopUp("You are all set! Feel free to explore but please don't close the tab while your post is being processed",'Explore', undefined, ['default', 'reject']));
+    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+      this.router.navigate(['/explore']);
+      this.isCreating = false;
+    });
   }
 
   previousClick() {

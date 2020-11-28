@@ -2,6 +2,7 @@
       class="sticker"
       style="cursor: pointer;"
      [ngStyle]="{'width': size,'height': size}"
+     [ngClass]="onBoarding && onBoardingStep === 4 ? 'pulsate-bck' : null"
      *ngIf="stickerContent | async; let content;">
     <img [src]='content'
          alt="sticker"

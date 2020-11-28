@@ -10,7 +10,9 @@ export class ProfileDetails {
 
   constructor(
     public username: string,
-    public bio: Biography
+    public bio: Biography,
+    public onBoarding?: boolean,
+    public onBoardingStep?: number
   ) {}
 }
 

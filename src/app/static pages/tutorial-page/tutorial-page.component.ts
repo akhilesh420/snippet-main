@@ -29,6 +29,8 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
   messageBottom1: string;
   messageBottom2: string;
 
+  activeNext: boolean = false;
+
   constructor(private miscellaneousService: MiscellaneousService,
               private authService: AuthService,
               private feedService: FeedService,
@@ -45,14 +47,24 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      if (!val) {
+        this.router.navigate(['/auth/69']); //change to auth
+      }
+    });
+
     this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
       this.onBoardingStep = step;
+      this.activeNext = false;
+      if (step === 0) {
+        setTimeout(() => this.activeNext = true, 5000);
+      }
       if (step === 1) {
         this.router.navigate(['/auth/' + this.miscellaneousService.exclusiveId]);
         return;
       }
       if (step === 2) {
-        this.feedService.getPostPage('OVci0pYOjC2UZ1fPAaTc').pipe(takeUntil(this.notifier$)).subscribe(details => {
+        this.feedService.getPostPage('DRVlZf1TkrPAogEE7u5s').pipe(takeUntil(this.notifier$)).subscribe(details => {
           this.postDetails = details[0];
           this.loadingPost = false;
         });
@@ -77,7 +89,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
         this.router.navigate(['/profile/' + this.uid + '/edit']);
       }
       if (step === 4) {
-        this.feedService.getPostPage('OVci0pYOjC2UZ1fPAaTc').pipe(takeUntil(this.notifier$)).subscribe(details => {
+        this.feedService.getPostPage('DRVlZf1TkrPAogEE7u5s').pipe(takeUntil(this.notifier$)).subscribe(details => {
           this.postDetails = details[0];
           this.loadingPost = false;
         });
@@ -85,14 +97,16 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
         this.messageTop2 = null;
         this.messageBottom1 = 'Displayed stickers always appear next to your username.';
         this.messageBottom2 = 'When clicked by anyone, they lead to the post that sticker represents.';
+        setTimeout(() => this.activeNext = true, 5000);
       }
       if (step === 7) {
         this.messageTop1 = "Each post has it's own holder list";
         this.messageTop2 = null;
         this.messageBottom1 = 'If you have a posts sticker,';
         this.messageBottom2 = 'you become one of the few people on its holder list';
+        setTimeout(() => this.activeNext = true, 5000);
       }
-      if (step == 8) {
+      if (step === 8) {
         this.router.navigate(['/create']);
       }
     });
@@ -100,6 +114,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
 
 
   clickNext() {
+    if (!this.activeNext) return;
     this.miscellaneousService.onBoardingStep$.next(++this.onBoardingStep);
     console.log(this.onBoardingStep);
   }

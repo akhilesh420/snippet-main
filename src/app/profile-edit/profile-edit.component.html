@@ -1,7 +1,7 @@
 <div *ngIf="isSaving" style="text-align: center;" class="horizontal-center">
   <app-loading-spinner></app-loading-spinner>
 </div>
-<form #f='ngForm' (ngSubmit)="onSubmit(f)" *ngIf="!isSaving" class="horizontal-center">
+<form #f='ngForm' (ngSubmit)="onSubmit()" *ngIf="!isSaving" class="horizontal-center">
   <div class="row">
     <div class="col-md"></div>
     <div class="col-md">
@@ -31,7 +31,7 @@
                           [src]="content"
                           alt="profile picture"
                           height="100%">
-                          Add icon
+                        <!-- Add icon -->
                         <img [src]="addIcon"
                              alt="add"
                              class="add-icon"
@@ -65,7 +65,8 @@
                             name="occupation"
                             placeholder="Title/Description"
                             maxlength="25"
-                            style="margin-top: 0px; margin-bottom: 20px">
+                            style="margin-top: 0px; margin-bottom: 20px"
+                            (change)='onDescriptionChange()'>
                       </div>
                     </div>
                     <div class="row">
@@ -78,7 +79,8 @@
                             name="location"
                             placeholder="Location"
                             maxlength="25"
-                            style="margin-top: 0px; margin-bottom: 20px">
+                            style="margin-top: 0px; margin-bottom: 20px"
+                            (change)='onDescriptionChange()'>
                       </div>
                     </div>
                     <div class="row">
@@ -91,7 +93,8 @@
                             name="content"
                             placeholder="About you"
                             maxlength="95"
-                            style="margin-top: 0px; margin-bottom: 20px">
+                            style="margin-top: 0px; margin-bottom: 20px"
+                            (change)='onDescriptionChange()'>
                       </div>
                     </div>
                   </div>
@@ -172,11 +175,11 @@
       </div>
     </div>
     <!-- Next arrow -->
-    
-    <div *ngIf='(dpCheck$ | async) && onBoarding' class = "nextArrow-2" (click)='clickNext()'> 
-          <img src="assets/icons/nextArrow.svg"> 
+
+    <div *ngIf='onBoarding' class = "nextArrow-2" (click)='clickNext()'>
+          <img [ngClass]="activeNext ? 'pulsate-bck' : 'inactive'" src="assets/icons/nextArrow.svg">
     </div>
-    
+
     <div class="col-md" style="margin-bottom: 100px;"></div>
   </div>
 </form>

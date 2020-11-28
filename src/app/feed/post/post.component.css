@@ -493,7 +493,7 @@
 
   .postDetails {
     padding: 4.8% 4% 15% 4%;
-    
+
   }
 
   .commentButton{
@@ -505,7 +505,7 @@
     height: 2.6vw;
     z-index: 1;
   }
-  
+
   .buttonBackground{
     padding: 0;
     position: absolute;
@@ -515,7 +515,7 @@
     height: 2.6vw;
     border-radius: 1.5294vw 1.5294vw 0 0;
   }
-  
+
   .hideExtra{
     padding: 0;
     position: absolute;
@@ -525,10 +525,10 @@
     height: 1.5294vw;
     overflow: hidden;
   }
-  
+
   .commentButton > img{
     padding: none;
-  
+
     width: 1vw;
     height: auto;
 
@@ -536,4 +536,40 @@
 
 }
 
-  
+
+/* Pulsate */
+
+.pulsate-sticker {
+	-webkit-animation: pulsate-bck 1s ease-in-out infinite both;
+          animation: pulsate-bck 1s ease-in-out infinite both;
+  cursor:pointer;
+}
+
+@-webkit-keyframes pulsate-bck {
+  0% {
+    -webkit-transform: scale(1)  translateY(-70%);
+            transform: scale(1)  translateY(-70%);
+  }
+  50% {
+    -webkit-transform: scale(0.9)  translateY(-70%);
+            transform: scale(0.9)  translateY(-70%);
+  }
+  100% {
+    -webkit-transform: scale(1)  translateY(-70%);
+            transform: scale(1)  translateY(-70%);
+  }
+}
+@keyframes pulsate-bck {
+  0% {
+    -webkit-transform: scale(1)  translateY(-70%);
+            transform: scale(1)  translateY(-70%);
+  }
+  50% {
+    -webkit-transform: scale(0.9)  translateY(-70%);
+            transform: scale(0.9)  translateY(-70%);
+  }
+  100% {
+    -webkit-transform: scale(1) translateY(-70%);
+            transform: scale(1) translateY(-70%);
+  }
+}

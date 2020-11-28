@@ -7,7 +7,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService, AuthResponseData } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
-import { MiscellaneousService } from '../shared/miscellaneous.service';
+import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 
 
 
@@ -119,16 +119,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
 
-    //Temp for testing
-    if (!this.isForgetMode) {
-      if (!this.isLoginMode) {
-        this.miscellaneousService.onBoardingStep$.next(2);
-        this.router.navigate(['/tutorial']);
-        return;
-      }
-    }
-    //Temp for testing
-
     if (!this.email || this.email.length === 0) {
       this.error = "Email is required"
       return;
@@ -192,9 +182,11 @@ export class AuthComponent implements OnInit, OnDestroy {
       resData => {
         if (this.isLoginMode && !this.isForgetMode) {
           form.reset();
-          this.router.navigate(['/explore']);
+          this.isLoading = false;
+          //navigate from startOnBoarding function
+          this.miscellaneousService.startOnBoarding(resData.localId);
         } else if (!this.isLoginMode && !this.isForgetMode) {
-          let profileDetails  = new ProfileDetails(this.username, new Biography("","",""));
+          let profileDetails  = new ProfileDetails(this.username, new Biography("","",""), true, 0);
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
           this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {
             if (Object.keys(response).length === 0) {
@@ -205,7 +197,7 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.activityService.addActivity(resData.localId, 'user');
               this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: resData.localId, username: this.username, fullname: this.name, email: this.email});
               form.reset();
-              // this.router.navigate(['/profile/' + resData.localId + '/edit']);
+              this.isLoading = false;
               this.miscellaneousService.onBoardingStep$.next(2);
               this.router.navigate(['/tutorial']);
             } else {
@@ -218,9 +210,12 @@ export class AuthComponent implements OnInit, OnDestroy {
             }
           });
         } else if (this.isForgetMode) {
-          alert("An email has been sent to your account");
+          this.miscellaneousService.setPopUp(new PopUp("An email has been sent to your account",'okay', undefined, ['default', 'reject']));
+          this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+            // this.router.navigate(['/explore']);
+            this.isLoading = false;
+          });
         }
-        this.isLoading = false;
       },
       errorMessage => {
         this.error = errorMessage;
