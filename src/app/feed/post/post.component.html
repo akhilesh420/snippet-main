@@ -7,12 +7,11 @@
           [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opacity-in-details'"
           *ngIf='postType.includes("image")'>
     <video class='post-content '
-           [src]='content'
            loop
            playsinline
            #videoPlayer
+           [src]='content'
            [ngClass]="!this.showDetails ? 'opacity-out-details' : 'opacity-in-details'"
-           type='video/mp4'
            *ngIf='postType.includes("video")'>
     </video>
     <div *ngIf="createPost">

@@ -26,7 +26,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   @ViewChild('stickerInput') stickerInput: ElementRef<HTMLElement>;
 
   postDetails: PostDetails;
-  postContent: any;
   stickerDetails: StickerDetails;
   stickerContent: any;
 
@@ -51,6 +50,8 @@ export class CreateComponent implements OnInit, OnDestroy {
   currentStep: string;
   stepCounter: number = 0;
   nextActive: boolean = false;
+
+  storageFile: File;
   constructor(private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
@@ -58,7 +59,7 @@ export class CreateComponent implements OnInit, OnDestroy {
               private activityService: ActivityService,
               private afs: AngularFirestore,
               private miscellaneousService: MiscellaneousService,
-              protected sanitizer: DomSanitizer) { }
+              public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
@@ -120,20 +121,45 @@ export class CreateComponent implements OnInit, OnDestroy {
     if (event.target.files)  {
       var reader = new FileReader();
 
-      let file = event.target.files[0];
-      reader.readAsDataURL(file);
+      let file: File = event.target.files[0];
+      let newFile: File;
 
+      reader.readAsDataURL(file);
       reader.onload = (event:any) => {
-        if (file.size < 10*1024*1024) {
-          this.error = undefined;
-          this.postContent = file;
-          this.postType$.next(file.type);
-          console.log(file.type); //temp log
-          this.postContent$.next(event.target.result);
+
+        if (file.type === 'video/quicktime') {
+        // create new file with type as mp4
+
+          const dataurl = event.target.result;
+          let arr = dataurl.split(','),
+              bstr = atob(arr[1]),
+              n = bstr.length,
+              u8arr = new Uint8Array(n);
+
+          while(n--){
+              u8arr[n] = bstr.charCodeAt(n);
+          }
+          newFile  = new File([u8arr], "test.mp4", {type:'video/mp4', lastModified: new Date().getDate()});
+          reader.readAsDataURL(newFile);
+          reader.onload = (event:any) => {
+            this.contentFileDetails(newFile, event);
+          }
         } else {
-          this.error ='Post file size too big! There is a 10 MB limit';
+          this.contentFileDetails(file, event);
         }
       }
+    }
+  }
+
+  contentFileDetails(file, event) {
+    if (file.size < 10*1024*1024) {
+      this.error = undefined;
+      this.storageFile = file;
+      this.postType$.next(file.type);
+      console.log(file.type); //temp log
+      this.postContent$.next(event.target.result);
+    } else {
+      this.error ='Post file size too big! There is a 10 MB limit';
     }
   }
 
@@ -173,7 +199,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     if (this.isCreating) return;
 
     if (this.currentStep === 'content') {
-      if (!this.postContent || !this.postContent) {
+      if (!this.storageFile) {
         this.error = "Trust me, click the BIG plus button";
         return;
       }
@@ -248,10 +274,6 @@ export class CreateComponent implements OnInit, OnDestroy {
   confirmPost() {
     this.error = undefined;
     ++this.stepCounter;
-    if (this.stepCounter != 3) {
-      this.error = 'Please follow all the steps required!'
-      return;
-    }
     this.createPost();
   }
 
@@ -262,7 +284,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     let scid = this.afs.createId();
     let dateCreated = new Date();
 
-    let postSubs =  this.postService.addContent(pcid,this.postContent);
+    let postSubs =  this.postService.addContent(pcid,this.storageFile);
     let stickerSubs = this.postService.addContent(scid,this.stickerContent);
 
     this.miscellaneousService.startLoading();
@@ -270,7 +292,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       if (results[0] === 100 && results[1] === 100) {
         this.miscellaneousService.endLoading();
         this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
-        this.postService.addPostContentRef(pid, new PostContent(pcid, this.postContent.type));
+        this.postService.addPostContentRef(pid, new PostContent(pcid, this.storageFile.type));
         this.postService.addStickerContentRef(pid, new PostContent(scid, this.stickerContent.type));
         this.postService.addStickerDetails(pid, new StickerDetails(this.amount, 0));
 
@@ -289,12 +311,10 @@ export class CreateComponent implements OnInit, OnDestroy {
     if (this.isCreating) return;
 
     if (this.currentStep === 'description') {
-      this.stepCounter = 0;
       this.router.navigate(['/create/content']);
       return;
     }
     if (this.currentStep === 'sticker') {
-      this.stepCounter = 1;
       this.router.navigate(['/create/description']);
       return;
     }

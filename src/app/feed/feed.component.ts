@@ -152,7 +152,7 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.router.navigate(['/explore']);
         return;
       }
-      this.postsList$ = this.feedService.getCollectionPage(uid,this.notifier$);
+      this.postsList$ = this.feedService.getCollectionPage(uid);
       this.showProfileDisplay = true;
     } else if (currentRoute === 'profile') {
       const uid = this.route.snapshot.params['id']
@@ -174,10 +174,15 @@ export class FeedComponent implements OnInit, OnDestroy {
   resetPostNumber() {
     this.postNumber = this.showProfileDisplay ? -1 : 0;
     this.postNumber$.next(this.postNumber);
+    this.done = true;
   }
 
   setUpPosts() {
     this.postsList$.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      if (!response) {
+        this.done = true;
+        return;
+      }
       this.done = false;
       this.postsList = response;
       if (this.postsList) {
