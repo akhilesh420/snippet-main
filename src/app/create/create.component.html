@@ -23,7 +23,8 @@
               <div class = "col-12 post" (click)='onAddClick("content")'>
                 <div *ngIf='(postType$ | async) as type;'>
                   <img *ngIf='type.includes("image")' class='post-content center-absolute' [src]='postContent$ | async'>
-                  <video *ngIf='type.includes("video")' class='post-content center-absolute' [src]='postContent$ | async' loop autoplay></video>
+                  <video *ngIf='type.includes("video")' [src]='(postContent$ | async)' class='post-content center-absolute' loop autoplay>
+                  </video>
                   <!-- <embed *ngIf='type === "video/quicktime"' Pluginspage="https://support.apple.com/quicktime" class='post-content center-absolute' [src]='postContent$ | async' LOOP="true" AUTOPLAY='true'> -->
                 </div>
                 <img class='post-add center-absolute'
@@ -33,7 +34,7 @@
                   type="file"
                   id="contentFile"
                   class="file-input"
-                  accept="image/x-png,image/gif,image/jpeg,image/tiff,video/mp4"
+                  accept="image/x-png,image/gif,image/jpeg,image/tiff,video/mp4,video/quicktime"
                   name="content"
                   (change)="onContentChange($event)"
                   (click)="stopPropagation($event);"

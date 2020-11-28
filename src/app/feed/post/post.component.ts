@@ -155,6 +155,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
     .subscribe(response => {
       this.postType = response.fileFormat;
       this.postContent$ = this.postService.getPostContent(this.pid, response);
+      this.postContent$.subscribe(res => console.log(res));
     });
 
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
