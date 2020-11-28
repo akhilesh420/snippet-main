@@ -52,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
     .subscribe(val => {
       if (val) {
         this.windowSize = val;
-        if (val < 768) {
+        if (val < 550) {
           this.mobileCheck = true;
         } else {
           this.mobileCheck = false;

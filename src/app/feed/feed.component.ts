@@ -103,7 +103,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
      this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
-      if (val < 768) {
+      if (val < 550) {
         this.mobileCheck = true;
       } else {
         this.mobileCheck = false;
