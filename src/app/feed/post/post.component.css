@@ -540,22 +540,39 @@
 /* Pulsate */
 
 .pulsate-sticker {	
+  -webkit-animation: pulsate-bck 1s ease-in-out infinite both;	
           animation: pulsate-bck 1s ease-in-out infinite both;
-  cursor:pointer;
+cursor:pointer;
+}
+
+
+@-webkit-keyframes pulsate-bck {
+0% {
+border-radius: 50%;
+}
+
+50% {
+border-radius: 35%;
+}
+
+100% {
+border-radius: 50%
+}
+
 }
 
 
 @keyframes pulsate-bck {
-  0% {
-    border-radius: 50%;
-  }
+0% {
+border-radius: 50%;
+}
 
-  50% {
-    border-radius: 35%;
-  }
+50% {
+border-radius: 35%;
+}
 
-  100% {
-    border-radius: 50%
-  }
+100% {
+border-radius: 50%
+}
 
 }
