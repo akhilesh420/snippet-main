@@ -539,38 +539,23 @@
 
 /* Pulsate */
 
-.pulsate-sticker {
-	-webkit-animation: pulsate-bck 1s ease-in-out infinite both;
+.pulsate-sticker {	
           animation: pulsate-bck 1s ease-in-out infinite both;
   cursor:pointer;
 }
 
-@-webkit-keyframes pulsate-bck {
-  0% {
-    -webkit-transform: scale(1) translateY(-70%);
-            transform: scale(1) translateY(-70%);
-  }
-  50% {
-    -webkit-transform: scale(0.9) translateY(-70%);
-            transform: scale(0.9) translateY(-70%);
-  }
-  100% {
-    -webkit-transform: scale(1) translateY(-70%);
-            transform: scale(1) translateY(-70%);
-  }
-}
 
 @keyframes pulsate-bck {
   0% {
-    -webkit-transform: scale(1) translateY(-70%);
-            transform: scale(1) translateY(-70%);
+    border-radius: 50%;
   }
+
   50% {
-    -webkit-transform: scale(0.9) translateY(-70%);
-            transform: scale(0.9) translateY(-70%);
+    border-radius: 35%;
   }
+
   100% {
-    -webkit-transform: scale(1) translateY(-70%);
-            transform: scale(1) translateY(-70%);
+    border-radius: 50%
   }
+
 }
