@@ -222,7 +222,7 @@ li {
 
 .nextArrow-2 {
   position: absolute;
-  top: 90vh;
+  top: 85vh;
   left: 50%;
 }
 .nextArrow-2 > img {
@@ -306,6 +306,13 @@ li {
   .inputFields {
     width: 84.82vw;
   }
+
+  .nextArrow-2 {
+    position: absolute;
+    top: 90vh;
+    left: 50%;
+  }
+
 }
 
 
