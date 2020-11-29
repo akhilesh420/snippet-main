@@ -93,7 +93,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
           this.postDetails = details[0];
           this.loadingPost = false;
         });
-        this.messageTop1 = 'If you were lucky, and got a sticker, you can display it!'
+        this.messageTop1 = 'If you were lucky, and got a sticker, you can display it!';
         this.messageTop2 = null;
         this.messageBottom1 = 'Displayed stickers always appear next to your username.';
         this.messageBottom2 = 'When clicked by anyone, they lead to the post that sticker represents.';

@@ -1,7 +1,7 @@
 <div *ngIf="isSaving" style="text-align: center;" class="horizontal-center">
   <app-loading-spinner></app-loading-spinner>
 </div>
-<form #f='ngForm' (ngSubmit)="onSubmit()" *ngIf="!isSaving" class="horizontal-center">
+<form #f='ngForm' *ngIf="!isSaving" class="horizontal-center">
   <div class="row">
     <div class="col-md"></div>
     <div class="col-md">
@@ -170,7 +170,7 @@
       <!-- confirm -->
       <div class="row" *ngIf="!onBoarding">
         <div class="col-6 offset-6">
-          <button class="btn float-right">Confirm</button>
+          <button (click)='onSubmit()' class="btn float-right">Confirm</button>
         </div>
       </div>
     </div>
