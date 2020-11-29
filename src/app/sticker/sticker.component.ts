@@ -54,6 +54,7 @@ export class StickerComponent implements OnInit, OnDestroy {
   }
 
   onClick() {
+    if (this.onBoarding) return;
     this.router.navigate(['/post/', this.pid]);
   }
 
