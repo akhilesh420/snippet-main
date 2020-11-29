@@ -20,13 +20,13 @@ import { WindowStateService } from 'src/app/shared/window.service';
   export class PostComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @Input() postDetails: PostDetails;
-  @Input() createPost?: boolean = false;
-  pid: string;
-  @Input() postContent$?: BehaviorSubject<any>;
-  @Input() postType$?: Subject<string>;
-  @Input() stickerContent$?: BehaviorSubject<any>;
   @Input() playVideo: boolean;
   @Input() tutorial?: boolean = false;
+  pid: string;
+  postContent$?: BehaviorSubject<any>;
+  postType$?: Subject<string>;
+  stickerContent$?: BehaviorSubject<any>;
+
 
   @Output() addClick = new EventEmitter();
 
@@ -135,19 +135,16 @@ import { WindowStateService } from 'src/app/shared/window.service';
     }, errorMessage => {
       console.log(errorMessage);
     });
+
+    // user profile setup
     this.uid = this.postDetails.uid;
     this.profileRoute = "/profile/" + this.uid;
     this.setUpProfile();
 
-    if (!this.createPost) {
-      this.pid = this.postDetails.pid; //exists because of id field
-      this.setUpPost();
-      this.setUpActivity();
-    } else {
-      this.postType$.pipe(takeUntil(this.notifier$)).subscribe(response => {
-        this.postType = response;
-      }, error => console.log(error));
-    }
+    // post setup
+    this.pid = this.postDetails.pid; //exists because of id field
+    this.setUpPost();
+    this.setUpActivity();
   }
 
   setUpPost() {
@@ -254,7 +251,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   postView() {
-    if (!this.viewed && !this.createPost && this.isAuthenticated) {
+    if (!this.viewed && this.isAuthenticated) {
       this.viewed = true;
       this.activityService.addViews(this.pid,this.myUid,this.uid);
     }

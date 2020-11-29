@@ -358,10 +358,9 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       } else {
         if (this.onBoardingStep === 3) {
           this.miscellaneousService.onBoardingStep$.next(4);
-        }
-        if (this.onBoardingStep === 5) {
+        } else if (this.onBoardingStep === 5) {
           this.miscellaneousService.onBoardingStep$.next(6);
-        }else if (this.onBoardingStep === 6) {
+        } else if (this.onBoardingStep === 6) {
           this.miscellaneousService.onBoardingStep$.next(7);
         }
       }

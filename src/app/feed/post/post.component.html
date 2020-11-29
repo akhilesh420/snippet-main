@@ -38,7 +38,7 @@
           <span #holderText [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">Holder List</span>
         </div>
         <!-- Metrics -->
-        <div *ngIf="engagementRatio === 1  && !createPost" class="float-right">
+        <div *ngIf="engagementRatio === 1" class="float-right">
           <!-- Views -->
           <div class="metrics height-auto">
             <img src=" /assets/icons/Post Icons/viewcounterSymbol.svg">
@@ -54,7 +54,7 @@
       <!-- Description -->
       <div *ngIf="!holderToggle">
         <span class="float-left text-left"
-              [ngClass]="engagementRatio === 1  && !createPost ? 'engaged' : 'reached'">{{postDetails.description}}</span>
+              [ngClass]="engagementRatio === 1 ? 'engaged' : 'reached'">{{postDetails.description}}</span>
       </div>
     </div>
     <!-- Holder List Popup -->
@@ -115,7 +115,7 @@
         <div class="row no-margin no-padding">
           <div class="col-6 no-margin no-padding username-col" #usernameCol>
              <!-- Username -->
-            <a style = "cursor: pointer;" [routerLink]='profileRoute'>
+            <a style = "cursor: pointer;" [routerLink]='tutorial ? profileRoute : []'>
               <span class = "stickerMargin" [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}" #usernameRef>
                 {{username}}
               </span>
