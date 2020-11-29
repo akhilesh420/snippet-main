@@ -108,7 +108,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                                             'Continue',
                                                             undefined,
                                                             ['routing', 'default']));
-              }, 500);
+              }, 200);
             });
           }
           if (step === 5) {
@@ -118,7 +118,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                                             'Continue',
                                                             undefined,
                                                             ['routing', 'default']));
-              }, 500);
+              }, 200);
             });
           }
           if (step === 6) {
@@ -128,7 +128,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
                                                             'Continue',
                                                             undefined,
                                                             ['routing', 'default']));
-              }, 500);
+              }, 200);
             });
           }
         });
@@ -356,7 +356,14 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       if (!this.onBoarding) {
         this.router.navigate(['/profile/'+this.uid]);
       } else {
-        this.miscellaneousService.onBoardingStep$.next(++this.onBoardingStep);
+        if (this.onBoardingStep === 3) {
+          this.miscellaneousService.onBoardingStep$.next(4);
+        }
+        if (this.onBoardingStep === 5) {
+          this.miscellaneousService.onBoardingStep$.next(6);
+        }else if (this.onBoardingStep === 6) {
+          this.miscellaneousService.onBoardingStep$.next(7);
+        }
       }
     });
   }

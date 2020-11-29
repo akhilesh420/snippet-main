@@ -212,7 +212,6 @@ export class AuthComponent implements OnInit, OnDestroy {
         } else if (this.isForgetMode) {
           this.miscellaneousService.setPopUp(new PopUp("An email has been sent to your account",'okay', undefined, ['default', 'reject']));
           this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-            // this.router.navigate(['/explore']);
             this.isLoading = false;
           });
         }
