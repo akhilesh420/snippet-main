@@ -77,6 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (val) {
         this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
           this.onBoardingStep = step;
+          this.setOnBoardingStep(); //temp log
         });
         this.onBoardingFailSafe();
       } else {
