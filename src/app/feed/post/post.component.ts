@@ -20,7 +20,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   export class PostComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @Input() postDetails: PostDetails;
-  @Input() playVideo: boolean;
+  @Input() postFocus: boolean;
   @Input() tutorial?: boolean = false;
   pid: string;
   postContent$?: BehaviorSubject<any>;
@@ -79,6 +79,9 @@ import { WindowStateService } from 'src/app/shared/window.service';
   onBoarding: boolean = false;
   onBoardingStep: number;
 
+  postCollection: Collection[] = [];
+  collectionLoaded = false;
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
@@ -118,6 +121,12 @@ import { WindowStateService } from 'src/app/shared/window.service';
           this.onBoardingStep = step;
         });
       }
+    });
+
+    // post collection list
+    this.activityService.getPostCollection(this.pid).subscribe(response => {
+      this.postCollection = response;
+      this.collectionLoaded = true;
     });
   }
 
@@ -212,25 +221,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
     }
   }
 
-  getDetailsButton() {
-    let close = "https://i.ibb.co/ZmbVSG4/Post-Detail-Button-3x.png";
-    let open = "https://i.ibb.co/p1fcnfh/Post-Detail-Button-open-3x.png";
-    return this.showDetails === false ?  close : open;
-  }
-
-  getDetailsButtonSize() {
-    let width: string;
-    let height: string;
-    if (!this.showDetails) {
-      width = this.detailsButtonSize.toString() + 'px';
-      height = 'auto'
-    } else {
-      height = this.detailsButtonSize.toString() + 'px';
-      width = 'auto'
-    }
-    return {width: width, height: height};
-  }
-
   convertToShort(num: number): string {
     let short = 0;
     if (num/1000000 <= 1) {
@@ -246,10 +236,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
       }
   }
 
-  onAddClick(field: string) {
-    this.addClick.emit(field);
-  }
-
   postView() {
     if (!this.viewed && this.isAuthenticated) {
       this.viewed = true;
@@ -259,55 +245,53 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   collectSticker() {
     if (this.isAuthenticated) {
-      if (!this.collectingSticker) {
+      if (!this.collectingSticker && this.collectionLoaded) {
         if (this.onBoarding && this.onBoardingStep != 2) {
           return;
         }
         this.collectingSticker = true;
         let popUpObj: PopUp;
-        this.activityService.getPostCollection(this.pid).pipe(take(1)).subscribe(response => {
-          let valid: boolean = false;
-          for (let key in response) {
-            if (response[key].collectorID === this.myUid) {
-              valid = false;
-              popUpObj = new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default'],'collection/'+this.myUid);
-              break;
-            } else {
-              valid = true;
-            }
-          }
-          if (valid) {
-            if (this.engagementRatio < 1) {
-                this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
+        let valid: boolean = false;
 
-                if (this.onBoarding && this.onBoardingStep === 2) {
-                  //For onBoarding
-                  this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
-                    if (val) {
-                      this.miscellaneousService.onBoardingStickerCollection$.next(true);
-                    }
-                  });
-                }
-                popUpObj = new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default'], 'profile/'+this.myUid+'/edit');
-            } else {
-              popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
-            }
+        for (let key in this.postCollection) {
+          if (this.postCollection[key].collectorID === this.myUid) {
+            valid = false;
+            popUpObj = new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default'],'collection/'+this.myUid);
+            break;
+          } else {
+            valid = true;
           }
-          if (!(this.onBoarding && this.onBoardingStep === 2)) {
-            this.miscellaneousService.setPopUp(popUpObj);
-          }
-          //testing
-          if (this.onBoarding && this.onBoardingStep === 2) {
-            //For onBoarding
-            this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
-              if (val) {
-                this.miscellaneousService.onBoardingStickerCollection$.next(true);
+        }
+        if (valid) {
+          if (this.engagementRatio < 1) {
+              this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
+
+              if (this.onBoarding && this.onBoardingStep === 2) {
+                //For onBoarding
+                this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+                  if (val) {
+                    this.miscellaneousService.onBoardingStickerCollection$.next(true);
+                  }
+                });
               }
-            });
+              popUpObj = new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default'], 'profile/'+this.myUid+'/edit');
+          } else {
+            popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
           }
-          // testing
-          this.collectingSticker = false;
-        });
+        }
+
+        if (!(this.onBoarding)) {
+          this.miscellaneousService.setPopUp(popUpObj);
+        } else {
+          //For onBoarding
+          this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
+            if (val) {
+              this.miscellaneousService.onBoardingStickerCollection$.next(true);
+            }
+          });
+        }
+
+        this.collectingSticker = false;
       }
     } else {
       this.router.navigate(['/auth']);
@@ -322,7 +306,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   videoToggle() {
     try {
       if (this.postType != 'video/mp4') return;
-      if (this.playVideo) {
+      if (this.postFocus) {
         this.videoPlayer.nativeElement.play();
       } else {
         this.videoPlayer.nativeElement.pause();
