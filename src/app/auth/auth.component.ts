@@ -185,6 +185,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           //navigate from startOnBoarding function
           this.miscellaneousService.startOnBoarding(resData.localId);
+          this.router.navigate(['/explore']);
         } else if (!this.isLoginMode && !this.isForgetMode) {
           let profileDetails  = new ProfileDetails(this.username, new Biography("","",""), true, 0);
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());

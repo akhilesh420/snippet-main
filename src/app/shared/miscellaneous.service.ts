@@ -88,7 +88,6 @@ export class MiscellaneousService {
         this.onBoardingStep$.next(details.onBoardingStep);
       } else {
         this.onBoarding$.next(false);
-        this.router.navigate(['/explore'])
       }
       notifier$.next();
       notifier$.complete();
