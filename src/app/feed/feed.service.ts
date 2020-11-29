@@ -12,6 +12,8 @@ import { PostService } from '../shared/post.service';
 })
 export class FeedService {
 
+  excludePID: string[] = ['mV3PPI52zGtRH7T6j545'];
+
   constructor(private activityService: ActivityService,
               private postService: PostService,
               private afs: AngularFirestore) {
@@ -20,7 +22,10 @@ export class FeedService {
 
   // get explore page
   getExplorePage() {
-    return this.afs.collection<PostDetails>('post details', ref => ref.orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
+    return this.afs.collection<PostDetails>('post details', ref => ref.orderBy('dateCreated', 'desc'))
+            .valueChanges({idField: 'pid'}).pipe(map(postsList => {
+              return postsList.filter(post => !this.excludePID.includes(post.pid));
+            }));;
 
   }
 
