@@ -540,39 +540,41 @@
 /* Pulsate */
 
 .pulsate-sticker {	
-  -webkit-animation: pulsate-bck 1s ease-in-out infinite both;	
-          animation: pulsate-bck 1s ease-in-out infinite both;
+  -webkit-animation: pulsate-sticker 1s ease-in-out infinite both;	
+          animation: pulsate-sticker 1s ease-in-out infinite both;
 cursor:pointer;
 }
 
 
-@-webkit-keyframes pulsate-bck {
-0% {
-border-radius: 50%;
+@-webkit-keyframes pulsate-sticker {
+  0% {
+    -webkit-transform: translateY(-70%) scale(1);
+            transform: translateY(-70%) scale(1);
+  }
+  50% {
+    -webkit-transform: translateY(-70%) scale(0.9);
+            transform: translateY(-70%) scale(0.9);
+  }
+  100% {
+    -webkit-transform: translateY(-70%) scale(1);
+            transform: translateY(-70%) scale(1);
+  }
+
 }
 
-50% {
-border-radius: 35%;
-}
 
-100% {
-border-radius: 50%
-}
-
-}
-
-
-@keyframes pulsate-bck {
-0% {
-border-radius: 50%;
-}
-
-50% {
-border-radius: 35%;
-}
-
-100% {
-border-radius: 50%
-}
+@keyframes pulsate-sticker {
+  0% {
+    -webkit-transform: translateY(-70%) scale(1);
+            transform: translateY(-70%) scale(1);
+  }
+  50% {
+    -webkit-transform: translateY(-70%) scale(0.9);
+            transform: translateY(-70%) scale(0.9);
+  }
+  100% {
+    -webkit-transform: translateY(-70%) scale(1);
+            transform: translateY(-70%) scale(1);
+  }
 
 }
