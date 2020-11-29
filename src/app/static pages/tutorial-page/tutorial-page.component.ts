@@ -49,7 +49,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
 
     this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
       if (!val) {
-        this.router.navigate(['/auth/69']); //change to auth
+        this.router.navigate(['/explore']); //change to auth
       }
     });
 
