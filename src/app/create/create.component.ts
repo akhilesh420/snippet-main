@@ -73,12 +73,14 @@ export class CreateComponent implements OnInit, OnDestroy {
 
     this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.onBoarding = val;
-      this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-        this.onBoardingStep = step;
-        if (step != 8) {
-          this.router.navigate(['/tutorial']);
-        }
-      })
+      if (val) {
+        this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+          this.onBoardingStep = step;
+          if (step != 8) {
+            this.router.navigate(['/tutorial']);
+          }
+        });
+      }
     })
 
     this.route.params
