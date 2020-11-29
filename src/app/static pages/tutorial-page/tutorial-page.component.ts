@@ -30,6 +30,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
   messageBottom2: string;
 
   activeNext: boolean = false;
+  pid: string = 'mV3PPI52zGtRH7T6j545';
 
   constructor(private miscellaneousService: MiscellaneousService,
               private authService: AuthService,
@@ -64,7 +65,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
         return;
       }
       if (step === 2) {
-        this.feedService.getPostPage('DRVlZf1TkrPAogEE7u5s').pipe(takeUntil(this.notifier$)).subscribe(details => {
+        this.feedService.getPostPage(this.pid).pipe(takeUntil(this.notifier$)).subscribe(details => {
           this.postDetails = details[0];
           this.loadingPost = false;
         });
@@ -89,7 +90,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
         this.router.navigate(['/profile/' + this.uid + '/edit']);
       }
       if (step === 4) {
-        this.feedService.getPostPage('DRVlZf1TkrPAogEE7u5s').pipe(takeUntil(this.notifier$)).subscribe(details => {
+        this.feedService.getPostPage(this.pid).pipe(takeUntil(this.notifier$)).subscribe(details => {
           this.postDetails = details[0];
           this.loadingPost = false;
         });
