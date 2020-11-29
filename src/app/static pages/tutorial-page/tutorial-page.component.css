@@ -96,6 +96,13 @@
 .post {
   width: 100vw;
   height: 55vh;
+  overflow: hidden;
+}
+
+.post > img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 
 /* Media-Query */
