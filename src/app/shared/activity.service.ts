@@ -73,7 +73,7 @@ export class ActivityService {
   // add view to realtime db
   // viewerID: UID of the person who viewed the post
   // vieweeID: UID of the person whose post was viewed
-  addViews(pid: string, viewerID: string, vieweeID: string) {
+  addViews(pid: string, vieweeID: string, viewerID: string = 'anonymous') {
     const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
     this.viewsRef.push(obj);
     this.updateActivity('view', vieweeID, pid);

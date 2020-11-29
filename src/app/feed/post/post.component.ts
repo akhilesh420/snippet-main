@@ -17,7 +17,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-  export class PostComponent implements OnInit, AfterViewChecked, OnDestroy {
+  export class PostComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
 
   @Input() postDetails: PostDetails;
   @Input() postFocus: boolean;
@@ -82,6 +82,9 @@ import { WindowStateService } from 'src/app/shared/window.service';
   postCollection: Collection[] = [];
   collectionLoaded = false;
 
+  viewTimer: any;
+  viewTime: number = 1500; //how long for a viewed post in milliseconds
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
@@ -128,6 +131,12 @@ import { WindowStateService } from 'src/app/shared/window.service';
       this.postCollection = response;
       this.collectionLoaded = true;
     });
+
+    this.postViewTime();
+  }
+
+  ngOnChanges() {
+    this.postViewTime();
   }
 
   ngAfterViewChecked() {
@@ -237,9 +246,23 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   postView() {
-    if (!this.viewed && this.isAuthenticated) {
-      this.viewed = true;
-      this.activityService.addViews(this.pid,this.myUid,this.uid);
+    if (this.viewed) return;
+    console.log('post viewed'); //temp log
+    this.viewed = true;
+    if (!this.isAuthenticated) {
+      this.activityService.addViews(this.pid,this.uid);
+    } else {
+      this.activityService.addViews(this.pid,this.uid,this.myUid);
+    }
+  }
+
+  postViewTime() {
+    if (this.viewed) return;
+    if (this.postFocus) {
+      this.viewTimer = setTimeout(() => this.postView(), this.viewTime);
+    } else {
+      if (!this.viewTimer) return;
+      clearTimeout(this.viewTimer);
     }
   }
 
