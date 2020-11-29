@@ -83,12 +83,7 @@ export class UsersService {
   // Update profile details from cloud firestore
   updateProfileDetails(uid: string, details: ProfileDetails) {
     const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
-    let obj;
-    if (details.onBoarding) {
-      obj = {username : details.username, bio: bio, onBoarding: details.onBoarding, onBoardingStep : details.onBoardingStep};
-    } else {
-      obj = {username : details.username, bio: bio};
-    }
+    let obj = {username : details.username, bio: bio};
     this.profileDetailsCollection.doc(uid).update(obj);
   }
 

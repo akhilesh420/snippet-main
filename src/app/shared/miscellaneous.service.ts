@@ -38,9 +38,6 @@ export class MiscellaneousService {
 
   ngOnInit() {
     this.loadingStart.next(false);
-    this.onBoardingStep$.subscribe(step => {
-      console.log(step); //temp log
-    })
   }
 
   getLoading() {
@@ -83,7 +80,6 @@ export class MiscellaneousService {
   }
 
   startOnBoarding(uid: string) {
-    let profileDetails: ProfileDetails;
     let notifier$ = new Subject();
     this.userService.getProfileDetails(uid).pipe(takeUntil(notifier$)).subscribe(details => {
       if (!details) return;
