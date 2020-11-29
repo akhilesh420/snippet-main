@@ -6,7 +6,7 @@
     <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
     <div *ngIf="feedList$ | async; let posts">
       <div class="post-container" *ngFor="let postDetails of posts; let i = index;" #post>
-        <app-post [postDetails]="postDetails" [playVideo]='i === postNumber'> </app-post>
+        <app-post [postDetails]="postDetails" [postFocus]='i === postNumber'> </app-post>
       </div>
     </div>
     <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">

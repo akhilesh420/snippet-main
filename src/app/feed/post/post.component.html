@@ -115,7 +115,7 @@
         <div class="row no-margin no-padding">
           <div class="col-6 no-margin no-padding username-col" #usernameCol>
              <!-- Username -->
-            <a style = "cursor: pointer;" [routerLink]='tutorial ? profileRoute : []'>
+            <a style = "cursor: pointer;" [routerLink]='!tutorial ? profileRoute : []'>
               <span class = "stickerMargin" [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}" #usernameRef>
                 {{username}}
               </span>
