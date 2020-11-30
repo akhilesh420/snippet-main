@@ -21,7 +21,12 @@
   </ng-template>
   <!-- post details -->
   <div class="postDetails"
-      (click)="showComments ? showDetails = false : showDetails = !showDetails; showComments = false; holderToggle = false;">
+      (click)="showComments ? showDetails = false : showDetails = !showDetails;
+              showComments = false;
+              holderToggle = false;
+              playFailSafe = false;
+              allowToggle = true;
+              videoToggle();">
     <div class="postTitle inline float-left pointer">
         {{postDetails.title}}
     </div>
@@ -150,7 +155,7 @@
     </a>
   </div>
     <!-- Fail-safe button -->
-    <div class = "fail-safe">
+    <div class = "fail-safe" *ngIf='playFailSafe' (click)='playFailSafe = false; allowToggle = true; videoToggle();'>
       <img src = "assets/icons/Post Icons/failSafeButton.png">
     </div>
 </div>

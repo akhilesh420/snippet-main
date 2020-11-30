@@ -144,7 +144,7 @@
   left: 0px;
   width: 8vw;
   height: 8vw;
-  
+
   z-index: 1;
 }
 
@@ -348,6 +348,7 @@
   height: auto;
   position: relative;
   top: 40%;
+  cursor:pointer;
 }
 
 .fail-safe > img {
@@ -564,8 +565,8 @@
 
 /* Pulsate */
 
-.pulsate-sticker {	
-  -webkit-animation: pulsate-sticker 1s ease-in-out infinite both;	
+.pulsate-sticker {
+  -webkit-animation: pulsate-sticker 1s ease-in-out infinite both;
           animation: pulsate-sticker 1s ease-in-out infinite both;
 cursor:pointer;
 }

@@ -32,7 +32,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   profileDetails?: ProfileDetails;
   profileStickers$?: Observable<ProfileSticker[]>;
-  postType: string;
+  postType: string = 'image/jpeg';
   notifier$ = new Subject();
   collectionList: Observable<Collection[]>;
 
@@ -85,6 +85,8 @@ import { WindowStateService } from 'src/app/shared/window.service';
   viewTimer: any;
   viewTime: number = 1500; //how long for a viewed post in milliseconds
 
+  playFailSafe: boolean = false;
+  allowToggle: boolean = true;
   constructor(private postService: PostService,
               private authService: AuthService,
               private usersService: UsersService,
@@ -137,6 +139,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   ngOnChanges() {
     this.postViewTime();
+    this.allowToggle = true;
   }
 
   ngAfterViewChecked() {
@@ -328,12 +331,15 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   videoToggle() {
     try {
-      if (this.postType != 'video/mp4') return;
+      if (!this.postType.includes('video') || !this.allowToggle) return;
       if (this.postFocus) {
-        this.videoPlayer.nativeElement.play();
+        this.videoPlayer.nativeElement.play()
+          .then(() => this.playFailSafe = false)
+          .catch((error) => this.playFailSafe = true);
       } else {
         this.videoPlayer.nativeElement.pause();
       }
+      this.allowToggle = false;
     } catch (error) {
       return;
     }
