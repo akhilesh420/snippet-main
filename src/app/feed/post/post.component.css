@@ -290,7 +290,7 @@
   position: relative;
   width: 90%;
   height: 40%;
-  border: 2px solid #D8B869;
+  border: 2px solid #e2b33d;
   border-radius: 15px;
   background: rgba(8,7,8,0.6);
   padding: 2% 2% 2% 3%;
@@ -298,7 +298,7 @@
 }
 
 .no-holders {
-  color: #D8B869;
+  color: #e2b33d;
 }
 
 .holder-list {
@@ -346,13 +346,15 @@
 .fail-safe {
   width: 30%;
   height: auto;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  position: relative;
+  top: 40%;
 }
+
+.fail-safe > img {
+  width: 100%;
+  height: auto;
+}
+
 
 
 
