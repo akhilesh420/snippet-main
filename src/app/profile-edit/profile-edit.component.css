@@ -149,6 +149,7 @@ input.invalidAmount {
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
+  object-fit: cover;
 }
 
 li {
@@ -208,6 +209,7 @@ li {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 

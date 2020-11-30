@@ -270,20 +270,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  setUpStickerSize(sticker: any) {
-    let stickerProp = {'height':'100%', 'width':'auto'};
-    let width = sticker.width;
-    let height= sticker.height;
-    if (width/height < 1) {
-      stickerProp.width = '100%';
-      stickerProp.height = 'auto';
-    } else {
-      stickerProp.width = 'auto';
-      stickerProp.height = '100%';
-    }
-    return stickerProp;
-  }
-
   checkUpload() {
     if (this.dpUpload) {
       return true

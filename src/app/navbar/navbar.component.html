@@ -50,8 +50,6 @@
         </a>
     </div>
     <div class="col text-center dropupSymbol" (click)="dropUp = !dropUp" (clickOutside)="dropUp = false">
-        <!-- <img *ngIf="currentRoute != '/auth' && currentRoute != '/tutorial' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
-        <img *ngIf="currentRoute === '/auth' || currentRoute === '/tutorial' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg"> -->
         <img *ngIf="currentRoute != '/auth' && currentRoute != '/feedback'"  src="assets/icons/NavBar icons/White (Inactive)/optionsSymbol.svg">
         <img *ngIf="currentRoute === '/auth' || currentRoute === '/feedback'"  src="assets/icons/NavBar icons/Gold (Active)/optionsSymbol.svg">
     </div>

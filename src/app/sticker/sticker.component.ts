@@ -16,7 +16,6 @@ export class StickerComponent implements OnInit, OnDestroy {
   @Input() size: String = "24px";
 
   stickerSize = {};
-  imageProp = {'height':'auto', 'width':'auto'};
 
   stickerContent: BehaviorSubject<any>;
   notifier$ = new Subject();
@@ -40,18 +39,6 @@ export class StickerComponent implements OnInit, OnDestroy {
       }
     });
    }
-
-  onLoad(event: any) {
-    let width = event.target.width;
-    let height= event.target.height;
-    if (width/height < 1) {
-      this.imageProp.width = '100%';
-      this.imageProp.height = 'auto';
-    } else {
-      this.imageProp.width = 'auto';
-      this.imageProp.height = '100%';
-    }
-  }
 
   onClick() {
     if (this.onBoarding) return;
