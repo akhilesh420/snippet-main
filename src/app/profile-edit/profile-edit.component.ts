@@ -258,13 +258,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 10*1024*1024) {
+        if (file.size < 15*1024*1024) {
           this.error = null;
           this.displayPicture = file;
           this.displayPicture$.next(event.target.result);
           this.activeNext = true;
         } else {
-          this.error ='Post file size too big! There is a 10 MB limit';
+          this.error ='Post file size too big! There is a 15 MB limit';
         }
       }
     }

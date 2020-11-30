@@ -6,8 +6,8 @@ import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { WindowStateService } from '../shared/window.service';
 import { FeedService } from './feed.service';
-import { ScrollService } from '../shared/scroll.service';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
+import { ScrollService } from '../shared/scroll.service';
 
 @Component({
   selector: 'app-feed',
@@ -37,7 +37,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   //Video auto play and pause
   postHeight: number; //height of the posts
-  postMarginTop: number; //margin on each post;
+  postMarginTop: number; //top margin on each post;
+  postMarginBottom: number; // bottom margin on each post;
   postNumber: number; //the index of the post thats being viewed
   postNumber$ = new Subject<number>(); //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
@@ -131,7 +132,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   getViewport() {
-    this.postMarginTop = 0;
+    this.postMarginTop = 15;
+    this.postMarginBottom = this.mobileCheck ? 0 : 25;
     this.postHeight = this.post.nativeElement.offsetHeight;
     this.viewPort = (this.postHeight+this.postMarginTop);
     this.triggerArea = this.triggerMultiplier*this.viewPort;

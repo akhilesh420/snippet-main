@@ -72,7 +72,7 @@
   .post-container {
     height: calc(100vh - 4.44vh - 25px);
     width: calc(9 * (100vh - 7.44vh) / 16);
-    max-width: 100vw; 
+    max-width: 100vw;
     /* border-radius: 1.67vh; */
     margin-bottom: 25px;
     overflow: hidden;
