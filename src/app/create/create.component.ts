@@ -170,14 +170,13 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   contentFileDetails(file, event) {
-    if (file.size < 10*1024*1024) {
+    if (file.size < 80*1024*1024) {
       this.error = undefined;
       this.storageFile = file;
       this.postType$.next(file.type);
-      console.log(file.type); //temp log
       this.postContent$.next(event.target.result);
     } else {
-      this.error ='Post file size too big! There is a 10 MB limit';
+      this.error ='Post file size too big! There is a 80 MB limit';
     }
   }
 
@@ -189,12 +188,12 @@ export class CreateComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 10*1024*1024) {
+        if (file.size < 15*1024*1024) {
           this.error = undefined;
           this.stickerContent = file;
           this.stickerContent$.next(event.target.result);
         } else {
-          this.error ='Sticker file size too big! There is a 10 MB limit';
+          this.error ='Sticker file size too big! There is a 15 MB limit';
         }
       }
     }

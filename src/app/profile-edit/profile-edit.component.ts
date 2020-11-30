@@ -258,30 +258,16 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
 
       reader.onload = (event:any) => {
-        if (file.size < 10*1024*1024) {
+        if (file.size < 15*1024*1024) {
           this.error = null;
           this.displayPicture = file;
           this.displayPicture$.next(event.target.result);
           this.activeNext = true;
         } else {
-          this.error ='Post file size too big! There is a 10 MB limit';
+          this.error ='Post file size too big! There is a 15 MB limit';
         }
       }
     }
-  }
-
-  setUpStickerSize(sticker: any) {
-    let stickerProp = {'height':'100%', 'width':'auto'};
-    let width = sticker.width;
-    let height= sticker.height;
-    if (width/height < 1) {
-      stickerProp.width = '100%';
-      stickerProp.height = 'auto';
-    } else {
-      stickerProp.width = 'auto';
-      stickerProp.height = '100%';
-    }
-    return stickerProp;
   }
 
   checkUpload() {
