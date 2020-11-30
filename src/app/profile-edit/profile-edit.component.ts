@@ -374,6 +374,5 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
-    this.authService.onBoarding.next('Login');
   }
 }

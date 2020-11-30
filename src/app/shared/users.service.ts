@@ -215,16 +215,18 @@ export class UsersService {
 
   // --------------------------------------- On boarding ---------------------------------------
   getOnBoarding(uid: string) {
-    const data = this.afs.doc<OnBoarding>('On Boarding/'+uid);
+    const data = this.afs.doc<OnBoarding>('on boarding/'+uid);
     return data.valueChanges();
   }
 
   addOnBoarding(uid: string, data: OnBoarding) {
-
+    const obj = {...data};
+    this.onBoardingCollection.doc(uid).set(obj);
   }
 
-  updateOnBoarding(uid: string, onBoarding: boolean, onBoardingStep: number) {
-
+  updateOnBoarding(uid: string, onBoarding: boolean, onBoardingStep: number, timeTaken: number[]) {
+    const obj = {onBoarding: onBoarding, onBoardingStep: onBoardingStep, timeTaken: timeTaken}
+    this.onBoardingCollection.doc(uid).update(obj);
   }
 
   // --------------------------------------- Error handling ---------------------------------------

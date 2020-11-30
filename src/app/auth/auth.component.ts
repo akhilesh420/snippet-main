@@ -190,7 +190,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.router.navigate(['/explore']);
         } else if (!this.isLoginMode && !this.isForgetMode) {
           let profileDetails  = new ProfileDetails(this.username, new Biography("","",""));
-          let onBoardingData = new OnBoarding(true, 0, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, []);
+          let onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
           this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {
             if (Object.keys(response).length === 0) {
@@ -198,17 +198,21 @@ export class AuthComponent implements OnInit, OnDestroy {
               this.userService.addPersonalDetails(resData.localId,personalDetails);
               this.userService.addProfileStickers(resData.localId,[]);
               this.userService.addDisplayPicture(resData.localId, new DisplayPicture(new Date(), 'null'), null);
+              this.userService.addOnBoarding(resData.localId, onBoardingData);
               this.activityService.addActivity(resData.localId, 'user');
               this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: resData.localId, username: this.username, fullname: this.name, email: this.email});
               form.reset();
               this.isLoading = false;
               this.miscellaneousService.onBoardingStep$.next(2);
+              this.miscellaneousService.startOnBoarding(resData.localId);
               this.router.navigate(['/tutorial']);
             } else {
               this.error = "Username taken";
               this.authService.deleteUser(resData.idToken).pipe(take(1)).subscribe(response => {
-                this.authService.logout();
+                this.authService.logout(false);
+                this.isLoading = false;
               }, errorMessage => {
+                this.isLoading = false;
                 console.log(errorMessage);
               });
             }

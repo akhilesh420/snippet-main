@@ -1,4 +1,4 @@
-import { ProfileDetails } from './profile.model';
+import { OnBoarding, ProfileDetails } from './profile.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
@@ -28,10 +28,15 @@ export class MiscellaneousService {
 
   public navbarHeight: number = 47;
 
+  public onBoardingDetails: OnBoarding;
+  private onBoardingStartStep: number;
   public onBoardingStep$ = new BehaviorSubject<number>(0);
   public onBoarding$ = new BehaviorSubject<boolean>(false); //must be false to begin with for log in
   public exclusiveId: string;
   public onBoardingStickerCollection$ = new BehaviorSubject<boolean>(false);
+
+  private startTime: number;
+  private endTime: number;
 
   constructor(private userService: UsersService,
               private router: Router) { }
@@ -74,8 +79,25 @@ export class MiscellaneousService {
     this.popUpSetup.next(undefined);
   }
 
+  setTimeTaken(step: number, unload: boolean = false) {
+    if (unload || step === this.onBoardingStartStep) {
+      this.endTime = new Date().getTime();
+      const timetaken = this.endTime - this.startTime;
+
+      this.onBoardingDetails.timeTaken[step] += timetaken;
+      this.startTime = new Date().getTime();
+    } else {
+      this.endTime = new Date().getTime();
+      const timetaken = this.endTime - this.startTime;
+
+      this.onBoardingDetails.timeTaken[step-1] += timetaken;
+      this.startTime = new Date().getTime();
+    }
+  }
+
   endOnBoarding(uid: string) {
     if (!this.onBoarding$.value) return;
+    this.onBoardingStep$.next(9);
     this.onBoarding$.next(false);
   }
 
@@ -83,7 +105,10 @@ export class MiscellaneousService {
     let notifier$ = new Subject();
     this.userService.getOnBoarding(uid).pipe(takeUntil(notifier$)).subscribe(details => {
       if (!details) return;
+      this.onBoardingDetails = details;
       if (details.onBoarding) {
+        this.onBoardingStartStep = details.onBoardingStep;
+        this.startTime = new Date().getTime();
         this.onBoarding$.next(true);
         this.onBoardingStep$.next(details.onBoardingStep);
       } else {
@@ -99,6 +124,7 @@ export class MiscellaneousService {
   }
 
   updateOnBoarding(uid: string) {
-    this.userService.updateOnBoarding(uid, this.onBoarding$.value, this.onBoardingStep$.value);
+    console.log('updating on boarding'); //temp log
+    this.userService.updateOnBoarding(uid, this.onBoarding$.value, this.onBoardingStep$.value, this.onBoardingDetails.timeTaken);
   }
 }

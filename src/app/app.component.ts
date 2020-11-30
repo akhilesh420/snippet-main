@@ -77,7 +77,8 @@ export class AppComponent implements OnInit, OnDestroy {
       if (val) {
         this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
           this.onBoardingStep = step;
-          this.setOnBoardingStep(); //temp log
+          console.log(this.onBoardingStep);
+          this.setOnBoardingStep(false);
         });
         this.onBoardingFailSafe();
       } else {
@@ -127,8 +128,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:beforeunload')
-  setOnBoardingStep() {
+  setOnBoardingStep(unload: boolean = true) {
     if (this.onBoarding && this.onBoardingStep >= 2) {
+      this.miscellaneousService.setTimeTaken(this.onBoardingStep, unload);
       this.miscellaneousService.setOnBoardingStep(this.uid);
     }
   }
