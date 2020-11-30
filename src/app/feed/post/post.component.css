@@ -332,6 +332,15 @@
   padding-top: 0.5%;
 }
 
+.fail-safe {
+  width: 30%;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 
 
 /* Animations */

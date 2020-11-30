@@ -30,7 +30,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
   messageBottom2: string;
 
   activeNext: boolean = false;
-  pid: string = 'mV3PPI52zGtRH7T6j545';
+  pid: string = 'CMesTkvauogVljEX54IE';
 
   constructor(private miscellaneousService: MiscellaneousService,
               private authService: AuthService,
