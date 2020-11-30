@@ -1,10 +1,10 @@
 import { UsersService } from './../shared/users.service';
-import { Biography, ProfileDetails, PersonalDetails, DisplayPicture } from './../shared/profile.model';
+import { Biography, ProfileDetails, PersonalDetails, DisplayPicture, OnBoarding } from './../shared/profile.model';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthService, AuthResponseData } from './auth.service';
+import { AuthService, AuthResponseData, ExclusiveID } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
@@ -43,6 +43,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   userNumber: number;
   notifier$ = new Subject();
 
+  exclusiveDetails: ExclusiveID;
   onBoarding: boolean = false;
   onBoardingStep: number;
 
@@ -90,8 +91,9 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
     // testing
 
-    this.authService.getIDused(this.exclusiveId).pipe(takeUntil(this.notifier$)).subscribe(response => {
+    this.authService.getExclusiveDetails(this.exclusiveId).pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (response) {
+        this.exclusiveDetails = response;
         if (response.used <= 2) {
           this.userNumber = response.used;
           this.validID = true;
@@ -187,7 +189,8 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.miscellaneousService.startOnBoarding(resData.localId);
           this.router.navigate(['/explore']);
         } else if (!this.isLoginMode && !this.isForgetMode) {
-          let profileDetails  = new ProfileDetails(this.username, new Biography("","",""), true, 0);
+          let profileDetails  = new ProfileDetails(this.username, new Biography("","",""));
+          let onBoardingData = new OnBoarding(true, 0, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, []);
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
           this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {
             if (Object.keys(response).length === 0) {

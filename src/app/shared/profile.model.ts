@@ -10,9 +10,7 @@ export class ProfileDetails {
 
   constructor(
     public username: string,
-    public bio: Biography,
-    public onBoarding?: boolean,
-    public onBoardingStep?: number
+    public bio: Biography
   ) {}
 }
 
@@ -53,10 +51,13 @@ export class Profile {
   ) {}
 }
 
-export class Profiles {
+export class OnBoarding {
 
   constructor(
-    public uid: string,
-    public profile: Profile
+    public onBoarding: boolean,
+    public onBoardingStep: number,
+    public marketingRound: string,
+    public batch: string,
+    public timeTaken: number[]
   ) {}
 }

@@ -1,3 +1,4 @@
+import { OnBoarding } from './../shared/profile.model';
 import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
@@ -20,8 +21,10 @@ export interface AuthResponseData {
   registered?: boolean;
 }
 
-interface ExclusiveID {
+export interface ExclusiveID {
   used: number; //number of times the link has been used
+  marketingRound: string;
+  batch: string;
   user1?: Feedback;
   user2?: Feedback;
   user3?: Feedback;
@@ -197,8 +200,8 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
-  getIDused(id: string) {
-    const idDoc = this.afs.doc<{used: number}>('exclusive ID/'+id);
+  getExclusiveDetails(id: string) {
+    const idDoc = this.afs.doc<ExclusiveID>('exclusive ID/'+id);
     return idDoc.valueChanges();
   }
 

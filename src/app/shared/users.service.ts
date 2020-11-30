@@ -1,6 +1,6 @@
 import { BehaviorSubject, throwError} from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
-import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './profile.model';
+import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoarding } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -20,6 +20,7 @@ export class UsersService {
   private personalDetailsCollection: AngularFirestoreCollection<PersonalDetails>;
   private profileStickersCollection: AngularFirestoreCollection<ProfileSticker[]>;
   private displayPictureCollection: AngularFirestoreCollection<DisplayPicture>;
+  private onBoardingCollection: AngularFirestoreCollection<OnBoarding>;
 
   // Downloaded data storage
   private profileDetailsList: {uid: string, obs: BehaviorSubject<ProfileDetails>}[] = [];
@@ -35,6 +36,7 @@ export class UsersService {
     this.personalDetailsCollection = afs.collection<PersonalDetails>('personal details');
     this.profileStickersCollection = afs.collection<ProfileSticker[]>('profile stickers');
     this.displayPictureCollection = afs.collection<DisplayPicture>('display picture');
+    this.onBoardingCollection = afs.collection<OnBoarding>('on boarding');
   }
 
   // Stops more than max connection from occurring
@@ -71,12 +73,7 @@ export class UsersService {
   // Add profile details from cloud firestore
   addProfileDetails(uid: string, details: ProfileDetails) {
     const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
-    let obj;
-    if (details.onBoarding) {
-      obj = {username : details.username, bio: bio, onBoarding: details.onBoarding, onBoardingStep : details.onBoardingStep};
-    } else {
-      obj = {username : details.username, bio: bio};
-    }
+    const obj = {username : details.username, bio: bio};
     this.profileDetailsCollection.doc(uid).set(obj);
   }
 
@@ -85,10 +82,6 @@ export class UsersService {
     const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
     let obj = {username : details.username, bio: bio};
     this.profileDetailsCollection.doc(uid).update(obj);
-  }
-
-  updateOnBoarding(uid: string, onBoarding: boolean, onBoardingStep: number) {
-    this.profileDetailsCollection.doc(uid).update({onBoarding: onBoarding, onBoardingStep: onBoardingStep});
   }
 
   //--------------------------------------- Personal Details ---------------------------------------
@@ -218,6 +211,20 @@ export class UsersService {
     const filePath = 'Display picture/' + uid;
     const task = this.storage.upload(filePath, file);
     return task.percentageChanges();
+  }
+
+  // --------------------------------------- On boarding ---------------------------------------
+  getOnBoarding(uid: string) {
+    const data = this.afs.doc<OnBoarding>('On Boarding/'+uid);
+    return data.valueChanges();
+  }
+
+  addOnBoarding(uid: string, data: OnBoarding) {
+
+  }
+
+  updateOnBoarding(uid: string, onBoarding: boolean, onBoardingStep: number) {
+
   }
 
   // --------------------------------------- Error handling ---------------------------------------

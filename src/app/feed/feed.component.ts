@@ -226,7 +226,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   infiniteScroll() {
     if (!this.done && this.postNumber > this.maxPostNumber) {
-      if (this.postNumber === (this.batchNumber-1)*this.batchSize - 2) {
+      if (this.postNumber >= (this.batchNumber-1)*this.batchSize - 2) {
         this.moreBatch();
       }
       this.maxPostNumber = this.postNumber;

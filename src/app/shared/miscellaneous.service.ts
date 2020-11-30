@@ -81,7 +81,7 @@ export class MiscellaneousService {
 
   startOnBoarding(uid: string) {
     let notifier$ = new Subject();
-    this.userService.getProfileDetails(uid).pipe(takeUntil(notifier$)).subscribe(details => {
+    this.userService.getOnBoarding(uid).pipe(takeUntil(notifier$)).subscribe(details => {
       if (!details) return;
       if (details.onBoarding) {
         this.onBoarding$.next(true);
