@@ -124,6 +124,7 @@ export class MiscellaneousService {
   }
 
   updateOnBoarding(uid: string) {
+    if (!this.onBoardingDetails) return;
     console.log('updating on boarding'); //temp log
     this.userService.updateOnBoarding(uid, this.onBoarding$.value, this.onBoardingStep$.value, this.onBoardingDetails.timeTaken);
   }

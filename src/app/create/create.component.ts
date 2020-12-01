@@ -312,7 +312,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     forkJoin([postSubs, stickerSubs]).subscribe(results => {
       if (results[0] === 100 && results[1] === 100) {
         this.miscellaneousService.endLoading();
-        if (this.onBoarding) this.miscellaneousService.updateOnBoarding(this.uid); //end on boarding on server
+        this.miscellaneousService.updateOnBoarding(this.uid); //end on boarding on server
 
         this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
         this.postService.addPostContentRef(pid, new PostContent(pcid, this.storageFile.type));

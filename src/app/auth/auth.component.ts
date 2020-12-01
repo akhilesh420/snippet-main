@@ -83,13 +83,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   checkID() {
-    //Put after valid id is checked after testing
-    if (this.onBoardingStep === 0) {
-      this.miscellaneousService.onBoarding$.next(true);
-      this.miscellaneousService.exclusiveId = this.exclusiveId;
-      this.router.navigate(['/tutorial']);
-    }
-    // testing
 
     this.authService.getExclusiveDetails(this.exclusiveId).pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (response) {
@@ -97,6 +90,11 @@ export class AuthComponent implements OnInit, OnDestroy {
         if (response.used <= 2) {
           this.userNumber = response.used;
           this.validID = true;
+          if (this.onBoardingStep === 0) {
+            this.miscellaneousService.onBoarding$.next(true);
+            this.miscellaneousService.exclusiveId = this.exclusiveId;
+            this.router.navigate(['/tutorial']);
+          }
         } else {
           this.validID = false;
           this.error = "This link can't be used anymore";
