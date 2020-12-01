@@ -12,7 +12,7 @@ import { PostService } from '../shared/post.service';
 })
 export class FeedService {
 
-  excludePID: string[] = ['CMesTkvauogVljEX54IE'];
+  excludePID: string[] = ['TqsSoDk3tgo9w1Eo4UyG'];
 
   constructor(private activityService: ActivityService,
               private postService: PostService,
