@@ -195,13 +195,13 @@
   }
 
 .active-dropdown {
-  opacity: 100%;
+  opacity: 1;
 }
 
 .inactive-dropdown {
-  opacity: 80%;
+  opacity: 0.8;
 }
 
 .headerdropDown > .row > .col-12:hover, .headerdropDown > .row > a > .col-12:hover {
-  opacity: 100%;
+  opacity: 1;
 }
