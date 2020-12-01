@@ -1,9 +1,9 @@
-import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -31,7 +31,6 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
-import { environment } from '../environments/environment';
 import { WithLoadingPipe } from './shared/with-loading.pipe';
 import { DateSortPipe } from './shared/date-sort.pipe';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
@@ -39,7 +38,7 @@ import { ScrollableDirective } from './shared/directives/scrollable.directive';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { ShortenPipe } from './shared/shorten.pipe';
-import { FullscreenDirective } from './shared/directives/fullscreen.directive';
+import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { PopUpComponent } from './pop-up/pop-up.component';
 
 @NgModule({
@@ -67,7 +66,6 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     ScrollableDirective,
     NavbarComponent,
     ShortenPipe,
-    FullscreenDirective,
     PopUpComponent,
     SnapscrollDirective
   ],

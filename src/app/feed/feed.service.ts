@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { map, takeUntil } from 'rxjs/operators';
 import { PostDetails } from 'src/app/shared/post.model';
 import { Injectable } from '@angular/core';
@@ -12,7 +13,7 @@ import { PostService } from '../shared/post.service';
 })
 export class FeedService {
 
-  excludePID: string[] = ['TqsSoDk3tgo9w1Eo4UyG'];
+  excludePID: string[] = [environment.onBoardingPid];
 
   constructor(private activityService: ActivityService,
               private postService: PostService,

@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { AuthService } from './../../auth/auth.service';
 import { PostDetails } from './../../shared/post.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -6,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MiscellaneousService, PopUp } from 'src/app/shared/miscellaneous.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-tutorial-page',
@@ -30,7 +32,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
   messageBottom2: string;
 
   activeNext: boolean = false;
-  pid: string = 'TqsSoDk3tgo9w1Eo4UyG';
+  pid: string;
 
   constructor(private miscellaneousService: MiscellaneousService,
               private authService: AuthService,
@@ -40,6 +42,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.loadingPost = true;
+    this.pid = environment.onBoardingPid;
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -99,8 +102,8 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
           if (step === 7) {
             this.messageTop1 = "Each post has it's own holder list";
             this.messageTop2 = null;
-            this.messageBottom1 = 'If you have a posts sticker,';
-            this.messageBottom2 = 'you become one of the few people on its holder list';
+            this.messageBottom1 = "If you are one the of few people to collect a post's sticker,";
+            this.messageBottom2 = 'you become one part of the holder list';
             setTimeout(() => this.activeNext = true, 5000);
           }
           if (step === 8) {
