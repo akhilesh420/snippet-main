@@ -49,9 +49,7 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
     });
 
     this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      if (!val) {
-        this.router.navigate(['/explore']);
-      } else {
+      if (val) {
         this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
           this.onBoardingStep = step;
           this.activeNext = false;
