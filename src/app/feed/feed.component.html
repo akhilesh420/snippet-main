@@ -1,5 +1,6 @@
 <div class="row no-padding no-margin" align="center">
   <div class="col-12 no-margin"
+      [ngClass]='mobileCheck ? "mobile-padding" : null'
       (touchstart)='userTouchStart()'
       (touchend)='userTouchEnd()'
        #scrollContainer>
@@ -15,10 +16,5 @@
     <div *ngIf="!done && !loading" class="fail-safe">
       <img src= "assets/icons/nextArrow.svg" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
     </div>
-    <!-- <div style="position: fixed; top: 0; color: white;">
-      <p>Touch: {{touchDown}}</p>
-      <p>Postnumber: {{postNumber}}</p>
-      <p>max post number: {{maxPostNumber}}</p>
-    </div> -->
   </div>
 </div>

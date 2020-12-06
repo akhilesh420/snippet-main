@@ -43,8 +43,9 @@
   width: 100vw;
 }
 
-.col-12 {
+.mobile-padding {
   padding: 0 0 7.24vh 0;
+
 }
 
 .scroll {
