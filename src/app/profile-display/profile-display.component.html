@@ -1,9 +1,9 @@
-<div class="row no-padding no-margin view-width">
+<!-- <div class="row no-padding no-margin view-width">
   <div class="col-md-12 no-margin no-padding" align="center"
       *ngIf="profileDetails$ | async; let details">
-    <div class="outerContainer">
+    <div class="outerContainer"> -->
       <!-- Profile stickers -->
-      <div class="row profile-sticker-row"
+      <!-- <div class="row profile-sticker-row"
            *ngIf="profileStickers$ | async as stickers; else noStickers;">
         <div class="col-2 no-margin-no-padding"></div>
         <div class="col profile-sticker-col"
@@ -17,9 +17,9 @@
       <ng-template #noStickers>
         <div class="row no-stickers">
         </div>
-      </ng-template>
+      </ng-template> -->
       <!-- DP -->
-      <div class="row display-picture"
+      <!-- <div class="row display-picture"
           *ngIf="displayPicture$ | async as content;">
         <div class="col-3 display-picture-col">
           <div class="storySignifier">
@@ -30,9 +30,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- Bio -->
-        <div class="col-9 bio" align="left">
+        <!-- <div class="col-9 bio" align="left">
           <div class="row">
             <div class="col-12 title">
               {{details.bio.title}}
@@ -81,9 +81,9 @@
               <span>Edit</span>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- <div class="col-1 no-margin-no-padding" ></div> -->
-        <div class="col-9 username float-right"
+        <!-- <div class="col-9 username float-right"
              style="cursor: pointer;"
             (click)="navigateRoute()"
             [ngStyle]="{'font-size': (usernameFontSize*multiplier).toString() + 'px'}"
@@ -105,5 +105,68 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+  
+  <div class = "profileDisplay">
+    <div class = "row profileDisplayBorder">
+      <div class = "col no-margin-no-padding">
+        <div class = "row no-margin-no-padding displayStickers">
+          
+          <div class = "sticker col-2 no-margin-no-padding">
+
+          </div>
+
+          <div class = "sticker col-2 no-margin-no-padding">
+            <div class = "stickerContainer"></div>
+          </div>
+
+          <div class = "sticker col-2 no-margin-no-padding">
+            <div class = "stickerContainer"></div>
+          </div>
+
+          <div class = "sticker col-2 no-margin-no-padding">
+            <div class = "stickerContainer"></div>
+          </div>
+
+          <div class = "sticker col-2 no-margin-no-padding">
+            <div class = "stickerContainer"></div>
+          </div>
+
+          <div class = "sticker col-2 no-margin-no-padding">
+            <div class = "stickerContainer"></div>
+          </div>
+
+        </div>
+
+        <div class = "row no-margin-no-padding profileDetailsTop">
+          
+          <div class = "col-3 no-margin-no-padding displayPicture">
+            <div class = "dpContainer"></div>
+          </div>
+
+          <div class = "col-8 no-margin-no-padding profileDescription">
+
+          </div>
+
+        </div>
+
+        <div class = "row no-margin-no-padding profileDetailsBottom">
+
+          <div class = "col-3 no-margin-no-padding editButton">
+            <p class = "editButtonText">Edit Profile</p>
+          </div>
+
+          <div class = "col-8 no-margin-no-padding profileLink">
+            
+          </div>
+         
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 

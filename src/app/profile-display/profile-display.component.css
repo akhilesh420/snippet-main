@@ -1,4 +1,4 @@
-.outerContainer {
+/* .outerContainer {
   width: 493px;
   height: 281px;
   border: 2px solid #E3B33D;
@@ -387,4 +387,101 @@
 
 
 
+ */
+
+ .profileDisplay {
+    top: 1vh;
+    margin-bottom: 1vh;
+    height: 234px;
+    width: 353px;
+    position: relative;
+    background: rgba(196, 196, 196, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 13px; 
+ }
+
+.profileDisplayBorder {
+   height: 100%;
+   width: 100%;
+   background-image: url("src/assets/icons/Profile Display/profileDisplayBorder.svg");
+   
+
+ }
+
+.no-margin-no-padding {
+  margin: 0px;
+  padding: 0px;
+}
+
+.displayStickers {
+  height: 21.36%;
+  width: 100%;
+  margin-top: 2.5%;
+}
+
+.sticker {
+  height: 100%;
+}
+
+.stickerContainer {
+ height: 100%;
+ width: 84.985836%;
+ border-radius: 50%;
+ background-color: rgba(196, 196, 196, 1);
+ position: absolute;
+ left: 0px;
+}
+  
+.profileDetailsTop {
+  height: 38.461538%;
+  width: 100%;
+  margin-top: 2.5%;
+}
+
+.displayPicture {
+  margin-left: 2.5%;
+}
+
+.dpContainer {
+  background-color: rgba(196, 196, 196, 1);
+  width: 100%;
+  padding-top: 100%; 
+  position: relative;
+  border-radius: 50%;
+}
+
+.profileDescription {
+  height: 100%;
+  margin-left: 2.7%;
+}
+
+.profileDetailsBottom {
+  margin-top: 0.8%;
+  height: 8.119658%;
+}
+
+.editButton {
+  height: 100%;
+  margin-left: 2.7%;
+  border: 0.8px solid #E2B33D;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.5));
+  border-radius: 2px;
+}
+
+.editButtonText {
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 9px;
+  text-align: center;
+  padding-top: 3.6%;
+}
+
+.profileLink {
+  height: 100%;
+  margin-left: 2.7%;
+}
 
