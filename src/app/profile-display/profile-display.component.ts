@@ -77,7 +77,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    console.log(this.uid);
     this.setUp();
   }
 

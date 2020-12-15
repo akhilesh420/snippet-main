@@ -13,63 +13,60 @@ const runtimeOpts = {
   memory: '2GB'
 }
 
-exports.faststart = functions.runWith(runtimeOpts).storage.object().onFinalize(async (object) => {
+exports.postCreate = functions.runWith(runtimeOpts).firestore
+  .document('post content/{pid}')
+  .onCreate(async (snap, context) => {
 
-  const fileBucket = object.bucket; // The Storage bucket that contains the file.
-  const filePath = object.name; // File path in the bucket.
-  const contentType = object.contentType; // File content type.
-  const metageneration = object.metageneration; // Number of times metadata has been generated. New objects have a value of 1.
-  const inputMetadata = object.metadata;
+    const fileBucket = 'snippet-test-716cd.appspot.com';
 
-  if (!contentType.includes('video')) {
-    functions.logger.info('File skipped because file type:', contentType);
-    return null;
-  }
+    const newValue = snap.data();
+    const fileName = newValue.name;
+    const contentType = newValue.fileFormat;
 
-  if(inputMetadata && inputMetadata.faststart === 'true') {
-    functions.logger.info("File skipped because it's already been transcoded");
-    return null;
-  }
+    functions.logger.info('File name:', fileName);
 
-  const fileName = path.basename(filePath);
-  const bucket = admin.storage().bucket(fileBucket);
-  const tempFilePath = path.join(os.tmpdir(), fileName);
-  const outputFilePath =  path.join(os.tmpdir(), 'faststarted.mp4');
-  const metadata = {
-    contentType: contentType,
-    faststart: 'true'
-  };
+    if (!contentType.includes('video')) {
+      functions.logger.info('File skipped because file type:', contentType);
+      return null;
+    }
 
-  await bucket.file(filePath).download({destination: tempFilePath});
+    const filePath = 'Post/' + fileName;
+    const bucket = admin.storage().bucket(fileBucket);
+    const tempFilePath = path.join(os.tmpdir(), fileName);
+    const outputFilePath =  path.join(os.tmpdir(), 'faststarted.mp4');
 
-  functions.logger.info('File downloaded locally to', tempFilePath);
+    await bucket.file(filePath).download({destination: tempFilePath})
 
-  await cmd(tempFilePath, outputFilePath, bucket, filePath, metadata);
+    functions.logger.info('File downloaded locally to', tempFilePath);
 
-  functions.logger.info('Finished execution');
-});
-
-function cmd(tempFilePath, outputFilePath, bucket, filePath, metadata) {
-  return new Promise((resolve,reject) => {
-    ffmpeg(tempFilePath)
-    .setFfmpegPath(ffmpegPath)
-    .outputOptions(['-movflags +faststart'])
-    .output(outputFilePath)
-    .on('error', (err, stdout, stderr) => {
-      functions.logger.info('An error occurred', err, stdout, stderr);
-      return fs.unlinkSync(tempFilePath);
-    })
-    .on('start', (commandLine) => functions.logger.info('started video processing: ', commandLine))
-    .on('end', (filenames) => {
-      functions.logger.info('finished video processing: ', filenames);
-      bucket.upload(outputFilePath, {
-        destination: filePath,
-        metadata: metadata
-      })
-      .then(() => functions.logger.info('Successfully uploaded to storage'))
-      .catch((error) => functions.logger.info('Failed to upload to storage', error))
-      .finally(() => {return fs.unlinkSync(tempFilePath);});
-    })
-    .run();
+    await faststart(tempFilePath, outputFilePath, bucket, filePath);
   });
-};
+
+  function faststart(tempFilePath, outputFilePath, bucket, filePath) {
+    return new Promise((resolve,reject) => {
+      ffmpeg(tempFilePath)
+      .setFfmpegPath(ffmpegPath)
+      .outputOptions(['-movflags +faststart'])
+      .output(outputFilePath)
+      .on('error', (err, stdout, stderr) => {
+        functions.logger.info('An error occurred', err, stdout, stderr);
+        return fs.unlinkSync(tempFilePath);
+      })
+      .on('start', (commandLine) => functions.logger.info('started video processing: ', commandLine))
+      .on('end', (filenames) => {
+        functions.logger.info('finished video processing: ', filenames);
+
+        bucket.upload(outputFilePath, {
+          destination: filePath
+        })
+        .then(() => {
+          functions.logger.info('Successfully uploaded to storage');
+          })
+        .catch((error) => functions.logger.info('Failed to upload to storage', error))
+        .finally(() => {
+          functions.logger.info('Finished execution');
+          return fs.unlinkSync(tempFilePath);});
+      })
+      .run();
+    });
+  };
