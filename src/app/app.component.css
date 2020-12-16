@@ -18,11 +18,11 @@
 }
 
 .header-margin {
-  margin-top:4.44vh;
+  margin-top:6vh;
 }
 
 .desktop-profile-display {
   position: fixed;
-  top: 100px;
-  right: 50px;
+  top: calc(5.334vh + 6vh);
+  right: 14.652vw;
 }
