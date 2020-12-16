@@ -20,6 +20,7 @@
 
   <div *ngIf="!mobileCheck && !onBoarding">
     <app-header ></app-header>
+    <app-profile-display class='desktop-profile-display'></app-profile-display>
   </div>
 
   <div *ngIf="mobileCheck && !onBoarding" style='z-index: 3'>

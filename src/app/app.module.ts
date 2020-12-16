@@ -40,6 +40,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { ShortenPipe } from './shared/shorten.pipe';
 import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { PopUpComponent } from './pop-up/pop-up.component';
+import { CollectionTabComponent } from './collection-tab/collection-tab.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     NavbarComponent,
     ShortenPipe,
     PopUpComponent,
-    SnapscrollDirective
+    SnapscrollDirective,
+    CollectionTabComponent
   ],
   imports: [
     BrowserModule,

@@ -21,3 +21,8 @@
   margin-top:4.44vh;
 }
 
+.desktop-profile-display {
+  position: fixed;
+  top: 100px;
+  right: 50px;
+}
