@@ -444,7 +444,7 @@
 .profileDetailsTop {
   height: 38.461538%;
   width: 100%;
-  margin-top: 1.8%;
+  margin-top: 1.1%;
 }
 
 .displayPicture {
@@ -505,6 +505,10 @@
   box-sizing: border-box;
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.5));
   border-radius: 2px;
+/* 
+  for edit mode 
+
+  margin-left: 2.7%; */
 
   
 }

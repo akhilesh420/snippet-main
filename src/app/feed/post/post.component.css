@@ -194,16 +194,16 @@
   left: 0px;
   padding: 4.8vh 4vw 15% 4vw;
   font-family: 'ChampagneAndLimousines';
-  font-size: 2.5vh;
+  font-size: 12px;
   letter-spacing: 0em;
   font-weight: bold;
-  color:rgba(255, 255, 255, 0.9);
+  color: rgba(235, 221, 187, 0.9);
 }
 
 .postTitle{
-  font-size: 3.3vh;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0em;
   width:auto;
   text-align: left;
   line-height: normal;
@@ -215,8 +215,8 @@
 
 .showDetails {
   margin-top: 0.5vh;
-  height: 3.2vh;
-  width: 3.2vh;
+  height: 18px;
+  width: 20px;
   position: relative;
 }
 
@@ -232,7 +232,7 @@
 }
 
 .post-metrics {
-  margin-top: 3.6vh;
+  margin-top: 3.2%;
   width: 100%;
   height: auto;
 }
@@ -247,7 +247,7 @@
 
 .metrics {
   position: relative;
-  height: 2.8vh;
+  height: 14px;
   width: auto;
 
 }
@@ -330,8 +330,9 @@
 }
 
 .textFontSize {
-  font-size: 2.9vh;
+  font-size: 14px;
   font-weight: 700;
+  letter-spacing: 0em;
 }
 
 .stickerMargin {
@@ -506,9 +507,7 @@
 @media screen and (min-width: 550px) {
 
   .postContainer {
-    border-top: 3vh solid rgba(196, 196, 196, 0.10);
-    -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    border-top: 2.8888vh solid #0B0B0B;;
     border-top-left-radius: 1.5vh;
     border-top-right-radius: 1.5vh;
   }
