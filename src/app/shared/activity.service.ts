@@ -48,11 +48,15 @@ export class ActivityService {
           take(1)
         )
       .subscribe((response) => {
+        if (!response[0]) {
+          console.log('user activity not found');
+        } else {
           if (type === 'view') {
             this.activityRef.update(response[0].key, {views: response[0].views + 1});
           } else if (type === 'collection') {
             this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
           }
+        }
     });
 
     queryPost.snapshotChanges().pipe( //update old activity for post
@@ -60,10 +64,14 @@ export class ActivityService {
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
         ),take(1))
       .subscribe((response) => {
-        if (type === 'view') {
-          this.activityRef.update(response[0].key, {views: response[0].views + 1});
-        } else if(type === 'collection') {
-          this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
+        if (!response[0]) {
+          console.log('user activity not found');
+        } else {
+          if (type === 'view') {
+            this.activityRef.update(response[0].key, {views: response[0].views + 1});
+          } else if(type === 'collection') {
+            this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
+          }
         }
     });
 
