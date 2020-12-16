@@ -525,6 +525,14 @@
 
 }
 
+.sticker > img {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .profileLink {
   height: 100%;
   margin-left: 2.7%;
