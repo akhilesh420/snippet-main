@@ -71,11 +71,11 @@
 
 @media screen and (min-width: 550px) {
   .post-container {
-    height: calc(100vh - 4.44vh - 25px);
-    width: calc(9 * (100vh - 7.44vh) / 16);
+    height: 77vh;
+    width: calc(9 * (77vh) / 16);
     max-width: 100vw;
     /* border-radius: 1.67vh; */
-    margin-bottom: 25px;
+    margin-bottom: 6.777vh;
     overflow: hidden;
   }
 }
