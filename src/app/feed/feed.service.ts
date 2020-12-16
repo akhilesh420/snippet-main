@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { PostDetails } from 'src/app/shared/post.model';
 import { Injectable } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
@@ -24,7 +24,7 @@ export class FeedService {
   // get explore page
   getExplorePage() {
     return this.afs.collection<PostDetails>('post details', ref => ref.orderBy('dateCreated', 'desc'))
-            .valueChanges({idField: 'pid'}).pipe(map(postsList => {
+            .valueChanges({idField: 'pid'}).pipe(take(1), map(postsList => {
               return postsList.filter(post => !this.excludePID.includes(post.pid));
             }));;
 
@@ -32,7 +32,7 @@ export class FeedService {
 
   // get profile page
   getProfilePage(uid: string) {
-    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid).orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
+    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid).orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'}).pipe(take(1));
   }
 
   // generate collection page by uid
@@ -61,7 +61,7 @@ export class FeedService {
   }
 
   getPostPage(pid: string) {
-    return this.postService.getPostDetails(pid).pipe(map(changes => { //get the post detail for pid
+    return this.postService.getPostDetails(pid).pipe(take(1),map(changes => { //get the post detail for pid
       return [{ pid: pid, ...changes}];
     }));
   }

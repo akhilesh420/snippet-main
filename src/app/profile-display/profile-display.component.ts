@@ -114,6 +114,11 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   setUpActivity() {
     this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      console.log(response);
+      if (!response[0]) {
+        console.log('No activity found');
+        return;
+      }
       this.activity = response[0];
       this.views = this.convertToShort(this.activity.views);
       this.collected = this.convertToShort(this.activity.collected);
