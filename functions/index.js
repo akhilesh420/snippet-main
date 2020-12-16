@@ -126,7 +126,7 @@ function faststart(tempFilePath, outputFilePath, bucket, filePath) {
 
 function image_processing(bucket, outputFilePath, tempFilePath, filePath) {
   return new Promise( async (resolve, reject) => {
-    functions.logger.info('started image processing for interlace');
+    functions.logger.info('started image processing');
     await spawn('convert', ['-sampling-factor','4:2:0', '-strip', '-quality', '85', '-interlace', 'Plane', '-gaussian-blur', '0.05', '-colorspace', 'RGB', tempFilePath, outputFilePath]);
     await uploadToStorage(bucket, outputFilePath, tempFilePath, filePath);
   });
@@ -134,7 +134,7 @@ function image_processing(bucket, outputFilePath, tempFilePath, filePath) {
 
 function gif_processing(bucket, outputFilePath, tempFilePath, filePath) {
   return new Promise( async (resolve, reject) => {
-    functions.logger.info('started image processing for interlace');
+    functions.logger.info('started gif processing');
     await spawn('convert', ['-sampling-factor','4:2:0', '-strip', '-quality', '85', '-interlace', 'Plane', tempFilePath, outputFilePath]);
     await uploadToStorage(bucket, outputFilePath, tempFilePath, filePath);
   });
