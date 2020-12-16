@@ -404,6 +404,11 @@
    height: 100%;
    width: 100%;
    background-image: url("src/assets/icons/Profile Display/profileDisplayBorder.svg");
+
+   /* Editing Mode */
+
+   /* background-image: url("src/assets/icons/Profile Display/editModeBackground.svg"); */
+   
    
 
  }
@@ -427,15 +432,19 @@
  height: 100%;
  width: 84.985836%;
  border-radius: 50%;
- background-color: rgba(196, 196, 196, 1);
+ background-image: url("src/assets/icons/Profile Display/addStickerButton.svg");
  position: absolute;
  left: 0px;
+
+ /* Background-Image when sticker is being added  */
+
+ /* background-image: url("src/assets/icons/Profile Display/addingSticker.svg"); */
 }
   
 .profileDetailsTop {
   height: 38.461538%;
   width: 100%;
-  margin-top: 2.2%;
+  margin-top: 1.8%;
 }
 
 .displayPicture {
@@ -448,16 +457,45 @@
   padding-top: 100%; 
   position: relative;
   border-radius: 50%;
+
+   /* Color in Edit Mode */
+
+  /* border: 0.8px solid #E2B33D; */
+  
 }
+
+/* for edit mode */
+
+/* .dpContainer > img {
+  width: 40%;
+  height: 40%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
 
 .profileDescription {
   height: 100%;
   margin-left: 2.7%;
+  position: relative;
+}
+
+.svgStyle {
+  position: absolute;
+  left:0; 
+  top:0; 
+  width:100%; 
+  height:100%
 }
 
 .profileDetailsBottom {
-  margin-top: 0.8%;
+  margin-top: 1.2%;
   height: 8.119658%;
+
+  /* for edit mode
+  height: 8.719658%; */
 }
 
 .editButton {
@@ -467,6 +505,8 @@
   box-sizing: border-box;
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.5));
   border-radius: 2px;
+
+  
 }
 
 .editButtonText {
@@ -475,19 +515,25 @@
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: normal;
-  font-size: 9px;
+  font-size: 10px;
   text-align: center;
-  padding-top: 3.6%;
+  padding-top: 1.0%;
+
+  /* for Edit Mode */
+  /* color: #E2B33D; */
+  /* font-size: 12px; */
+
 }
 
 .profileLink {
   height: 100%;
   margin-left: 2.7%;
+  position: relative;
 }
 
 .profileMetrics {
   margin-top: 0.4%;
-  height: 20%;
+  height: 18%;
   width: 100%;
 }
 
@@ -504,6 +550,7 @@
 .metricsNumbers {
   height: 27.5%;
   width: 100%;
+  margin-bottom: 2px;
 }
 
 .metricsLabel {
@@ -526,8 +573,40 @@
   margin-bottom: 5px;
 }
 
+.viewCounter , .holderCounter {
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  color: #FFFFFF;
+  text-align: center;
+  padding-bottom: 2px;
+}
+
+
+
+
 .usernameSpace {
   height: 100%;
   margin-left: 2.7%;
 }
+
+
+.username {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;  
+  display: flex;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+  margin: 0;
+  position: absolute;
+  top: 60%;
+  left: 76.5%;
+  transform: translate(-50%, -50%);
+}
+
 
