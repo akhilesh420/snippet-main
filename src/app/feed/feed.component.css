@@ -69,6 +69,13 @@
   margin-top: 5.334vh;
 }
 
+.desktop-profile-display {
+  position: fixed;
+  top: calc(5.334vh + 6vh);
+  right: 14.652vw;
+}
+
+
 @media screen and (min-width: 550px) {
   .post-container {
     height: 77vh;
