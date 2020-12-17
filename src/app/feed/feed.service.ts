@@ -14,6 +14,9 @@ import { PostService } from '../shared/post.service';
 export class FeedService {
 
   excludePID: string[] = [environment.onBoardingPid];
+  $explorePageList = new BehaviorSubject<(PostDetails)[]>(null);
+  $collectionPageList = new BehaviorSubject<(PostDetails)[]>(null);
+  $profilePageList = new BehaviorSubject<(PostDetails)[]>(null);
 
   constructor(private activityService: ActivityService,
               private postService: PostService,
@@ -23,16 +26,18 @@ export class FeedService {
 
   // get explore page
   getExplorePage() {
-    return this.afs.collection<PostDetails>('post details', ref => ref.orderBy('dateCreated', 'desc'))
+    if (!this.$explorePageList.value) {
+      this.afs.collection<PostDetails>('post details', ref => ref.orderBy('dateCreated', 'desc'))
             .valueChanges({idField: 'pid'}).pipe(take(1), map(postsList => {
               return postsList.filter(post => !this.excludePID.includes(post.pid));
-            }));;
-
+            })).subscribe(response => this.$explorePageList.next(response));
+    }
+    return this.$explorePageList;
   }
 
   // get profile page
   getProfilePage(uid: string) {
-    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid).orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'}).pipe(take(1));
+    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid).orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
   }
 
   // generate collection page by uid
@@ -61,7 +66,7 @@ export class FeedService {
   }
 
   getPostPage(pid: string) {
-    return this.postService.getPostDetails(pid).pipe(take(1),map(changes => { //get the post detail for pid
+    return this.postService.getPostDetails(pid).pipe(map(changes => { //get the post detail for pid
       return [{ pid: pid, ...changes}];
     }));
   }

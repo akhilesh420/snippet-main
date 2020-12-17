@@ -90,7 +90,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   functions.logger.info('File name:', fileName);
   functions.logger.info('File type:', contentType);
 
-  const filePath = 'Post/' + fileName;
+  const filePath = 'Display picture/' + fileName;
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
 

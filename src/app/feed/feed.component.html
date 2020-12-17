@@ -1,8 +1,6 @@
 <div class="row no-padding no-margin">
   <div class="col-12 no-margin"
       [ngClass]='mobileCheck ? "mobile-padding" : null'
-      (touchstart)='userTouchStart()'
-      (touchend)='userTouchEnd()'
        #scrollContainer>
     <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
     <div *ngIf="feedList$ | async; let posts">
@@ -18,5 +16,5 @@
     </div>
   </div>
 </div>
-<app-profile-display class='desktop-profile-display'></app-profile-display>
+<app-profile-display [uid$]='myUid$' class='desktop-profile-display'></app-profile-display>
 <app-collection-tab></app-collection-tab>

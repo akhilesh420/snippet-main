@@ -41,13 +41,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(){
-    if (screenfull.isEnabled) {
-      screenfull.request().catch(error => console.log(error));
-      screenfull.on('error', event => {console.log(event);});
-    }
+    // if (screenfull.isEnabled) {
+    //   screenfull.request().catch(error => console.log(error));
+    //   screenfull.on('error', event => {console.log(event);});
+    // }
 
-    this.elem = document.documentElement;
-    this.openFullscreen();
+    // this.elem = document.documentElement;
+    // this.openFullscreen();
     this.authService.autoLogin();
 
     this.windowService.checkWidth();

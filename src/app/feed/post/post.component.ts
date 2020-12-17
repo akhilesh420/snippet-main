@@ -65,8 +65,8 @@ import { WindowStateService } from 'src/app/shared/window.service';
   userSubs: Subscription;
   fetchingWindow: boolean;
 
-  @ViewChild('usernameRef') usernameSpan : ElementRef;
-  @ViewChild('usernameCol') usernameCol : ElementRef;
+  // @ViewChild('usernameRef') usernameSpan : ElementRef;
+  // @ViewChild('usernameCol') usernameCol : ElementRef;
   maxWidth: number;
   usernameCounter: number;
   username: string;
@@ -143,7 +143,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   ngAfterViewChecked() {
-    this.maxWidth = this.usernameCol.nativeElement.offsetWidth;
+    // this.maxWidth = this.usernameCol.nativeElement.offsetWidth;
     this.videoToggle();
   }
 
@@ -192,16 +192,16 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
         let lastUsername: string;
         let timer = setInterval(func => {
-          this.stickerSize = this.usernameSpan.nativeElement.offsetHeight.toString() + 'px';
-          const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
-          if (lastUsername != this.username && currentWidth > this.maxWidth) {
-            lastUsername = this.profileDetails.username;
-            ++this.usernameCounter;
-            this.username = this.profileDetails.username.slice(0, this.profileDetails.username.length - this.usernameCounter)  + '...';
-          } else {
-            clearInterval(timer);
-            this.usernameFetch = true;
-          }
+          // this.stickerSize = this.usernameSpan.nativeElement.offsetHeight.toString() + 'px';
+          // const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
+          // if (lastUsername != this.username && currentWidth > this.maxWidth) {
+          //   lastUsername = this.profileDetails.username;
+          //   ++this.usernameCounter;
+          //   this.username = this.profileDetails.username.slice(0, this.profileDetails.username.length - this.usernameCounter)  + '...';
+          // } else {
+          //   clearInterval(timer);
+          //   this.usernameFetch = true;
+          // }
         })}
       });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);

@@ -19,7 +19,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   postsList$: Observable<PostDetails[]>;
 
-  feedList$ = new Subject<PostDetails[]>();
+  feedList$: BehaviorSubject<PostDetails[]>;
   notifier$ = new Subject();
 
   postsList: PostDetails[];
@@ -48,6 +48,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   viewPort: number;
 
   uid$ = new BehaviorSubject<string>(null); //From URL
+  myUid$ = new BehaviorSubject<string>(null); //From URL
   myUid: string; //Authenticated user uid
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
@@ -78,10 +79,13 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.feedList$ = new BehaviorSubject<PostDetails[]>(null);
+
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
         this.myUid = response.id;
+        this.myUid$.next(response.id);
       }
     });
 
@@ -123,6 +127,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postNumber = newNum;
       this.infiniteScroll();
     })
+
   }
 
   setUpScroll() {
@@ -132,11 +137,15 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   getViewport() {
-    this.postMarginTop = 15;
-    this.postMarginBottom = this.mobileCheck ? 0 : 25;
-    this.postHeight = this.post.nativeElement.offsetHeight;
-    this.viewPort = (this.postHeight+this.postMarginTop);
-    this.triggerArea = this.triggerMultiplier*this.viewPort;
+    try {
+      this.postMarginTop = 15;
+      this.postMarginBottom = this.mobileCheck ? 0 : 25;
+      this.postHeight = this.post.nativeElement.offsetHeight;
+      this.viewPort = (this.postHeight+this.postMarginTop);
+      this.triggerArea = this.triggerMultiplier*this.viewPort;
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   getPosts(currentRoute: string) {
@@ -219,7 +228,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     } else {
       this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
-    console.log(this.postsList.slice(0,this.batchSize*this.batchNumber));
     this.batchNumber++;
     this.loading = false;
   }
@@ -230,67 +238,6 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.moreBatch();
       }
       this.maxPostNumber = this.postNumber;
-    }
-  }
-
-  //user interactions
-  userTouchStart() {
-    this.touchDown = true;
-    this.scrolled = false;
-  }
-
-  userTouchEnd() {
-    this.touchDown = false;
-    if (!this.scrolled) {
-      this.postNumber$.next(this.postNumber);
-      this.scrolled = true;
-    }
-  }
-
-  snapTrigger(scrollY: number) {
-    if (this.inSnap) return;
-    this.inSnap = true;
-    const diff = scrollY - this.postNumber*this.viewPort;
-    if (diff > this.triggerArea) {
-      this.postNumber$.next(this.postNumber+1);
-    } else if (diff < -this.triggerArea) {
-      this.postNumber$.next(this.postNumber-1);
-    }
-    setTimeout(() => this.inSnap = false, 1000);
-    console.log(this.postNumber,diff);
-  }
-
-  setScroll() {
-    if (this.touchDown) return;
-    window.scrollTo({top:this.postNumber*this.viewPort, left: 0, behavior: 'smooth'});
-    this.scrolling = true;
-  }
-
-  snapScroll(scrollY) {
-    if (this.inSnap) return;
-    this.inSnap = true;
-    const diff = scrollY - this.postNumber*this.viewPort;
-    console.log(diff, this.triggerArea); //temp log
-    if (diff > this.triggerArea) {
-      this.postNumber$.next(this.postNumber+1);
-    } else if (diff < -this.triggerArea) {
-      this.postNumber$.next(this.postNumber-1);
-    }
-    setTimeout(() => this.inSnap = false, 500);
-    this.currentScroll = this.postNumber*this.viewPort;
-  }
-
-  snapLimiter(scrollY: number) {
-    if (this.scrolling) return;
-    if (scrollY != this.postNumber*this.viewPort) {
-      // this.setScroll();
-      window.scrollTo(0,this.postNumber*this.viewPort);
-    }
-  }
-
-  scrollComplete(scrollY) {
-    if (scrollY === this.postNumber*this.viewPort) {
-      this.scrolling = false;
     }
   }
 
@@ -305,6 +252,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('destroy');
     this.notifier$.next();
     this.notifier$.complete();
     this.feedList$.complete();
