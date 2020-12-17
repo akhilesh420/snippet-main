@@ -197,7 +197,7 @@
   font-size: 12px;
   letter-spacing: 0em;
   font-weight: bold;
-  color: rgba(235, 221, 187, 0.9);
+  color: #FFFFFF;
 }
 
 .postTitle{
@@ -207,6 +207,15 @@
   width:auto;
   text-align: left;
   line-height: normal;
+  color: #FFFFFF;
+}
+
+.postDescription {
+  font-family: 'ChampagneAndLimousines';
+  font-size: 12px;
+  letter-spacing: 0em;
+  font-weight: bold;
+  color: rgba(235, 221, 187, 0.9);
 }
 
 .pointer {
