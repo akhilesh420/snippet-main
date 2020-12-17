@@ -41,6 +41,7 @@ import { ShortenPipe } from './shared/shorten.pipe';
 import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { CollectionTabComponent } from './collection-tab/collection-tab.component';
+import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { CollectionTabComponent } from './collection-tab/collection-tab.componen
     ShortenPipe,
     PopUpComponent,
     SnapscrollDirective,
-    CollectionTabComponent
+    CollectionTabComponent,
+    ProfileTabComponent
   ],
   imports: [
     BrowserModule,

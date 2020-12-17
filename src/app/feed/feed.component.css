@@ -72,7 +72,7 @@
 .desktop-profile-display {
   position: fixed;
   top: calc(5.334vh + 6vh);
-  right: 14.652vw;
+  right: 15vw;
 }
 
 
@@ -83,7 +83,7 @@
     max-width: 100vw;
     /* border-radius: 1.67vh; */
     margin-bottom: 6.777vh;
-    margin-left: 27.361vw;
+    margin-left: calc(100vw - 15vw - 10vw - 353px - (9 * (77vh) / 16));
     overflow: hidden;
   }
 }

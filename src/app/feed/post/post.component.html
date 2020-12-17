@@ -81,10 +81,11 @@
       </ng-template>
     </div>
   </div>
+  <app-profile-tab></app-profile-tab>
   <!-- profile tab -->
-  <div *ngIf="!fetchingWindow" class="profileTab bkgrd-opc" [ngClass]="showComments ? 'open-comment' : 'close-comment'">
+  <!-- <div *ngIf="!fetchingWindow" class="profileTab bkgrd-opc" [ngClass]="showComments ? 'open-comment' : 'close-comment'"> -->
     <!-- comment button -->
-    <div *ngIf="!tutorial">
+    <!-- <div *ngIf="!tutorial">
       <div class="commentButton"
           (click)="showComments = !showComments; showDetails = false; holderToggle = false;"
             style="cursor: pointer;" >
@@ -94,33 +95,33 @@
         </div>
         <img src="https://i.ibb.co/twfK1TW/icons-3x.png" alt="comment button">
       </div>
-      <div *ngIf="showComments">
+      <div *ngIf="showComments"> -->
         <!-- Coming soon placeholder -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col align-self-center">
             <span class="temp">Coming soon!</span>
           </div>
-        </div>
+        </div> -->
         <!-- <app-comments class="section" [postId]="postDetails.postId"></app-comments> -->
-      </div>
+      <!-- </div>
     </div>
-  </div>
+  </div> -->
   <!-- profile tab information -->
-  <div *ngIf="!fetchingWindow" class="profileTab close-comment">
-    <div class="post-info">
+  <!-- <div *ngIf="!fetchingWindow" class="profileTab close-comment">
+    <div class="post-info"> -->
       <!-- Engagement Bar -->
-      <div  class="engagementBar">
+      <!-- <div  class="engagementBar">
         <div class="engagement"
           [ngStyle]='engagementProp'>
         </div>
         <div class="bar"></div>
-      </div>
+      </div> -->
       <!-- Profile details -->
-      <div class="width-100" [ngStyle]='{"height": stickerSize}'>
+      <!-- <div class="width-100" [ngStyle]='{"height": stickerSize}'>
         <div class="row no-margin no-padding">
-          <div class="col-6 no-margin no-padding username-col" #usernameCol>
+          <div class="col-6 no-margin no-padding username-col" #usernameCol> -->
              <!-- Username -->
-            <a style = "cursor: pointer;" [routerLink]='!tutorial ? profileRoute : []'>
+            <!-- <a style = "cursor: pointer;" [routerLink]='!tutorial ? profileRoute : []'>
               <span class = "stickerMargin" [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}" #usernameRef>
                 {{username}}
               </span>
@@ -143,9 +144,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Post Sticker -->
-    <a style="cursor: pointer;" (click)='collectSticker()'>
+    <!-- <a style="cursor: pointer;" (click)='collectSticker()'>
       <div class="postSticker"
           [ngClass]="onBoarding && onBoardingStep === 2 ? 'pulsate-sticker' : null"
           *ngIf="stickerContent$ | async as stickerContent">
@@ -153,7 +154,7 @@
              src={{stickerContent}}>
       </div>
     </a>
-  </div>
+  </div> -->
     <!-- Fail-safe button -->
     <div class = "fail-safe" *ngIf='playFailSafe' (click)='playFailSafe = false; allowToggle = true; videoToggle();'>
       <img src = "assets/icons/Post Icons/failSafeButton.png">
