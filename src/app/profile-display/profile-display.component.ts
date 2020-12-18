@@ -47,9 +47,10 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   description: string = '';
   link: string = '';
   @ViewChild('usernameRef') usernameSpan : ElementRef;
+  @ViewChild('descriptionRef') descriptionRef : ElementRef;
+  @ViewChild('linkRef') linkRef : ElementRef;
   profileStickers: ProfileSticker[] = [null,null,null,null,null];
   userStickers:  ProfileSticker[] = [null,null,null,null,null];
-  // 'null','null','null','null','null'
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
