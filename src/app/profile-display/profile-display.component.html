@@ -130,12 +130,26 @@
 
           <div class = "col-3 no-margin-no-padding displayPicture">
             <div class = "dpContainer" [ngClass]='{"dpContainer-edit": inEditing}'>
+              <div class="file-input-container">
+                <input
+                type="file"
+                id="postFile"
+                class="form-control-file float-center"
+                accept="image/x-png,image/gif,image/jpeg"
+                (change)="fileUpload($event)"
+                (click)="touched=true"
+                name="content"
+                #dpInput>
+              </div>
               <img [ngClass]='inEditing ? "opacity-in-details" :  "opacity-out-details"'
-                    *ngIf="displayPicture$ | async as content;"
+                    *ngIf="tempDisplayPicture$ | async as content;"
                     class='dp'
                     [src]="content"
                     alt="display picture">
-              <img *ngIf="inEditing;" [ngClass]='inEditing ? "dpContainer-edit-img" : null' src = "assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
+              <img *ngIf="inEditing;"
+                    [ngClass]='inEditing ? "dpContainer-edit-img" : null'
+                    (click)="onAddClick()"
+                    src = "assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
             </div>
           </div>
 
@@ -194,7 +208,7 @@
 
           <div class = "col-3 no-margin-no-padding"
               [ngClass]="{'editButton': !inEditing, 'editButton-edit': inEditing}"
-              (click)='onSave();'>
+              (click)='inEditing ? onSave() : resetState();'>
 
             <p *ngIf="!inEditing; else saveButton" class = "editButtonText">Edit Profile</p>
 

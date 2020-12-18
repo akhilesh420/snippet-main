@@ -1,5 +1,5 @@
 import { UsersService } from './../shared/users.service';
-import { ProfileSticker, ProfileDetails } from './../shared/profile.model';
+import { ProfileSticker, ProfileDetails, DisplayPicture } from './../shared/profile.model';
 import { Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { takeUntil, tap } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges }
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
+import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-profile-display',
@@ -22,6 +23,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   profileDetails$: BehaviorSubject<ProfileDetails>;
   profileStickers$: BehaviorSubject<ProfileSticker[]>;
   displayPicture$: BehaviorSubject<any>;
+  tempDisplayPicture$ = new BehaviorSubject<any>(null);
   activity: Activity;
 
   isAuthenticated: boolean;
@@ -48,17 +50,24 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   tempDescription: string = '';
   link: string = '';
   tempLink: string = '';
+  profileStickers: ProfileSticker[] = [null,null,null,null,null];
+  userStickers:  ProfileSticker[] = [null,null,null,null,null];
+  error: string;
+  displayPicture: any;
+  changedDP: boolean = false;
+  updatedDP: any;
+
   @ViewChild('usernameRef') usernameSpan : ElementRef;
   @ViewChild('descriptionRef') descriptionRef : ElementRef;
   @ViewChild('linkRef') linkRef : ElementRef;
-  profileStickers: ProfileSticker[] = [null,null,null,null,null];
-  userStickers:  ProfileSticker[] = [null,null,null,null,null];
+  @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
                private activityService: ActivityService,
                private router: Router,
-               private windowService: WindowStateService) { }
+               private windowService: WindowStateService,
+               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.fetchingWindow = true;
@@ -113,6 +122,9 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       console.log(this.profileStickers);
     });
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+    this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
+      this.tempDisplayPicture$.next(dp);
+    })
   }
 
   getMultiplier(value: ProfileDetails) {
@@ -172,9 +184,39 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSave() {
+    let noChange = true;
+    let message = 'Profile updated!';
     this.resetState();
     this.description = this.tempDescription;
     this.link = this.tempLink;
+
+    if (this.profileStickers.length > 5) { //in case of an error
+      for (let i=0; i <= this.profileStickers.length; i++) {
+        this.profileStickers.pop();
+       }
+    }
+
+    if (this.description != this.tempDescription || this.link != this.tempLink) {
+      // this.usersService.updateProfileDetails(this.uid, this.profileDetails);
+      noChange = false;
+    }
+
+    if (this.changedDP) {
+      noChange = false;
+      message = "Profile updating! Feel free to explore but please don't close or reload the tab while your dp is being processed";
+
+      this.miscellaneousService.startLoading();
+      this.displayPicture$.next(this.updatedDP);
+      this.usersService.updateDisplayPicture(this.uid, this.displayPicture).pipe(takeUntil(this.notifier$))
+      .subscribe(response => {
+        if (response === 100) {
+          this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(new Date(), this.displayPicture.type));
+          this.miscellaneousService.endLoading();
+        }
+      });
+    }
+    if (noChange) return;
+    this.miscellaneousService.setPopUp(new PopUp(message,'Okay', undefined, ['default', 'reject']));
   }
 
   resetState() {
@@ -185,12 +227,33 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   onPressEnter(event) {
     event.preventDefault();
-    this.editDesc = false;
-    this.editLink = false;
+    this.descriptionRef.nativeElement.focusout();
+    this.linkRef.nativeElement.focusout();
   }
 
-  stopPropagation(event) {
-    event.stopPropagation();
+  fileUpload(event) {
+    if (event.target.files)  {
+      var reader = new FileReader();
+
+      let file = event.target.files[0];
+      reader.readAsDataURL(file);
+
+      reader.onload = (event:any) => {
+        if (file.size < 15*1024*1024) {
+          this.error = null;
+          this.displayPicture = file;
+          this.updatedDP = event.target.result;
+          this.tempDisplayPicture$.next(this.updatedDP);
+          this.changedDP = true;
+        } else {
+          this.error ='Image file size too big! There is a 15 MB limit';
+        }
+      }
+    }
+  }
+
+  onAddClick(event) {
+    this.dpInput.nativeElement.click();
   }
 
   ngOnDestroy() {
