@@ -1,26 +1,146 @@
-/* NEW */
+/* Classes for multiple components */
+
+.no-margin-no-padding {
+
+  margin: 0%;
+  padding: 0%;
+
+}
+
+
+
+
+
+
+/* Classes for single components */
+
+.header {
+  
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 54px;
+  position: fixed;
+
+}
+
+.headerBackpanel {
+
+  width: 100%;
+  height: 54px;
+  background: #0B0B0B;
+
+}
+
+.headerLogo {
+  height: 100%;
+  width: 360px;
+  text-align: center;
+}
+
+.logoRow {
+
+  height: 100%;
+  width: 100%;
+
+}
+
+.mainLogo {
+
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 36px;
+  letter-spacing: 0.1em;
+  color: #E2B33D;
+  padding-left: 15px;
+  padding-top: 9px;
+
+}
+
+.subLogo {
+
+  
+
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: 0.1em;
+  color: rgba(235, 221, 187, 0.7);
+  padding-left: 176px;
+  position: relative;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* NEW
 .fullHeader {
   width: 100%;
-  height: 20vh;
+  height: 54px;
 }
 
 .headerPosition {
   top: 0;
   position: fixed;
-  height: 6vh;
+  height: 54px;
   width: 100%;
-  background: linear-gradient(90.65deg, #080708 28.65%, #121012 76.04%);
-  box-shadow: 0px -0.5px 0px rgba(255, 255, 255, 0.16);
+  background: #0B0B0B;
 
 }
 
 .headerLogo {
-  font-size: 3.6vh;
+  font-size: 32px;
   font-family: 'Comfortaa';
   color: #E2B33D;
   font-style: normal;
   font-weight: bold;
   letter-spacing: 0.1em;
+  line-height: 36px;
   text-align: left;
   padding-left: 1.0vw;
 }
@@ -127,7 +247,9 @@
 
 .headerdropDown > .row {
   padding-top: 1vw;
-}
+} */
+
+
 
 
 /* Animation */
@@ -194,7 +316,7 @@
     }
   }
 
-.active-dropdown {
+/* .active-dropdown {
   opacity: 1;
 }
 
@@ -204,4 +326,5 @@
 
 .headerdropDown > .row > .col-12:hover, .headerdropDown > .row > a > .col-12:hover {
   opacity: 1;
-}
+} */
+
