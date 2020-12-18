@@ -254,6 +254,13 @@
   padding-left: 1%;
 }
 
+/* Change css for editable div in focus here */
+/* [contenteditable="true"]:active,
+[contenteditable="true"]:focus{
+  border:none;
+  outline:none;
+} */
+
 .input-cover {
   background: rgba(196, 196, 196, 0.05);
   backdrop-filter: blur(1px);
@@ -262,6 +269,17 @@
   top:0;
 }
 
+.file-input-container {
+  position: absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
 
 /* Opacity in for opening post details */
 
