@@ -63,10 +63,11 @@ li {
     font-family: "Comfortaa";
     font-style: normal;
     font-weight: bold;
-    font-size: 1.8vh;
+    font-size: 14px;
     line-height: 0px;
     letter-spacing: 0.1em;
     color: #FFFFFF;
+    padding-top: 1.5%;
 
 }
 
