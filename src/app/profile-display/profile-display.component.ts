@@ -40,8 +40,16 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   maxWidth: number;
   multiplier: number = 1;
 
+  inEditing: Boolean = false;
+  editDesc: Boolean = false;
+  editLink: Boolean = false;
+  username: string = '';
+  description: string = '';
+  link: string = '';
   @ViewChild('usernameRef') usernameSpan : ElementRef;
-
+  profileStickers: ProfileSticker[] = [null,null,null,null,null];
+  userStickers:  ProfileSticker[] = [null,null,null,null,null];
+  // 'null','null','null','null','null'
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
@@ -52,6 +60,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.fetchingWindow = true;
     this.windowService.checkWidth();
+    console.log('init');
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -63,17 +72,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.setUp();
-
-    this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
-    .subscribe(val => {
-      if (val < 560) {
-        this.stickerSize = (60*val/560).toString() + 'px';
-        this.usernameFontSize = 30*val/560;
-      } else {
-        this.stickerSize = '60px';
-        this.usernameFontSize = 30;
-      }
-    });
   }
 
   ngOnChanges() {
@@ -84,6 +82,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{
       if (uid) {
         this.uid = uid;
+        console.log(this.uid);
         this.profileRoute = "/profile/" + this.uid;
         this.setUpProfile();
         this.setUpActivity();
@@ -93,18 +92,27 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   setUpProfile() {
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
-    this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      if (response) {
-       setInterval(this.getMultiplier(response),1000);
-      }
-    })
+    this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
+      if (!details) return;
+      setInterval(this.getMultiplier(details),1000);
+      console.log(this.username);
+      this.username = details.username;
+      this.description = 'test description hdfkajsdhfljaksdhfljkdashflkja';
+      this.link = 'test link';
+    });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
+    this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
+      if (!stickers) return;
+      stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
+      this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
+      console.log(this.profileStickers);
+    });
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
   }
 
   getMultiplier(value: ProfileDetails) {
     try {
-      // const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
+      const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
       this.multiplier = value.username.length <= 10 ? 1 : 10/value.username.length;
       return null;
     } catch(error) {
@@ -114,7 +122,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   setUpActivity() {
     this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-      // console.log(response);
       if (!response[0]) {
         console.log('No activity found');
         return;
@@ -138,12 +145,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       short = Math.round((num/1000000) * 100) / 100;
       return short.toString() + 'M';
       }
-  }
-
-  editProfile() {
-    if (this.uid === this.myUid) {
-      this.router.navigate(['profile/'+this.myUid+'/edit']);
-    }
   }
 
   getEmptySlots(stickers) {

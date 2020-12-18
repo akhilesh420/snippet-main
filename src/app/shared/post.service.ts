@@ -103,7 +103,7 @@ export class PostService {
     })
 
     if (index === -1) {
-      this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(this.placeholderImg)});
+      this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.stickerContentList.length - 1;
       this.getStickerContentRef(pid).subscribe((response: PostContent) => {
         const ref = this.storage.ref('Post/' + response.name);

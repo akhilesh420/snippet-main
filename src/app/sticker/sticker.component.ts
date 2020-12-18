@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 export class StickerComponent implements OnInit, OnDestroy {
 
   @Input() pid: string;
-  @Input() size: String = "24px";
+  // @Input() size: String = "24px";
 
   stickerSize = {};
 

@@ -1,6 +1,6 @@
 <div class="row master">
   <div class="col" style="padding: 0" #usernameCol>
-    <span class="float-left username" 
+    <span class="float-left username"
           #usernameRef
           [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}"
           (click)="navigate()">
@@ -10,7 +10,7 @@
    <!-- profile stickers -->
    <div class="col" style="padding: 0px">
       <div class="row" style="width: 100%" *ngIf="profileStickers$ | async as stickers">
-        <div class="col" 
+        <div class="col"
           *ngFor="let i of getEmptySlots(stickers)"
           style="padding: 0px;"
           [ngStyle]="{'width': stickerSize, 'height': stickerSize}">
@@ -19,7 +19,7 @@
           *ngFor="let sticker of stickers"
           style="padding: 0px;"
           [ngStyle]="{'width': stickerSize, 'height': stickerSize}">
-          <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
+          <app-sticker [pid]="sticker.pid"></app-sticker>
         </div>
     </div>
   </div>

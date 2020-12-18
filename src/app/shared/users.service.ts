@@ -172,7 +172,7 @@ export class UsersService {
     })
 
     if (index === -1) {
-      this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(this.placeholderImg)});
+      this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.displayPictureList.length - 1;
       this.getDisplayPictureRef(uid).subscribe((response: DisplayPicture) => {
         const ref = this.storage.ref('Display picture/' + uid);

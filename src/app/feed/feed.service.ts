@@ -37,27 +37,32 @@ export class FeedService {
 
   // get profile page
   getProfilePage(uid: string) {
-    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid).orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
+    if (!this.$profilePageList.value) {
+      this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid)
+      .orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'})
+      .subscribe(response => this.$profilePageList.next(response));
+    }
+    return this.$profilePageList;
   }
 
   // generate collection page by uid
   getCollectionPage(uid: string) {
-    const collectionList$ = new Subject<PostDetails[]>();
-
-    this.activityService.getUserCollection(uid) //get details of user collection
-    .subscribe((response:Collection[]) => {
-      let postDetailsLists: PostDetails[] = [];
-      response.forEach(collection => {
-        this.postService.getPostDetails(collection.pid).pipe(map(changes => { //get the post detail for each pid in collection
-          return { pid: collection.pid, ...changes};
-        })).subscribe(res => {
-          postDetailsLists.push(res);
-          collectionList$.next(postDetailsLists);
-        })
+    if (!this.$collectionPageList.value) {
+      this.activityService.getUserCollection(uid) //get details of user collection
+      .subscribe((response:Collection[]) => {
+        let postDetailsLists: PostDetails[] = [];
+        response.forEach(collection => {
+          this.postService.getPostDetails(collection.pid).pipe(map(changes => { //get the post detail for each pid in collection
+            return { pid: collection.pid, ...changes};
+          })).subscribe(res => {
+            postDetailsLists.push(res);
+            this.$collectionPageList.next(postDetailsLists);
+          })
+        });
       });
-    });
+    }
 
-    return collectionList$.pipe(map(postsList => {
+    return this.$collectionPageList.pipe(map(postsList => {
       postsList = postsList.filter(post => { //Filter out users own posts
         return uid != post.uid;
       })
