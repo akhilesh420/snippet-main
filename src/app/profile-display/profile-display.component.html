@@ -141,15 +141,25 @@
 
           <div class = "col-8 no-margin-no-padding profileDescription">
 
-            <div *ngIf="!inEditing;" #descriptionRef >
+            <div *ngIf="!inEditing;">
               {{description}}
             </div>
 
-            <div *ngIf="inEditing && editDesc;" contenteditable="true">
+            <div class='input'
+                *ngIf="inEditing && editDesc;"
+                 contenteditable="true"
+                 #descriptionRef
+                 [textContent]="tempDescription"
+                 (input)="tempDescription=$event.target.textContent"
+                 (keydown.enter)="onPressEnter($event)"
+                 >
               {{description}}
             </div>
 
-            <svg *ngIf="inEditing && !editDesc;" (click)='editDesc = true;' class = "svgStyle" width="253.33" height="90.17" viewBox="0 0 253.33 90.17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg *ngIf="inEditing && !editDesc;"
+                 (click)='onEditDescClick()'
+                 class = "svgStyle"
+                 width="253.33" height="90.17" viewBox="0 0 253.33 90.17" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g filter="url(#filter0_d)">
               <rect x="1" y="1" width="238" height="88" rx="5.5" stroke="url(#paint0_linear)"/>
               </g>
@@ -184,7 +194,7 @@
 
           <div class = "col-3 no-margin-no-padding"
               [ngClass]="{'editButton': !inEditing, 'editButton-edit': inEditing}"
-              (click)='inEditing = !inEditing; editDesc = false; editLink = false'>
+              (click)='onSave();'>
 
             <p *ngIf="!inEditing; else saveButton" class = "editButtonText">Edit Profile</p>
 
@@ -221,12 +231,28 @@
 
           <div class = "col-8 no-margin-no-padding profileLink">
 
-            <div *ngIf="!inEditing || editLink; else editLinkButton" #linkRef >
+            <div *ngIf="!inEditing;">
               {{link}}
             </div>
 
-            <ng-template  #editLinkButton>
-              <svg (click)='editLink = true' *ngIf="inEditing;" class = "svgStyle" width="251" height="31" viewBox="0 0 251 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class='input'
+                *ngIf="inEditing && editLink;"
+                 contenteditable="true"
+                 #linkRef
+                 [textContent]="tempLink"
+                 (input)="tempLink=$event.target.textContent"
+                 (keydown.enter)="onPressEnter($event)"
+                 >
+              {{link}}
+            </div>
+
+            <!-- <div class='fill input-cover'
+                *ngIf="inEditing && !editLink;">
+            </div> -->
+
+            <svg (click)='onEditLinkClick()'
+                  *ngIf="inEditing && !editLink;"
+                  class = "svgStyle" width="251" height="31" viewBox="0 0 251 31" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g filter="url(#filter0_d)">
               <rect x="1" y="1" width="238" height="20" rx="1.5" stroke="url(#paint0_linear)"/>
               </g>
@@ -252,7 +278,6 @@
               </linearGradient>
               </defs>
               </svg>
-            </ng-template>
 
           </div>
 

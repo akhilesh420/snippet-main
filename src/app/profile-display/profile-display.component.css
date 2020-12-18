@@ -246,6 +246,23 @@
   transform: translate(-50%, -50%);
 }
 
+.input {
+  width: 100%;
+  height: 100%;
+  border: 0.8px solid #E2B33D;
+  /* border-radius: 5%; */
+  padding-left: 1%;
+}
+
+.input-cover {
+  background: rgba(196, 196, 196, 0.05);
+  backdrop-filter: blur(1px);
+  position:absolute;
+  left:0;
+  top:0;
+}
+
+
 /* Opacity in for opening post details */
 
 .opacity-in-details {

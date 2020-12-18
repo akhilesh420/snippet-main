@@ -249,7 +249,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   postView() {
-    if (this.viewed) return;
+    if (this.viewed || this.uid === this.myUid) return;
     console.log('post viewed'); //temp log
     this.viewed = true;
     if (!this.isAuthenticated) {
