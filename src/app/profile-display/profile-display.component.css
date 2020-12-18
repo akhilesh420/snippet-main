@@ -97,11 +97,16 @@
 }
 
 .profileDescription {
-  color: #fff;
   height: 100%;
   margin-left: 2.7%;
   position: relative;
   word-wrap: break-word;
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(235, 221, 187, 0.9);
 }
 
 .svgStyle {
@@ -155,7 +160,12 @@
   height: 100%;
   margin-left: 2.7%;
   position: relative;
-  color: #fff;
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(235, 221, 187, 0.9);
 }
 
 .profileMetrics {
