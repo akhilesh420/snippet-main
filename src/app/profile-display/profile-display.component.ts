@@ -45,11 +45,14 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   editLink: Boolean = false;
   username: string = '';
   description: string = '';
+  tempDescription: string = '';
   link: string = '';
+  tempLink: string = '';
   @ViewChild('usernameRef') usernameSpan : ElementRef;
+  @ViewChild('descriptionRef') descriptionRef : ElementRef;
+  @ViewChild('linkRef') linkRef : ElementRef;
   profileStickers: ProfileSticker[] = [null,null,null,null,null];
   userStickers:  ProfileSticker[] = [null,null,null,null,null];
-  // 'null','null','null','null','null'
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
@@ -95,10 +98,12 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
       if (!details) return;
       setInterval(this.getMultiplier(details),1000);
-      console.log(this.username);
       this.username = details.username;
       this.description = 'test description hdfkajsdhfljaksdhfljkdashflkja';
       this.link = 'test link';
+
+      this.tempDescription = this.description;
+      this.tempLink = this.link;
     });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
     this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
@@ -153,6 +158,39 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   navigateRoute() {
     this.router.navigate([this.profileRoute]);
+  }
+
+
+  onEditDescClick() {
+    this.editDesc = true;
+    setTimeout(() => this.descriptionRef.nativeElement.focus(), 100);
+  }
+
+  onEditLinkClick() {
+    this.editLink = true;
+    setTimeout(() => this.linkRef.nativeElement.focus(), 100);
+  }
+
+  onSave() {
+    this.resetState();
+    this.description = this.tempDescription;
+    this.link = this.tempLink;
+  }
+
+  resetState() {
+    this.inEditing = !this.inEditing;
+    this.editDesc = false;
+    this.editLink = false
+  }
+
+  onPressEnter(event) {
+    event.preventDefault();
+    this.editDesc = false;
+    this.editLink = false;
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 
   ngOnDestroy() {

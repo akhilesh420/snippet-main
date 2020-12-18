@@ -98,7 +98,10 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  if (contentType.startsWith('image/')) {
+  if (contentType.startsWith('image/gif')) {
+    const outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
+    await gif_processing(bucket, outputFilePath, tempFilePath, filePath);
+  } else if (contentType.startsWith('image/')) {
     const outputFilePath =  path.join(os.tmpdir(), 'compressed.jpeg');
     await image_processing(bucket, outputFilePath, tempFilePath, filePath);
   }
