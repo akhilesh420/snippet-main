@@ -113,7 +113,7 @@
         <div class = "row no-margin-no-padding displayStickers">
 
           <div class = "sticker col-2 no-margin-no-padding">
-            <img *ngIf="inEditing;" src = "assets/icons/Edit mode Profile Display/backButton.svg">
+            <img (click)='inEditing=false' *ngIf="inEditing;" src = "assets/icons/Edit mode Profile Display/backButton.svg">
           </div>
 
           <div class = "sticker col-2 no-margin-no-padding" *ngFor = 'let sticker of profileStickers'>
@@ -129,7 +129,7 @@
         <div class = "row no-margin-no-padding profileDetailsTop">
 
           <div class = "col-3 no-margin-no-padding displayPicture">
-            <div class = "dpContainer" [ngClass]='{"dpContainer-edit": inEditing}'>
+            <div class = "dpContainer" [ngClass]='{"dpContainer-edit": inEditing, "dpContainer-bck": !tempDisplayPicture$.value}'>
               <div class="file-input-container">
                 <input
                 type="file"
@@ -137,7 +137,6 @@
                 class="form-control-file float-center"
                 accept="image/x-png,image/gif,image/jpeg"
                 (change)="fileUpload($event)"
-                (click)="touched=true"
                 name="content"
                 #dpInput>
               </div>
@@ -166,7 +165,7 @@
                  [textContent]="tempDescription"
                  (input)="tempDescription=$event.target.textContent"
                  (keydown.enter)="onPressEnter($event)"
-                 >
+                 (focus)='setCaret(true)'>
               {{description}}
             </div>
 
@@ -256,7 +255,7 @@
                  [textContent]="tempLink"
                  (input)="tempLink=$event.target.textContent"
                  (keydown.enter)="onPressEnter($event)"
-                 >
+                 (focus)='setCaret(false)'>
               {{link}}
             </div>
 

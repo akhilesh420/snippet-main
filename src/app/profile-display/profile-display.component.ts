@@ -172,7 +172,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.router.navigate([this.profileRoute]);
   }
 
-
   onEditDescClick() {
     this.editDesc = true;
     setTimeout(() => this.descriptionRef.nativeElement.focus(), 100);
@@ -187,8 +186,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     let noChange = true;
     let message = 'Profile updated!';
     this.resetState();
-    this.description = this.tempDescription;
-    this.link = this.tempLink;
 
     if (this.profileStickers.length > 5) { //in case of an error
       for (let i=0; i <= this.profileStickers.length; i++) {
@@ -197,6 +194,8 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (this.description != this.tempDescription || this.link != this.tempLink) {
+      this.description = this.tempDescription;
+      this.link = this.tempLink;
       // this.usersService.updateProfileDetails(this.uid, this.profileDetails);
       noChange = false;
     }
@@ -252,8 +251,23 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  onAddClick(event) {
+  onAddClick() {
     this.dpInput.nativeElement.click();
+  }
+
+  setCaret(description: boolean) {
+    var range = document.createRange();
+    var sel = window.getSelection();
+
+    if (description) {
+      range.setStart(this.descriptionRef.nativeElement.childNodes[0], this.description.length);
+    } else {
+      range.setStart(this.linkRef.nativeElement.childNodes[0], this.link.length);
+    }
+    range.collapse(true);
+
+    sel.removeAllRanges();
+    sel.addRange(range);
   }
 
   ngOnDestroy() {

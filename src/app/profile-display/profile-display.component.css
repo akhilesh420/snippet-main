@@ -60,12 +60,15 @@
 }
 
 .dpContainer {
-  background-color: rgba(196, 196, 196, 1);
   width: 100%;
   padding-top: 100%;
   position: relative;
   border-radius: 50%;
   overflow: hidden;;
+}
+
+.dpContainer-bck {
+  background-color: rgba(196, 196, 196, 1);
 }
 
 .dpContainer-edit {
