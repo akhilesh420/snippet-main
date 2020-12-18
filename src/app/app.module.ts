@@ -42,6 +42,7 @@ import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { CollectionTabComponent } from './collection-tab/collection-tab.component';
 import { ProfileTabComponent } from './profile-tab/profile-tab.component';
+import { CollectionComponent } from './collection-tab/collection/collection.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ProfileTabComponent } from './profile-tab/profile-tab.component';
     PopUpComponent,
     SnapscrollDirective,
     CollectionTabComponent,
-    ProfileTabComponent
+    ProfileTabComponent,
+    CollectionComponent
   ],
   imports: [
     BrowserModule,
