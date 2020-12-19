@@ -4,7 +4,7 @@ import { Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, EventEmitter, Output } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
@@ -55,12 +55,17 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   error: string;
   displayPicture: any;
   changedDP: boolean = false;
+  profileStickersChanged: boolean = false;
   updatedDP: any;
 
   @ViewChild('usernameRef') usernameSpan : ElementRef;
   @ViewChild('descriptionRef') descriptionRef : ElementRef;
   @ViewChild('linkRef') linkRef : ElementRef;
   @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
+
+  emittedPid: string;
+  profileStickerEdit: boolean;
+  index: number;
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
@@ -72,7 +77,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.fetchingWindow = true;
     this.windowService.checkWidth();
-    console.log('init');
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -81,6 +85,16 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       }
     }, errorMessage => {
       console.log(errorMessage);
+    });
+
+    this.miscellaneousService.stickerSelectConfirm.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.miscellaneousService.profileStickerEdit.next(false);
+      if (response) {
+        this.profileStickers.forEach((sticker, i) => this.userStickers[4-i] = sticker);
+        this.profileStickersChanged = true;
+      } else {
+        this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
+      }
     });
 
     this.setUp();
@@ -94,7 +108,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{
       if (uid) {
         this.uid = uid;
-        console.log(this.uid);
         this.profileRoute = "/profile/" + this.uid;
         this.setUpProfile();
         this.setUpActivity();
@@ -119,7 +132,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       if (!stickers) return;
       stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
       this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
-      console.log(this.profileStickers);
     });
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
     this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
@@ -193,6 +205,11 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
        }
     }
 
+    if (this.profileStickersChanged) {
+      noChange = false;
+      this.usersService.updateProfileSticker(this.uid,this.userStickers);
+    }
+
     if (this.description != this.tempDescription || this.link != this.tempLink) {
       this.description = this.tempDescription;
       this.link = this.tempLink;
@@ -214,9 +231,11 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
         }
       });
     }
+
     if (noChange) return;
     this.miscellaneousService.setPopUp(new PopUp(message,'Okay', undefined, ['default', 'reject']));
     this.changedDP = false;
+    this.profileStickersChanged=false;
   }
 
   resetState() {
@@ -269,6 +288,17 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
     sel.removeAllRanges();
     sel.addRange(range);
+  }
+
+  clickProfileSticker(sticker: any, index: number) {
+    if (sticker && !this.inEditing) return;
+    this.inEditing = true;
+    this.index = index;
+    this.miscellaneousService.profileStickerEdit.next(true);
+    this.miscellaneousService.stickerEmitted.pipe(takeUntil(this.notifier$)).subscribe(pid => {
+      if (!pid) return;
+      this.profileStickers[this.index] = new ProfileSticker(pid, new Date());
+    });
   }
 
   ngOnDestroy() {

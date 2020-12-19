@@ -1,10 +1,10 @@
 import { takeUntil } from 'rxjs/operators';
 import { ActivityService } from './../shared/activity.service';
 import { AuthService } from './../auth/auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter } from '@angular/core';
 import { Collection } from '../shared/activity.model';
-import { PostDetails } from '../shared/post.model';
 import { Subject } from 'rxjs';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-collection-tab',
@@ -16,9 +16,11 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
   collectionList: Collection[] = [];
   myUid: string;
   notifier$ = new Subject();
+  editMode: boolean;
 
   constructor(private authService: AuthService,
-              private activityService: ActivityService) { }
+              private activityService: ActivityService,
+              private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
@@ -28,14 +30,20 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
     }, errorMessage => {
       console.log(errorMessage);
     });
+
+    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.editMode = value);
   }
 
   getCollection() {
-    this.activityService.getUserCollection(this.myUid) //get details of user collection
+    this.activityService.getUserCollection(this.myUid).pipe(takeUntil(this.notifier$)) //get details of user collection
     .subscribe((response:Collection[]) => {
       this.collectionList = response;
       console.log(this.collectionList);
     });
+  }
+
+  confirmSelection(confirm: boolean) {
+    this.miscellaneousService.stickerSelectConfirm.next(confirm);
   }
 
   ngOnDestroy() {
