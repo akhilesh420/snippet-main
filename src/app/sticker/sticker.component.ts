@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 export class StickerComponent implements OnInit, OnDestroy {
 
   @Input() pid: string;
+  @Input() overrideNavigate: boolean = false;
   // @Input() size: String = "24px";
 
   stickerSize = {};
@@ -41,7 +42,7 @@ export class StickerComponent implements OnInit, OnDestroy {
    }
 
   onClick() {
-    if (this.onBoarding) return;
+    if (this.onBoarding || this.overrideNavigate) return;
     this.router.navigate(['/post/', this.pid]);
   }
 

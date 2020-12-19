@@ -38,6 +38,10 @@ export class MiscellaneousService {
   private startTime: number;
   private endTime: number;
 
+  profileStickerEdit = new Subject<boolean>();
+  stickerEmitted = new Subject<string>();
+  stickerSelectConfirm = new Subject<boolean>();
+
   constructor(private userService: UsersService,
               private router: Router) { }
 
