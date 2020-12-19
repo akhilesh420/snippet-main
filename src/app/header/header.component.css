@@ -15,7 +15,7 @@
 /* Classes for single components */
 
 .header {
-  
+
   top: 0%;
   left: 0%;
   width: 100%;
@@ -61,7 +61,7 @@
 
 .subLogo {
 
-  
+
 
   font-family: "ChampagneAndLimousines";
   font-style: normal;
@@ -117,7 +117,7 @@
   top: 1px;
   left: 1px;
   border-radius: 50%;
-
+  overflow: hidden;
 }
 
 .optionsButton {
@@ -129,8 +129,14 @@
 
 }
 
+.dpContainer > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
 
-/* .headerdropDown {
+headerdropDown {
   position: fixed;
   height: 7.6vw;
   width: 7.7vw;
@@ -148,13 +154,10 @@
   border-radius: 0.8vh;
 }
 
-.extra-padding {
-  padding-top: 1vw;
-}
 
 .headerdropDown > .row {
   padding-top: 1vw;
-} 
+}
 
 .active-dropdown {
   opacity: 1;
@@ -166,10 +169,87 @@
 
 .headerdropDown > .row > .col-12:hover, .headerdropDown > .row > a > .col-12:hover {
   opacity: 1;
-} */
+}
 
 
+.loading-bar {
+  border-top: 2px solid #D8B869;
+  position: fixed;
+  width: 90vw;
+  animation-name: loadingAnim;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+}
 
+
+/* Animation */
+
+.slide-in-top {
+	-webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+            transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+            transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-out-top {
+
+  -webkit-animation: slide-out-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-out-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+}
+
+  @-webkit-keyframes slide-out-top {
+    0% {
+      -webkit-transform: translateY(0px);
+              transform: translateY(0px);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: translateY(-1000px);
+              transform: translateY(-1000px);
+      opacity: 0;
+    }
+  }
+  @keyframes slide-out-top {
+    0% {
+      -webkit-transform: translateY(0px);
+              transform: translateY(0px);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: translateY(-1000px);
+              transform: translateY(-1000px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes loadingAnim {
+    from { width: 0; };
+    to { width: 90vw; };
+  }
 
 
 
@@ -341,69 +421,6 @@
 
 
 
-/* Animation */
-
-.slide-in-top {
-	-webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-@-webkit-keyframes slide-in-top {
-  0% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    opacity: 1;
-  }
-}
-@keyframes slide-in-top {
-  0% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.slide-out-top {
-
-  -webkit-animation: slide-out-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  animation: slide-out-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-
-}
-
-  @-webkit-keyframes slide-out-top {
-    0% {
-      -webkit-transform: translateY(0px);
-              transform: translateY(0px);
-      opacity: 1;
-    }
-    100% {
-      -webkit-transform: translateY(-1000px);
-              transform: translateY(-1000px);
-      opacity: 0;
-    }
-  }
-  @keyframes slide-out-top {
-    0% {
-      -webkit-transform: translateY(0px);
-              transform: translateY(0px);
-      opacity: 1;
-    }
-    100% {
-      -webkit-transform: translateY(-1000px);
-              transform: translateY(-1000px);
-      opacity: 0;
-    }
-  }
 
 
 

@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   notifier$ = new Subject();
   loadingBar$: Subject<boolean>;
 
-  dropdown: boolean = false;
+  dropdown: boolean = true;
   displayPicture$: BehaviorSubject<any>;
 
   constructor(private authService: AuthService,

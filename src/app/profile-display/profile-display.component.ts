@@ -216,6 +216,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (noChange) return;
     this.miscellaneousService.setPopUp(new PopUp(message,'Okay', undefined, ['default', 'reject']));
+    this.changedDP = false;
   }
 
   resetState() {
