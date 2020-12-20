@@ -16,6 +16,7 @@
 
 .profileDB-edit {
   background-image: url("src/assets/icons/Profile Display/editModeBackground.svg");
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
 }
 
 .no-margin-no-padding {
