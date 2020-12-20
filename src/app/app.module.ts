@@ -31,14 +31,10 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
-import { WithLoadingPipe } from './shared/with-loading.pipe';
-import { DateSortPipe } from './shared/date-sort.pipe';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
 import { ScrollableDirective } from './shared/directives/scrollable.directive';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ClickOutsideModule } from 'ng-click-outside';
-import { ShortenPipe } from './shared/shorten.pipe';
-import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { CollectionTabComponent } from './collection-tab/collection-tab.component';
 import { ProfileTabComponent } from './profile-tab/profile-tab.component';
@@ -63,14 +59,10 @@ import { CollectionComponent } from './collection-tab/collection/collection.comp
     AuthComponent,
     LoadingSpinnerComponent,
     TitleCaseDirective,
-    WithLoadingPipe,
-    DateSortPipe,
     TutorialPageComponent,
     ScrollableDirective,
     NavbarComponent,
-    ShortenPipe,
     PopUpComponent,
-    SnapscrollDirective,
     CollectionTabComponent,
     ProfileTabComponent,
     CollectionComponent

@@ -1,13 +1,13 @@
 <div class = "profileTab">
-    
+
     <div class = "backpanel row no-margin-no-padding">
 
         <div class = "backpanel col no-margin-no-padding">
 
             <div class = "engagementBar row no-margin-no-padding">
 
-                <div class = "engagement no-margin-no-padding">
-                    
+                <div class = "engagement no-margin-no-padding" [ngStyle]='engagementProp'>
+
                 </div>
 
             </div>
@@ -15,7 +15,7 @@
             <div class = "profileDetails row no-margin-no-padding">
 
                 <div class = "usernameSpace col-8 no-margin-no-padding">
-                    <span class = "username">WWWWWWWWWWWWWWW</span>
+                    <span class = "username" *ngIf='profileDetails$ | async as details'>details.username</span>
                 </div>
 
                 <div class = "profileStickers col-4 no-margin-no-padding">
@@ -25,7 +25,7 @@
                         <div class = "col no-margin-no-padding">
                             <div class = "stickerContainer"></div>
                         </div>
-                            
+
                         <div class = "col no-margin-no-padding">
                             <div class = "stickerContainer"></div>
                         </div>
@@ -46,7 +46,7 @@
                     </div>
 
                 </div>
-                
+
 
             </div>
 
@@ -59,7 +59,7 @@
     </div>
 
     <div class = "postSticker">
-        
+
     </div>
 
 </div>

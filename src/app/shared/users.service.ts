@@ -56,7 +56,14 @@ export class UsersService {
       this.profileDetailsList.push({uid: uid, obs: new BehaviorSubject<ProfileDetails>(undefined)});
       let secIndex = this.profileDetailsList.length - 1;
       this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(response => {
-        this.profileDetailsList[secIndex].obs.next(response);
+        let temp: ProfileDetails;
+        if (!response.description) {
+          temp = new ProfileDetails(response.username, '','');
+          this.addProfileDetails(uid, temp);
+        } else {
+          temp = response;
+        }
+        this.profileDetailsList[secIndex].obs.next(temp);
       });
       return this.profileDetailsList[secIndex].obs;
     } else {
@@ -72,15 +79,13 @@ export class UsersService {
 
   // Add profile details from cloud firestore
   addProfileDetails(uid: string, details: ProfileDetails) {
-    const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
-    const obj = {username : details.username, bio: bio};
+    const obj = {...details};
     this.profileDetailsCollection.doc(uid).set(obj);
   }
 
   // Update profile details from cloud firestore
-  updateProfileDetails(uid: string, details: ProfileDetails) {
-    const bio = {title: details.bio.title, location: details.bio.location, content: details.bio.content};
-    let obj = {username : details.username, bio: bio};
+  updateProfileDetails(uid: string, details: any) {
+    let obj = {...details};
     this.profileDetailsCollection.doc(uid).update(obj);
   }
 
@@ -121,7 +126,13 @@ export class UsersService {
       let secIndex = this.profileStickersList.length - 1;
       this.afs.doc<{stickers: ProfileSticker[]}>('profile stickers/' + uid).valueChanges().pipe(catchError(this.handleError)).subscribe(response => {
         if (!response) return;
-        this.profileStickersList[secIndex].obs.next(response.stickers);
+        const temp = [null,null,null,null,null];
+        response.stickers.forEach((sticker,index) => {
+          if (sticker.pid) {
+           temp[index] = sticker;
+          }
+        });
+        this.profileStickersList[secIndex].obs.next(temp);
       });;
       return this.profileStickersList[secIndex].obs;
     } else {
@@ -142,7 +153,8 @@ export class UsersService {
   updateProfileSticker(uid: string, profileSticker: ProfileSticker[]) {
     const stickerArray = [];
     profileSticker.forEach(sticker => {
-      stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})
+      if (sticker) {stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})}
+      else {stickerArray.push("empty")}
     });
     this.profileStickersCollection.doc(uid).update({stickers: stickerArray});
   }

@@ -45,6 +45,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   inEditing: Boolean = false;
   editDesc: Boolean = false;
   editLink: Boolean = false;
+  editStickers: Boolean = false;
   username: string = '';
   description: string = '';
   tempDescription: string = '';
@@ -55,7 +56,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   error: string;
   displayPicture: any;
   changedDP: boolean = false;
-  profileStickersChanged: number = 0;
+  profileStickersChanged: boolean = false;
   updatedDP: any;
 
   @ViewChild('usernameRef') usernameSpan : ElementRef;
@@ -89,12 +90,17 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
     this.miscellaneousService.stickerSelectConfirm.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.miscellaneousService.profileStickerEdit.next(false);
-      if (response === 'confirm') {
-        this.profileStickers.forEach((sticker, i) => this.userStickers[4-i] = sticker);
-        ++this.profileStickersChanged;
-      } else if (response === 'reject'){
+      if (response === 'reject'){
         this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
+        this.profileStickersChanged = false;
+      } else if (response === 'remove') {
+        this.profileStickersChanged = true;
+        this.profileStickers[this.index] = null;
       }
+    });
+
+    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.editStickers = response;
     });
 
     this.setUp();
@@ -121,8 +127,8 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       if (!details) return;
       setInterval(this.getMultiplier(details),1000);
       this.username = details.username;
-      this.description = 'test description hdfkajsdhfljaksdhfljkdashflkja';
-      this.link = 'test link';
+      this.description = details.description;
+      this.link = details.link;
 
       this.tempDescription = this.description;
       this.tempLink = this.link;
@@ -130,6 +136,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
     this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
       if (!stickers) return;
+      console.log(stickers);
       stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
       this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
     });
@@ -197,6 +204,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   onSave() {
     let noChange = true;
     let message = 'Profile updated!';
+    this.miscellaneousService.profileStickerEdit.next(false);
     this.resetState();
 
     if (this.profileStickers.length > 5) { //in case of an error
@@ -205,15 +213,16 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
        }
     }
 
-    if (this.profileStickersChanged === 2) {
+    if (this.profileStickersChanged) {
       noChange = false;
+      this.profileStickers.forEach((sticker, i) => this.userStickers[4-i] = sticker);
       this.usersService.updateProfileSticker(this.uid,this.userStickers);
     }
 
     if (this.description != this.tempDescription || this.link != this.tempLink) {
       this.description = this.tempDescription;
       this.link = this.tempLink;
-      // this.usersService.updateProfileDetails(this.uid, this.profileDetails);
+      this.usersService.updateProfileDetails(this.uid, {description: this.description, link: this.link});
       noChange = false;
     }
 
@@ -235,13 +244,13 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     if (noChange) return;
     this.miscellaneousService.setPopUp(new PopUp(message,'Okay', undefined, ['default', 'reject']));
     this.changedDP = false;
-    this.profileStickersChanged = 0;
+    this.profileStickersChanged = false;
   }
 
   resetState() {
     this.inEditing = !this.inEditing;
     this.editDesc = false;
-    this.editLink = false
+    this.editLink = false;
   }
 
   onPressEnter(event) {
@@ -296,10 +305,36 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.index = index;
     this.miscellaneousService.profileStickerEdit.next(true);
     this.miscellaneousService.stickerEmitted.pipe(takeUntil(this.notifier$)).subscribe(pid => {
-      if (!pid) return;
+      if (!pid || (this.profileStickers[this.index] != null && this.profileStickers[this.index].pid === pid)) return;
       this.profileStickers[this.index] = new ProfileSticker(pid, new Date());
-      ++this.profileStickersChanged;
+      this.profileStickersChanged = true;
     });
+  }
+
+  onClickBack () {
+    this.inEditing = false;
+    this.miscellaneousService.profileStickerEdit.next(false);
+    if (this.profileStickersChanged) {
+      this.profileStickersChanged = false;
+      this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
+    }
+  }
+
+  goToLink(){
+    if (!this.link) return;
+    const link = 'https://' + this.link;
+    if (!this.validURL(link)) return;
+    window.open(link, "_blank");
+  }
+
+ validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return !!pattern.test(str);
   }
 
   ngOnDestroy() {
