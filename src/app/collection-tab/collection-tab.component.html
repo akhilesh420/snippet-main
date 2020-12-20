@@ -28,7 +28,7 @@
     <!-- In Sticker selection mode -->
     <div class = "row actionButtons no-margin-no-padding" *ngIf='editMode'>
         <!-- Confirm -->
-        <div class = "col-6 acceptButton no-margin-no-padding" (click)='confirmSelection(true)'>
+        <div class = "col-4 acceptButton no-margin-no-padding" (click)='confirmSelection("confirm")'>
 
             <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="2" height="7" transform="matrix(-0.651011 0.759068 0.759068 0.651011 1.99414 4.4624)" fill="#C4C4C4"/>
@@ -37,8 +37,18 @@
 
         </div>
 
+        <!-- Remove -->
+        <div class = "col-4 acceptButton no-margin-no-padding" (click)='confirmSelection("remove")'>
+
+          <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="2" height="7" transform="matrix(-0.651011 0.759068 0.759068 0.651011 1.99414 4.4624)" fill="#C4C4C4"/>
+              <rect x="13.2549" width="2" height="12" transform="rotate(43.4658 13.2549 0)" fill="#C4C4C4"/>
+          </svg>
+
+        </div>
+
         <!-- Reject -->
-        <div class = "col-6 backButton no-margin-no-padding" (click)='confirmSelection(false)'>
+        <div class = "col-4 backButton no-margin-no-padding" (click)='confirmSelection("reject")'>
 
             <svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.646446 3.64645C0.451185 3.84171 0.451185 4.15829 0.646446 4.35355L3.82843 7.53553C4.02369 7.7308 4.34027 7.7308 4.53553 7.53553C4.7308 7.34027 4.7308 7.02369 4.53553 6.82843L1.70711 4L4.53553 1.17157C4.7308 0.976311 4.7308 0.659728 4.53553 0.464466C4.34027 0.269204 4.02369 0.269204 3.82843 0.464466L0.646446 3.64645ZM21 3.5L1 3.5V4.5L21 4.5V3.5Z" fill="white"/>

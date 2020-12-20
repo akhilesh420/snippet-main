@@ -55,7 +55,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   error: string;
   displayPicture: any;
   changedDP: boolean = false;
-  profileStickersChanged: boolean = false;
+  profileStickersChanged: number = 0;
   updatedDP: any;
 
   @ViewChild('usernameRef') usernameSpan : ElementRef;
@@ -89,10 +89,10 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
     this.miscellaneousService.stickerSelectConfirm.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.miscellaneousService.profileStickerEdit.next(false);
-      if (response) {
+      if (response === 'confirm') {
         this.profileStickers.forEach((sticker, i) => this.userStickers[4-i] = sticker);
-        this.profileStickersChanged = true;
-      } else {
+        ++this.profileStickersChanged;
+      } else if (response === 'reject'){
         this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
       }
     });
@@ -205,7 +205,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
        }
     }
 
-    if (this.profileStickersChanged) {
+    if (this.profileStickersChanged === 2) {
       noChange = false;
       this.usersService.updateProfileSticker(this.uid,this.userStickers);
     }
@@ -235,7 +235,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     if (noChange) return;
     this.miscellaneousService.setPopUp(new PopUp(message,'Okay', undefined, ['default', 'reject']));
     this.changedDP = false;
-    this.profileStickersChanged=false;
+    this.profileStickersChanged = 0;
   }
 
   resetState() {
@@ -298,6 +298,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.miscellaneousService.stickerEmitted.pipe(takeUntil(this.notifier$)).subscribe(pid => {
       if (!pid) return;
       this.profileStickers[this.index] = new ProfileSticker(pid, new Date());
+      ++this.profileStickersChanged;
     });
   }
 
