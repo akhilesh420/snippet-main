@@ -37,8 +37,7 @@
       <div class="post-metrics float-left">
         <!-- Holder List Button -->
         <div class="metrics pointer inline float-left height-auto textFontSize"
-            (click)="getHolderList(); stopPropagation($event);"
-            [hidden]="tutorial">
+            (click)="getHolderList(); stopPropagation($event);">
           <img src="assets/icons/Post Icons/holderlistSymbol.svg" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
           <span #holderText [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">Holder List</span>
         </div>
@@ -73,7 +72,7 @@
         </div>
         <!-- Holder List -->
         <div class="holder-list">
-          <app-holder *ngFor="let holder of collection" [uid]="holder.collectorID" [stickerSize]="stickerSize"></app-holder>
+          <app-holder *ngFor="let holder of collection" [uid]="holder.collectorID"></app-holder>
         </div>
       </div>
       <ng-template #holderLoading>
@@ -81,80 +80,7 @@
       </ng-template>
     </div>
   </div>
-  <app-profile-tab></app-profile-tab>
-  <!-- profile tab -->
-  <!-- <div *ngIf="!fetchingWindow" class="profileTab bkgrd-opc" [ngClass]="showComments ? 'open-comment' : 'close-comment'"> -->
-    <!-- comment button -->
-    <!-- <div *ngIf="!tutorial">
-      <div class="commentButton"
-          (click)="showComments = !showComments; showDetails = false; holderToggle = false;"
-            style="cursor: pointer;" >
-        <div class="hideExtra">
-          <div class="buttonBackground bkgrd-opc">
-          </div>
-        </div>
-        <img src="https://i.ibb.co/twfK1TW/icons-3x.png" alt="comment button">
-      </div>
-      <div *ngIf="showComments"> -->
-        <!-- Coming soon placeholder -->
-        <!-- <div class="row">
-          <div class="col align-self-center">
-            <span class="temp">Coming soon!</span>
-          </div>
-        </div> -->
-        <!-- <app-comments class="section" [postId]="postDetails.postId"></app-comments> -->
-      <!-- </div>
-    </div>
-  </div> -->
-  <!-- profile tab information -->
-  <!-- <div *ngIf="!fetchingWindow" class="profileTab close-comment">
-    <div class="post-info"> -->
-      <!-- Engagement Bar -->
-      <!-- <div  class="engagementBar">
-        <div class="engagement"
-          [ngStyle]='engagementProp'>
-        </div>
-        <div class="bar"></div>
-      </div> -->
-      <!-- Profile details -->
-      <!-- <div class="width-100" [ngStyle]='{"height": stickerSize}'>
-        <div class="row no-margin no-padding">
-          <div class="col-6 no-margin no-padding username-col" #usernameCol> -->
-             <!-- Username -->
-            <!-- <a style = "cursor: pointer;" [routerLink]='!tutorial ? profileRoute : []'>
-              <span class = "stickerMargin" [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}" #usernameRef>
-                {{username}}
-              </span>
-            </a>
-          </div>
-          <div class="col-6 no-margin no-padding">
-            <div class="row no-margin no-padding"
-                 *ngIf="!fetchingWindow && profileStickers$ | async as stickers">
-              <div class="col"
-                *ngFor="let i of getEmptySlots(stickers)"
-                style="padding: 0px;">
-              </div>
-              <div class="col"
-                  *ngFor="let sticker of stickers"
-                   style="padding: 0px;"
-                   align='right'>
-                <app-sticker [pid]="sticker.pid" [size]="stickerSize"></app-sticker>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- Post Sticker -->
-    <!-- <a style="cursor: pointer;" (click)='collectSticker()'>
-      <div class="postSticker"
-          [ngClass]="onBoarding && onBoardingStep === 2 ? 'pulsate-sticker' : null"
-          *ngIf="stickerContent$ | async as stickerContent">
-        <img class="sticker-img"
-             src={{stickerContent}}>
-      </div>
-    </a>
-  </div> -->
+  <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
     <!-- Fail-safe button -->
     <div class = "fail-safe" *ngIf='playFailSafe' (click)='playFailSafe = false; allowToggle = true; videoToggle();'>
       <img src = "assets/icons/Post Icons/failSafeButton.png">

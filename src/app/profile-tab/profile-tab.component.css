@@ -41,8 +41,6 @@
 
 .engagement {
     height: 100%;
-    width: 10%;
-    background: #e2b33d;
     border-radius: 5px 0px 0px 0px;
 }
 
@@ -65,7 +63,7 @@
     position: relative;
 }
 
-.username {  
+.username {
     margin: 0;
     position: absolute;
     top: 52%;
@@ -78,15 +76,14 @@
 
 
 .displayStickers {
-    height: 100%;  
-    position: relative; 
+    height: 100%;
+    position: relative;
 }
 
 .stickerContainer {
     height: 2.366vh;
     width: 2.366vh;
     border-radius: 50%;
-    background-color: #8F8F8F;
     margin: 0;
     position: absolute;
     top: 17%;
@@ -94,14 +91,27 @@
     filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
+.stickerContainer-bck {
+  background-color: #8F8F8F;
+}
 
 .postSticker {
     position: absolute;
-    background-color: #8F8F8F;
     height: 7.777vh;
     width: 7.777vh;
     border-radius: 50%;
     left: 80.2%;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     top: -200%;
+}
+
+.postSticker-bck {
+  background-color: #8F8F8F;
+}
+
+.postSticker > IMG {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }

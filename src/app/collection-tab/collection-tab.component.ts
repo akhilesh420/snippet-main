@@ -42,7 +42,7 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmSelection(confirm: boolean) {
+  confirmSelection(confirm: string) {
     this.miscellaneousService.stickerSelectConfirm.next(confirm);
   }
 

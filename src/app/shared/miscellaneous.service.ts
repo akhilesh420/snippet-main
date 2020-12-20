@@ -40,7 +40,7 @@ export class MiscellaneousService {
 
   profileStickerEdit = new Subject<boolean>();
   stickerEmitted = new Subject<string>();
-  stickerSelectConfirm = new Subject<boolean>();
+  stickerSelectConfirm = new Subject<string>();
 
   constructor(private userService: UsersService,
               private router: Router) { }

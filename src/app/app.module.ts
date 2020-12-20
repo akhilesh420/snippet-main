@@ -19,7 +19,6 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedComponent } from './feed/feed.component';
 import { PostComponent } from './feed/post/post.component';
 import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
-import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { CommentsComponent } from './feed/post/comments/comments.component';
 import { CommentComponent } from './feed/post/comments/comment/comment.component';
 import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
@@ -31,18 +30,15 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
-import { WithLoadingPipe } from './shared/with-loading.pipe';
-import { DateSortPipe } from './shared/date-sort.pipe';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
 import { ScrollableDirective } from './shared/directives/scrollable.directive';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ClickOutsideModule } from 'ng-click-outside';
-import { ShortenPipe } from './shared/shorten.pipe';
-import { SnapscrollDirective } from './shared/directives/snapscroll.directive';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { CollectionTabComponent } from './collection-tab/collection-tab.component';
 import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 import { CollectionComponent } from './collection-tab/collection/collection.component';
+import { ReversePipe } from './shared/reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -53,7 +49,6 @@ import { CollectionComponent } from './collection-tab/collection/collection.comp
     FeedComponent,
     PostComponent,
     PostEditComponent,
-    ProfileEditComponent,
     CommentsComponent,
     CommentComponent,
     CommentListComponent,
@@ -63,17 +58,14 @@ import { CollectionComponent } from './collection-tab/collection/collection.comp
     AuthComponent,
     LoadingSpinnerComponent,
     TitleCaseDirective,
-    WithLoadingPipe,
-    DateSortPipe,
     TutorialPageComponent,
     ScrollableDirective,
     NavbarComponent,
-    ShortenPipe,
     PopUpComponent,
-    SnapscrollDirective,
     CollectionTabComponent,
     ProfileTabComponent,
-    CollectionComponent
+    CollectionComponent,
+    ReversePipe
   ],
   imports: [
     BrowserModule,
