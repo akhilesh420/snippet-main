@@ -1,7 +1,6 @@
 import { FeedComponent } from './feed/feed.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthComponent } from './auth/auth.component';
-import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { CreateComponent } from './create/create.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 
@@ -17,7 +16,6 @@ const appRoutes: Routes = [
   { path: 'create/:step', component: CreateComponent, canActivate: [AuthGuard]},
   { path: 'create', redirectTo: '/create/content', pathMatch: 'full', canActivate: [AuthGuard]},
   { path: 'profile/:id', component: FeedComponent},
-  { path: 'profile/:id/edit', component: ProfileEditComponent, canActivate: [AuthGuard]},
   { path: 'feedback', component: FeedbackComponent},
   { path: 'post/:id', component: FeedComponent},
   { path: 'auth', component: AuthComponent},
