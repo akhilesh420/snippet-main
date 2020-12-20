@@ -23,9 +23,9 @@ const appRoutes: Routes = [
   { path: 'tutorial', component: TutorialPageComponent}
 ];
 
-// , {scrollPositionRestoration: 'enabled'}
+
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, {scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
