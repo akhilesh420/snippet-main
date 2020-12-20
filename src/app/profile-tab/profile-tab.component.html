@@ -18,7 +18,7 @@
                     <span class = "username"
                           *ngIf='profileDetails$ | async as details'
                           style="cursor: pointer;"
-                          routerLink='profileRoute'>
+                          [routerLink]='profileRoute'>
                           {{details.username}}
                     </span>
                 </div>
