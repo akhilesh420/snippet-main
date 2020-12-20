@@ -19,7 +19,6 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedComponent } from './feed/feed.component';
 import { PostComponent } from './feed/post/post.component';
 import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
-import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { CommentsComponent } from './feed/post/comments/comments.component';
 import { CommentComponent } from './feed/post/comments/comment/comment.component';
 import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
@@ -39,6 +38,7 @@ import { PopUpComponent } from './pop-up/pop-up.component';
 import { CollectionTabComponent } from './collection-tab/collection-tab.component';
 import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 import { CollectionComponent } from './collection-tab/collection/collection.component';
+import { ReversePipe } from './shared/reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -49,7 +49,6 @@ import { CollectionComponent } from './collection-tab/collection/collection.comp
     FeedComponent,
     PostComponent,
     PostEditComponent,
-    ProfileEditComponent,
     CommentsComponent,
     CommentComponent,
     CommentListComponent,
@@ -65,7 +64,8 @@ import { CollectionComponent } from './collection-tab/collection/collection.comp
     PopUpComponent,
     CollectionTabComponent,
     ProfileTabComponent,
-    CollectionComponent
+    CollectionComponent,
+    ReversePipe
   ],
   imports: [
     BrowserModule,

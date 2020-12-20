@@ -59,7 +59,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   profileStickersChanged: boolean = false;
   updatedDP: any;
 
-  @ViewChild('usernameRef') usernameSpan : ElementRef;
   @ViewChild('descriptionRef') descriptionRef : ElementRef;
   @ViewChild('linkRef') linkRef : ElementRef;
   @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
@@ -125,7 +124,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
     this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
       if (!details) return;
-      setInterval(this.getMultiplier(details),1000);
       this.username = details.username;
       this.description = details.description;
       this.link = details.link;
@@ -144,16 +142,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
       this.tempDisplayPicture$.next(dp);
     })
-  }
-
-  getMultiplier(value: ProfileDetails) {
-    try {
-      const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
-      this.multiplier = value.username.length <= 10 ? 1 : 10/value.username.length;
-      return null;
-    } catch(error) {
-      return null;
-    }
   }
 
   setUpActivity() {
@@ -228,7 +216,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
     if (this.changedDP) {
       noChange = false;
-      message = "Profile updating! Feel free to explore but please don't close or reload the tab while your dp is being processed";
+      message = "Profile updating! Feel free to explore but please don't close the tab while your dp is being processed";
 
       this.miscellaneousService.startLoading();
       this.displayPicture$.next(this.updatedDP);
