@@ -16,7 +16,7 @@
             </div>
 
             <div class = "row no-margin-no-padding creatorName">
-                <p class = "name">{{(setUpUser(details.uid) | async).username}}</p>
+                <p class = "name" *ngIf='(setUpUser(details.uid) | async) as profile'>{{profile.username}}</p>
             </div>
 
         </div>

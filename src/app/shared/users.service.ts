@@ -186,12 +186,10 @@ export class UsersService {
     if (index === -1) {
       this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.displayPictureList.length - 1;
-      this.getDisplayPictureRef(uid).subscribe((response: DisplayPicture) => {
-        const ref = this.storage.ref('Display picture/' + uid);
-        ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
-          this.displayPictureList[secIndex].obs.next(response);
-          this.dpLoadCheck.next(true);
-        });
+      const ref = this.storage.ref('Display picture/' + uid);
+      ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
+        this.displayPictureList[secIndex].obs.next(response);
+        this.dpLoadCheck.next(true);
       });
       return this.displayPictureList[secIndex].obs
     } else {
