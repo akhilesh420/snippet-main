@@ -114,3 +114,63 @@ cursor: pointer;
     padding-top: 1.8%;
 
 }
+
+.removeButton {
+
+    background:  #8F8F8F;;
+    text-align: center;
+    padding-top: 1.8%;
+}
+
+.removeText {
+
+font-family: "ChampagneAndLimousines";
+font-style: normal;
+font-weight: bold;
+font-size: 12px;
+line-height: 0px;
+letter-spacing: 0.1em;
+color: #FFFFFF;
+position: absolute;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+
+
+}
+
+.loggedout {
+
+    position: absolute;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+  
+  }
+  
+.loggedoutText {
+  
+    font-family: "Comfortaa";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 0px;
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+  
+  }
+
+.svgStyle {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+
+}
