@@ -66,18 +66,18 @@
 .post-container {
   width: 100vw;
   height: calc(100vh - 7.24vh);
-  margin-top: 5.334vh;
+  margin-top: 40px;
 }
 
 .desktop-profile-display {
   position: fixed;
-  top: calc(5.334vh + 6vh);
+  top: 86px;
   right: 15vw;
 }
 
 .desktop-collection-tab {
   position: fixed;
-  top: calc(5.334vh + 6vh + 234px + 2.4444vh);
+  top: 340px;
   right: calc(15vw + 69px);
 }
 
@@ -94,7 +94,6 @@
     height: 79vh;
     width: calc(9 * (79vh) / 16);
     max-width: 100vw;
-    /* border-radius: 1.67vh; */
     margin-bottom: 6.077vh;
     margin-left: calc(100vw - 15vw - 10vw - 353px - (9 * (79vh) / 16));
     overflow: hidden;
