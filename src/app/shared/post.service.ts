@@ -1,9 +1,10 @@
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { PostContent, PostDetails, StickerDetails } from './post.model';
 
 import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -97,7 +98,7 @@ export class PostService {
   }
 
   // Get sticker content from firebase storage by UID
-  getStickerContent(pid: string) {
+  getStickerContent(pid: string, size: string='_sm') {
     let index = this.stickerContentList.findIndex(details => {
       return details.pid === pid;
     })
@@ -105,11 +106,19 @@ export class PostService {
     if (index === -1) {
       this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.stickerContentList.length - 1;
-      this.getStickerContentRef(pid).subscribe((response: PostContent) => {
-        const ref = this.storage.ref('Post/' + response.name);
+      this.getStickerContentRef(pid).pipe(catchError(this.handleError)).subscribe((response: PostContent) => {
+        const ref = this.storage.ref('Post/' + response.name + size);
         ref.getDownloadURL().subscribe(response => {
           if (response) {
             this.stickerContentList[secIndex].obs.next(response);
+          }
+        },error => {          if (error.code_ === "storage/object-not-found") {
+            const ref = this.storage.ref('Post/' + response.name);
+            ref.getDownloadURL().subscribe(response => {
+              if (response) {
+                this.stickerContentList[secIndex].obs.next(response);
+              }
+            });
           }
         });
       });
@@ -129,4 +138,17 @@ export class PostService {
     const task = ref.put(file);
     return task.percentageChanges();
   }
+
+    // --------------------------------------- Error handling ---------------------------------------
+    handleError(error) {
+      let errorMessage = 'Unknown error!';
+      if (error.error instanceof ErrorEvent) {
+        // Client-side errors
+        errorMessage = `Error: ${error.error.message}`;
+      } else {
+        // Server-side errors
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      }
+      return throwError(errorMessage);
+    }
 }
