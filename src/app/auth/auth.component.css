@@ -151,7 +151,7 @@
 
 
 
-/* 
+ 
 label,
 span{
   font-family: 'ChampagneAndLimousines';
@@ -191,10 +191,11 @@ textarea:focus {
 ::-webkit-calendar-picker-indicator {
   -webkit-filter: invert(0.5);
           filter: invert(0.5);
-  /* color: rgba(216,184,105,1); */
+  color: rgba(216,184,105,1);
 
+}
 
-/* .btn {
+.btn {
 
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
@@ -237,4 +238,4 @@ input.invalidAmount {
 
 .topPadding {
   padding-top: 20vh;
-} */
+}

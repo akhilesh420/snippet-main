@@ -41,7 +41,7 @@
 
 .engagement {
     height: 100%;
-    border-radius: 5px 0px 0px 0px;
+    border-radius: 0px 0px 0px 0px;
 }
 
 .profileDetails {
@@ -81,8 +81,8 @@
 }
 
 .stickerContainer {
-    height: 2.366vh;
-    width: 2.366vh;
+    height: 2.466vh;
+    width: 2.466vh;
     border-radius: 50%;
     margin: 0;
     position: absolute;

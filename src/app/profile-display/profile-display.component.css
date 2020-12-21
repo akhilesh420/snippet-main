@@ -43,11 +43,12 @@
 }
 
 .stickerContainer-edit {
-  background-image: url("src/assets/icons/Profile Display/addingSticker.svg");
+  background-color: #8F8F8F;
+  border: 2px solid #E2B33D;
 }
 
 .stickerContainer-bck {
- background-image: url("src/assets/icons/Profile Display/addStickerButton.svg");
+ background-color: #8F8F8F;
 }
 
 .profileDetailsTop {
@@ -152,6 +153,16 @@
   padding-top: 1.0%;
 }
 
+.svgCenter {
+
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
 .sticker > img {
   margin: 0;
   position: absolute;
@@ -246,8 +257,8 @@
   margin: 0;
   position: absolute;
   top: 60%;
-  left: 76.5%;
-  transform: translate(-50%, -50%);
+  left: 100%;
+  transform: translate(-100%, -50%);
 }
 
 .input {
@@ -284,6 +295,39 @@
   height: 0px;
   opacity: 0;
 }
+
+.loggedout {
+
+  position: absolute;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+
+}
+
+.loggedoutText {
+
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 0px;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+
+}
+
+.selectedSticker {
+
+
+
+}
+
+
+
+
 
 /* Opacity in for opening post details */
 
