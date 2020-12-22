@@ -299,6 +299,11 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.miscellaneousService.profileStickerEdit.next(true);
     this.miscellaneousService.stickerEmitted.pipe(takeUntil(this.notifier$)).subscribe(pid => {
       if (!pid || (this.profileStickers[this.index] != null && this.profileStickers[this.index].pid === pid)) return;
+      console.log(this.profileStickers);
+      this.profileStickers.forEach((profileSticker, i) => { //Filter out same pid sticker
+        if (profileSticker === null) return;
+        if (profileSticker.pid === pid) this.profileStickers[i] = null;
+      });
       this.profileStickers[this.index] = new ProfileSticker(pid, new Date());
       this.profileStickersChanged = true;
     });

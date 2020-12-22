@@ -16,7 +16,7 @@
 
               <!-- Edit Mode -->
 
-              <svg class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg *ngIf='inEditing || sticker === null' class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_b)">
                 <rect x="8" width="4" height="20" rx="2" fill="white"/>
                 <rect y="8" width="20" height="4" rx="2" fill="white"/>
@@ -174,7 +174,7 @@
 
             <div class='fill input-cover'
                 *ngIf="inEditing && !editLink;">
-            </div> 
+            </div>
 
             <svg (click)='onEditLinkClick()'
                   *ngIf="inEditing && !editLink;"
@@ -272,7 +272,7 @@
           </div>
 
         </div>
-      </div> 
+      </div>
 
       <!-- Not logged in state
 
