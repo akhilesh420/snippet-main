@@ -1,7 +1,7 @@
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild, EventEmitter, Input } from '@angular/core';
 import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { WindowStateService } from '../shared/window.service';
@@ -68,6 +68,9 @@ export class FeedComponent implements OnInit, OnDestroy {
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
 
+  profileStickerEdit = new EventEmitter<boolean>(false);
+  @Input() emittedPid = new EventEmitter<string>();
+
   constructor(private windowService: WindowStateService,
               private feedService: FeedService,
               private router: Router,
@@ -127,7 +130,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postNumber = newNum;
       this.infiniteScroll();
     })
-
   }
 
   setUpScroll() {
@@ -250,6 +252,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   trackByFn(index, item) {
     return index; // or item.id
   }
+
 
   ngOnDestroy() {
     console.log('destroy');

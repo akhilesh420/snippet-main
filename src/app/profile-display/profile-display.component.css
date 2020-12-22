@@ -16,6 +16,7 @@
 
 .profileDB-edit {
   background-image: url("src/assets/icons/Profile Display/editModeBackground.svg");
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
 }
 
 .no-margin-no-padding {
@@ -42,11 +43,12 @@
 }
 
 .stickerContainer-edit {
-  background-image: url("src/assets/icons/Profile Display/addingSticker.svg");
+  background-color: #8F8F8F;
+  border: 2px solid #E2B33D;
 }
 
 .stickerContainer-bck {
- background-image: url("src/assets/icons/Profile Display/addStickerButton.svg");
+ background-color: #8F8F8F;
 }
 
 .profileDetailsTop {
@@ -60,12 +62,15 @@
 }
 
 .dpContainer {
-  background-color: rgba(196, 196, 196, 1);
   width: 100%;
   padding-top: 100%;
   position: relative;
   border-radius: 50%;
   overflow: hidden;;
+}
+
+.dpContainer-bck {
+  background-color: rgba(196, 196, 196, 1);
 }
 
 .dpContainer-edit {
@@ -97,11 +102,16 @@
 }
 
 .profileDescription {
-  color: #fff;
   height: 100%;
   margin-left: 2.7%;
   position: relative;
   word-wrap: break-word;
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(235, 221, 187, 0.9);
 }
 
 .svgStyle {
@@ -143,6 +153,16 @@
   padding-top: 1.0%;
 }
 
+.svgCenter {
+
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
 .sticker > img {
   margin: 0;
   position: absolute;
@@ -155,7 +175,12 @@
   height: 100%;
   margin-left: 2.7%;
   position: relative;
-  color: #fff;
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(235, 221, 187, 0.9);
 }
 
 .profileMetrics {
@@ -232,9 +257,77 @@
   margin: 0;
   position: absolute;
   top: 60%;
-  left: 76.5%;
-  transform: translate(-50%, -50%);
+  left: 100%;
+  transform: translate(-100%, -50%);
 }
+
+.input {
+  width: 100%;
+  height: 100%;
+  border: 0.8px solid #E2B33D;
+  /* border-radius: 5%; */
+  padding-left: 1%;
+}
+
+/* Change css for editable div in focus here */
+/* [contenteditable="true"]:active,
+[contenteditable="true"]:focus{
+  border:none;
+  outline:none;
+} */
+
+.input-cover {
+  background: rgba(196, 196, 196, 0.05);
+  backdrop-filter: blur(1px);
+  position:absolute;
+  left:0;
+  top:0;
+}
+
+.file-input-container {
+  position: absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
+
+.loggedout {
+
+  position: absolute;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+
+}
+
+.loggedoutText {
+
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 0px;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+
+}
+
+.selectedSticker {
+
+
+
+}
+
+
+
+
 
 /* Opacity in for opening post details */
 

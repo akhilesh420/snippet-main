@@ -1,5 +1,5 @@
 import { UsersService } from './../shared/users.service';
-import { Biography, ProfileDetails, PersonalDetails, DisplayPicture, OnBoarding } from './../shared/profile.model';
+import { ProfileDetails, PersonalDetails, DisplayPicture, OnBoarding } from './../shared/profile.model';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
@@ -187,7 +187,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.miscellaneousService.startOnBoarding(resData.localId);
           this.router.navigate(['/explore']);
         } else if (!this.isLoginMode && !this.isForgetMode) {
-          let profileDetails  = new ProfileDetails(this.username, new Biography("","",""));
+          let profileDetails  = new ProfileDetails(this.username, '','');
           let onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
           let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
           this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {

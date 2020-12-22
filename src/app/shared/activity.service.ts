@@ -48,6 +48,7 @@ export class ActivityService {
           take(1)
         )
       .subscribe((response) => {
+        console.log(response); //temp log
         if (!response[0]) {
           console.log('user activity not found');
         } else {
@@ -64,8 +65,9 @@ export class ActivityService {
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
         ),take(1))
       .subscribe((response) => {
+        console.log(response); //temp log
         if (!response[0]) {
-          console.log('user activity not found');
+          console.log('post activity not found');
         } else {
           if (type === 'view') {
             this.activityRef.update(response[0].key, {views: response[0].views + 1});

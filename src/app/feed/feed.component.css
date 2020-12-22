@@ -81,6 +81,14 @@
   right: calc(15vw + 69px);
 }
 
+.desktop-collection-tab-edit {
+
+  position: fixed;
+  top: calc(5.334vh + 6vh + 65px);
+  right: calc(15vw + 10px);
+
+}
+
 @media screen and (min-width: 550px) {
   .post-container {
     height: 79vh;

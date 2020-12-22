@@ -1,16 +1,9 @@
-export class Biography {
-
-  constructor(
-    public title: string,
-    public location: string,
-    public content: string) { }
-}
-
 export class ProfileDetails {
 
   constructor(
     public username: string,
-    public bio: Biography
+    public description: string,
+    public link: string
   ) {}
 }
 

@@ -1,19 +1,22 @@
-<div class = "collection">
+<div class = "collection" (click)='navigate()'>
 
     <div class = "row no-margin-no-padding collectionBackpanel">
 
         <div class = "col-2 no-margin-no-padding postSticker">
-            <div class = "stickerContainer"></div>
+            <div class = "stickerContainer">
+              <img *ngIf='(stickerContent$ | async) as content;' [src]='content'
+                    alt="sticker">
+            </div>
         </div>
 
-        <div class = "col-10 no-margin-no-padding postDetails">
-            
+        <div class = "col-10 no-margin-no-padding postDetails" *ngIf='(postDetails$ | async) as details;'>
+
             <div class = "row no-margin-no-padding postTitle">
-                <p class = "title no-margin-no-padding">This is the title</p>
+                <p class = "title no-margin-no-padding">{{details.title}}</p>
             </div>
 
             <div class = "row no-margin-no-padding creatorName">
-                <p class = "name">Creator Name</p>
+                <p class = "name" *ngIf='(setUpUser(details.uid) | async) as profile'>{{profile.username}}</p>
             </div>
 
         </div>
