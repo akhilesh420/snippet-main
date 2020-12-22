@@ -5,6 +5,7 @@
     background: rgba(196, 196, 196, 0.05);
     backdrop-filter: blur(10px);
     border-radius: 13px;
+    outline: 0;
  }
 
 .profileDisplayBorder {
@@ -70,7 +71,7 @@
 }
 
 .dpContainer-bck {
-  background-color: rgba(196, 196, 196, 1);
+  background-color: #8F8f8f;
 }
 
 .dpContainer-edit {
@@ -319,22 +320,31 @@
 
 }
 
+.sticker-opacity-edit {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left:0;
+  border-radius: 50%;
+}
 
 
-/* Opacity in for opening post details */
+/* Opacity in for dp */
 
 .opacity-in-details {
-	-webkit-animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-	        animation: opacity-in 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	-webkit-animation: opacity-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 @-webkit-keyframes opacity-in{
   0% {
     opacity: 1;
+    background: rgba(11,11,11);
   }
   100% {
     opacity: 0;
-    background: rgba(11,11,11,0.5);
   }
 }
 
@@ -350,8 +360,8 @@
 }
 
 .opacity-out-details {
-	-webkit-animation: opacity-out 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-	        animation: opacity-out 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	-webkit-animation: opacity-out 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-out 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 @-webkit-keyframes opacity-out{
@@ -371,5 +381,56 @@
 
   100% {
     opacity: 1;
+  }
+}
+
+
+/* Opacity in for profile stickers */
+
+.opacity-in-sticker {
+	-webkit-animation: opacity-in-sticker 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-in-sticker 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes opacity-in-sticker {
+  0% {
+    background: rgba(11,11,11,0);
+  }
+  100% {
+    background: rgba(11,11,11,0.5);
+  }
+}
+
+
+@keyframes opacity-in-sticker {
+  0% {
+    background: rgba(11,11,11,0);
+  }
+  100% {
+    background: rgba(11,11,11,0.5);
+  }
+}
+
+.opacity-out-sticker {
+	-webkit-animation: opacity-out-sticker 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: opacity-out-sticker 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes opacity-out-sticker {
+  0% {
+    background: rgba(11,11,11,0.5);
+  }
+  100% {
+    background: rgba(11,11,11,0);
+  }
+}
+
+
+@keyframes opacity-out-sticker {
+  0% {
+    background: rgba(11,11,11,0.5);
+  }
+  100% {
+    background: rgba(11,11,11,0);
   }
 }

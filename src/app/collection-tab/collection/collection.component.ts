@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { ProfileDetails } from './../../shared/profile.model';
+import { ProfileDetails, ProfileSticker } from './../../shared/profile.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { PostDetails } from './../../shared/post.model';
 import { PostService } from './../../shared/post.service';
@@ -26,6 +26,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
   profileStickerEdit: boolean = false;
   selectedPID: string;
   notifier$ = new Subject();
+  userStickerSelected: ProfileSticker;
+
 
   constructor(private postService: PostService,
               private userService: UsersService,
@@ -36,6 +38,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
     this.pid = this.collection.pid;
     this.postDetails$ = this.postService.getPostDetails(this.pid);
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
+    this.miscellaneousService.userStickerSelection.pipe(takeUntil(this.notifier$)).subscribe(value => this.userStickerSelected = value)
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value)
   }
 
@@ -47,6 +50,11 @@ export class CollectionComponent implements OnInit, OnDestroy {
     if (!this.postDetails$) return;
     if (!this.profileStickerEdit) this.router.navigate(['/post/' + this.pid]);
     if (this.profileStickerEdit) this.miscellaneousService.stickerEmitted.next(this.pid);
+  }
+
+  stickerSelected() {
+    if (this.userStickerSelected === null) return false;
+    if (this.userStickerSelected.pid === this.pid) return true;
   }
 
   ngOnDestroy() {
