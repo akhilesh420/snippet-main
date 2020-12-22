@@ -1,25 +1,25 @@
 <div class = "collectionTab"
-    [routerLink]='! isAuthenticated ? "/auth" : null'
+    [routerLink]='!isAuthenticated ? "/auth" : null'
     [ngStyle]='{"cursor": !isAuthenticated ? "pointer" : null}'>
 
     <div class = "row no-margin-no-padding topBorder">
 
        <!-- edit-mode -->
-       
-        <!-- <svg width="284" height="12" viewBox="0 0 284 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 12C0 5.37258 5.37258 0 12 0H272C278.627 0 284 5.37258 284 12V12H0V12Z" fill="url(#paint0_linear)"/>
-            <defs>
-            <linearGradient id="paint0_linear" x1="-1.28528e-06" y1="0.464789" x2="12.2655" y2="64.2516" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#632FDE"/>
-            <stop offset="0.0465075" stop-color="#8451B4"/>
-            <stop offset="0.144441" stop-color="#A87687"/>
-            <stop offset="0.462233" stop-color="#E2B33D"/>
-            <stop offset="0.784198" stop-color="#DF9C3D"/>
-            <stop offset="0.870785" stop-color="#DB7E3D"/>
-            <stop offset="1" stop-color="#CF263C"/>
-            </linearGradient>
-            </defs>
-        </svg> -->
+
+      <svg *ngIf='editMode' width="284" height="12" viewBox="0 0 284 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 12C0 5.37258 5.37258 0 12 0H272C278.627 0 284 5.37258 284 12V12H0V12Z" fill="url(#paint0_linear)"/>
+          <defs>
+          <linearGradient id="paint0_linear" x1="-1.28528e-06" y1="0.464789" x2="12.2655" y2="64.2516" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#632FDE"/>
+          <stop offset="0.0465075" stop-color="#8451B4"/>
+          <stop offset="0.144441" stop-color="#A87687"/>
+          <stop offset="0.462233" stop-color="#E2B33D"/>
+          <stop offset="0.784198" stop-color="#DF9C3D"/>
+          <stop offset="0.870785" stop-color="#DB7E3D"/>
+          <stop offset="1" stop-color="#CF263C"/>
+          </linearGradient>
+          </defs>
+      </svg>
 
     </div>
 
@@ -56,7 +56,7 @@
     <!-- In Sticker selection mode -->
     <div class = "row actionButtons no-margin-no-padding" *ngIf='editMode'>
         <!-- Confirm -->
-        <div class = "col-4 acceptButton no-margin-no-padding" (click)='confirmSelection("confirm")'>
+        <div class = "col acceptButton no-margin-no-padding" (click)='confirmSelection("confirm")'>
 
             <svg class = "svgStyle" width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="2" height="7" transform="matrix(-0.651011 0.759068 0.759068 0.651011 1.99414 4.4624)" fill="#C4C4C4"/>
@@ -66,14 +66,14 @@
         </div>
 
         <!-- Remove -->
-        <div class = "col-4 removeButton no-margin-no-padding" (click)='confirmSelection("remove")'>
+        <div *ngIf='(userStickerSelected$ | async) != null' class = "col removeButton no-margin-no-padding" (click)='confirmSelection("remove")'>
 
           <p class = "removeText">Remove</p>
 
         </div>
 
         <!-- Reject -->
-        <div class = "col-4 backButton no-margin-no-padding" (click)='confirmSelection("reject")'>
+        <div class = "col backButton no-margin-no-padding" (click)='confirmSelection("reject")'>
 
             <svg class = "svgStyle" width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.646446 3.64645C0.451185 3.84171 0.451185 4.15829 0.646446 4.35355L3.82843 7.53553C4.02369 7.7308 4.34027 7.7308 4.53553 7.53553C4.7308 7.34027 4.7308 7.02369 4.53553 6.82843L1.70711 4L4.53553 1.17157C4.7308 0.976311 4.7308 0.659728 4.53553 0.464466C4.34027 0.269204 4.02369 0.269204 3.82843 0.464466L0.646446 3.64645ZM21 3.5L1 3.5V4.5L21 4.5V3.5Z" fill="white"/>

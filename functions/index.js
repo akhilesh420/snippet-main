@@ -77,17 +77,17 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   filePath = filePath + '_sm';
 
   if (contentType.startsWith('image/gif')) {
-    var args = ['-sampling-factor',
+    var args = ['-coalesce',
+                '-resize',
+                size,
+                '-deconstruct',
+                '-sampling-factor',
                 '4:2:0',
                 '-strip',
                 '-quality',
                 '85',
                 '-interlace',
-                'Plane',
-                '-coalesce',
-                '-resize',
-                size,
-                '-deconstruct']
+                'Plane']
     outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
   } else if (contentType.startsWith('image/')) {
     var args = ['-sampling-factor',

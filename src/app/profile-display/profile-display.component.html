@@ -1,22 +1,26 @@
 <form #f='ngForm'>
-  <div class = "profileDisplay">
+  <div class = "profileDisplay"
+      [routerLink]='!isAuthenticated ? "/auth" : null'
+      [ngStyle]='{"cursor": !isAuthenticated ? "pointer" : null}'>
+
     <div class = "row no-margin-no-padding profileDisplayBorder" [ngClass]='inEditing ? "profileDB-edit" : null'>
-      <div class = "col no-margin-no-padding">
+      <div class = "col no-margin-no-padding" *ngIf='isAuthenticated'>
         <div class = "row no-margin-no-padding displayStickers">
 
           <div class = "sticker col-2 no-margin-no-padding">
             <img (click)='onClickBack()' *ngIf="inEditing;" src = "assets/icons/Edit mode Profile Display/backButton.svg">
           </div>
 
-          <div class = "sticker col-2 no-margin-no-padding" *ngFor = 'let sticker of profileStickers; let i = index;'>
+          <div class = "sticker col-2 no-margin-no-padding" *ngFor='let sticker of profileStickers; let i = index;'>
             <div class = "stickerContainer"
-                [ngClass]="{'stickerContainer-bck': sticker === null}"
+                [ngClass]="{'stickerContainer-bck': sticker === null, 'stickerContainer-edit': index === i}"
                 (click)='clickProfileSticker(sticker,i)'>
+
               <app-sticker *ngIf='sticker != null' [pid]="sticker.pid" [overrideNavigate]='inEditing'></app-sticker>
 
+              <div class="sticker-opacity-edit" [ngClass]='(inEditing && sticker != null) && index != i ? "opacity-in-sticker" : "opacity-out-sticker"'></div>
               <!-- Edit Mode -->
-
-              <svg class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg *ngIf='(inEditing || sticker === null) && index != i' class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_b)">
                 <rect x="8" width="4" height="20" rx="2" fill="white"/>
                 <rect y="8" width="20" height="4" rx="2" fill="white"/>
@@ -55,10 +59,13 @@
                     class='dp'
                     [src]="content"
                     alt="display picture">
-              <img *ngIf="inEditing;"
-                    [ngClass]='inEditing ? "dpContainer-edit-img" : null'
-                    (click)="onAddClick()"
-                    src = "assets/icons/NavBar icons/Gold (Active)/createSymbol.svg">
+              <div *ngIf="inEditing;"
+                    (click)="onAddClick()">
+                <svg class="dpContainer-edit-img" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="8" width="4" height="20" rx="2" fill="#E2B33D"/>
+                  <rect y="8" width="20" height="4" rx="2" fill="#E2B33D"/>
+                </svg>
+              </div>
             </div>
           </div>
 
@@ -116,9 +123,11 @@
             [ngClass]='{"profileDetailsBottom-edit": inEditing}'
             *ngIf='!editStickers'>
 
+          <div class="col-3"  *ngIf='myUid != uid'></div>
+
           <div class = "col-3 no-margin-no-padding"
               [ngClass]="{'editButton': !inEditing, 'editButton-edit': inEditing}"
-              (click)='inEditing ? onSave() : resetState();'>
+              (click)='inEditing ? onSave() : resetState();' *ngIf='myUid === uid'>
 
             <p *ngIf="!inEditing; else saveButton" class = "editButtonText">Edit Profile</p>
 
@@ -174,7 +183,7 @@
 
             <div class='fill input-cover'
                 *ngIf="inEditing && !editLink;">
-            </div> 
+            </div>
 
             <svg (click)='onEditLinkClick()'
                   *ngIf="inEditing && !editLink;"
@@ -272,15 +281,15 @@
           </div>
 
         </div>
-      </div> 
+      </div>
 
-      <!-- Not logged in state
+      <!-- Not logged in state -->
 
-      <div class = "loggedout">
+      <div class = "loggedout" *ngIf='!isAuthenticated'>
 
         <p class = "loggedoutText no-margin-no-padding">Sign In</p>
 
-      </div> -->
+      </div>
 
     </div>
   </div>
