@@ -11,7 +11,7 @@ const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 
 const runtimeOpts = {
   timeoutSeconds: 540,
-  memory: '128MB'
+  memory: '512MB'
 }
 
 exports.contentCreate = functions.runWith(runtimeOpts).firestore
@@ -66,25 +66,50 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   const filePath = 'Post/' + fileName;
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
+  let outputFilePath = '';
 
   await bucket.file(filePath).download({destination: tempFilePath});
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  if (contentType.startsWith('image/gif')) {
-    const outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
-    await gif_processing(bucket, outputFilePath, tempFilePath, filePath);
-    await gif_resize(bucket, outputFilePath, outputFilePath, filePath, '150');
+  const dimension = '200';
+  const size = dimension + 'x' + dimension + '^';
+  filePath = filePath + '_sm';
 
+  if (contentType.startsWith('image/gif')) {
+    var args = ['-sampling-factor',
+                '4:2:0',
+                '-strip',
+                '-quality',
+                '85',
+                '-interlace',
+                'Plane',
+                '-coalesce',
+                '-resize',
+                size,
+                '-deconstruct']
+    outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
   } else if (contentType.startsWith('image/')) {
-    const outputFilePath =  path.join(os.tmpdir(), 'compressed.jpeg');
-    const outputFilePath_2 =  path.join(os.tmpdir(), 'resized.jpeg');
-    await image_processing(bucket, outputFilePath, tempFilePath, filePath);
-    await image_resize(bucket, outputFilePath_2, outputFilePath, filePath, '150');
+    var args = ['-sampling-factor',
+                '4:2:0',
+                '-strip',
+                '-quality',
+                '85',
+                '-interlace',
+                'Plane',
+                '-gaussian-blur',
+                '0.05',
+                '-colorspace',
+                'RGB',
+                '-resize',
+                size]
+    outputFilePath =  path.join(os.tmpdir(), 'optimized.jpeg');
   }
 
-  finishUp([tempFilePath,outputFilePath]);
+  await image_processing(bucket, outputFilePath, tempFilePath, filePath, args)
+        .catch(error => functions.logger.info('An error occurred while resizing', error));
 
+  finishUp([tempFilePath, outputFilePath]);
 });
 
 exports.dpCreate = functions.runWith(runtimeOpts).firestore
@@ -100,27 +125,53 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   functions.logger.info('File name:', fileName);
   functions.logger.info('File type:', contentType);
 
-  const filePath = 'Display picture/' + fileName;
+  let filePath = 'Display picture/' + fileName;
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
+  let outputFilePath = '';
 
   await bucket.file(filePath).download({destination: tempFilePath});
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  if (contentType.startsWith('image/gif')) {
-    const outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
-    await gif_processing(bucket, outputFilePath, tempFilePath, filePath);
-    await gif_resize(bucket, outputFilePath, outputFilePath, filePath, '150');
+  const dimension = '200';
+  const size = dimension + 'x' + dimension + '^';
+  filePath = filePath + '_sm';
 
+  if (contentType.startsWith('image/gif')) {
+    // var args = ['-resize',
+    //             size];
+    var args = ['-sampling-factor',
+                '4:2:0',
+                '-strip',
+                '-quality',
+                '85',
+                '-interlace',
+                'Plane',
+                '-coalesce',
+                '-resize',
+                size,
+                '-deconstruct'];
+    outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
   } else if (contentType.startsWith('image/')) {
-    const outputFilePath =  path.join(os.tmpdir(), 'compressed.jpeg');
-    const outputFilePath_2 =  path.join(os.tmpdir(), 'resized.jpeg');
-    await image_processing(bucket, outputFilePath, tempFilePath, filePath);
-    await image_resize(bucket, outputFilePath_2, outputFilePath, filePath, '150');
+    var args = ['-sampling-factor',
+                '4:2:0',
+                '-strip',
+                '-quality',
+                '85',
+                '-interlace',
+                'Plane',
+                '-gaussian-blur',
+                '0.05',
+                '-colorspace',
+                'RGB',
+                '-resize',
+                size]
+    outputFilePath =  path.join(os.tmpdir(), 'optimized.jpeg');
   }
 
-  finishUp([tempFilePath,outputFilePath]);
+  await image_processing(bucket, outputFilePath, tempFilePath, filePath, args, [tempFilePath, outputFilePath])
+        .catch(error => functions.logger.info('An error occurred while resizing', error));
 });
 
 function faststart(tempFilePath, outputFilePath, bucket, filePath) {
@@ -135,64 +186,31 @@ function faststart(tempFilePath, outputFilePath, bucket, filePath) {
     .on('start', (commandLine) => functions.logger.info('started video processing for faststart: ', commandLine))
     .on('end', async (filenames) => {
       functions.logger.info('finished video processing: ', filenames);
-      await uploadToStorage(bucket, outputFilePath, tempFilePath, filePath);
+      await uploadToStorage(bucket, outputFilePath, filePath);
     })
     .run();
   });
 };
 
-function image_processing(bucket, outputFilePath, tempFilePath, filePath) {
+function image_processing(bucket, outputFilePath, inputFilePath, filePath, args, unlinkPaths) {
   return new Promise( async (resolve, reject) => {
     functions.logger.info('started image processing');
-    await spawn('convert', ['-sampling-factor','4:2:0', '-strip', '-quality', '85', '-interlace', 'Plane', '-gaussian-blur', '0.05', '-colorspace', 'RGB', tempFilePath, outputFilePath]);
-    await uploadToStorage(bucket, outputFilePath, tempFilePath, filePath);
+    args.push(inputFilePath, outputFilePath);
+    functions.logger.info(args);
+    await spawn('convert', args);
+    await uploadToStorage(bucket, outputFilePath, filePath, unlinkPaths);
   });
 }
 
-function image_resize(bucket, outputFilePath, tempFilePath, filePath, dimension) {
-  return new Promise( async (resolve, reject) => {
-    functions.logger.info('started image resize');
-    const size = '"'+ dimension + 'x' + dimension + '^'+'"';
-    await spawn('convert', ['-resize', size, tempFilePath, outputFilePath]);
-    filePath = filePath + '_sm';
-    await uploadToStorage(bucket, outputFilePath, tempFilePath, filePath);
+function uploadToStorage(bucket, outputFilePath, filePath, unlinkPaths) {
+  return new Promise(async (resolve, reject) => {
+    await bucket.upload(outputFilePath, { destination: filePath })
+                .catch((error) => functions.logger.info('Failed to upload to storage', error));
+    finishUp(unlinkPaths);
   });
 }
 
-function gif_processing(bucket, outputFilePath, tempFilePath, filePath) {
-  return new Promise( async (resolve, reject) => {
-    functions.logger.info('started gif processing');
-    await spawn('convert', ['-sampling-factor','4:2:0', '-coalesce', '-strip', '-quality', '85', '-interlace', 'Plane', tempFilePath, outputFilePath]);
-    await uploadToStorage(bucket, outputFilePath, tempFilePath, filePath);
-  });
-}
-
-function gif_resize(bucket, outputFilePath, tempFilePath, filePath, dimension) {
-  return new Promise( async (resolve, reject) => {
-    functions.logger.info('started gif resize');
-    const size = dimension + 'x' + dimension + '^';
-    await spawn('convert', ['-resize', size, '-deconstruct', tempFilePath, outputFilePath]);
-    filePath = filePath + '_sm';
-    await uploadToStorage(bucket, outputFilePath, tempFilePath, filePath);
-  });
-}
-
-function uploadToStorage(bucket, outputFilePath, filePath) {
-  return new Promise((resolve, reject) => {
-    functions.logger.info('Uploading with name:' );
-    bucket.upload(outputFilePath, {
-      destination: filePath
-    })
-    .then(() => {
-      functions.logger.info('Successfully uploaded to storage');
-      })
-    .catch((error) => functions.logger.info('Failed to upload to storage', error))
-    .finally(() => {
-      functions.logger.info('Finished execution');
-    });
-  });
-}
-
-function finishUp(filePaths) {
-  filePaths.forEach((filePath) => fs.unlinkSync(filePath));
+function finishUp(unlinkPaths) {
+  unlinkPaths.forEach((filePath) => fs.unlinkSync(filePath));
+  functions.logger.info('Finished execution');
 }

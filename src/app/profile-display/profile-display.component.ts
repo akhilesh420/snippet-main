@@ -58,6 +58,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   changedDP: boolean = false;
   profileStickersChanged: boolean = false;
   updatedDP: any;
+  saving: boolean = false;
 
   @ViewChild('descriptionRef') descriptionRef : ElementRef;
   @ViewChild('linkRef') linkRef : ElementRef;
@@ -190,6 +191,8 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSave() {
+    if (this.saving) return;
+    this.saving = true;
     let noChange = true;
     let message = 'Profile updated!';
     this.miscellaneousService.profileStickerEdit.next(false);
@@ -222,6 +225,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       this.displayPicture$.next(this.updatedDP);
       this.usersService.updateDisplayPicture(this.uid, this.displayPicture).pipe(takeUntil(this.notifier$))
       .subscribe(response => {
+        console.log(response);
         if (response === 100) {
           this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(new Date(), this.displayPicture.type));
           this.miscellaneousService.endLoading();
@@ -229,6 +233,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       });
     }
 
+    this.saving = false;
     if (noChange) return;
     this.miscellaneousService.setPopUp(new PopUp(message,'Okay', undefined, ['default', 'reject']));
     this.changedDP = false;
