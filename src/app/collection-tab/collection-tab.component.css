@@ -37,6 +37,7 @@ li {
     box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     border-radius: 12px;
+    outline: 0;
 
 }
 
@@ -149,11 +150,11 @@ position: absolute;
             transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
-  
+
   }
-  
+
 .loggedoutText {
-  
+
     font-family: "Comfortaa";
     font-style: normal;
     font-weight: bold;
@@ -161,7 +162,7 @@ position: absolute;
     line-height: 0px;
     letter-spacing: 0.1em;
     color: #FFFFFF;
-  
+
   }
 
 .svgStyle {

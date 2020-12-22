@@ -112,7 +112,8 @@ export class PostService {
           if (response) {
             this.stickerContentList[secIndex].obs.next(response);
           }
-        },error => {          if (error.code_ === "storage/object-not-found") {
+        },error => {
+          if (error.code_ === "storage/object-not-found") {
             const ref = this.storage.ref('Post/' + response.name);
             ref.getDownloadURL().subscribe(response => {
               if (response) {

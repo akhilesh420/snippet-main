@@ -1,18 +1,20 @@
-<div class = "collectionTab">
+<div class = "collectionTab"
+    [routerLink]='! isAuthenticated ? "/auth" : null'
+    [ngStyle]='{"cursor": !isAuthenticated ? "pointer" : null}'>
 
     <div class = "row no-margin-no-padding topBorder">
 
     </div>
 
     <div class = "row no-margin-no-padding title">
-        <p class = "titleText"> {{!editMode ? 'My Collection' : 'Choose a Sticker'}} </p>
+        <p class = "titleText" [routerLink]='isAuthenticated ? "/collection/" + myUid : null'> {{!editMode ? 'My Collection' : 'Choose a Sticker'}} </p>
     </div>
 
     <div class = "row no-margin-no-padding scroll">
 
         <div class = "col no-margin-no-padding scrollSpace">
 
-        <ul class = "no-margin-no-padding">
+        <ul class = "no-margin-no-padding" *ngIf='isAuthenticated'>
 
             <li *ngFor='let collection of collectionList' class = "no-margin-no-padding padding-bottom ">
               <app-collection [collection]='collection'></app-collection>
@@ -20,14 +22,14 @@
 
         </ul>
 
-        
+
         <!-- Logged Out state -->
-        
-        <!-- <div class = "loggedout">
+
+        <div class = "loggedout" *ngIf='!isAuthenticated'>
 
             <p class = "loggedoutText no-margin-no-padding">Sign In</p>
-    
-        </div> -->
+
+        </div>
 
         </div>
 

@@ -15,6 +15,7 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
 
   collectionList: Collection[] = [];
   myUid: string;
+  isAuthenticated: boolean = false;
   notifier$ = new Subject();
   editMode: boolean;
 
@@ -25,6 +26,7 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
       if (!authRes) return;
+      this.isAuthenticated = !!authRes;
       this.myUid = authRes.id;
       this.getCollection();
     }, errorMessage => {

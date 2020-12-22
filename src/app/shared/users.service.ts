@@ -167,18 +167,19 @@ export class UsersService {
 
   // Add display picture from cloud firestore
   private addDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
-    const dp = {name: uid, dateCreated: displayPicture.dateCreated}
+    const dp = {name: uid, ...displayPicture}
     this.displayPictureCollection.doc(uid).set(dp);
   }
 
   // Update display picture from cloud firestore
   updateDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
-    const dp = {name: uid, dateCreated: displayPicture.dateCreated}
+    const dp = {...displayPicture}
+    console.log(dp);
     this.displayPictureCollection.doc(uid).update(dp);
   }
 
   // Get display picture from firebase storage by UID
-  getDisplayPicture(uid: string) {
+  getDisplayPicture(uid: string, size: string='_sm') {
     let index = this.displayPictureList.findIndex(details => {
       return details.uid === uid;
     })
@@ -186,10 +187,20 @@ export class UsersService {
     if (index === -1) {
       this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.displayPictureList.length - 1;
-      const ref = this.storage.ref('Display picture/' + uid);
+      const ref = this.storage.ref('Display picture/' + uid + size);
       ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
         this.displayPictureList[secIndex].obs.next(response);
         this.dpLoadCheck.next(true);
+      }, error => {
+        if (error.code_ === "storage/object-not-found") {
+          const ref = this.storage.ref('Display picture/' + uid + size);
+          ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
+            if (response) {
+              this.displayPictureList[secIndex].obs.next(response);
+              this.dpLoadCheck.next(true);
+            }
+          });
+        }
       });
       return this.displayPictureList[secIndex].obs
     } else {
@@ -204,7 +215,7 @@ export class UsersService {
   // Add display picture from firebase storage
   addDisplayPicture(uid: string, displayPicture: DisplayPicture, content: any) {
     // Upload to cloud firestore
-    this.addDisplayPictureRef(uid, displayPicture);
+    this.addDisplayPictureRef(uid, displayPicture); //remove from here
     // Upload to storage
     if (content) {
       const file = content;
