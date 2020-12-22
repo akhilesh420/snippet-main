@@ -136,40 +136,46 @@
   border-radius: 50%;
 }
 
-headerdropDown {
-  position: fixed;
-  height: 7.6vw;
-  width: 7.7vw;
-  top: 6.84vh;
-  right: 1vw;
-  font-family: 'ChampagneAndLimousines';
-  color: #ffffff;
-  font-size: 1.2vw;
+.headerDropdownBorder {
+
+position: absolute;
+height: 18.75vh;
+width: calc(18.75vh * (152/168));
+top: calc(5.334vh + 6vh);
+right: 2.0vw;
+border-radius: 5%;
+border: 1px solid #E2B33D;
+background-image: linear-gradient(rgba(99,47,222,1), rgba(207,40,60,1));
+
+}
+
+.headerDropdown {
+
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 44.642857%;
+  width: 50.322581%;
+
+}
+
+.dropdownText {
+
+  height: 33.33333%;
+  width: 100%;
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
   font-weight: bold;
-  text-align: left;
-  padding-left: 1vw;
-  background-color: rgba(196, 196, 196, 0.05);
-  border-top: 1.5vh solid #E2B33D;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  border-radius: 0.8vh;
+  font-size: 1.778vh;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+  position: relative;
+  margin-bottom: 8%;
+  
+  
 }
 
-
-.headerdropDown > .row {
-  padding-top: 1vw;
-}
-
-.active-dropdown {
-  opacity: 1;
-}
-
-.inactive-dropdown {
-  opacity: 0.8;
-}
-
-.headerdropDown > .row > .col-12:hover, .headerdropDown > .row > a > .col-12:hover {
-  opacity: 1;
-}
 
 
 .loading-bar {

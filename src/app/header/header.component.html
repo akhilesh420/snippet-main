@@ -86,30 +86,37 @@
   </div>
 
 </div> -->
+<div class = "headerDropdownBorder">
 
+  <div class = "row headerDropdown no-margin-no-padding">
 
+    <div class = "row dropdownText no-margin-no-padding">
 
-<div class = "headerdropDown"
-    [ngClass]='dropdown ? "slide-in-top" : "slide-out-top"'>
+      <p class = "Text">Feedback</p>
 
-  <div class = "row">
-    <a routerLink='/feedback'>
-      <div class = "col-12" [ngClass]='currentRoute.includes("feedback") ? "active-dropdown" : "inactive-dropdown"'>
-        Feedback
-      </div>
-    </a>
-  </div>
-
-  <div class = "row">
-    <div class = "col-12"
-         style='cursor:pointer;'
-        (click)='clickAuth()'
-        [ngClass]='currentRoute.includes("auth") ? "active-dropdown" : "inactive-dropdown"'>
-      {{isAuthenticated ? "Logout" : "Login"}}
     </div>
+    
+    <div class = "row dropdownText no-margin-no-padding">
+
+      <p class = "Text">Logout</p>
+
+      <!-- When logged out -->
+
+      <!-- <p style = "Text">Login</p> -->
+
+    </div>
+
+    <div class = "row dropdownText no-margin-no-padding">
+
+      <p class = "Text">Contact</p>
+
+    </div>
+
   </div>
 
 </div>
+
+
 
 <div class = "header no-margin-no-padding" #header>
 
