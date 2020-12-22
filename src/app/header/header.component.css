@@ -146,6 +146,9 @@ right: 2.0vw;
 border-radius: 5%;
 border: 1px solid #E2B33D;
 background-image: linear-gradient(rgba(99,47,222,1), rgba(207,40,60,1));
+-webkit-transform: translateY(-1000px);
+        transform: translateY(-1000px);
+opacity: 0;
 
 }
 
@@ -169,7 +172,7 @@ background-image: linear-gradient(rgba(99,47,222,1), rgba(207,40,60,1));
   font-weight: bold;
   font-size: 1.778vh;
   letter-spacing: 0.1em;
-  color: #FFFFFF;
+  color: #E2B33D;
   position: relative;
   margin-bottom: 12%;
   
@@ -177,6 +180,11 @@ background-image: linear-gradient(rgba(99,47,222,1), rgba(207,40,60,1));
 }
 
 
+}
+
+.active-link {
+  color: #FFFFFF;
+}
 
 .loading-bar {
   border-top: 2px solid #D8B869;
