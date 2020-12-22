@@ -152,7 +152,7 @@ background-image: linear-gradient(rgba(99,47,222,1), rgba(207,40,60,1));
 .headerDropdown {
 
   position: absolute;
-  top: 48%;
+  top: 46%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 44.642857%;
@@ -171,7 +171,7 @@ background-image: linear-gradient(rgba(99,47,222,1), rgba(207,40,60,1));
   letter-spacing: 0.1em;
   color: #FFFFFF;
   position: relative;
-  margin-bottom: 8%;
+  margin-bottom: 12%;
   
   
 }
