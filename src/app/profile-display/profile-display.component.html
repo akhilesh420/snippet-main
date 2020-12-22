@@ -1,7 +1,7 @@
 <form #f='ngForm'>
   <div class = "profileDisplay">
     <div class = "row no-margin-no-padding profileDisplayBorder" [ngClass]='inEditing ? "profileDB-edit" : null'>
-      <div class = "col no-margin-no-padding">
+      <div class = "col no-margin-no-padding" *ngIf='isAuthenticated'>
         <div class = "row no-margin-no-padding displayStickers">
 
           <div class = "sticker col-2 no-margin-no-padding">
@@ -10,13 +10,13 @@
 
           <div class = "sticker col-2 no-margin-no-padding" *ngFor = 'let sticker of profileStickers; let i = index;'>
             <div class = "stickerContainer"
-                [ngClass]="{'stickerContainer-bck': sticker === null}"
+                [ngClass]="{'stickerContainer-bck': sticker === null, 'stickerContainer-edit': index === i}"
                 (click)='clickProfileSticker(sticker,i)'>
               <app-sticker *ngIf='sticker != null' [pid]="sticker.pid" [overrideNavigate]='inEditing'></app-sticker>
 
               <!-- Edit Mode -->
 
-              <svg *ngIf='inEditing || sticker === null' class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg *ngIf='(inEditing || sticker === null) && index != i' class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_b)">
                 <rect x="8" width="4" height="20" rx="2" fill="white"/>
                 <rect y="8" width="20" height="4" rx="2" fill="white"/>
@@ -116,9 +116,11 @@
             [ngClass]='{"profileDetailsBottom-edit": inEditing}'
             *ngIf='!editStickers'>
 
+          <div class="col-3"  *ngIf='myUid != uid'></div>
+
           <div class = "col-3 no-margin-no-padding"
               [ngClass]="{'editButton': !inEditing, 'editButton-edit': inEditing}"
-              (click)='inEditing ? onSave() : resetState();'>
+              (click)='inEditing ? onSave() : resetState();' *ngIf='myUid === uid'>
 
             <p *ngIf="!inEditing; else saveButton" class = "editButtonText">Edit Profile</p>
 
@@ -274,13 +276,13 @@
         </div>
       </div>
 
-      <!-- Not logged in state
+      <!-- Not logged in state -->
 
-      <div class = "loggedout">
+      <div class = "loggedout" *ngIf='!isAuthenticated'>
 
         <p class = "loggedoutText no-margin-no-padding">Sign In</p>
 
-      </div> -->
+      </div>
 
     </div>
   </div>

@@ -244,6 +244,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.inEditing = !this.inEditing;
     this.editDesc = false;
     this.editLink = false;
+    this.index = undefined;
   }
 
   onPressEnter(event) {
