@@ -123,6 +123,7 @@ cursor: pointer;
     background:  #8F8F8F;;
     text-align: center;
     padding-top: 1.8%;
+    overflow: hidden;
 }
 
 .removeText {
@@ -176,4 +177,105 @@ position: absolute;
     -ms-transform: translate(-50%,-50%);
         transform: translate(-50%,-50%);
 
+}
+
+
+/* col width change */
+
+.width-full {
+	-webkit-animation: width-up 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: width-up 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes width-up{
+  0% {
+    flex-grow:0;
+  }
+  100% {
+    flex-grow:1;
+  }
+}
+
+
+@keyframes width-up {
+  0% {
+    flex-grow:0;
+  }
+  100% {
+    flex-grow:1;
+  }
+}
+
+.width-remove {
+	-webkit-animation: width-down 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: width-down 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes width-down{
+  0% {
+    flex-grow:1;
+  }
+  100% {
+    flex-grow:0;
+  }
+}
+
+
+@keyframes width-down {
+  0% {
+    flex-grow:1;
+  }
+  100% {
+    flex-grow:0;
+  }
+}
+
+/* height change */
+
+.height-full {
+	-webkit-animation: height-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+          animation: height-up 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes height-up{
+  0% {
+    height:0;
+  }
+  100% {
+    height:100%;
+  }
+}
+
+
+@keyframes height-up {
+  0% {
+    height:0;
+  }
+  100% {
+    height:100%;
+  }
+}
+
+.height-remove {
+	-webkit-animation: height-down 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: height-down 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes height-down{
+  0% {
+    height:100%;
+  }
+  100% {
+    height:0;
+  }
+}
+
+
+@keyframes height-down {
+  0% {
+    height:100%;
+  }
+  100% {
+    height:0;
+  }
 }
