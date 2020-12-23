@@ -42,6 +42,54 @@
 
 }
 
+.entryfieldOneTitle {
+
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 3.111vh;
+  line-height: 28px;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+  padding-left: 15px;
+  margin-top: 2vh;
+
+}
+
+.entryfield {
+
+  top: 1vh;
+  height: 3.111vh;
+  width: 25.625vw;
+
+
+}
+
+.entryfieldOne {
+
+  height: 3.111vh;
+  width: 25.625vw;
+  background-color: #9A9696;
+  margin-left: 15px;
+  border-radius: 8px;
+
+}
+
+.entryfieldTwoTitle {
+
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 3.111vh;
+  line-height: 28px;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+  padding-left: 15px;
+  margin-top: 5vh;
+
+}
+
+
 .subLinks {
 
   position: absolute;
@@ -94,7 +142,6 @@
 }
 
 
-
 .clickPrompt {
 
   position: relative;
@@ -127,13 +174,6 @@
   
 }
 
-.path {
-
-    stroke-dasharray: 10000;
-    stroke-dashoffset: 200;
-    
-
-}
 
 
 
