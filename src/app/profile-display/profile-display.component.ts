@@ -4,7 +4,7 @@ import { Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import { take, takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
@@ -67,6 +67,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   emittedPid: string;
   profileStickerEdit: boolean;
   index: number;
+  buttonHeight: number;
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
@@ -113,6 +114,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     this.setUp();
   }
+
 
   setUp() {
     this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{

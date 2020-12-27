@@ -8,7 +8,10 @@
         <div class = "row no-margin-no-padding displayStickers">
 
           <div class = "sticker col-2 no-margin-no-padding">
-            <img (click)='onClickBack()' *ngIf="inEditing;" src = "assets/icons/Edit mode Profile Display/backButton.svg">
+            <svg class='backbutton' (click)='onClickBack()' *ngIf="inEditing;" width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.799858 13.1343C0.941021 13.2475 1.09678 13.3481 1.26445 13.4343L12.2597 22.3479C12.7764 22.7606 13.4733 22.991 14.1987 22.9888C14.924 22.9865 15.6188 22.7519 16.1317 22.3361C16.6445 21.9203 16.9338 21.3569 16.9364 20.7689C16.9391 20.1808 16.6549 19.6158 16.1458 19.197L6.67656 11.5201L16.1946 3.80314C16.7099 3.3854 16.9995 2.81881 16.9995 2.228C16.9996 1.6372 16.7101 1.07057 16.1949 0.652781C15.6796 0.234991 14.9807 0.000255585 14.252 0.000217438C13.5232 0.000179291 12.8243 0.23484 12.309 0.652576L1.26445 9.60752C0.917896 9.79578 0.626503 10.0434 0.410805 10.3329C0.195108 10.6223 0.06036 10.9467 0.0160599 11.2829C-0.0282402 11.6192 0.0189877 11.9593 0.154413 12.2792C0.289839 12.5991 0.510164 12.891 0.799858 13.1343Z" fill="#E2B33D"/>
+            </svg>
+
           </div>
 
           <div class = "sticker col-2 no-margin-no-padding" *ngFor='let sticker of profileStickers; let i = index;'>
@@ -222,7 +225,7 @@
 
           <div class = "col-3 no-margin-no-padding metricsCol">
 
-            <div class = "row no-margin-no-padding metricsSymbols">
+            <div class = "row no-margin-no-padding metricsSymbols" >
 
               <div class = "col-6 viewsSymbol no-margin-no-padding">
                 <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">

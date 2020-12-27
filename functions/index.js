@@ -72,7 +72,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  const dimension = '200';
+  const dimension = '250';
   const size = dimension + 'x' + dimension + '^';
   filePath = filePath + '_sm';
 
@@ -197,7 +197,9 @@ function image_processing(bucket, outputFilePath, inputFilePath, filePath, args,
     functions.logger.info('started image processing');
     args.push(inputFilePath, outputFilePath);
     functions.logger.info(args);
-    await spawn('convert', args);
+    await spawn('convert', args)
+          .catch((error) => functions.logger.info('Spawn failed:', error));
+    functions.logger.info('finished image processing');
     await uploadToStorage(bucket, outputFilePath, filePath, unlinkPaths);
   });
 }
