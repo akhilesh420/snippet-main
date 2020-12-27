@@ -185,6 +185,12 @@ opacity: 0;
 
 }
 
+.diffPadding {
+
+  top: 6%;
+
+}
+
 .borderTop {
 
   border-top: 3px solid #000000;
