@@ -179,7 +179,7 @@ export class UsersService {
   }
 
   // Get display picture from firebase storage by UID
-  getDisplayPicture(uid: string, size: string='_sm') {
+  getDisplayPicture(uid: string, size: string='sm_') {
     let index = this.displayPictureList.findIndex(details => {
       return details.uid === uid;
     })
@@ -187,7 +187,7 @@ export class UsersService {
     if (index === -1) {
       this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.displayPictureList.length - 1;
-      const ref = this.storage.ref('Display picture/' + uid + size);
+      const ref = this.storage.ref('Display picture/' + `sm_${uid}`);
       ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
         this.displayPictureList[secIndex].obs.next(response);
         this.dpLoadCheck.next(true);

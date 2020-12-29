@@ -98,7 +98,7 @@ export class PostService {
   }
 
   // Get sticker content from firebase storage by UID
-  getStickerContent(pid: string, size: string='_sm') {
+  getStickerContent(pid: string, size: string='sm_') {
     let index = this.stickerContentList.findIndex(details => {
       return details.pid === pid;
     })
@@ -107,7 +107,7 @@ export class PostService {
       this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(null)});
       let secIndex = this.stickerContentList.length - 1;
       this.getStickerContentRef(pid).pipe(catchError(this.handleError)).subscribe((response: PostContent) => {
-        const ref = this.storage.ref('Post/' + response.name + size);
+        const ref = this.storage.ref('Post/' + size + response.name);
         ref.getDownloadURL().subscribe(response => {
           if (response) {
             this.stickerContentList[secIndex].obs.next(response);
