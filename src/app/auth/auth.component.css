@@ -24,7 +24,7 @@
 
 .heading {
 
-    margin-top: 5.222%;
+    margin-top: 8.222%;
 
 
 }
@@ -51,7 +51,7 @@
   line-height: 28px;
   letter-spacing: 0.1em;
   color: #FFFFFF;
-  padding-left: 15px;
+  padding-left: 18px;
   margin-top: 2vh;
 
 }
@@ -59,7 +59,7 @@
 .entryfield {
 
   top: 1vh;
-  height: 3.111vh;
+  height: 3.611vh;
   width: 25.625vw;
 
 
@@ -67,7 +67,7 @@
 
 .entryfieldOne {
 
-  height: 3.111vh;
+  height: 3.611vh;
   width: 25.625vw;
   background-color: #9A9696;
   margin-left: 15px;
@@ -84,7 +84,7 @@
   line-height: 28px;
   letter-spacing: 0.1em;
   color: #FFFFFF;
-  padding-left: 15px;
+  padding-left: 18px;
   margin-top: 5vh;
 
 }
@@ -97,7 +97,6 @@
   width: 13.4027vw;
   top: 84%;
   left: 15px;
-
 
 }
 
@@ -128,18 +127,18 @@
 }
 
 .onBoarding {
-
-
+    
+ 
   width: 69.791667%;
   height: 100%;
   margin-left: 30.208%;
   /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   background: linear-gradient(102.39deg, #632FDE 0.7%, #8451B4 15.32%, #E2B33D 46.6%, #DB7E3D 78.17%, #CF263C 100%);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;;
-
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite; 
 
 }
+
 
 
 .clickPrompt {
