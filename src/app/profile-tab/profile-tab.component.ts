@@ -26,7 +26,7 @@ export class ProfileTabComponent implements OnInit {
   profileStickers$: Observable<ProfileSticker[]>;
   stickerContent$: BehaviorSubject<any>;
   profileRoute: string;
-  engagementProp = {'width': '0','background': '#D8B869'};
+  engagementProp = {'width': '0','background': '#E2B33D'};
   stickerDetails: StickerDetails;
   activity: Activity;
   collected: string = '0';
@@ -89,7 +89,7 @@ export class ProfileTabComponent implements OnInit {
     if (this.stickerDetails && this.activity) {
       let colour: string;
       this.engagementRatio = this.activity.collected/this.stickerDetails.amountReleased;
-      this.engagementRatio === 1 ? colour = '#53BD9C': colour = '#D8B869';
+      this.engagementRatio === 1 ? colour = '#13A032': colour = '#E3B33D';
       let percentage: string = (this.engagementRatio*100).toString() + '%';
       this.engagementProp.width = percentage;
       this.engagementProp.background = colour;
