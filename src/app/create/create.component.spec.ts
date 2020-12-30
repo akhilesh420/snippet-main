@@ -17,9 +17,14 @@ describe('CreateComponent', () => {
     fixture = TestBed.createComponent(CreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    
   });
 
   it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+  it('file format either mp4 or mov', () => {
     expect(component).toBeTruthy();
   });
 });

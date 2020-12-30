@@ -1,115 +1,30 @@
-<!-- <div class = "headerdropDown"
-    [ngClass]='dropdown ? "slide-in-top" : "slide-out-top"'>
+<div class = "headerDropdownBorder" [ngClass]='dropdown ? "slide-in-top" : "slide-out-top"'>
 
-  <div class = "row">
-    <a routerLink='/feedback'>
-      <div class = "col-12" [ngClass]='currentRoute.includes("feedback") ? "active-dropdown" : "inactive-dropdown"'>
-        Feedback
-      </div>
-    </a>
-  </div>
+ 
 
-  <div class = "row">
-    <div class = "col-12"
-         style='cursor:pointer;'
-        (click)='clickAuth()'
-        [ngClass]='currentRoute.includes("auth") ? "active-dropdown" : "inactive-dropdown"'>
-      {{isAuthenticated ? "Logout" : "Login"}}
+    <div class = "row dropdownText no-margin-no-padding">
+      <a class = "Text extraPad" routerLink="/feedback" [routerLinkActive]='"active-link"'>
+        <p >Feedback</p>
+      </a>
     </div>
-  </div>
+
+    <div class = "row dropdownText no-margin-no-padding">
+
+      <p class = "Text" style='cursor: pointer'>Contact</p>
+
+    </div>    
+    
+    <div class = "row dropdownText borderTop no-margin-no-padding">
+
+      <p class = "Text diffPadding" (click)='clickAuth()' [ngClass]='{"active-link": currentRoute.includes("auth")}' style='cursor: pointer'> {{isAuthenticated ? "Logout": "Login"}} </p>
+
+    </div>
+   
+  
 
 </div>
 
 
-<div class = "row no-gutters headerPosition" #header>
-  <div class = "col-5 align-self-start headerLogo">
-    <a routerLink="/explore">
-      <span>Snippet</span>
-    </a>
-  </div>
-
-
-  <div class = "col-2 createSymbol">
-    <a [routerLink]='createRoute'>
-      <img *ngIf='!currentRoute.includes("create")' src = "assets/icons/Header Icons/White (Inactive)/createSymbol.svg">
-      <img *ngIf='currentRoute.includes("create")' src = "assets/icons/Header Icons/Gold (Active)/createSymbol.svg">
-    </a>
-  </div>
-
-  <div class = "col-3"></div>
-
-  <div class = "col-2 height leftSymbols">
-
-    <div class = "row height">
-
-      <div class = "col-3 height exploreSymbol">
-        <a routerLink="/explore">
-          <img *ngIf="currentRoute != '/explore'" src='assets/icons/Header Icons/White (Inactive)/exploreSymbol.svg'>
-          <img *ngIf="currentRoute === '/explore'" src='assets/icons/Header Icons/Gold (Active)/exploreSymbol.svg'>
-        </a>
-      </div>
-
-      <div class = "col-3 height myCollection">
-        <a [routerLink]='collectionRoute'>
-          <img *ngIf="!currentRoute.includes('collection')" src="assets/icons/Header Icons/White (Inactive)/collectionSymbol.svg">
-          <img *ngIf="currentRoute.includes('collection')" src="assets/icons/Header Icons/Gold (Active)/collectionSymbol.svg">
-        </a>
-      </div>
-
-      <div class = "col-3 height myProfile">
-        <a [routerLink]='profileRoute'>
-          <div [ngClass]='currentRoute.includes("profile") ? "dp-active" : "dp-inactive"'>
-            <img *ngIf="isAuthenticated && (displayPicture$ | async) as dp"
-                  [src]="dp"
-                  alt="display picture">
-          </div>
-        </a>
-      </div>
-
-
-    <div class = "col-3 height dropdownSymbol"
-         style='cursor:pointer'
-         (click)='dropdown = !dropdown'
-         (clickOutside)="dropdown = false"
-         #dropdownButton>
-        <img *ngIf='!(currentRoute.includes("auth") || currentRoute.includes("feedback"))' src="assets/icons/Header Icons/White (Inactive)/optionsSymbol.svg">
-        <img *ngIf='currentRoute.includes("auth") || currentRoute.includes("feedback")' src="assets/icons/Header Icons/Gold (Active)/optionsSymbol.svg">
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="loading-bar"
-      [ngStyle]='{"top": header.offsetHeight.toString() +"px"}'
-      *ngIf="loadingBar$ | async">
-  </div>
-
-</div> -->
-
-
-
-<div class = "headerdropDown"
-    [ngClass]='dropdown ? "slide-in-top" : "slide-out-top"'>
-
-  <div class = "row">
-    <a routerLink='/feedback'>
-      <div class = "col-12" [ngClass]='currentRoute.includes("feedback") ? "active-dropdown" : "inactive-dropdown"'>
-        Feedback
-      </div>
-    </a>
-  </div>
-
-  <div class = "row">
-    <div class = "col-12"
-         style='cursor:pointer;'
-        (click)='clickAuth()'
-        [ngClass]='currentRoute.includes("auth") ? "active-dropdown" : "inactive-dropdown"'>
-      {{isAuthenticated ? "Logout" : "Login"}}
-    </div>
-  </div>
-
-</div>
 
 <div class = "header no-margin-no-padding" #header>
 
@@ -265,7 +180,7 @@
 
       <!-- Inactive -->
 
-      <svg  *ngIf='!(currentRoute.includes("auth") || currentRoute.includes("feedback")); else activeDropdown'   width="8" height="27" viewBox="0 0 8 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg  *ngIf='!(currentRoute.includes("auth") || currentRoute.includes("feedback")) ; else activeDropdown'   width="8" height="27" viewBox="0 0 8 27" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4.29961 6.70083C5.89433 6.70083 7.18711 5.50969 7.18711 4.04036C7.18711 2.57102 5.89433 1.37988 4.29961 1.37988C2.70489 1.37988 1.41211 2.57102 1.41211 4.04036C1.41211 5.50969 2.70489 6.70083 4.29961 6.70083Z" stroke="white"/>
         <path d="M4.29961 16.1603C5.89433 16.1603 7.18711 14.9692 7.18711 13.4998C7.18711 12.0305 5.89433 10.8394 4.29961 10.8394C2.70489 10.8394 1.41211 12.0305 1.41211 13.4998C1.41211 14.9692 2.70489 16.1603 4.29961 16.1603Z" stroke="white"/>
         <path d="M4.29961 25.6203C5.89433 25.6203 7.18711 24.4291 7.18711 22.9598C7.18711 21.4905 5.89433 20.2993 4.29961 20.2993C2.70489 20.2993 1.41211 21.4905 1.41211 22.9598C1.41211 24.4291 2.70489 25.6203 4.29961 25.6203Z" stroke="white"/>

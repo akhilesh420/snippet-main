@@ -1,8 +1,8 @@
-import { OnBoarding, ProfileDetails } from './profile.model';
+import { OnBoarding, ProfileDetails, ProfileSticker } from './profile.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 export class PopUp {
@@ -41,6 +41,7 @@ export class MiscellaneousService {
   profileStickerEdit = new Subject<boolean>();
   stickerEmitted = new Subject<string>();
   stickerSelectConfirm = new Subject<string>();
+  userStickerSelection = new BehaviorSubject<ProfileSticker>(null);
 
   constructor(private userService: UsersService,
               private router: Router) { }

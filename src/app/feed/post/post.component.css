@@ -1,3 +1,17 @@
+.no-margin-no-padding {
+  margin: 0%;
+  padding: 0%;
+}
+
+
+
+
+
+
+
+
+
+
 .postContainer {
   width: 100%;
   height: 100%;
@@ -21,42 +35,6 @@
      object-fit: cover;
 }
 
-.profileTab {
-  position: absolute;
-  bottom: 0;
-
-  width: 100%;
-}
-
-.close-comment {
-  height: 6.5vh;
-}
-
-.open-comment {
-  height: 70%;
-}
-
-.bkgrd-opc {
-  /* rgba used so that opacity doesn't effect child components */
-  background: rgba(19, 17, 20, 0.6);
-  -webkit-backdrop-filter: blur(4px);
-          backdrop-filter: blur(4px);
-}
-
-.post-info {
-  color: #FFFFFF;
-  font-size: calc(0.025*(100vh - 7.24vh));
-  font-weight: 700;
-  letter-spacing: 0.120em;
-  text-align: left;
-
-  padding: 0.7vh 0 0 8%;
-  height: 100%;
-  width: 78%;
-
-  position: absolute;
-  bottom: 0;
-}
 
 .no-margin {
   margin: 0;
@@ -64,126 +42,6 @@
 
 .no-padding {
   padding: 0;
-}
-
-.engagementBar{
-  width: 100%;
-  height: 1.08vh;
-  margin-bottom: 2%;
-  position: relative;
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
-}
-
-.bar{
-  width: 100%;
-  height: 100%;
-  border-radius: 100px;
-  border: 1px solid #e2b33d;
-  padding: 0px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.engagement{
-  height: 100%;
-  border-radius: 10px;
-  padding: 0px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.width-100 {
-  width: 100%;
-}
-
-.width-100 > .row, .width-100 > .row > .col-6 {
-  height: 100%;
-}
-
-.postSticker {
-  height: 21.3vw;
-  width: 21.3vw;
-  background-color: #070707;
-  /* border: 0.001px solid #707070; */
-  border-radius: 50%;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 77.6%;
-  -webkit-transform: translateY(-70%);
-      -ms-transform: translateY(-70%);
-          transform: translateY(-70%);
-  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
-}
-
-.sticker-img{
-  padding: 0;
-  margin: 0 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 50%;
-}
-
-.commentButton{
-  padding: 0;
-  position: absolute;
-  top: -4vw;
-  left: 0px;
-  width: 8vw;
-  height: 8vw;
-
-  z-index: 1;
-}
-
-.buttonBackground{
-  padding: 0;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 8vw;
-  height: 8vw;
-  border-radius: 4vw 4vw 0 0;
-  background: rgba(19, 17, 20, 0.6);
-  -webkit-backdrop-filter: blur(4px);
-          backdrop-filter: blur(4px);
-}
-
-.hideExtra{
-  padding: 0;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 8vw;
-  height: 4vw;
-  overflow: hidden;
-}
-
-.commentButton > img{
-  padding: 0;
-
-  width: 3.5vw;
-  height: auto;
-
-  margin: 0 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
 }
 
 .postDetails {
@@ -195,9 +53,9 @@
   padding: 4.8vh 4vw 15% 4vw;
   font-family: 'ChampagneAndLimousines';
   font-size: 12px;
-  letter-spacing: 0em;
   font-weight: bold;
   color: #FFFFFF;
+  letter-spacing: 0.1em;
 }
 
 .postTitle{
@@ -208,14 +66,6 @@
   text-align: left;
   line-height: normal;
   color: #FFFFFF;
-}
-
-.postDescription {
-  font-family: 'ChampagneAndLimousines';
-  font-size: 12px;
-  letter-spacing: 0em;
-  font-weight: bold;
-  color: rgba(235, 221, 187, 0.9);
 }
 
 .pointer {
@@ -246,19 +96,10 @@
   height: auto;
 }
 
-.inline {
-  display: inline-block;
-}
-
-.block {
-  display: block;
-}
-
 .metrics {
   position: relative;
   height: 14px;
   width: auto;
-
 }
 
 .height-auto {
@@ -279,20 +120,6 @@
 
 .post-metrics > div:nth-child(2) > div:nth-child(2) {
   margin-top: 1vh;
-}
-
-.engaged {
-  padding-top: 1vh;
-}
-
-.reached {
-  padding-top: 1vh;
-}
-
-/* temp for comment section placeholder */
-.profileTab.bkgrd-opc > div, .profileTab.bkgrd-opc > div > div:nth-child(2), .profileTab.bkgrd-opc > div > div:nth-child(2) > .row{
-  height: 100%;
-  width: 100%;
 }
 
 .holder-list-container {
@@ -326,33 +153,10 @@
           transform: translate(-50%,-50%);
 }
 
-.temp {
-  font-weight: bold;
-  font-size: 24px;
-  height: 100%;
-  color: #D8B869;
-}
-
-.sticker-add {
-  width: 57px;
-  height: 57px;
-}
-
 .textFontSize {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0em;
-}
-
-.stickerMargin {
-  padding-top: 0.3vh;
-  padding-bottom: 0.3vh;
-  line-height: 0%;
-}
-
-.username-col {
-  overflow: hidden;
-  padding-top: 0.5%;
 }
 
 .fail-safe {
@@ -367,8 +171,6 @@
   width: 100%;
   height: auto;
 }
-
-
 
 
 /* Animations */
@@ -521,96 +323,8 @@
     border-top-right-radius: 1.5vh;
   }
 
-  .postSticker {
-    height: 0;
-    width: 21.3%;
-    padding-bottom: 21.3%;
-  }
-
   .postDetails {
     padding: 4.8% 4% 15% 4%;
-
   }
-
-  .commentButton{
-    padding: 0;
-    position: absolute;
-    top: -1.5294vw;
-    left: 0px;
-    width: 2.6vw;
-    height: 2.6vw;
-    z-index: 1;
-  }
-
-  .buttonBackground{
-    padding: 0;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 2.6vw;
-    height: 2.6vw;
-    border-radius: 1.5294vw 1.5294vw 0 0;
-  }
-
-  .hideExtra{
-    padding: 0;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 3.059vw;
-    height: 1.5294vw;
-    overflow: hidden;
-  }
-
-  .commentButton > img{
-    padding: none;
-
-    width: 1vw;
-    height: auto;
-
-  }
-
 }
 
-
-/* Pulsate */
-
-.pulsate-sticker {
-  -webkit-animation: pulsate-sticker 1s ease-in-out infinite both;
-          animation: pulsate-sticker 1s ease-in-out infinite both;
-cursor:pointer;
-}
-
-
-@-webkit-keyframes pulsate-sticker {
-  0% {
-    -webkit-transform: translateY(-70%) scale(1);
-            transform: translateY(-70%) scale(1);
-  }
-  50% {
-    -webkit-transform: translateY(-70%) scale(0.9);
-            transform: translateY(-70%) scale(0.9);
-  }
-  100% {
-    -webkit-transform: translateY(-70%) scale(1);
-            transform: translateY(-70%) scale(1);
-  }
-
-}
-
-
-@keyframes pulsate-sticker {
-  0% {
-    -webkit-transform: translateY(-70%) scale(1);
-            transform: translateY(-70%) scale(1);
-  }
-  50% {
-    -webkit-transform: translateY(-70%) scale(0.9);
-            transform: translateY(-70%) scale(0.9);
-  }
-  100% {
-    -webkit-transform: translateY(-70%) scale(1);
-            transform: translateY(-70%) scale(1);
-  }
-
-}

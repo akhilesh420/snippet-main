@@ -79,10 +79,6 @@
     letter-spacing: 0.1em;
     color: rgba(235, 221, 187, 0.9);
 
-
-
-
-
 }
 
 
@@ -97,4 +93,12 @@
     letter-spacing: 0.1em;
     color: rgba(235, 221, 187, 0.7);
 
+}
+
+.selectedSticker-title {
+  color: rgba(226, 179, 61);
+}
+
+.selectedSticker-name {
+  color: rgba(226, 179, 61, 0.7);
 }

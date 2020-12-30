@@ -17,4 +17,4 @@
   </div>
 </div>
 <app-profile-display class='desktop-profile-display' [uid$]='myUid$'></app-profile-display>
-<app-collection-tab class='desktop-collection-tab'></app-collection-tab>
+<app-collection-tab [ngClass]='!profileStickerEdit ? "desktop-collection-tab" : "desktop-collection-tab-edit"'></app-collection-tab>

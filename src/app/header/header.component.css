@@ -136,41 +136,70 @@
   border-radius: 50%;
 }
 
-headerdropDown {
-  position: fixed;
-  height: 7.6vw;
-  width: 7.7vw;
-  top: 6.84vh;
-  right: 1vw;
-  font-family: 'ChampagneAndLimousines';
-  color: #ffffff;
-  font-size: 1.2vw;
+.headerDropdownBorder {
+
+position: absolute;
+height: 11.6667vh;
+width: calc(11.6667vh * (155/105));
+top: calc(5.334vh + 6vh);
+right: 2.0vw;
+border-radius: 8px;
+background-color: rgba(11,11,11,1);
+-webkit-transform: translateY(-1000px);
+        transform: translateY(-1000px);    
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+opacity: 0;
+
+
+
+}
+
+
+
+.dropdownText {
+
+  height: 33.33333%;
+  width: 100%;
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
   font-weight: bold;
-  text-align: left;
-  padding-left: 1vw;
-  background-color: rgba(196, 196, 196, 0.05);
-  border-top: 1.5vh solid #E2B33D;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  border-radius: 0.8vh;
+  font-size: 1.778vh;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+  position: relative;
+  
+   
 }
 
+.Text {
 
-.headerdropDown > .row {
-  padding-top: 1vw;
+  position: relative;
+  top: 10%;
+  left: 10%;
+
 }
 
-.active-dropdown {
-  opacity: 1;
+.extraPad {
+
+  top: 28%;
+
 }
 
-.inactive-dropdown {
-  opacity: 0.8;
+.diffPadding {
+
+  top: 6%;
+
 }
 
-.headerdropDown > .row > .col-12:hover, .headerdropDown > .row > a > .col-12:hover {
-  opacity: 1;
+.borderTop {
+
+  border-top: 3px solid #000000;
+
 }
 
+.active-link {
+  color: #E2B33D;
+}
 
 .loading-bar {
   border-top: 2px solid #D8B869;
@@ -283,140 +312,6 @@ headerdropDown {
 
 
 
-
-
-
-
-/* NEW
-.fullHeader {
-  width: 100%;
-  height: 54px;
-}
-
-.headerPosition {
-  top: 0;
-  position: fixed;
-  height: 54px;
-  width: 100%;
-  background: #0B0B0B;
-
-}
-
-.headerLogo {
-  font-size: 32px;
-  font-family: 'Comfortaa';
-  color: #E2B33D;
-  font-style: normal;
-  font-weight: bold;
-  letter-spacing: 0.1em;
-  line-height: 36px;
-  text-align: left;
-  padding-left: 1.0vw;
-}
-
-.height {
-  height: 6vh;
-}
-
-.col-3 > a > img, .col-3 > img {
-  height: 2.66vh;
-  width: auto;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-}
-
-.col-3 > a > div {
-  height: 2.66vh;
-  width: 2.66vh;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-  overflow: hidden;
-  border-radius: 50%;
-}
-
-.col-3 > a > div > img{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.col-2 > a > img {
-  height: 2.66vh;
-  width: auto;
-  position: absolute;
-  top:50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-}
-
-.leftSymbols {
-  padding-right: 1.944vw;
-}
-
-.loading-bar {
-  border-top: 2px solid #D8B869;
-  position: fixed;
-  width: 90vw;
-  animation-name: loadingAnim;
-  animation-duration: 10s;
-  animation-timing-function: linear;
-}
-
-@keyframes loadingAnim {
-  from { width: 0; };
-  to { width: 90vw; };
-}
-
-.dp-active {
-  border: 1px solid #E2B33D;
-}
-
-.dp-inactive {
-  border: 1px solid #ffffff;
-}
-
-.headerdropDown {
-  position: fixed;
-  height: 7.6vw;
-  width: 7.7vw;
-  top: 6.84vh;
-  right: 1vw;
-  font-family: 'ChampagneAndLimousines';
-  color: #ffffff;
-  font-size: 1.2vw;
-  font-weight: bold;
-  text-align: left;
-  padding-left: 1vw;
-  background-color: rgba(196, 196, 196, 0.05);
-  border-top: 1.5vh solid #E2B33D;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  border-radius: 0.8vh;
-}
-
-.extra-padding {
-  padding-top: 1vw;
-}
-
-.headerdropDown > .row {
-  padding-top: 1vw;
-} */
 
 
 

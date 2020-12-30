@@ -2,9 +2,9 @@ import { UsersService } from './../shared/users.service';
 import { ProfileSticker, ProfileDetails, DisplayPicture } from './../shared/profile.model';
 import { Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
-import { takeUntil, tap } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
@@ -58,6 +58,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   changedDP: boolean = false;
   profileStickersChanged: boolean = false;
   updatedDP: any;
+  saving: boolean = false;
 
   @ViewChild('descriptionRef') descriptionRef : ElementRef;
   @ViewChild('linkRef') linkRef : ElementRef;
@@ -66,6 +67,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   emittedPid: string;
   profileStickerEdit: boolean;
   index: number;
+  buttonHeight: number;
 
   constructor( private authService: AuthService,
                private usersService: UsersService,
@@ -88,14 +90,18 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.miscellaneousService.stickerSelectConfirm.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.miscellaneousService.profileStickerEdit.next(false);
-      if (response === 'reject'){
+      if (response === 'reject') {
         this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
         this.profileStickersChanged = false;
-      } else if (response === 'remove') {
+        this.miscellaneousService.profileStickerEdit.next(false);
+      } else if (response === 'confirm') {
+        this.miscellaneousService.profileStickerEdit.next(false);
+      }else if (response === 'remove') {
         this.profileStickersChanged = true;
         this.profileStickers[this.index] = null;
       }
+      this.miscellaneousService.userStickerSelection.next(null);
+      this.index = undefined;
     });
 
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(response => {
@@ -108,6 +114,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     this.setUp();
   }
+
 
   setUp() {
     this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{
@@ -132,9 +139,8 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       this.tempLink = this.link;
     });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
-    this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
+    this.profileStickers$.pipe(take(2)).subscribe(stickers => {
       if (!stickers) return;
-      console.log(stickers);
       stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
       this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
     });
@@ -190,9 +196,12 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSave() {
+    if (this.saving) return;
+    this.saving = true;
     let noChange = true;
     let message = 'Profile updated!';
     this.miscellaneousService.profileStickerEdit.next(false);
+    this.miscellaneousService.userStickerSelection.next(null);
     this.resetState();
 
     if (this.profileStickers.length > 5) { //in case of an error
@@ -222,6 +231,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       this.displayPicture$.next(this.updatedDP);
       this.usersService.updateDisplayPicture(this.uid, this.displayPicture).pipe(takeUntil(this.notifier$))
       .subscribe(response => {
+        console.log(response);
         if (response === 100) {
           this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(new Date(), this.displayPicture.type));
           this.miscellaneousService.endLoading();
@@ -229,6 +239,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
       });
     }
 
+    this.saving = false;
     if (noChange) return;
     this.miscellaneousService.setPopUp(new PopUp(message,'Okay', undefined, ['default', 'reject']));
     this.changedDP = false;
@@ -239,6 +250,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.inEditing = !this.inEditing;
     this.editDesc = false;
     this.editLink = false;
+    this.index = undefined;
   }
 
   onPressEnter(event) {
@@ -292,16 +304,24 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.inEditing = true;
     this.index = index;
     this.miscellaneousService.profileStickerEdit.next(true);
+    this.miscellaneousService.userStickerSelection.next(sticker);
     this.miscellaneousService.stickerEmitted.pipe(takeUntil(this.notifier$)).subscribe(pid => {
       if (!pid || (this.profileStickers[this.index] != null && this.profileStickers[this.index].pid === pid)) return;
+      this.profileStickers.forEach((profileSticker, i) => { //Filter out same pid sticker
+        if (profileSticker === null) return;
+        if (profileSticker.pid === pid) this.profileStickers[i] = null;
+      });
       this.profileStickers[this.index] = new ProfileSticker(pid, new Date());
       this.profileStickersChanged = true;
+      this.miscellaneousService.userStickerSelection.next(this.profileStickers[this.index]);
     });
   }
 
   onClickBack () {
     this.inEditing = false;
+    this.index = undefined;
     this.miscellaneousService.profileStickerEdit.next(false);
+    this.miscellaneousService.userStickerSelection.next(null);
     if (this.profileStickersChanged) {
       this.profileStickersChanged = false;
       this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);

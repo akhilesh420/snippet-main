@@ -3,8 +3,9 @@ import { ActivityService } from './../shared/activity.service';
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit, OnDestroy, Input, EventEmitter } from '@angular/core';
 import { Collection } from '../shared/activity.model';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
+import { ProfileSticker } from '../shared/profile.model';
 
 @Component({
   selector: 'app-collection-tab',
@@ -15,8 +16,10 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
 
   collectionList: Collection[] = [];
   myUid: string;
+  isAuthenticated: boolean = false;
   notifier$ = new Subject();
   editMode: boolean;
+  userStickerSelected$: BehaviorSubject<ProfileSticker>;
 
   constructor(private authService: AuthService,
               private activityService: ActivityService,
@@ -25,12 +28,13 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
       if (!authRes) return;
+      this.isAuthenticated = !!authRes;
       this.myUid = authRes.id;
       this.getCollection();
     }, errorMessage => {
       console.log(errorMessage);
     });
-
+    this.userStickerSelected$ = this.miscellaneousService.userStickerSelection;
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.editMode = value);
   }
 

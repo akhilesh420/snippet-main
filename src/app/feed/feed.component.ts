@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, EventEmitter, Input } from '@angular/core';
 import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
-import { WindowStateService } from '../shared/window.service';
 import { FeedService } from './feed.service';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
 import { ScrollService } from '../shared/scroll.service';
@@ -68,10 +67,9 @@ export class FeedComponent implements OnInit, OnDestroy {
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
 
-  profileStickerEdit = new EventEmitter<boolean>(false);
-  @Input() emittedPid = new EventEmitter<string>();
+  profileStickerEdit: boolean = false;
 
-  constructor(private windowService: WindowStateService,
+  constructor(private miscellaneousService: MiscellaneousService,
               private feedService: FeedService,
               private router: Router,
               private route: ActivatedRoute,
@@ -109,27 +107,14 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.uid$.next(params['id']);
       });
 
-     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
-    .subscribe(val => {
-      if (val < 550) {
-        this.mobileCheck = true;
-      } else {
-        this.mobileCheck = false;
-      }
-
-      if (val < 560) {
-        this.profileDisplayHeight = 281*val/560;
-      } else {
-        this.profileDisplayHeight = 281;
-      }
-    });
-
     this.setUpScroll();
     this.resetPostNumber();
     this.postNumber$.pipe(takeUntil(this.notifier$)).subscribe(newNum => {
       this.postNumber = newNum;
       this.infiniteScroll();
-    })
+    });
+
+    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
   }
 
   setUpScroll() {
