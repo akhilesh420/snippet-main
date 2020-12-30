@@ -12,85 +12,85 @@ const runtimeOpts = {
 }
 
 exports.contentCreate = functions.runWith(runtimeOpts).firestore
-  .document('post content/{pid}')
-  .onCreate(async (snap, context) => {
+.document('post content/{pid}')
+.onCreate(async (snap, context) => {
 
-    const fileBucket = 'snippet-test-716cd.appspot.com';
+  const fileBucket = 'snippet-test-716cd.appspot.com';
 
-    const newValue = snap.data();
-    const fileName = newValue.name;
-    const contentType = newValue.fileFormat;
+  const newValue = snap.data();
+  const fileName = newValue.name;
+  const contentType = newValue.fileFormat;
 
-    functions.logger.info('File name:', fileName);
-    functions.logger.info('File type:', contentType);
+  functions.logger.info('File name:', fileName);
+  functions.logger.info('File type:', contentType);
 
-    const filePath = 'Post/' + fileName;
-    const bucket = admin.storage().bucket(fileBucket);
-    const tempFilePath = path.join(os.tmpdir(), fileName);
+  const filePath = 'Post/' + fileName;
+  const bucket = admin.storage().bucket(fileBucket);
+  const tempFilePath = path.join(os.tmpdir(), fileName);
 
-    await bucket.file(filePath).download({destination: tempFilePath});
+  await bucket.file(filePath).download({destination: tempFilePath});
 
-    functions.logger.info('File downloaded locally to', tempFilePath);
+  functions.logger.info('File downloaded locally to', tempFilePath);
 
-    let args = [];
-    let command = '';
-    if (contentType.startsWith('image/gif')) {
-      outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
-      command = 'convert';
-      args = ['-coalesce',
-              '-sampling-factor',
-              '4:2:0',
-              '-strip',
-              '-quality',
-              '85',
-              '-interlace',
-              'Plane',
-              '-colorspace',
-              'RGB',
-              tempFilePath,
-              outputFilePath];
-    } else if (contentType.startsWith('image/')) {
-      outputFilePath =  path.join(os.tmpdir(), 'optimized.jpeg');
-      command = 'convert';
-      args = ['-sampling-factor',
-              '4:2:0',
-              '-strip',
-              '-quality',
-              '85',
-              '-interlace',
-              'Plane',
-              '-gaussian-blur',
-              '0.05',
-              '-colorspace',
-              'RGB',
-              tempFilePath,
-              outputFilePath];
-    } else if (contentType.startsWith('video/')) {
-      outputFilePath =  path.join(os.tmpdir(), 'optimized.mp4');
-      command = 'ffmpeg';
-      args = ['-i',
-              tempFilePath,
-              '-c',
-              'copy',
-              '-map',
-              '0',
-              '-movflags',
-              '+faststart',
-              outputFilePath];
-    } else {
-      return functions.logger.info('Unsupported file type');
-    }
+  let args = [];
+  let command = '';
+  if (contentType.startsWith('image/gif')) {
+    outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
+    command = 'convert';
+    args = ['-coalesce',
+            '-sampling-factor',
+            '4:2:0',
+            '-strip',
+            '-quality',
+            '85',
+            '-interlace',
+            'Plane',
+            '-colorspace',
+            'RGB',
+            tempFilePath,
+            outputFilePath];
+  } else if (contentType.startsWith('image/')) {
+    outputFilePath =  path.join(os.tmpdir(), 'optimized.jpeg');
+    command = 'convert';
+    args = ['-sampling-factor',
+            '4:2:0',
+            '-strip',
+            '-quality',
+            '85',
+            '-interlace',
+            'Plane',
+            '-gaussian-blur',
+            '0.05',
+            '-colorspace',
+            'RGB',
+            tempFilePath,
+            outputFilePath];
+  } else if (contentType.startsWith('video/')) {
+    outputFilePath =  path.join(os.tmpdir(), 'optimized.mp4');
+    command = 'ffmpeg';
+    args = ['-i',
+            tempFilePath,
+            '-c',
+            'copy',
+            '-map',
+            '0',
+            '-movflags',
+            '+faststart',
+            outputFilePath];
+  } else {
+    return functions.logger.info('Unsupported file type');
+  }
 
-    unlinkPaths = [tempFilePath, outputFilePath];
+  unlinkPaths = [tempFilePath, outputFilePath];
 
-    functions.logger.info('started processing', command, args);
-    await spawn(command, args);
-    functions.logger.info('finished processing');
-    functions.logger.info('uploading to storage', filePath);
-    await bucket.upload(outputFilePath, { destination: filePath });
-    functions.logger.info('uploaded to storage');
-    finishUp(unlinkPaths);
-  });
+  functions.logger.info('started processing', command, args);
+  await spawn(command, args);
+  functions.logger.info('finished processing');
+  functions.logger.info('uploading to storage', filePath);
+  await bucket.upload(outputFilePath, { destination: filePath });
+  functions.logger.info('uploaded to storage');
+  finishUp(unlinkPaths);
+});
 
 exports.stickerCreate = functions.runWith(runtimeOpts).firestore
 .document('sticker content/{pid}')
