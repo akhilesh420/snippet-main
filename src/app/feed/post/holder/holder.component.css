@@ -1,4 +1,79 @@
-.username {
+.no-margin-no-padding {
+  margin: 0%;
+  padding: 0%;
+}
+
+.backpanel {
+  width: 100%;
+  height: 100%;
+}
+
+
+.dpHolder {
+ 
+  left: 0%;
+  height: 90%;
+  width: 80%;
+  margin-top: 5%;
+   
+}
+
+.dpContainer {
+
+  position: relative;
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  padding-top: 100%;
+  background: white;
+
+}
+
+.holderDetails {
+  height: 72%;
+  width: 100%;
+  top: 14%;
+  background-color: thistle;
+}
+
+.detailsTop {
+  width: 100%;
+  height: 40%;
+}
+
+.detailsBottom {
+  width: 100%;
+  height: 50%;
+}
+
+.usernameSpace {
+  width: 100%;
+  height: 100%;
+  font-size: 100%; 
+}
+
+.collectionDate {
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+}
+
+.dateCollected {
+  text-align: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* .username {
   font-size: 2.5vh;
   color: #F7F7F7;
   letter-spacing: 0.16em;
@@ -16,7 +91,10 @@
   width: 100%;
   margin-top: 5px;
   margin-bottom: 10px;
-}
+} */
+
+
+
 
 
 

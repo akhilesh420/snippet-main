@@ -33,33 +33,76 @@
     <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
       <img src='/assets/icons/Post Icons/postdetailDropdown.svg'>
     </div>
+    
+    <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
+    
     <div class = "fade-in-top" *ngIf="showDetails === true">
       <div class="post-metrics float-left">
-        <!-- Holder List Button -->
-        <div class="metrics pointer inline float-left height-auto textFontSize"
-            (click)="getHolderList(); stopPropagation($event);">
-          <img src="assets/icons/Post Icons/holderlistSymbol.svg" [ngStyle]="{'height': holderText.offsetHeight.toString() + 'px'}">
-          <span #holderText [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">Holder List</span>
+        
+    
+      </div>
+
+      
+      
+      <!-- Holder List -->
+      <div class = "holderList">
+
+        <div class = "row holderListTitle no-margin-no-padding">
+  
+          <p class = "holderTitle no-margin-no-padding">Holder List</p>
+  
         </div>
+  
+        <div class = "row holderListScrollSpace no-margin-no-padding">
+          
+          <ul class = "listScrollSpace">
+
+            <li>
+
+              <app-holder> </app-holder>
+
+            </li>
+
+            <li>
+
+              <app-holder> </app-holder>
+
+            </li>
+
+            <li>
+
+              <app-holder> </app-holder>
+
+            </li>
+            
+          </ul> 
+
+        </div>
+  
+      </div>
         <!-- Metrics -->
         <div *ngIf="engagementRatio === 1" class="float-right">
           <!-- Views -->
-          <div class="metrics height-auto">
+          <!-- <div class="metrics height-auto">
             <img src="/assets/icons/Profile Display/viewsIcon.svg">
             <span [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">{{views}}</span>
-          </div>
+          </div> -->
           <!-- Collection -->
-          <div class="metrics float-left height-auto">
+          <!-- <div class="metrics float-left height-auto">
             <img src="/assets/icons/Profile Display/collectionSymbol.svg">
             <span [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">{{collected}}</span>
-          </div>
-        </div>
+          </div> -->
+        </div> 
       </div>
+     
       <!-- Description -->
       <div *ngIf="!holderToggle">
         <span class="float-left text-left"
               [ngClass]="engagementRatio === 1 ? 'engaged' : 'reached'">{{postDetails.description}}</span>
       </div>
+
+       
+
     </div>
     <!-- Holder List Popup -->
     <!-- <div class="holder-list-container" *ngIf="holderToggle" (click)="stopPropagation($event)">
@@ -81,23 +124,9 @@
         <app-loading-spinner class="center-absolute"></app-loading-spinner>
       </ng-template>
     </div> -->
+    
 
-    <div class = "holderList">
-
-      <div class = "row holderListTitle no-margin-no-padding">
-
-
-      </div>
-
-      <div class = "row holderListScrollSpace no-margin-no-padding">
-
-
-      </div>
-
-    </div>
-
-  </div>
-  <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
+   
     <!-- Fail-safe button -->
     <div class = "fail-safe" *ngIf='playFailSafe' (click)='playFailSafe = false; allowToggle = true; videoToggle();'>
       <img src = "assets/icons/Post Icons/failSafeButton.png">
