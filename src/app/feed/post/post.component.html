@@ -33,12 +33,12 @@
     <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
       <img src='/assets/icons/Post Icons/postdetailDropdown.svg'>
     </div>
-    
+
     <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
-    
+
     <div class = "postMetrics">
 
-      
+
       <div class = "row metricsSymbols no-margin-no-padding">
 
         <div class = "col-6 viewsSymbol no-margin-no-padding">
@@ -51,7 +51,7 @@
         </div>
 
         <div class = "col-6 holderSymbol no-margin-no-padding">
-          
+
           <svg class = "sizeSVG" width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0)">
             <path d="M7.99969 15.6631C3.79879 15.6631 0.381104 12.2453 0.381104 8.04421C0.381104 3.84315 3.79879 0.425293 7.99969 0.425293C12.2009 0.425293 15.619 3.84315 15.619 8.04421C15.619 12.2453 12.2009 15.6631 7.99969 15.6631ZM7.99969 1.18772C4.21881 1.18772 1.14287 4.26351 1.14287 8.04421C1.14287 11.8253 4.21881 14.9014 7.99969 14.9014C11.7809 14.9014 14.8572 11.8253 14.8572 8.04421C14.8572 4.26351 11.7809 1.18772 7.99969 1.18772Z" fill="white"/>
@@ -63,7 +63,7 @@
             <rect width="16" height="16" fill="white" transform="translate(0 0.0449219)"/>
             </clipPath>
             </defs>
-          </svg> 
+          </svg>
 
         </div>
 
@@ -72,11 +72,11 @@
       <div class = "row metricsNumbers no-margin-no-padding">
 
         <div class = "col-6 viewNumbers no-margin-no-padding">
-          <span>1,235</span>
+          <span>{{views}}</span>
         </div>
 
         <div class = "col-6 holderNumbers no-margin-no-padding">
-          <span>3,674</span>
+          <span>{{collected}}</span>
         </div>
 
       </div>
@@ -86,105 +86,48 @@
 
     <div class = "fade-in-top" *ngIf="showDetails === true">
       <div class="post-metrics float-left">
-        
-    
+
+
       </div>
 
       <div class = "descriptionSpace">
 
-        <span class = "description">How it works</span>
+        <span class = "description">{{postDetails.description}}</span>
 
       </div>
 
-      
-      
+
+
       <!-- Holder List -->
       <div class = "holderList">
 
         <div class = "row holderListTitle no-margin-no-padding">
-  
+
           <p class = "holderTitle no-margin-no-padding">Holder List</p>
-  
+
         </div>
-  
+
         <div class = "row holderListScrollSpace no-margin-no-padding">
-          
+
           <ul class = "listScrollSpace">
 
-            <li>
-
-              <app-holder> </app-holder>
-
+            <li *ngFor='let collection of postCollection | reverse;'>
+              <app-holder [collection]='collection'> </app-holder>
             </li>
 
-            <li>
+          </ul>
 
-              <app-holder> </app-holder>
-
-            </li>
-
-            <li>
-
-              <app-holder> </app-holder>
-
-            </li>
-            
-          </ul> 
+        <app-loading-spinner *ngIf="!postCollection" class="center-absolute"></app-loading-spinner>
 
         </div>
-  
-      </div>
-        <!-- Metrics -->
-        <div *ngIf="engagementRatio === 1" class="float-right">
-          <!-- Views -->
-          <!-- <div class="metrics height-auto">
-            <img src="/assets/icons/Profile Display/viewsIcon.svg">
-            <span [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">{{views}}</span>
-          </div> -->
-          <!-- Collection -->
-          <!-- <div class="metrics float-left height-auto">
-            <img src="/assets/icons/Profile Display/collectionSymbol.svg">
-            <span [ngStyle]="{'padding-left': (holderText.offsetHeight + 5).toString() + 'px'}">{{collected}}</span>
-          </div> -->
-        </div> 
-      </div>
-     
-      <!-- Description -->
-      <div *ngIf="!holderToggle">
-        <span class="float-left text-left"
-              [ngClass]="engagementRatio === 1 ? 'engaged' : 'reached'">{{postDetails.description}}</span>
-      </div>
 
-       
+      </div>
+    </div>
 
     </div>
 
-   
-    <!-- Holder List Popup -->
-    <!-- <div class="holder-list-container" *ngIf="holderToggle" (click)="stopPropagation($event)">
-      <div *ngIf="collectionList | async; let collection; else holderLoading"> -->
-        <!-- No holders -->
-        <!-- <div *ngIf="collection.length === 0;" class="no-holders">
-          <br>
-          <p>No holders</p>
-          <br>
-        </div> -->
-        <!-- Holder List -->
-        <!-- <div class="holder-list-title">
-          <div class = "holder-list">
-            <app-holder *ngFor="let holder of collection" [uid]="holder.collectorID"></app-holder>
-          </div>
-        </div>
-      </div>
-      <ng-template #holderLoading>
-        <app-loading-spinner class="center-absolute"></app-loading-spinner>
-      </ng-template>
-    </div> -->
-    
-
-   
     <!-- Fail-safe button -->
-    <div class = "fail-safe" *ngIf='playFailSafe' (click)='playFailSafe = false; allowToggle = true; videoToggle();'>
+    <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='playFailSafe = false; allowToggle = true; videoToggle();'>
       <img src = "assets/icons/Post Icons/failSafeButton.png">
     </div>
 </div>

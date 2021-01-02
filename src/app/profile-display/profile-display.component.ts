@@ -43,6 +43,9 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   multiplier: number = 1;
 
   inEditing: Boolean = false;
+  dpLoaded: Boolean = false;
+  descLoaded: Boolean = false;
+  stickerLoaded: Boolean = false;
   editDesc: Boolean = false;
   editLink: Boolean = false;
   editStickers: Boolean = false;
@@ -124,6 +127,9 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   setUpProfile() {
+    this.dpLoaded = false;
+    this.descLoaded = false;
+    this.stickerLoaded = false;
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
     this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
       if (!details) return;
@@ -133,17 +139,21 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
       this.tempDescription = this.description;
       this.tempLink = this.link;
+      this.dpLoaded = true;
     });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
     this.profileStickers$.pipe(take(2)).subscribe(stickers => {
       if (!stickers) return;
       stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
       this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
+      this.stickerLoaded = true;
     });
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
     this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
+      if (!dp) return;
       this.tempDisplayPicture$.next(dp);
-    })
+      this.dpLoaded = true;
+    });
   }
 
   setUpActivity() {
@@ -171,10 +181,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       short = Math.round((num/1000000) * 100) / 100;
       return short.toString() + 'M';
       }
-  }
-
-  getEmptySlots(stickers) {
-    return [...Array(5-stickers.length).keys()];
   }
 
   navigateRoute() {
@@ -243,6 +249,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   resetState() {
+    if (!this.dpLoaded && !this.stickerLoaded && !this.descLoaded) return;
     this.inEditing = !this.inEditing;
     this.editDesc = false;
     this.editLink = false;
@@ -293,9 +300,9 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     sel.addRange(range);
   }
 
-  inputEditable(event, max) {
+  inputEditable(event, max, type) {
     console.log(event.target.textContent.length);
-    if (event.target.textContent.length > max
+    if (event.target.textContent.length >= max
         && event.keyCode != 8 //backspace
         && event.keyCode != 46 //delete
         && event.keyCode != 37 //arrow left
@@ -307,11 +314,12 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       return event.preventDefault();
     }
 
-    this.tempDescription = event.target.textContent;
+    if (type === 'desc') return this.tempDescription = event.target.textContent;
+    this.tempLink = event.target.textContent;
   }
 
   clickProfileSticker(sticker: any, index: number) {
-    if (sticker && !this.inEditing) return;
+    if (sticker && !this.inEditing && !this.stickerLoaded) return;
     this.inEditing = true;
     this.index = index;
     this.miscellaneousService.profileStickerEdit.next(true);

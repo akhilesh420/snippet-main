@@ -18,9 +18,13 @@
             </div>
 
             <div class = "row no-margin-no-padding creatorName">
-                <p class = "name"
-                   *ngIf='(setUpUser(details.uid) | async) as profile'
-                   [ngClass]='{"selectedSticker-title": stickerSelected()}'>{{profile.username}}</p>
+              <p class = "name"
+                *ngIf='(setUpUser(details.uid) | async) as profile'
+                [ngClass]='{"selectedSticker-title": stickerSelected()}'>
+                <a [routerLink]='["/profile/" + details.uid]'>
+                    {{profile.username}}
+                </a>
+               </p>
             </div>
 
         </div>

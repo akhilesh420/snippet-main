@@ -43,33 +43,21 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   @ViewChild('videoPlayer') videoPlayer : ElementRef;
 
-  onBoarding: boolean = false;
-  onBoardingStep: number;
-
-
   viewTimer: any;
   viewTime: number = 1500; //how long for a viewed post in milliseconds
 
   playFailSafe: boolean = false;
   allowToggle: boolean = true;
 
+  postCollection: Collection[];
+  activity: Activity;
+
   constructor(private postService: PostService,
               private authService: AuthService,
-              private activityService: ActivityService,
-              private miscellaneousService: MiscellaneousService) { }
+              private activityService: ActivityService) { }
 
   ngOnInit(): void {
     this.restartPost();
-
-    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.onBoarding = val;
-      if (val) {
-        this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-          this.onBoardingStep = step;
-        });
-      }
-    });
-
     this.postViewTime();
   }
 
@@ -106,7 +94,17 @@ import { WindowStateService } from 'src/app/shared/window.service';
       this.postType = response.fileFormat;
       this.postContent$ = this.postService.getPostContent(this.pid, response);
     });
+    // post collection list
+    this.activityService.getPostCollection(this.pid).pipe(takeUntil(this.notifier$))
+    .subscribe(response => {
+      this.postCollection = response;
+    });
 
+    this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.activity = response[0];
+      this.views = this.convertToShort(this.activity.views);
+      this.collected = this.convertToShort(this.activity.collected);
+    });
   }
 
   postView() {
@@ -130,11 +128,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
     }
   }
 
-  getHolderList() {
-    this.holderToggle = !this.holderToggle;
-    if (this.holderToggle) this.collectionList = this.activityService.getHolderList(this.pid, this.uid);
-  }
-
   videoToggle() {
     try {
       if (!this.postType.includes('video') || !this.allowToggle) return;
@@ -151,8 +144,19 @@ import { WindowStateService } from 'src/app/shared/window.service';
     }
   }
 
-  stopPropagation(event) {
-    event.stopPropagation();
+  convertToShort(num: number): string {
+    let short = 0;
+    if (num/1000000 <= 1) {
+      if (num/1000 <= 1) {
+          return num.toString();
+      } else {
+        short = Math.round((num/1000) * 10) / 10;
+        return short.toString() + 'K';
+      }
+    } else {
+      short = Math.round((num/1000000) * 100) / 100;
+      return short.toString() + 'M';
+      }
   }
 
   ngOnDestroy() {

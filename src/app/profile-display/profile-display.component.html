@@ -83,8 +83,8 @@
                 contenteditable="true"
                 #descriptionRef
                 [textContent]="tempDescription"
-                (keydown)="inputEditable($event, 105);"
-                (paste)="inputEditable($event, 105);"
+                (keydown)="inputEditable($event, 105, 'desc');"
+                (paste)="inputEditable($event, 105, 'desc');"
                 (keydown.enter)="onPressEnter($event)"
                 (focus)='setCaret(true)'>
             </div>
@@ -179,7 +179,8 @@
                  #linkRef
                  [textContent]="tempLink"
                  role="textbox"
-                 (input)="tempLink=$event.target.textContent"
+                 (keydown)="inputEditable($event, 21, 'link');"
+                 (paste)="inputEditable($event, 21, 'link');"
                  (keydown.enter)="onPressEnter($event)"
                  (focus)='setCaret(false)'>
                  {{link}}
@@ -281,7 +282,9 @@
           </div>
 
           <div class = "col-8 usernameSpace no-margin-no-padding">
-            <p #usernameRef class = "username">{{username}}</p>
+            <a [routerLink]='["/profile/" + uid]'>
+              <p #usernameRef class = "username">{{username}}</p>
+            </a>
           </div>
 
         </div>

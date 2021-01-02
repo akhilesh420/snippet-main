@@ -18,7 +18,6 @@ import { CreateComponent } from './create/create.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedComponent } from './feed/feed.component';
 import { PostComponent } from './feed/post/post.component';
-import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
 import { CommentsComponent } from './feed/post/comments/comments.component';
 import { CommentComponent } from './feed/post/comments/comment/comment.component';
 import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
@@ -48,7 +47,6 @@ import { ReversePipe } from './shared/reverse.pipe';
     FeedbackComponent,
     FeedComponent,
     PostComponent,
-    PostEditComponent,
     CommentsComponent,
     CommentComponent,
     CommentListComponent,

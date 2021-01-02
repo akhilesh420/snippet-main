@@ -1,70 +1,41 @@
 import { ProfileDetails, ProfileSticker } from '../../../shared/profile.model';
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { UsersService } from 'src/app/shared/users.service';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
+import { Collection } from 'src/app/shared/activity.model';
 
 @Component({
   selector: 'app-holder',
   templateUrl: './holder.component.html',
   styleUrls: ['./holder.component.css']
 })
-export class HolderComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HolderComponent implements OnInit, OnDestroy{
 
-  @Input() uid: string;
-  @Input() stickerSize: string;
-
+  @Input() collection: Collection;
+  uid: string;
   notifier$ = new Subject();
 
-  profileDetails: ProfileDetails;
-  profileStickers$: Observable<ProfileSticker[]>;
-
-  @ViewChild('usernameRef') usernameSpan : ElementRef;
-  @ViewChild('usernameCol') usernameCol : ElementRef;
-
-  maxWidth: number;
-  usernameCounter: number;
-  username: string;
-  usernameFetch: boolean;
+  $profileDetails: Observable<ProfileDetails>;
+  profileStickers: ProfileSticker[] = [null,null,null,null,null];
+  $displayPicture: BehaviorSubject<any>;
 
   constructor(private usersService: UsersService,
               private router: Router) {
    }
 
   ngOnInit(): void {
-    this.usernameFetch = false;
-
-    this.usersService.getProfileDetails(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.usernameFetch = false;
-      if  (response) {
-        this.profileDetails = response;
-        this.usernameCounter = 0;
-        this.username = response.username;
-
-        let lastUsername: string;
-        let timer = setInterval(func => {
-          const currentWidth = this.usernameSpan.nativeElement.offsetWidth;
-          if (lastUsername != this.username && currentWidth > this.maxWidth) {
-            lastUsername = this.profileDetails.username;
-            ++this.usernameCounter;
-            this.username = this.profileDetails.username.slice(0, this.profileDetails.username.length - this.usernameCounter)  + '...';
-          } else {
-            clearInterval(timer);
-            this.usernameFetch = true;
-          }
-        })}
-      });
-    this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
+    this.uid = this.collection.collectorID;
+    this.$profileDetails = this.usersService.getProfileDetails(this.uid);
+    this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
+    .subscribe(response => {
+      if (!response) return;
+      this.profileStickers = response;
+    });
+    this.$displayPicture = this.usersService.getDisplayPicture(this.uid);
   }
 
-  ngAfterViewInit() {
-    this.maxWidth = this.usernameCol.nativeElement.offsetWidth;
-  }
-
-  getEmptySlots(stickers) {
-    return [...Array(5-stickers.length).keys()]; 
-  }
 
   navigate() {
     this.router.navigate(['/profile/' + this.uid]);
