@@ -15,7 +15,7 @@ import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
   templateUrl: './profile-display.component.html',
   styleUrls: ['./profile-display.component.css']
 })
-export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
+export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   @Input() uid$: BehaviorSubject<string>;
   uid: string;
@@ -63,6 +63,8 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('descriptionRef') descriptionRef : ElementRef;
   @ViewChild('linkRef') linkRef : ElementRef;
   @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
+  @ViewChild('tempdesc') tempDesc: ElementRef<HTMLElement>;
+  @ViewChild('desc_col') desc_col: ElementRef<HTMLElement>;
 
   emittedPid: string;
   profileStickerEdit: boolean;
@@ -111,13 +113,9 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.setUp();
   }
 
-  ngOnChanges() {
-    this.setUp();
-  }
-
-
   setUp() {
     this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{
+      console.log(uid);
       if (uid) {
         this.uid = uid;
         this.profileRoute = "/profile/" + this.uid;
@@ -255,8 +253,9 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   onPressEnter(event) {
     event.preventDefault();
-    this.descriptionRef.nativeElement.focusout();
-    this.linkRef.nativeElement.focusout();
+    // this.descriptionRef.nativeElement.focusout();
+    // this.linkRef.nativeElement.focusout();
+    return;
   }
 
   fileUpload(event) {
@@ -297,6 +296,16 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
     sel.removeAllRanges();
     sel.addRange(range);
+  }
+
+  inputEditable(event) {
+    if (this.tempDesc.nativeElement.offsetHeight > this.desc_col.nativeElement.offsetHeight) {
+      event.preventDefault();
+    } else {
+      this.tempDescription = event.target.textContent;
+    }
+    console.log('height:', this.tempDesc.nativeElement.offsetHeight);
+    console.log('width:', this.tempDesc.nativeElement.offsetWidth);
   }
 
   clickProfileSticker(sticker: any, index: number) {
@@ -346,6 +355,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('profile display destroy')
     this.notifier$.next();
     this.notifier$.complete();
   }

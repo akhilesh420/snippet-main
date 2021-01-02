@@ -1,11 +1,10 @@
 import { environment } from './../../environments/environment';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { PostDetails } from 'src/app/shared/post.model';
 import { Injectable } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { forkJoin, Observable, Subject, BehaviorSubject } from 'rxjs';
-import { Collection } from '../shared/activity.model';
+import { BehaviorSubject } from 'rxjs';
 import { PostService } from '../shared/post.service';
 
 @Injectable({
@@ -49,11 +48,11 @@ export class FeedService {
   getCollectionPage(uid: string) {
     if (!this.$collectionPageList.value) {
       this.activityService.getUserCollection(uid) //get details of user collection
-      .subscribe((response:Collection[]) => {
+      .subscribe(response => {
         let postDetailsLists: PostDetails[] = [];
         response.forEach(collection => {
           this.postService.getPostDetails(collection.pid).pipe(map(changes => { //get the post detail for each pid in collection
-            return { pid: collection.pid, ...changes};
+            return {pid: collection.pid, ...changes};
           })).subscribe(res => {
             postDetailsLists.push(res);
             this.$collectionPageList.next(postDetailsLists);
@@ -63,6 +62,7 @@ export class FeedService {
     }
 
     return this.$collectionPageList.pipe(map(postsList => {
+      if (!postsList) return postsList;
       postsList = postsList.filter(post => { //Filter out users own posts
         return uid != post.uid;
       })

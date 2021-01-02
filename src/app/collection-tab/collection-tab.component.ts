@@ -42,7 +42,6 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
     this.activityService.getUserCollection(this.myUid).pipe(takeUntil(this.notifier$)) //get details of user collection
     .subscribe((response:Collection[]) => {
       this.collectionList = response;
-      console.log(this.collectionList);
     });
   }
 

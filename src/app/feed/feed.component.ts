@@ -16,7 +16,7 @@ import { ScrollService } from '../shared/scroll.service';
 
 export class FeedComponent implements OnInit, OnDestroy {
 
-  postsList$: Observable<PostDetails[]>;
+  postsList$: Observable<PostDetails[]> | BehaviorSubject<PostDetails[]>;
 
   feedList$: BehaviorSubject<PostDetails[]>;
   notifier$ = new Subject();
@@ -30,20 +30,15 @@ export class FeedComponent implements OnInit, OnDestroy {
   done: boolean;
   postOffset: number; //Trigger next post after this value
   failSafe: boolean;
-  loading: boolean;
-
-  addIcon = "assets/icons/add_icon@2x.png";
 
   //Video auto play and pause
   postHeight: number; //height of the posts
   postMarginTop: number; //top margin on each post;
   postMarginBottom: number; // bottom margin on each post;
   postNumber: number; //the index of the post thats being viewed
-  postNumber$ = new Subject<number>(); //the index of the post thats being viewed
+  postNumber$ = new BehaviorSubject<number>(0); //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
-  profileDisplayHeight: number; //height of the posts
 
-  firstView: number;
   viewPort: number;
 
   uid$ = new BehaviorSubject<string>(null); //From URL
@@ -51,20 +46,10 @@ export class FeedComponent implements OnInit, OnDestroy {
   myUid: string; //Authenticated user uid
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
-  inSnap: boolean;
-  lastScroll: number;
   mobileCheck: boolean;
 
-  lastHeight: number = 0;
-  currentScroll: number = 0;
-  triggerMultiplier = 0.03;
-  triggerArea: number;
-  scrolled: boolean; //scroll completed
-  scrolling: boolean;//scroll in progress
-  touchDown: boolean = false;
   maxPostNumber: number = -2;
 
-  @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
 
   profileStickerEdit: boolean = false;
@@ -92,12 +77,9 @@ export class FeedComponent implements OnInit, OnDestroy {
 
     this.done = false;
     this.failSafe = false;
-    this.loading = true;
-    this.inSnap = false;
 
     this.getPosts(this.router.url);
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.lastHeight = 0;
       this.getPosts(this.router.url);
     });
 
@@ -108,13 +90,16 @@ export class FeedComponent implements OnInit, OnDestroy {
       });
 
     this.setUpScroll();
+
     this.resetPostNumber();
+
     this.postNumber$.pipe(takeUntil(this.notifier$)).subscribe(newNum => {
       this.postNumber = newNum;
       this.infiniteScroll();
     });
 
-    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
+    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$))
+      .subscribe(value => this.profileStickerEdit = value);
   }
 
   setUpScroll() {
@@ -128,20 +113,23 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postMarginTop = 15;
       this.postMarginBottom = this.mobileCheck ? 0 : 25;
       this.postHeight = this.post.nativeElement.offsetHeight;
-      this.viewPort = (this.postHeight+this.postMarginTop);
-      this.triggerArea = this.triggerMultiplier*this.viewPort;
+      this.viewPort = (this.postHeight);
     } catch(error) {
       console.log(error);
     }
   }
 
   getPosts(currentRoute: string) {
-    if (currentRoute === this.lastRoute) {return}
+    if (currentRoute === this.lastRoute) return;
     this.lastRoute = currentRoute;
     currentRoute = currentRoute.split('/')[1]; //get parent route
     this.showProfileDisplay = false;
     this.resetPostNumber();
     if (currentRoute === 'explore') {
+      this.myUid$.pipe(take(2)).subscribe(uid => {
+        if (!uid) return;
+        setTimeout(() => this.uid$.next(uid), 100);
+      });
       this.postsList$ = this.feedService.getExplorePage();
     } else if (currentRoute === 'collection') {
       const uid = this.route.snapshot.params['id']
@@ -170,8 +158,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   resetPostNumber() {
-    this.postNumber = this.showProfileDisplay ? -1 : 0;
-    this.postNumber$.next(this.postNumber);
+    this.postNumber$.next(0);
     this.done = true;
   }
 
@@ -185,14 +172,15 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postsList = response;
       if (this.postsList) {
         this.initBatch();
-      } else { this.loading = false;}
+      }
     }, error => {
-      return;
+      this.feedList$.next([]);
+      this.done = true;
+      return console.log(error);
     });
   }
 
   initBatch() { // get initial batch of posts to render
-    this.loading = true;
     if (this.postsList.length <= this.batchSize) {
       this.feedList$.next(this.postsList);
       this.done = true;
@@ -200,7 +188,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize));
     }
     this.batchNumber++;
-    this.loading = false;
     setTimeout(() => {
       if (this.postsList.length === 0) return;
       this.getViewport();
@@ -208,7 +195,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   moreBatch() { // get the next batch of posts used for manual render
-    this.loading = true;
     if ((this.postsList.length - this.batchSize*this.batchNumber) <= 0) {
       this.feedList$.next(this.postsList);
       this.done = true;
@@ -216,7 +202,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
     this.batchNumber++;
-    this.loading = false;
   }
 
   infiniteScroll() {
@@ -230,14 +215,15 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   //temp
   postFocus(scrollY) {
-    const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
-    this.postNumber$.next(Math.floor(scroll/this.viewPort));
+    const scroll = scrollY;
+    // const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
+    this.postNumber$.next(Math.round(scroll/this.viewPort));
+    // this.postNumber$.next(Math.floor(scroll/this.viewPort));
   }
 
   trackByFn(index, item) {
     return index; // or item.id
   }
-
 
   ngOnDestroy() {
     console.log('destroy');

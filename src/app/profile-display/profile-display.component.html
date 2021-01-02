@@ -72,23 +72,35 @@
             </div>
           </div>
 
-          <div class = "col-8 no-margin-no-padding profileDescription">
+          <div #desc_col class = "col-8 no-margin-no-padding profileDescription">
 
-            <div *ngIf="!inEditing;">
+            <div class='output' *ngIf='!inEditing'>
               {{description}}
             </div>
 
             <div class='input'
                 *ngIf="inEditing && editDesc;"
-                 contenteditable="true"
-                 #descriptionRef
-                 [textContent]="tempDescription"
-                 (input)="tempDescription=$event.target.textContent"
-                 (keydown.enter)="onPressEnter($event)"
-                 (focus)='setCaret(true)'>
-              {{description}}
+                contenteditable="true"
+                #descriptionRef
+                [textContent]="tempDescription"
+                (input)="inputEditable($event);"
+                (keydown.enter)="onPressEnter($event)"
+                (focus)='setCaret(true)'>
             </div>
 
+            <div #tempdesc class="hide">
+              {{tempDescription}}
+            </div>
+
+            <!-- <textarea *ngIf="inEditing && editDesc;"
+              #descriptionRef
+              name='desc'
+              [(ngModel)]="tempDescription"
+              (input)="inputEditable();"
+              (focus)='setCaret(true);'>
+            </textarea> -->
+ <!-- (input)="tempDescription=$event.target.textContent; inputEditable();" -->
+              <!-- <span #desc_span>{{description}}</span> -->
             <svg *ngIf="inEditing && !editDesc;"
                  (click)='onEditDescClick()'
                  class = "svgStyle"
@@ -178,6 +190,7 @@
                  contenteditable="true"
                  #linkRef
                  [textContent]="tempLink"
+                 role="textbox"
                  (input)="tempLink=$event.target.textContent"
                  (keydown.enter)="onPressEnter($event)"
                  (focus)='setCaret(false)'>
