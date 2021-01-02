@@ -36,10 +36,64 @@
     
     <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
     
+    <div class = "postMetrics">
+
+      
+      <div class = "row metricsSymbols no-margin-no-padding">
+
+        <div class = "col-6 viewsSymbol no-margin-no-padding">
+
+          <svg class = "sizeSVG" width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.27311 12.0964L1.17581 2.32065C1.17234 1.97183 1.36162 1.66204 1.69513 1.4707C2.02863 1.27936 2.42809 1.2514 2.79105 1.39398L14.9278 6.16151C15.5473 6.40486 15.6004 6.91487 15.6019 7.06539C15.6034 7.21592 15.5605 7.72689 14.946 7.98252L2.90648 12.9907C2.54643 13.1405 2.1465 13.1205 1.80925 12.9358C1.472 12.7511 1.27659 12.4452 1.27311 12.0964Z" fill="white"/>
+            <path d="M14.4574 7.07682L14.4574 7.07682L2.32056 2.30928C2.32056 2.30929 2.32056 2.30929 2.32056 2.30929L2.41787 12.085C2.41787 12.085 2.41787 12.085 2.41787 12.085C2.41787 12.085 2.41787 12.085 2.41787 12.085L14.4574 7.07682C14.4574 7.07682 14.4574 7.07682 14.4574 7.07682ZM16.7466 7.05403C16.7539 7.78529 16.3179 8.52095 15.4348 8.88829L3.39533 13.8965C1.88452 14.5249 0.143174 13.5715 0.128605 12.1078L0.0312988 2.33208C0.0167296 0.868396 1.73876 -0.119543 3.26177 0.478727L15.3986 5.24626C16.2888 5.59594 16.7393 6.32278 16.7466 7.05403Z" fill="white"/>
+          </svg>
+
+        </div>
+
+        <div class = "col-6 holderSymbol no-margin-no-padding">
+          
+          <svg class = "sizeSVG" width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0)">
+            <path d="M7.99969 15.6631C3.79879 15.6631 0.381104 12.2453 0.381104 8.04421C0.381104 3.84315 3.79879 0.425293 7.99969 0.425293C12.2009 0.425293 15.619 3.84315 15.619 8.04421C15.619 12.2453 12.2009 15.6631 7.99969 15.6631ZM7.99969 1.18772C4.21881 1.18772 1.14287 4.26351 1.14287 8.04421C1.14287 11.8253 4.21881 14.9014 7.99969 14.9014C11.7809 14.9014 14.8572 11.8253 14.8572 8.04421C14.8572 4.26351 11.7809 1.18772 7.99969 1.18772Z" fill="white"/>
+            <path d="M1.51796 4.82555C2.70467 2.4455 5.16445 0.80686 7.99978 0.80686C10.8354 0.80686 13.2953 2.44541 14.4822 4.82541C13.2954 2.44522 10.8353 0.806302 7.99978 0.806302C5.16449 0.806302 2.70467 2.44531 1.51796 4.82555ZM7.99978 16.0441C3.58883 16.0441 0.000244141 12.4554 0.000244141 8.04429C0.000244141 3.63313 3.58883 0.0444336 7.99978 0.0444336C12.4111 0.0444336 16 3.63313 16 8.04429C16 12.4554 12.4111 16.0441 7.99978 16.0441ZM7.99978 1.56873C4.429 1.56873 1.52391 4.47368 1.52391 8.04429C1.52391 11.6153 4.429 14.5205 7.99978 14.5205C11.571 14.5205 14.4763 11.6153 14.4763 8.04429C14.4763 4.47368 11.571 1.56873 7.99978 1.56873Z" fill="white"/>
+            <path d="M8.00018 13.7586C11.1561 13.7586 13.7145 11.2003 13.7145 8.04458C13.7145 4.88882 11.1561 2.33057 8.00018 2.33057C4.84426 2.33057 2.28589 4.88882 2.28589 8.04458C2.28589 11.2003 4.84426 13.7586 8.00018 13.7586Z" fill="white"/>
+            </g>
+            <defs>
+            <clipPath id="clip0">
+            <rect width="16" height="16" fill="white" transform="translate(0 0.0449219)"/>
+            </clipPath>
+            </defs>
+          </svg> 
+
+        </div>
+
+      </div>
+
+      <div class = "row metricsNumbers no-margin-no-padding">
+
+        <div class = "col-6 viewNumbers no-margin-no-padding">
+          <span>1,235</span>
+        </div>
+
+        <div class = "col-6 holderNumbers no-margin-no-padding">
+          <span>3,674</span>
+        </div>
+
+      </div>
+
+
+    </div>
+
     <div class = "fade-in-top" *ngIf="showDetails === true">
       <div class="post-metrics float-left">
         
     
+      </div>
+
+      <div class = "descriptionSpace">
+
+        <span class = "description">How it works</span>
+
       </div>
 
       
@@ -104,6 +158,8 @@
        
 
     </div>
+
+   
     <!-- Holder List Popup -->
     <!-- <div class="holder-list-container" *ngIf="holderToggle" (click)="stopPropagation($event)">
       <div *ngIf="collectionList | async; let collection; else holderLoading"> -->

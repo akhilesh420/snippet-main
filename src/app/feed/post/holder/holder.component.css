@@ -33,7 +33,6 @@
   height: 72%;
   width: 100%;
   top: 14%;
-  background-color: thistle;
 }
 
 .detailsTop {
@@ -43,24 +42,104 @@
 
 .detailsBottom {
   width: 100%;
-  height: 50%;
+  height: 60%;
 }
 
 .usernameSpace {
+  
   width: 100%;
   height: 100%;
-  font-size: 100%; 
+  font-size: 1.4vh; 
+ 
 }
 
+.username {
+
+  text-align: left;
+  display: inline;
+  vertical-align: top;
+  letter-spacing: 0.15em;
+
+}
+
+
 .collectionDate {
+
   width: 100%;
   height: 100%;
-  font-size: 100%;
+  font-size: 1.3vh;
+  text-align: right;
+
 }
 
 .dateCollected {
+
   text-align: right;
+
 }
+
+.stickerHolder {
+
+  height: 50%;
+  width: 7%;
+  position: absolute;
+  right: 0%;
+  bottom: 0%;
+  
+}
+
+.sticker {
+
+  position: relative;
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+  padding-top: 100%;
+  background: white;
+
+}
+
+.stickerHolder-1 {
+
+  height: 50%;
+  width: 7%;
+  position: absolute;
+  right: 9%;
+  bottom: 0%;
+  
+}
+
+.stickerHolder-2 {
+
+  height: 50%;
+  width: 7%;
+  position: absolute;
+  right: 18%;
+  bottom: 0%;
+  
+}
+
+.stickerHolder-3 {
+
+  height: 50%;
+  width: 7%;
+  position: absolute;
+  right: 27%;
+  bottom: 0%;
+  
+}
+
+.stickerHolder-4 {
+
+  height: 50%;
+  width: 7%;
+  position: absolute;
+  right: 36%;
+  bottom: 0%;
+  
+}
+
+
 
 
 
