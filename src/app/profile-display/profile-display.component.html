@@ -72,7 +72,7 @@
             </div>
           </div>
 
-          <div #desc_col class = "col-8 no-margin-no-padding profileDescription">
+          <div class = "col-8 no-margin-no-padding profileDescription">
 
             <div class='output' *ngIf='!inEditing'>
               {{description}}
@@ -83,24 +83,12 @@
                 contenteditable="true"
                 #descriptionRef
                 [textContent]="tempDescription"
-                (input)="inputEditable($event);"
+                (keydown)="inputEditable($event, 105);"
+                (paste)="inputEditable($event, 105);"
                 (keydown.enter)="onPressEnter($event)"
                 (focus)='setCaret(true)'>
             </div>
 
-            <div #tempdesc class="hide">
-              {{tempDescription}}
-            </div>
-
-            <!-- <textarea *ngIf="inEditing && editDesc;"
-              #descriptionRef
-              name='desc'
-              [(ngModel)]="tempDescription"
-              (input)="inputEditable();"
-              (focus)='setCaret(true);'>
-            </textarea> -->
- <!-- (input)="tempDescription=$event.target.textContent; inputEditable();" -->
-              <!-- <span #desc_span>{{description}}</span> -->
             <svg *ngIf="inEditing && !editDesc;"
                  (click)='onEditDescClick()'
                  class = "svgStyle"

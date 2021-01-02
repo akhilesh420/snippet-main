@@ -63,8 +63,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   @ViewChild('descriptionRef') descriptionRef : ElementRef;
   @ViewChild('linkRef') linkRef : ElementRef;
   @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
-  @ViewChild('tempdesc') tempDesc: ElementRef<HTMLElement>;
-  @ViewChild('desc_col') desc_col: ElementRef<HTMLElement>;
 
   emittedPid: string;
   profileStickerEdit: boolean;
@@ -252,10 +250,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   onPressEnter(event) {
-    event.preventDefault();
-    // this.descriptionRef.nativeElement.focusout();
-    // this.linkRef.nativeElement.focusout();
-    return;
+    return event.preventDefault();
   }
 
   fileUpload(event) {
@@ -298,14 +293,21 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     sel.addRange(range);
   }
 
-  inputEditable(event) {
-    if (this.tempDesc.nativeElement.offsetHeight > this.desc_col.nativeElement.offsetHeight) {
-      event.preventDefault();
-    } else {
-      this.tempDescription = event.target.textContent;
+  inputEditable(event, max) {
+    console.log(event.target.textContent.length);
+    if (event.target.textContent.length > max
+        && event.keyCode != 8 //backspace
+        && event.keyCode != 46 //delete
+        && event.keyCode != 37 //arrow left
+        && event.keyCode != 38 //arrow up
+        && event.keyCode != 39 //arrow right
+        && event.keyCode != 40 //arrow down
+        && !event.ctrlKey) //ctrl key combos
+    {
+      return event.preventDefault();
     }
-    console.log('height:', this.tempDesc.nativeElement.offsetHeight);
-    console.log('width:', this.tempDesc.nativeElement.offsetWidth);
+
+    this.tempDescription = event.target.textContent;
   }
 
   clickProfileSticker(sticker: any, index: number) {
