@@ -1,4 +1,3 @@
-import { OnBoarding } from './../shared/profile.model';
 import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
@@ -9,16 +8,10 @@ import { catchError, tap, take } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-
+import { AngularFireAuth } from '@angular/fire/auth';
 
 export interface AuthResponseData {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
   localId: string;
-  registered?: boolean;
 }
 
 export interface ExclusiveID {
@@ -39,29 +32,32 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private afs: AngularFirestore,
-              private miscellaneousService: MiscellaneousService) {}
+              private miscellaneousService: MiscellaneousService,
+              public auth: AngularFireAuth) {
+  }
+
+  ngOnInit() {
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.user.next(new User(user.email, user.uid));
+        console.log("logged in:", this.user);
+      } else {
+        this.user.next(null);
+      }
+    });
+  }
 
   signUp(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+this.APIKey,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap(resData => {
-          this.handleAuthentication(
-            resData.email,
-            resData.localId,
-            resData.idToken,
-            +resData.expiresIn
-          );
-        })
-      );
+    this.auth.createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      // Signed in
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+    });
   }
 
   forgotPassword(email: string) {
@@ -79,72 +75,15 @@ export class AuthService {
   }
 
   logIn(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+this.APIKey,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap(resData => {
-          this.handleAuthentication(
-            resData.email,
-            resData.localId,
-            resData.idToken,
-            +resData.expiresIn
-          );
-        })
-      );
-  }
-
-  logout(navigate:boolean = true) {
-    this.user.next(null);
-    if (navigate) this.router.navigate(['/auth']);
-    localStorage.removeItem('userData');
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    this.tokenExpirationTimer = null;
-  }
-
-  autoLogin() {
-
-    const userData: {
-      email: string;
-      id: string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));
-
-    if (!userData) {
-      return;
-    }
-
-    const loadedUser = new User(
-      userData.email,
-      userData.id,
-      userData._token,
-      new Date(userData._tokenExpirationDate)
-    );
-
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
-      const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
-      this.autoLogout(expirationDuration);
-    }
-    this.miscellaneousService.startOnBoarding(loadedUser.id);
-  }
-
-  autoLogout(expirationDuration: number) {
-    this.tokenExpirationTimer = setTimeout(() => {
-      this.logout();
-    }, expirationDuration);
+    this.auth.signInWithEmailAndPassword(email, password)
+    .then((user) => {
+      this.user.next(new User(user.user.email, user.user.uid));
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ..
+    });
   }
 
   deleteUser(token: string) {
@@ -155,19 +94,6 @@ export class AuthService {
         idToken: token
       }
     )
-  }
-
-  private handleAuthentication(
-    email: string,
-    userId: string,
-    token: string,
-    expiresIn: number
-  ) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
-    this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse) {

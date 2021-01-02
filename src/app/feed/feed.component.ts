@@ -1,7 +1,8 @@
+import { WindowStateService } from './../shared/window.service';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { FeedService } from './feed.service';
@@ -27,16 +28,13 @@ export class FeedComponent implements OnInit, OnDestroy {
   maxBatch: number = 0;
   batchSize: number = 4; //number of posts to load - min batch size is 2
   batchNumber: number = 1;
-  done: boolean;
-  postOffset: number; //Trigger next post after this value
-  failSafe: boolean;
+  done: boolean = true;
 
   //Video auto play and pause
   postHeight: number; //height of the posts
   postMarginTop: number; //top margin on each post;
   postMarginBottom: number; // bottom margin on each post;
-  postNumber: number; //the index of the post thats being viewed
-  postNumber$ = new BehaviorSubject<number>(0); //the index of the post thats being viewed
+  postNumber: number = 0; //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
 
   viewPort: number;
@@ -47,8 +45,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
   mobileCheck: boolean;
-
-  maxPostNumber: number = -2;
+  tabletCheck: boolean;
 
   @ViewChild('post') post: ElementRef;
 
@@ -59,12 +56,12 @@ export class FeedComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
-              private scrollService: ScrollService) {
+              private scrollService: ScrollService,
+              private windowStateService: WindowStateService) {
    }
 
 
   ngOnInit(): void {
-
     this.feedList$ = new BehaviorSubject<PostDetails[]>(null);
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
@@ -74,9 +71,6 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.myUid$.next(response.id);
       }
     });
-
-    this.done = false;
-    this.failSafe = false;
 
     this.getPosts(this.router.url);
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
@@ -89,23 +83,19 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.uid$.next(params['id']);
       });
 
-    this.setUpScroll();
-
-    this.resetPostNumber();
-
-    this.postNumber$.pipe(takeUntil(this.notifier$)).subscribe(newNum => {
-      this.postNumber = newNum;
-      this.infiniteScroll();
-    });
-
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$))
       .subscribe(value => this.profileStickerEdit = value);
-  }
 
-  setUpScroll() {
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
       this.postFocus(scrollY);
     });
+
+    this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      if (!val) return
+      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
+      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
+    })
   }
 
   getViewport() {
@@ -124,7 +114,8 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.lastRoute = currentRoute;
     currentRoute = currentRoute.split('/')[1]; //get parent route
     this.showProfileDisplay = false;
-    this.resetPostNumber();
+    this.done = true;
+    this.postNumber = 0;
     if (currentRoute === 'explore') {
       this.myUid$.pipe(take(2)).subscribe(uid => {
         if (!uid) return;
@@ -155,11 +146,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     }
 
     this.setUpPosts();
-  }
-
-  resetPostNumber() {
-    this.postNumber$.next(0);
-    this.done = true;
   }
 
   setUpPosts() {
@@ -205,28 +191,19 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   infiniteScroll() {
-    if (!this.done && this.postNumber > this.maxPostNumber) {
-      if (this.postNumber >= (this.batchNumber-1)*this.batchSize - 2) {
-        this.moreBatch();
-      }
-      this.maxPostNumber = this.postNumber;
-    }
+    if (!this.done) return
+    if (this.postNumber >= (this.batchNumber-1)*this.batchSize - 2) return this.moreBatch();
   }
 
-  //temp
   postFocus(scrollY) {
     const scroll = scrollY;
     // const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
-    this.postNumber$.next(Math.round(scroll/this.viewPort));
+    this.postNumber = Math.round(scroll/this.viewPort);
+    this.infiniteScroll();
     // this.postNumber$.next(Math.floor(scroll/this.viewPort));
   }
 
-  trackByFn(index, item) {
-    return index; // or item.id
-  }
-
   ngOnDestroy() {
-    console.log('destroy');
     this.notifier$.next();
     this.notifier$.complete();
     this.feedList$.complete();
