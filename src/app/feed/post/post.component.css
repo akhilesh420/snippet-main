@@ -44,10 +44,11 @@ li {
 }
 
 .holderTitle {
-  font-size: 100%;
+  font-size: 1.6vh;
   letter-spacing: 0.1em;
   font-family: 'Comfortaa';
   font-weight: bold;
+  
 }
 
 .holderListScrollSpace {
