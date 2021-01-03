@@ -117,7 +117,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
 
     if (!this.email || this.email.length === 0) {
       this.error = "Email is required"
@@ -144,7 +144,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           return;
         }
         if (this.username.length > 21) {
-          this.error = "Username can't be longer than 21"
+          this.error = "Username can't be longer than 21 characters"
           return;
         }
         if (!this.dob || this.dob <= this.allowedDate) {
@@ -166,67 +166,68 @@ export class AuthComponent implements OnInit, OnDestroy {
     const email = form.value.email;
     const password = form.value.password;
 
-    let authObs: Observable<AuthResponseData>;
-
     this.isLoading = true;
-
+    let message: string;
     if (this.isLoginMode && !this.isForgetMode) {
-      authObs = this.authService.logIn(email, password);
+      message = await this.authService.logIn(email, password);
     } else if (!this.isLoginMode && !this.isForgetMode){
-      authObs = this.authService.signUp(email, password);
+      message = await this.authService.signUp(email, password);
     } else if (this.isForgetMode) {
-      authObs = this.authService.forgotPassword(email);
+      // this.authService.forgotPassword(email);
     }
 
-    authObs.subscribe(
-      resData => {
-        if (this.isLoginMode && !this.isForgetMode) {
-          form.reset();
-          this.isLoading = false;
-          //navigate from startOnBoarding function
-          this.miscellaneousService.startOnBoarding(resData.localId);
-          this.router.navigate(['/explore']);
-        } else if (!this.isLoginMode && !this.isForgetMode) {
-          let profileDetails  = new ProfileDetails(this.username, '','');
-          let onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
-          let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
-          this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {
-            if (Object.keys(response).length === 0) {
-              this.userService.addProfileDetails(resData.localId, profileDetails);
-              this.userService.addPersonalDetails(resData.localId,personalDetails);
-              this.userService.addProfileStickers(resData.localId,[]);
-              this.userService.addDisplayPicture(resData.localId, new DisplayPicture(new Date(), 'null'), null);
-              this.userService.addOnBoarding(resData.localId, onBoardingData);
-              this.activityService.addActivity(resData.localId, 'user');
-              this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: resData.localId, username: this.username, fullname: this.name, email: this.email});
-              form.reset();
-              this.isLoading = false;
-              this.miscellaneousService.onBoardingStep$.next(2);
-              this.miscellaneousService.startOnBoarding(resData.localId);
-              this.router.navigate(['/tutorial']);
-            } else {
-              this.error = "Username taken";
-              this.authService.deleteUser(resData.idToken).pipe(take(1)).subscribe(response => {
-                this.authService.logout(false);
-                this.isLoading = false;
-              }, errorMessage => {
-                this.isLoading = false;
-                console.log(errorMessage);
-              });
-            }
-          });
-        } else if (this.isForgetMode) {
-          this.miscellaneousService.setPopUp(new PopUp("An email has been sent to your account",'okay', undefined, ['default', 'reject']));
-          this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-            this.isLoading = false;
-          });
-        }
-      },
-      errorMessage => {
-        this.error = errorMessage;
-        this.isLoading = false;
-      }
-    );
+    this.isLoading = false;
+    if (message != 'success') return this.error = message;
+
+    // authObs.subscribe(
+    //   resData => {
+    //     if (this.isLoginMode && !this.isForgetMode) {
+    //       form.reset();
+    //       this.isLoading = false;
+    //       //navigate from startOnBoarding function
+    //       this.miscellaneousService.startOnBoarding(resData.localId);
+    //       this.router.navigate(['/explore']);
+    //     } else if (!this.isLoginMode && !this.isForgetMode) {
+    //       let profileDetails  = new ProfileDetails(this.username, '','');
+    //       let onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
+    //       let personalDetails = new PersonalDetails(this.name,this.email,this.dob,new Date());
+    //       this.userService.getProfileDetailsByKey('username', profileDetails.username).pipe(take(1)).subscribe((response) => {
+    //         if (Object.keys(response).length === 0) {
+    //           this.userService.addProfileDetails(resData.localId, profileDetails);
+    //           this.userService.addPersonalDetails(resData.localId,personalDetails);
+    //           this.userService.addProfileStickers(resData.localId,[]);
+    //           this.userService.addDisplayPicture(resData.localId, new DisplayPicture(new Date(), 'null'), null);
+    //           this.userService.addOnBoarding(resData.localId, onBoardingData);
+    //           this.activityService.addActivity(resData.localId, 'user');
+    //           this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: resData.localId, username: this.username, fullname: this.name, email: this.email});
+    //           form.reset();
+    //           this.isLoading = false;
+    //           this.miscellaneousService.onBoardingStep$.next(2);
+    //           this.miscellaneousService.startOnBoarding(resData.localId);
+    //           this.router.navigate(['/tutorial']);
+    //         } else {
+    //           this.error = "Username taken";
+    //           this.authService.deleteUser(resData.idToken).pipe(take(1)).subscribe(response => {
+    //             this.authService.logout(false);
+    //             this.isLoading = false;
+    //           }, errorMessage => {
+    //             this.isLoading = false;
+    //             console.log(errorMessage);
+    //           });
+    //         }
+    //       });
+    //     } else if (this.isForgetMode) {
+    //       this.miscellaneousService.setPopUp(new PopUp("An email has been sent to your account",'okay', undefined, ['default', 'reject']));
+    //       this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
+    //         this.isLoading = false;
+    //       });
+    //     }
+    //   },
+    //   errorMessage => {
+    //     this.error = errorMessage;
+    //     this.isLoading = false;
+    //   }
+    // );
   }
 
   avoidSpace(event) {

@@ -1,7 +1,5 @@
 <div class = "authScreen">
 
-
-
     <div class = "onBoarding">
 
       <div class = "clickPrompt">
@@ -34,7 +32,6 @@
 
 
 
-    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
 
   <div class = "form">
 
@@ -43,6 +40,7 @@
       <p class = "title">Sign In</p>
 
     </div>
+    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
 
     <div class = "row entryfieldOneTitle no-margin-no-padding">
 
@@ -94,17 +92,10 @@
       </button>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
+    <div class="danger-alert" *ngIf="error">
+      {{ error }}
+    </div>
+    </form>
 
     <div class = "row subLinks no-margin-no-padding">
 
@@ -133,7 +124,6 @@
     </div>
 
   </div>
-</form>
 </div>
 
 

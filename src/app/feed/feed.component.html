@@ -1,30 +1,9 @@
-<!-- <div class="row no-padding no-margin">
-  <div class="col-12 no-margin"
-      [ngClass]='mobileCheck ? "mobile-padding" : null'
-       #scrollContainer>
-    <app-profile-display [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
-    <div *ngIf="feedList$ | async; let posts">
-      <div class="post-container" *ngFor="let postDetails of posts; let i = index;" #post>
-        <app-post [postDetails]="postDetails" [postFocus]='i === postNumber'> </app-post>
-      </div>
-    </div>
-    <div *ngIf="loading || !feedList$" style="text-align: center;" class="horizontal-center">
-      <app-loading-spinner></app-loading-spinner>
-    </div>
-    <div *ngIf="!done && !loading" class="fail-safe">
-      <img src= "assets/icons/nextArrow.svg" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
-    </div>
-  </div>
-</div>
-<app-profile-display class='desktop-profile-display' [uid$]='myUid$'></app-profile-display>
-<app-collection-tab [ngClass]='!profileStickerEdit ? "desktop-collection-tab" : "desktop-collection-tab-edit"'></app-collection-tab> -->
-
 <div class="main-container">
   <div class="feed-container">
     <div class="feed">
-      <!-- <div class="profile-display secondary-profile-display">
+      <div *ngIf='mobileCheck' class="secondary-profile-display">
         <app-profile-display  [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
-      </div> -->
+      </div>
       <div *ngIf="feedList$ | async; let posts; else loader">
         <div class="post-container" *ngFor="let postDetails of posts; let i = index;" #post>
           <app-post [postDetails]="postDetails" [postFocus]='i === postNumber'> </app-post>
@@ -34,10 +13,10 @@
         </div>
       </div>
       <ng-template #loader>
-        <app-loading-spinner></app-loading-spinner>
+        <app-loading-spinner [ngClass]='{"center-absolute": mobileCheck}'></app-loading-spinner>
       </ng-template>
     </div>
-    <div class='feed dashboard'>
+    <div class='feed dashboard' *ngIf='!mobileCheck' >
       <div class='profile-display'>
         <app-profile-display [uid$]='uid$'></app-profile-display>
       </div>

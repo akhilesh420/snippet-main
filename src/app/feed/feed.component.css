@@ -134,6 +134,20 @@
   transform: translate(59px, calc( -1 * (234px + 2.4444vh - 65px)));
 }
 
+.secondary-profile-display {
+  margin-left: calc((100vw - 353px)/2);
+  margin-bottom: 20px;
+}
+
+.center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
 @media screen and (min-width: 550px) {
   .post-container {
     height: 82vh;
@@ -153,9 +167,9 @@
     position: fixed;
   }
 
-  .secondary-profile-display {
+  /* .secondary-profile-display {
     margin-left: calc(((9 * (79vh) / 16) - 353px)/2);
-  }
+  } */
 }
 
 
