@@ -119,65 +119,62 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   async onSubmit(form: NgForm) {
 
-    if (!this.email || this.email.length === 0) {
-      this.error = "Email is required"
-      return;
-    }
+    if (!this.email || this.email.length === 0) return this.error = "Email is required";
 
     if (!this.isForgetMode) {
       if (!this.isLoginMode) {
 
-        if (!this.validID) { //check for valid exclusive link
-          return;
-        }
+        if (!this.validID) return
 
-        if (!this.name || this.name.length === 0) {
-          this.error = "Full name is required"
-          return;
-        }
-        if (!this.username || this.username.length === 0) {
-          this.error = "Username is required"
-          return;
-        }
-        if (this.username && this.username.indexOf(' ') != -1) {
-          this.error = "Username can't have spaces"
-          return;
-        }
-        if (this.username.length > 21) {
-          this.error = "Username can't be longer than 21 characters"
-          return;
-        }
-        if (!this.dob || this.dob <= this.allowedDate) {
-          this.error = "Must be at least 13 years old"
-          return;
-        }
+        if (!this.username || this.username.length === 0) return this.error = "Username is required"
+
+        if (this.username && this.username.indexOf(' ') != -1) return this.error = "Username can't have spaces";
+
+        if (this.username.length > 21) return this.error = "Username can't be longer than 21 characters";
+
+        const usernameRes = await this.userService.getProfileDetailsByKey('username', this.username);
+
+        if (Object.keys(usernameRes).length != 0) return this.error = "Username taken";
+
       }
 
-      if (!this.password || this.password.length === 0) {
-        this.error = "Password is required"
-        return;
-      }
-      if (!this.password || this.password.length < 6) {
-        this.error = "Password must be at least 6 characters"
-        return;
-      }
+      if (!this.password || this.password.length === 0) return this.error = "Password is required";
+
+      if (!this.password || this.password.length < 6) return this.error = "Password must be at least 6 characters";
     }
-
-    const email = form.value.email;
-    const password = form.value.password;
 
     this.isLoading = true;
     let message: string;
     if (this.isLoginMode && !this.isForgetMode) {
-      message = await this.authService.logIn(email, password);
+      message = await this.authService.logIn(this.email, this.password);
     } else if (!this.isLoginMode && !this.isForgetMode){
-      message = await this.authService.signUp(email, password);
+      message = await this.authService.signUp(this.email, this.password);
     } else if (this.isForgetMode) {
       // this.authService.forgotPassword(email);
     }
 
     this.isLoading = false;
     if (message != 'success') return this.error = message;
+
+    if (!this.isLoginMode && !this.isForgetMode) {
+      const uid = this.authService.user.value.id;
+
+      const profileDetails  = new ProfileDetails(this.username, '','');
+      const personalDetails = new PersonalDetails(this.name, this.email, this.dob, new Date());
+      const displayPicture = new DisplayPicture(new Date(), 'null');
+      const onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
+
+      this.userService.addProfileDetails(uid, profileDetails);
+      this.userService.addPersonalDetails(uid, personalDetails);
+      this.userService.addProfileStickers(uid, []);
+      this.userService.addDisplayPicture(uid, displayPicture, null);
+      this.userService.addOnBoarding(uid, onBoardingData);
+      this.activityService.addActivity(uid, 'user');
+      this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.email});
+    }
+
+    form.reset();
+
 
     // authObs.subscribe(
     //   resData => {
