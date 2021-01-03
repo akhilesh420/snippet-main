@@ -117,7 +117,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
 
     if (!this.email || this.email.length === 0) {
       this.error = "Email is required"
@@ -144,7 +144,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           return;
         }
         if (this.username.length > 21) {
-          this.error = "Username can't be longer than 21"
+          this.error = "Username can't be longer than 21 characters"
           return;
         }
         if (!this.dob || this.dob <= this.allowedDate) {
@@ -167,14 +167,17 @@ export class AuthComponent implements OnInit, OnDestroy {
     const password = form.value.password;
 
     this.isLoading = true;
-
+    let message: string;
     if (this.isLoginMode && !this.isForgetMode) {
-      this.authService.logIn(email, password);
+      message = await this.authService.logIn(email, password);
     } else if (!this.isLoginMode && !this.isForgetMode){
-      this.authService.signUp(email, password);
+      message = await this.authService.signUp(email, password);
     } else if (this.isForgetMode) {
-      this.authService.forgotPassword(email);
+      // this.authService.forgotPassword(email);
     }
+
+    this.isLoading = false;
+    if (message != 'success') return this.error = message;
 
     // authObs.subscribe(
     //   resData => {

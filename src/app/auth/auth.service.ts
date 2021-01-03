@@ -26,8 +26,6 @@ export interface ExclusiveID {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
-  APIKey = environment.firebaseConfig.apiKey;
-  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -44,85 +42,112 @@ export class AuthService {
     });
   }
 
-  signUp(email: string, password: string) {
-    this.auth.createUserWithEmailAndPassword(email, password)
-    .then((user) => {
-      // Signed in
-      // ...
-    })
+  async signUp(email: string, password: string) {
+    let message = 'success';
+    await this.auth.setPersistence('local');
+    await this.auth.createUserWithEmailAndPassword(email, password)
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ..
+      message = this.FirebaseErrors(errorCode);
     });
+    return message
   }
 
-  forgotPassword(email: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key='+this.APIKey,
-        {
-          requestType: 'PASSWORD_RESET',
-          email: email,
-        }
-      )
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
+
 
   async logIn(email: string, password: string) {
+    let message = 'success';
     await this.auth.setPersistence('local');
     await this.auth.signInWithEmailAndPassword(email, password)
-          .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-          });
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      message = this.FirebaseErrors(errorCode);
+    });
+    return message
   }
 
   logout() {
     this.auth.signOut().then(() => {
+      this.router.navigate(['/auth']);
       console.log('signed out');
     }).catch((error) => {
       // An error happened.
     });
   }
 
-  deleteUser(token: string) {
-    return this.http
-    .post<AuthResponseData>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:delete?key='+this.APIKey,
-      {
-        idToken: token
-      }
-    )
-  }
+  // forgotPassword(email: string) {
+  //   return this.http
+  //     .post<AuthResponseData>(
+  //       'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key='+this.APIKey,
+  //       {
+  //         requestType: 'PASSWORD_RESET',
+  //         email: email,
+  //       }
+  //     )
+  //     .pipe(
+  //       catchError(this.handleError)
+  //     );
+  // }
 
-  private handleError(errorRes: HttpErrorResponse) {
-    console.log(errorRes.error.error.message);
-    let errorMessage = 'we have no idea what happened...No cap';
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
+  // deleteUser(token: string) {
+  //   return this.http
+  //   .post<AuthResponseData>(
+  //     'https://identitytoolkit.googleapis.com/v1/accounts:delete?key='+this.APIKey,
+  //     {
+  //       idToken: token
+  //     }
+  //   )
+  // }
+
+  private FirebaseErrors (errorCode: string): string {
+
+    let message: string;
+
+    switch (errorCode) {
+      case 'auth/wrong-password':
+        message = 'Invalid email or password';
+        break;
+      case 'auth/network-request-failed':
+        message = 'Please check your internet connection';
+        break;
+      case 'auth/too-many-requests':
+        message =
+          'We have detected too many requests from your device. Take a break please!';
+        break;
+      case 'auth/user-disabled':
+        message =
+          'Your account has been disabled or deleted. Please contact the system administrator.';
+        break;
+      case 'auth/requires-recent-login':
+        message = 'Please login again and try again!';
+        break;
+      case 'auth/email-already-exists':
+        message = 'Email address is already in use';
+        break;
+      case 'auth/user-not-found':
+        message =
+          'Email does not exist';
+        break;
+      case 'auth/phone-number-already-exists':
+        message = 'The phone number is already in use by an existing user.';
+        break;
+      case 'auth/invalid-phone-number':
+        message = 'The phone number is not a valid phone number!';
+        break;
+      case 'auth/invalid-email  ':
+        message = 'The email address is not a valid!';
+        break;
+      case 'auth/cannot-delete-own-user-account':
+        message = 'You cannot delete your own user account.';
+        break;
+        default:
+        message = 'Oops! Something went wrong. Try again later.';
+        break;
     }
-    switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        errorMessage = 'This email exists already';
-        break;
-      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-        errorMessage = 'Too many attempts try again later';
-        break;
-      case 'EMAIL_NOT_FOUND':
-        errorMessage = 'Email does not exist';
-        break;
-      case 'INVALID_EMAIL':
-        errorMessage = 'Email is invalid';
-        break;
-      case 'INVALID_PASSWORD':
-        errorMessage = 'Email and password do not match';
-        break;
-    }
-    return throwError(errorMessage);
+    console.log(message);
+    return message;
   }
 
   getExclusiveDetails(id: string) {
