@@ -42,6 +42,10 @@ export class CollectionComponent implements OnInit, OnDestroy {
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value)
   }
 
+  ngOnChanges() {
+    this.ngOnInit();
+  }
+
   setUpUser(uid: string) {
     return this.profileDetails$ = this.userService.getProfileDetails(uid);
   }

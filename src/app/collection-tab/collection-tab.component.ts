@@ -49,6 +49,10 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
     this.miscellaneousService.stickerSelectConfirm.next(confirm);
   }
 
+  trackByFn(index, item) {
+    return index; // or item.id
+  }
+
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
