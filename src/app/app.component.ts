@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // this.elem = document.documentElement;
     // this.openFullscreen();
-    this.authService.autoLogin();
+    // this.authService.autoLogin();
 
     this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))

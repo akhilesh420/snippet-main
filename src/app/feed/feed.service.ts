@@ -15,7 +15,6 @@ export class FeedService {
   excludePID: string[] = [environment.onBoardingPid];
   $explorePageList = new BehaviorSubject<(PostDetails)[]>(null);
   $collectionPageList = new BehaviorSubject<(PostDetails)[]>(null);
-  $profilePageList = new BehaviorSubject<(PostDetails)[]>(null);
 
   constructor(private activityService: ActivityService,
               private postService: PostService,
@@ -36,12 +35,8 @@ export class FeedService {
 
   // get profile page
   getProfilePage(uid: string) {
-    if (!this.$profilePageList.value) {
-      this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid)
-      .orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'})
-      .subscribe(response => this.$profilePageList.next(response));
-    }
-    return this.$profilePageList;
+    return this.afs.collection<PostDetails>('post details', ref => ref.where('uid','==',uid)
+      .orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
   }
 
   // generate collection page by uid
