@@ -34,13 +34,10 @@ export class AuthService {
               private afs: AngularFirestore,
               private miscellaneousService: MiscellaneousService,
               public auth: AngularFireAuth) {
-  }
-
-  ngOnInit() {
-    this.auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         this.user.next(new User(user.email, user.uid));
-        console.log("logged in:", this.user);
+        console.log("logged in:", this.user.value);
       } else {
         this.user.next(null);
       }
@@ -74,15 +71,21 @@ export class AuthService {
       );
   }
 
-  logIn(email: string, password: string) {
-    this.auth.signInWithEmailAndPassword(email, password)
-    .then((user) => {
-      this.user.next(new User(user.user.email, user.user.uid));
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ..
+  async logIn(email: string, password: string) {
+    await this.auth.setPersistence('local');
+    await this.auth.signInWithEmailAndPassword(email, password)
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+          });
+  }
+
+  logout() {
+    this.auth.signOut().then(() => {
+      console.log('signed out');
+    }).catch((error) => {
+      // An error happened.
     });
   }
 
