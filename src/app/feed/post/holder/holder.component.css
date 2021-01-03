@@ -11,7 +11,8 @@
 
 .dpHolder {
 
-  left: 0%;
+  position: absolute;
+  left: -8%;
   height: 90%;
   width: 80%;
   margin-top: 5%;
@@ -22,10 +23,8 @@
 
   position: relative;
   border-radius: 50%;
-  width: 100%;
-  height: auto;
-  padding-top: 100%;
-  background: white;
+  width: 6vh;
+  height: 6vh;
 
 }
 
@@ -46,7 +45,7 @@
 }
 
 .holderDetails {
-  height: 72%;
+  height: 100%;
   width: 100%;
   top: 14%;
 }
@@ -65,15 +64,17 @@
 
   width: 100%;
   height: 100%;
-  font-size: 1.4vh;
+  font-size: 1.6vh;
+  font-family: 'Comfortaa';
+  font-weight: bold;
 
 }
 
 .username {
 
   text-align: left;
-  display: inline;
-  vertical-align: top;
+  position: absolute;
+  bottom: 0%;
   letter-spacing: 0.15em;
 
 }
@@ -84,27 +85,29 @@
   width: 100%;
   height: 100%;
   font-size: 1.3vh;
-  text-align: right;
+  font-family: 'Comfortaa';
 
 }
 
 .dateCollected {
 
-  text-align: right;
+  right: 0%;
+  position: absolute;
+  bottom: 0%;
 
 }
 
 .stickerHolder {
 
-  height: 50%;
-  width: 7%;
+  height: 2.8vh;
+  width: 2.8vh;
   position: absolute;
   right: 0%;
-  bottom: 0%;
+  top: 2.4vh;
 
 }
 
-.sticker {
+/* .sticker {
 
   position: relative;
   border-radius: 50%;
@@ -113,45 +116,45 @@
   padding-top: 100%;
   background: white;
 
-}
+} */
 
 .stickerHolder-1 {
 
-  height: 50%;
-  width: 7%;
+  height: 2.8vh;
+  width: 2.8vh;
   position: absolute;
-  right: 9%;
-  bottom: 0%;
+  right: 11%;
+  top: 2.4vh;
 
 }
 
 .stickerHolder-2 {
 
-  height: 50%;
-  width: 7%;
+  height: 2.8vh;
+  width: 2.8vh;
   position: absolute;
-  right: 18%;
-  bottom: 0%;
+  right: 22%;
+  top: 2.4vh;
 
 }
 
 .stickerHolder-3 {
 
-  height: 50%;
-  width: 7%;
+  height: 2.8vh;
+  width: 2.8vh;
   position: absolute;
-  right: 27%;
-  bottom: 0%;
+  right: 33%;
+  top: 2.4vh;
 
 }
 
 .stickerHolder-4 {
 
-  height: 50%;
-  width: 7%;
+  height: 2.8vh;
+  width: 2.8vh;
   position: absolute;
-  right: 36%;
-  bottom: 0%;
+  right: 44%;
+  top: 2.4vh;
 
 }
 
