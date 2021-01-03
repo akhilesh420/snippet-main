@@ -26,7 +26,6 @@ import { StickerComponent } from './sticker/sticker.component';
 import { ProfileDisplayComponent } from './profile-display/profile-display.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
@@ -79,7 +78,6 @@ import { ReversePipe } from './shared/reverse.pipe';
     ClickOutsideModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     TitleCasePipe,
     Title,
     PerformanceMonitoringService,
