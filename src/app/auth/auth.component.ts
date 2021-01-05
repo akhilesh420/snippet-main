@@ -1,13 +1,14 @@
 import { UsersService } from './../shared/users.service';
 import { ProfileDetails, PersonalDetails, DisplayPicture, OnBoarding } from './../shared/profile.model';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { first, take, takeUntil } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService, AuthResponseData, ExclusiveID } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 
@@ -52,34 +53,35 @@ export class AuthComponent implements OnInit, OnDestroy {
               private activityService: ActivityService,
               private router: Router,
               private route: ActivatedRoute,
-              private miscellaneousService: MiscellaneousService) {}
+              private miscellaneousService: MiscellaneousService,
+              private afs: AngularFirestore) {}
 
   ngOnInit(): void {
-    let todayDate = new Date();
-    this.allowedDate = new Date(todayDate.getFullYear() - this.minAge, todayDate.getMonth(), todayDate.getDate());
+    // let todayDate = new Date();
+    // this.allowedDate = new Date(todayDate.getFullYear() - this.minAge, todayDate.getMonth(), todayDate.getDate());
 
-    this.validID = false;
+    // this.validID = false;
 
-    this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-      this.onBoardingStep = step;
-    });
+    // this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
+    //   this.onBoardingStep = step;
+    // });
 
-    this.exclusiveId = this.route.snapshot.params['id'];
-    this.isLoginMode = !this.exclusiveId; //switch to signup if id exists
-    if (this.exclusiveId) {
-      this.checkID();
-    }
+    // this.exclusiveId = this.route.snapshot.params['id'];
+    // this.isLoginMode = !this.exclusiveId; //switch to signup if id exists
+    // if (this.exclusiveId) {
+    //   this.checkID();
+    // }
 
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.exclusiveId = params['id'];
-        this.isLoginMode = !this.exclusiveId;
-        if (this.exclusiveId) {
-          this.checkID();
-        }
-      }
-    );
+    // this.route.params
+    // .subscribe(
+    //   (params: Params) => {
+    //     this.exclusiveId = params['id'];
+    //     this.isLoginMode = !this.exclusiveId;
+    //     if (this.exclusiveId) {
+    //       this.checkID();
+    //     }
+    //   }
+    // );
   }
 
   checkID() {
@@ -118,13 +120,18 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
+    console.log(this.isLoginMode, this.isForgetMode);
+    if (this.isLoading) return;
 
     if (!this.email || this.email.length === 0) return this.error = "Email is required";
 
     if (!this.isForgetMode) {
       if (!this.isLoginMode) {
 
-        if (!this.validID) return
+        // if (!this.validID) return
+        this.username = this.afs.createId();
+        this.dob = new Date();
+        this.name = "test";
 
         if (!this.username || this.username.length === 0) return this.error = "Username is required"
 
@@ -132,7 +139,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
         if (this.username.length > 21) return this.error = "Username can't be longer than 21 characters";
 
-        const usernameRes = await this.userService.getProfileDetailsByKey('username', this.username);
+        const usernameRes = await this.userService.getProfileDetailsByKey('username', this.username).pipe(first()).toPromise();
 
         if (Object.keys(usernameRes).length != 0) return this.error = "Username taken";
 
@@ -159,19 +166,22 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (!this.isLoginMode && !this.isForgetMode) {
       const uid = this.authService.user.value.id;
 
-      const profileDetails  = new ProfileDetails(this.username, '','');
-      const personalDetails = new PersonalDetails(this.name, this.email, this.dob, new Date());
+      const profileDetails  = new ProfileDetails(this.username, '','', this.email);
+      const personalDetails = new PersonalDetails(this.name, this.dob, new Date());
       const displayPicture = new DisplayPicture(new Date(), 'null');
-      const onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
+      // const onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
 
       this.userService.addProfileDetails(uid, profileDetails);
       this.userService.addPersonalDetails(uid, personalDetails);
       this.userService.addProfileStickers(uid, []);
       this.userService.addDisplayPicture(uid, displayPicture, null);
-      this.userService.addOnBoarding(uid, onBoardingData);
       this.activityService.addActivity(uid, 'user');
-      this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.email});
+
+      // this.userService.addOnBoarding(uid, onBoardingData);
+      // this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.email});
     }
+
+    this.router.navigate([this.miscellaneousService.lastRoute]);
 
     form.reset();
 

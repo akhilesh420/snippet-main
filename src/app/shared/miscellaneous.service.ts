@@ -42,6 +42,7 @@ export class MiscellaneousService {
   stickerEmitted = new Subject<string>();
   stickerSelectConfirm = new Subject<string>();
   userStickerSelection = new BehaviorSubject<ProfileSticker>(null);
+  lastRoute  = '/explore';
 
   constructor(private userService: UsersService,
               private router: Router) { }

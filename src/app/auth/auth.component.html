@@ -31,71 +31,75 @@
     </div>
 
 
-
-
   <div class = "form">
 
     <div class = "row heading no-margin-no-padding">
 
-      <p class = "title">Sign In</p>
-
-    </div>
-    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
-
-    <div class = "row entryfieldOneTitle no-margin-no-padding">
-
-      <p>E-mail / Username</p>
+      <p class = "title">Sign {{isLoginMode ? 'In' : 'Up'}}</p>
 
     </div>
 
-    <div class = "row entryfield no-margin-no-padding">
+    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading; else loader">
 
-      <input
-      type="email"
-      id="email"
-      class="entryfieldOne"
-      [(ngModel)]="email"
-      name="email"
-      required
-      email
-    />
+      <div class = "row entryfieldOneTitle no-margin-no-padding">
 
-    </div>
+        <p>E-mail / Username</p>
 
-    <div class = "row entryfieldTwoTitle no-margin-no-padding">
+      </div>
 
-      <p>Password</p>
+      <div class = "row entryfield no-margin-no-padding">
 
-    </div>
+        <input
+        type="email"
+        id="email"
+        class="entryfieldOne"
+        [(ngModel)]="email"
+        name="email"
+        required
+        email
+      />
 
-    <div class = "row entryfield no-margin-no-padding">
+      </div>
 
-      <input
-            type="password"
-            id="password"
-            class="entryfieldOne"
-            [(ngModel)]="password"
-            name="password"
-            required
-            minlength="6"
-            (keypress)="avoidSpace($event); "
-          />
+      <div class = "row entryfieldTwoTitle no-margin-no-padding">
 
-    </div>
+        <p>Password</p>
 
-    <div class = "row entryfield no-margin-no-padding">
+      </div>
 
-      <button
-              class="btn btn-primary"
-              type="submit">
-              {{ isForgetMode ? 'Submit' : isLoginMode ? 'Login' : 'Sign Up' }}
-      </button>
-    </div>
+      <div class = "row entryfield no-margin-no-padding">
 
-    <div class="danger-alert" *ngIf="error">
-      {{ error }}
-    </div>
+        <input
+              type="password"
+              id="password"
+              class="entryfieldOne"
+              [(ngModel)]="password"
+              name="password"
+              required
+              minlength="6"
+              (keypress)="avoidSpace($event); "
+            />
+
+      </div>
+
+      <div class = "row entryfield no-margin-no-padding">
+
+        <button
+                class="btn btn-primary"
+                type="submit">
+                {{ isForgetMode ? 'Submit' : isLoginMode ? 'Login' : 'Sign Up' }}
+        </button>
+      </div>
+
+      <div class="danger-alert" *ngIf="error">
+        {{ error }}
+      </div>
+
     </form>
+
+    <ng-template #loader>
+      <app-loading-spinner></app-loading-spinner>
+    </ng-template>
 
     <div class = "row subLinks no-margin-no-padding">
 

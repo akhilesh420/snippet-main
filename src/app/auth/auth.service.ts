@@ -43,14 +43,16 @@ export class AuthService {
   }
 
   async signUp(email: string, password: string) {
+    console.log('sign up');
     let message = 'success';
     await this.auth.setPersistence('local');
-    await this.auth.createUserWithEmailAndPassword(email, password)
+    const user = await this.auth.createUserWithEmailAndPassword(email, password)
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       message = this.FirebaseErrors(errorCode);
     });
+    console.log("sign up", user);
     return message
   }
 

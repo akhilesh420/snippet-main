@@ -1,5 +1,5 @@
 import { BehaviorSubject, throwError} from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, first, take } from 'rxjs/operators';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoarding } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -55,10 +55,15 @@ export class UsersService {
     if (index === -1) {
       this.profileDetailsList.push({uid: uid, obs: new BehaviorSubject<ProfileDetails>(undefined)});
       let secIndex = this.profileDetailsList.length - 1;
-      this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(response => {
+      this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(async (response) => {
         let temp: ProfileDetails;
         if (!response.description) {
-          temp = new ProfileDetails(response.username, '','');
+          let email: string;
+          if (!response.email){
+           let personalDetails = await this.getPersonalDetails(uid).pipe(first()).toPromise();
+           email = personalDetails.email;
+          } else email = response.email;;
+          temp = new ProfileDetails(response.username, '','', email);
           this.addProfileDetails(uid, temp);
         } else {
           temp = response;
@@ -110,7 +115,7 @@ export class UsersService {
 
   // Add personal details from cloud firestore
   addPersonalDetails(uid: string, details: PersonalDetails) {
-    const obj = {dateCreated : details.dateCreated, dateOfBirth : details.dateOfBirth, email: details.email, name: details.name};
+    const obj = {...details};
     this.personalDetailsCollection.doc(uid).set(obj);
   }
 
