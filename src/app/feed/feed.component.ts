@@ -1,3 +1,5 @@
+import { DisplayPicture } from './../shared/profile.model';
+import { UsersService } from 'src/app/shared/users.service';
 import { WindowStateService } from './../shared/window.service';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -41,6 +43,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   uid$ = new BehaviorSubject<string>(null); //From URL
   myUid$ = new BehaviorSubject<string>(null); //From URL
+  displayPicture$ = new BehaviorSubject<string>(null); //From URL
   myUid: string; //Authenticated user uid
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
@@ -57,7 +60,8 @@ export class FeedComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private authService: AuthService,
               private scrollService: ScrollService,
-              private windowStateService: WindowStateService) {
+              private windowStateService: WindowStateService,
+              private usersService: UsersService) {
    }
 
 
@@ -69,6 +73,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       if (this.isAuthenticated) {
         this.myUid = response.id;
         this.myUid$.next(response.id);
+        this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
       }
     });
 
@@ -95,7 +100,8 @@ export class FeedComponent implements OnInit, OnDestroy {
       if (!val) return
       val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
       val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
-    })
+    });
+
   }
 
   getViewport() {

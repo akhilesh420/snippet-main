@@ -24,7 +24,6 @@ export class UsersService {
 
   // Downloaded data storage
   private profileDetailsList: {uid: string, obs: BehaviorSubject<ProfileDetails>}[] = [];
-  private personalDetailsList: {uid: string, obs: BehaviorSubject<PersonalDetails>}[] = [];
   private profileStickersList: {uid: string, obs: BehaviorSubject<ProfileSticker[]>}[] = [];
   private displayPictureList: {uid: string, obs: BehaviorSubject<any>}[] = [];
 
@@ -61,6 +60,7 @@ export class UsersService {
           let email: string;
           if (!response.email){
            let personalDetails = await this.getPersonalDetails(uid).pipe(first()).toPromise();
+           console.log(personalDetails);
            email = personalDetails.email;
           } else email = response.email;;
           temp = new ProfileDetails(response.username, '','', email);
@@ -97,20 +97,7 @@ export class UsersService {
   //--------------------------------------- Personal Details ---------------------------------------
   // Get personal details from cloud firestore by UID
   getPersonalDetails(uid: string) {
-    let index = this.personalDetailsList.findIndex(details => {
-      return details.uid === uid;
-    })
-
-    if (index === -1) {
-      this.personalDetailsList.push({uid: uid, obs: new BehaviorSubject<PersonalDetails>(undefined)});
-      let secIndex = this.personalDetailsList.length - 1;
-      this.afs.doc<PersonalDetails>('personal details/' + uid).valueChanges().subscribe(response => {
-        this.personalDetailsList[secIndex].obs.next(response);
-      });;
-      return this.personalDetailsList[secIndex].obs;
-    } else {
-     return this.personalDetailsList[index].obs;
-    }
+    return this.afs.doc<PersonalDetails>('personal details/' + uid).valueChanges();
   }
 
   // Add personal details from cloud firestore

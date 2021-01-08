@@ -120,7 +120,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
-    console.log(this.isLoginMode, this.isForgetMode);
+    console.log(this.isLoginMode, this.isForgetMode); //temp log
     if (this.isLoading) return;
 
     if (!this.email || this.email.length === 0) return this.error = "Email is required";
@@ -157,11 +157,19 @@ export class AuthComponent implements OnInit, OnDestroy {
     } else if (!this.isLoginMode && !this.isForgetMode){
       message = await this.authService.signUp(this.email, this.password);
     } else if (this.isForgetMode) {
-      // this.authService.forgotPassword(email);
+      message = await this.authService.forgotPassword(this.email);
     }
 
-    this.isLoading = false;
-    if (message != 'success') return this.error = message;
+    if (message != 'success') {
+      this.isLoading = false;
+      return this.error = message;
+    }
+
+    if (this.isForgetMode) {
+      this.miscellaneousService.setPopUp(new PopUp("An email has been sent to your account",'okay', undefined, ['default', 'reject']));
+      this.isLoading = false;
+      return await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
+    }
 
     if (!this.isLoginMode && !this.isForgetMode) {
       const uid = this.authService.user.value.id;
@@ -183,6 +191,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.router.navigate([this.miscellaneousService.lastRoute]);
 
+    this.isLoading = false;
     form.reset();
 
 

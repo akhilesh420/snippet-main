@@ -47,12 +47,16 @@ export class AuthService {
     let message = 'success';
     await this.auth.setPersistence('local');
     const user = await this.auth.createUserWithEmailAndPassword(email, password)
+    .then(async () => {
+      console.log("sign up", user);
+      (await this.auth.currentUser).sendEmailVerification()
+      .then(() => console.log('verification email sent'));
+    })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       message = this.FirebaseErrors(errorCode);
     });
-    console.log("sign up", user);
     return message
   }
 
@@ -75,33 +79,21 @@ export class AuthService {
       this.router.navigate(['/auth']);
       console.log('signed out');
     }).catch((error) => {
-      // An error happened.
+      console.log(error);
     });
   }
 
-  // forgotPassword(email: string) {
-  //   return this.http
-  //     .post<AuthResponseData>(
-  //       'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key='+this.APIKey,
-  //       {
-  //         requestType: 'PASSWORD_RESET',
-  //         email: email,
-  //       }
-  //     )
-  //     .pipe(
-  //       catchError(this.handleError)
-  //     );
-  // }
-
-  // deleteUser(token: string) {
-  //   return this.http
-  //   .post<AuthResponseData>(
-  //     'https://identitytoolkit.googleapis.com/v1/accounts:delete?key='+this.APIKey,
-  //     {
-  //       idToken: token
-  //     }
-  //   )
-  // }
+  async forgotPassword(email: string) {
+    let message = 'success';
+    await this.auth.sendPasswordResetEmail(email)
+    .then(() => console.log("password reset email sent"))
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      message = this.FirebaseErrors(errorCode);
+    });
+    return message
+  }
 
   private FirebaseErrors (errorCode: string): string {
 
