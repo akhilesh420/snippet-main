@@ -8,10 +8,6 @@
 }
 
 
-
-
-
-
 /* Classes for single components */
 
 .header {
@@ -282,7 +278,7 @@ opacity: 0;
   }
 
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (min-width: 550px) and (max-width: 800px) {
 
     .subLogo {
       display: none;
@@ -294,11 +290,32 @@ opacity: 0;
       top: 50%;
       left: 82.881%;
       transform: translate(-50%, -50%);
+      display: block;
     
     }
     
 
 }
+
+  @media only screen and (max-width: 550px) {
+
+    .header {
+
+      bottom: 0%;
+      top: unset;
+      
+    
+    }
+    
+    .headerBackpanel {
+    
+      background: #000000;
+    
+    }
+
+
+  }
+
 
 
 

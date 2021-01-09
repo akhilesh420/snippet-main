@@ -18,12 +18,9 @@
                 [route]='value.route'></app-pop-up>
   </div>
 
-  <div *ngIf="!mobileCheck && !onBoarding">
+  <div>
     <app-header ></app-header>
   </div>
 
-  <div *ngIf="mobileCheck && !onBoarding" style='z-index: 3'>
-    <app-navbar></app-navbar>
-  </div>
 </div>
 
