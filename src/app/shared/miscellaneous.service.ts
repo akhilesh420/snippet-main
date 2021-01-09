@@ -44,6 +44,8 @@ export class MiscellaneousService {
   userStickerSelection = new BehaviorSubject<ProfileSticker>(null);
   lastRoute  = '/explore';
 
+  showDashboard = new Subject<boolean>();
+
   constructor(private userService: UsersService,
               private router: Router) { }
 

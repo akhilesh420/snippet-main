@@ -38,6 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   dropdown: boolean = false;
   displayPicture$: BehaviorSubject<any>;
 
+  showDashboard: boolean = false;
+
   constructor(private authService: AuthService,
               private router: Router,
               private usersService: UsersService,
@@ -70,6 +72,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   clickAuth() {
     this.isAuthenticated ? this.authService.logout() : this.router.navigate(['/auth']);
+  }
+
+  dashboardToggle() {
+    this.showDashboard = !this.showDashboard;
+    this.miscellaneousService.showDashboard.next(this.showDashboard);
   }
 
   ngOnDestroy() {
