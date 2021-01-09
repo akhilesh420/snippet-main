@@ -87,14 +87,6 @@
 
 }
 
-.displayButton {
-
-  position: absolute;
-  top: 50%;
-  left: 82.881%;
-  transform: translate(-50%, -50%);
-
-}
 
 .exploreButton {
 
@@ -116,7 +108,9 @@
 
 }
 
-
+.displayButton {
+  display: none;
+}
 
 .dpContainer {
 
@@ -294,6 +288,14 @@ opacity: 0;
       display: none;
     }
 
+    .displayButton {
+
+      position: absolute;
+      top: 50%;
+      left: 82.881%;
+      transform: translate(-50%, -50%);
+    
+    }
     
 
 }
