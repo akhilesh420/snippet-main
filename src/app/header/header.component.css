@@ -87,6 +87,15 @@
 
 }
 
+.displayButton {
+
+  position: absolute;
+  top: 50%;
+  left: 82.881%;
+  transform: translate(-50%, -50%);
+
+}
+
 .exploreButton {
 
   position: absolute;
@@ -138,7 +147,7 @@
 
 .headerDropdownBorder {
 
-position: absolute;
+position: fixed;
 height: 11.6667vh;
 width: calc(11.6667vh * (155/105));
 top: calc(5.334vh + 6vh);
@@ -149,8 +158,6 @@ background-color: rgba(11,11,11,1);
         transform: translateY(-1000px);    
 box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
 opacity: 0;
-
-
 
 }
 
