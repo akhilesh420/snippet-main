@@ -58,11 +58,13 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   ngOnInit(): void {
     if (!this.postDetails) return;
+    console.log('ngOnInit', this.pid);
     this.restartPost();
     this.postViewTime();
   }
 
   ngOnChanges() {
+    console.log('ngOnChanges', this.pid);
     this.postViewTime();
     this.allowToggle = true;
   }
