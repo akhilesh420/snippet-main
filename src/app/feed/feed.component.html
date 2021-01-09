@@ -1,8 +1,8 @@
 <div class="main-container">
   <div class="feed-container">
     <div class="feed">
-      <div *ngIf='mobileCheck' class="secondary-profile-display">
-        <app-profile-display  [uid$]='uid$' *ngIf='showProfileDisplay'></app-profile-display>
+      <div *ngIf='mobileCheck && showProfileDisplay' class="secondary-profile-display">
+        <app-profile-display  [uid$]='uid$'></app-profile-display>
       </div>
 
       <div class = "profileNavigation"
