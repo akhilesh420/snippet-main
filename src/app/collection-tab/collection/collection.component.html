@@ -3,7 +3,7 @@
     <div class = "row no-margin-no-padding collectionBackpanel">
 
         <div class = "col-2 no-margin-no-padding postSticker">
-            <div class = "stickerContainer">
+            <div class = "stickerContainer" [ngClass]="{'sticker-bck': !(stickerContent$ | async)}">
               <img *ngIf='(stickerContent$ | async) as content;' [src]='content'
                     alt="sticker">
             </div>

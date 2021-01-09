@@ -45,6 +45,8 @@ export class ProfileTabComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if (!this.pid || !this.uid) return;
+
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {

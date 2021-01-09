@@ -1,13 +1,9 @@
-import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError, tap, take } from 'rxjs/operators';
-import { throwError, BehaviorSubject } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { BehaviorSubject } from 'rxjs';
+import { AngularFirestore} from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 export interface AuthResponseData {
@@ -27,16 +23,15 @@ export interface ExclusiveID {
 export class AuthService {
   user = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient,
-              private router: Router,
+  constructor(private router: Router,
               private afs: AngularFirestore,
-              private miscellaneousService: MiscellaneousService,
               public auth: AngularFireAuth) {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.user.next(new User(user.email, user.uid));
         console.log("logged in:", this.user.value);
       } else {
+        console.log("null");
         this.user.next(null);
       }
     });
@@ -59,8 +54,6 @@ export class AuthService {
     });
     return message
   }
-
-
 
   async logIn(email: string, password: string) {
     let message = 'success';
