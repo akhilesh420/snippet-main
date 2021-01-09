@@ -6,6 +6,7 @@ import { Collection } from '../shared/activity.model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
 import { ProfileSticker } from '../shared/profile.model';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-collection-tab',
@@ -14,26 +15,27 @@ import { ProfileSticker } from '../shared/profile.model';
 })
 export class CollectionTabComponent implements OnInit, OnDestroy {
 
-  collectionList: Collection[] = [];
+  collectionList: Collection[] = [null, null, null, null];
   myUid: string;
-  isAuthenticated: boolean = false;
+  isAuthenticated: boolean = true;
   notifier$ = new Subject();
   editMode: boolean;
   userStickerSelected$: BehaviorSubject<ProfileSticker>;
 
-  constructor(private authService: AuthService,
+  constructor(private auth: AngularFireAuth,
               private activityService: ActivityService,
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
-      if (!authRes) return;
-      this.isAuthenticated = !!authRes;
-      this.myUid = authRes.id;
-      this.getCollection();
-    }, errorMessage => {
-      console.log(errorMessage);
+
+    this.auth.onAuthStateChanged((user) => {
+      this.isAuthenticated = !!user;
+      if (this.isAuthenticated) {
+        this.myUid = user.uid;
+        this.getCollection();
+      }
     });
+
     this.userStickerSelected$ = this.miscellaneousService.userStickerSelection;
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.editMode = value);
   }

@@ -9,6 +9,7 @@ import { ActivityService } from '../shared/activity.service';
 import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-profile-display',
@@ -26,7 +27,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   tempDisplayPicture$ = new BehaviorSubject<any>(null);
   activity: Activity;
 
-  isAuthenticated: boolean;
+  isAuthenticated: boolean = true;
+  allowEdit: boolean = false;
   notifier$ = new Subject();
 
   collected: string = '0';
@@ -68,11 +70,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
 
   emittedPid: string;
-  profileStickerEdit: boolean;
   index: number;
   buttonHeight: number;
 
-  constructor( private authService: AuthService,
+  constructor( private auth: AngularFireAuth,
                private usersService: UsersService,
                private activityService: ActivityService,
                private router: Router,
@@ -83,13 +84,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.fetchingWindow = true;
     this.windowService.checkWidth();
 
-    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.isAuthenticated = !!response;
-      if (this.isAuthenticated) {
-        this.myUid = response.id;
-      }
-    }, errorMessage => {
-      console.log(errorMessage);
+    this.auth.onAuthStateChanged((user) => {
+      this.isAuthenticated = !!user;
+      this.allowEdit = this.isAuthenticated;
+      if (this.isAuthenticated)  this.myUid = user.uid;
     });
 
     this.miscellaneousService.stickerSelectConfirm.pipe(takeUntil(this.notifier$)).subscribe(response => {
@@ -116,7 +114,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   setUp() {
     this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{
-      console.log(uid);
       if (uid) {
         this.uid = uid;
         this.profileRoute = "/profile/" + this.uid;

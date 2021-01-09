@@ -57,6 +57,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
               private activityService: ActivityService) { }
 
   ngOnInit(): void {
+    if (!this.postDetails) return;
     this.restartPost();
     this.postViewTime();
   }
@@ -80,6 +81,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
       console.log(errorMessage);
     });
 
+    if (!this.postDetails.pid) return;
     // user profile setup
     this.uid = this.postDetails.uid;
 

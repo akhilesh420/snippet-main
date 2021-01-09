@@ -66,7 +66,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.feedList$ = new BehaviorSubject<PostDetails[]>(null);
+    const emptyPost = new PostDetails(null, "","",new Date(), null);
+    this.feedList$ = new BehaviorSubject<PostDetails[]>([emptyPost,emptyPost,emptyPost,emptyPost]);
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
