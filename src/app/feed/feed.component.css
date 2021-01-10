@@ -153,7 +153,7 @@
 
   .post-container {
     width: 100vw;
-    height: calc(100vh - 7.24vh);
+    height: calc(100vh - 54px);
     padding-bottom: 0%;
   }
 
