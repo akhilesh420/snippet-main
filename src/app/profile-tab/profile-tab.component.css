@@ -103,3 +103,37 @@
   object-fit: cover;
   border-radius: 50%;
 }
+
+@media only screen and (max-width: 550px) {
+
+    .profileTab {
+        height: 8%;
+    }
+    
+    
+    
+    .postSticker {
+
+        height: 10.4947vh;
+        width: 10.4947vh;
+        top: -160%;
+
+    }
+    
+    .username {
+        top: 50%;
+    }
+
+    .usernameSpace {
+        font-size: 2vh;
+    }
+
+    .stickerContainer {
+        height: 3.6vh;
+        width: 3.6vh;
+        top: 21%;
+        left: -23%;
+    }
+
+
+}
