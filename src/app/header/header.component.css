@@ -303,7 +303,7 @@ opacity: 0;
 
       bottom: 0%;
       top: unset;
-      
+
     
     }
     
@@ -313,6 +313,55 @@ opacity: 0;
     
     }
 
+    .logoRow {
+
+      display: none;
+
+    }
+
+
+    .exploreButton {
+
+      position: absolute;
+      top: 50%;
+      left: 8%;
+      transform: translate(-50%, -50%);
+
+    }
+
+    .displayButton {
+
+      position: absolute;
+      top: 50%;
+      left: 28.9855%;
+      transform: translate(-50%, -50%);
+      display: block;
+    
+    }
+
+    .profileButton {
+
+      height: 25px;
+      width: 25px;
+      position: absolute;
+      top: 50%;
+      left: 71.014%;
+      transform: translate(-50%, -50%);
+    
+    }
+
+
+    .optionsButton {
+
+      position: absolute;
+      top: 50%;
+      left: 92%;
+      transform: translate(-50%, -50%);
+
+    }
+
+
+    
 
   }
 
