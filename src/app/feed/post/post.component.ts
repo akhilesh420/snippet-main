@@ -58,11 +58,13 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   ngOnInit(): void {
     if (!this.postDetails) return;
+    console.log('ngOnInit', this.pid);
     this.restartPost();
     this.postViewTime();
   }
 
   ngOnChanges() {
+    console.log('ngOnChanges', this.pid);
     this.postViewTime();
     this.allowToggle = true;
   }
@@ -110,7 +112,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   postView() {
-    if (this.viewed || this.uid === this.myUid) return;
+    if (this.viewed || this.uid === this.myUid || !this.postDetails.pid || !this.postDetails.uid) return;
     console.log('post viewed'); //temp log
     this.viewed = true;
     if (!this.isAuthenticated) {

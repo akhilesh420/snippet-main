@@ -6,7 +6,9 @@
       </div>
 
       <div class = "profileNavigation"
-      *ngIf="(lastRoute.split('/')[1] === 'profile' ||  lastRoute.split('/')[1] === 'collection') && lastRoute.split('/')[2] === myUid">
+      *ngIf="(lastRoute.split('/')[1] === 'profile'
+              ||  lastRoute.split('/')[1] === 'collection')
+              && lastRoute.split('/')[2] === myUid">
 
         <div class = "backpanel row no-margin-no-padding">
 
@@ -76,7 +78,8 @@
           <app-post [postDetails]="postDetails" [postFocus]='i === postNumber'> </app-post>
         </div>
         <div *ngIf="!done" class="fail-safe">
-          <img src= "assets/icons/nextArrow.svg" alt="more posts" class="horizontal-center more-post" (click)="moreBatch()">
+          <img src= "assets/icons/nextArrow.svg" alt="more posts" class="horizontal-center more-post"
+          (click)="moreBatch()">
         </div>
       </div>
       <ng-template #loader>

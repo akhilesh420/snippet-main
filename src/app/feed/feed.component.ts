@@ -29,15 +29,15 @@ export class FeedComponent implements OnInit, OnDestroy {
   batch: number = 0;
   maxBatch: number = 0;
   batchSize: number = 4; //number of posts to load - min batch size is 2
-  batchNumber: number = 1;
+  batchNumber: number = 1; //start from 1
   done: boolean = true;
 
   //Video auto play and pause
   postHeight: number; //height of the posts
-  postMarginTop: number; //top margin on each post;
-  postMarginBottom: number; // bottom margin on each post;
+  feedPaddingTop: number = 5; //top margin on each post;
   postNumber: number = 0; //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
+  profileDisplayHeight: number = 234; //height of the profile display
 
   viewPort: number;
 
@@ -53,6 +53,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   @ViewChild('post') post: ElementRef;
 
   profileStickerEdit: boolean = false;
+  showDashboard: boolean = false;
 
   constructor(private miscellaneousService: MiscellaneousService,
               private feedService: FeedService,
@@ -92,8 +93,12 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$))
       .subscribe(value => this.profileStickerEdit = value);
 
+    this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$))
+      .subscribe(value => this.showDashboard = value);
+
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      this.postFocus(scrollY);
+      this.postNumber = this.currentPostNumber(scrollY);
+      this.infiniteScroll();
     });
 
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
@@ -107,10 +112,9 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   getViewport() {
     try {
-      this.postMarginTop = 15;
-      this.postMarginBottom = this.mobileCheck ? 0 : 25;
       this.postHeight = this.post.nativeElement.offsetHeight;
-      this.viewPort = (this.postHeight);
+      this.viewPort = this.postHeight;
+      console.log(this.viewPort); //temp log
     } catch(error) {
       console.log(error);
     }
@@ -174,6 +178,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   initBatch() { // get initial batch of posts to render
+    this.batchNumber = 1;
     if (this.postsList.length <= this.batchSize) {
       this.feedList$.next(this.postsList);
       this.done = true;
@@ -198,16 +203,15 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   infiniteScroll() {
-    if (!this.done) return
-    if (this.postNumber >= (this.batchNumber-1)*this.batchSize - 2) return this.moreBatch();
+    if (this.done) return;
+    if (this.postNumber >= ((this.batchNumber-1)*this.batchSize - 2)) this.moreBatch();
   }
 
-  postFocus(scrollY) {
-    const scroll = scrollY;
-    // const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
-    this.postNumber = Math.round(scroll/this.viewPort);
-    this.infiniteScroll();
-    // this.postNumber$.next(Math.floor(scroll/this.viewPort));
+  currentPostNumber(scrollY): number {
+    scrollY = scrollY - this.feedPaddingTop;
+    const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
+    if (scroll < 0) return 0;
+    return Math.round(scroll/this.viewPort);
   }
 
   ngOnDestroy() {
