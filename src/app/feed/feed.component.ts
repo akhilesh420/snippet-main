@@ -1,7 +1,10 @@
+import { DisplayPicture } from './../shared/profile.model';
+import { UsersService } from 'src/app/shared/users.service';
+import { WindowStateService } from './../shared/window.service';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { FeedService } from './feed.service';
@@ -16,7 +19,7 @@ import { ScrollService } from '../shared/scroll.service';
 
 export class FeedComponent implements OnInit, OnDestroy {
 
-  postsList$: Observable<PostDetails[]>;
+  postsList$: Observable<PostDetails[]> | BehaviorSubject<PostDetails[]>;
 
   feedList$: BehaviorSubject<PostDetails[]>;
   notifier$ = new Subject();
@@ -26,78 +29,58 @@ export class FeedComponent implements OnInit, OnDestroy {
   batch: number = 0;
   maxBatch: number = 0;
   batchSize: number = 4; //number of posts to load - min batch size is 2
-  batchNumber: number = 1;
-  done: boolean;
-  postOffset: number; //Trigger next post after this value
-  failSafe: boolean;
-  loading: boolean;
-
-  addIcon = "assets/icons/add_icon@2x.png";
+  batchNumber: number = 1; //start from 1
+  done: boolean = true;
 
   //Video auto play and pause
   postHeight: number; //height of the posts
-  postMarginTop: number; //top margin on each post;
-  postMarginBottom: number; // bottom margin on each post;
-  postNumber: number; //the index of the post thats being viewed
-  postNumber$ = new Subject<number>(); //the index of the post thats being viewed
+  feedPaddingTop: number = 5; //top margin on each post;
+  postNumber: number = 0; //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
-  profileDisplayHeight: number; //height of the posts
+  profileDisplayHeight: number = 234; //height of the profile display
 
-  firstView: number;
   viewPort: number;
 
   uid$ = new BehaviorSubject<string>(null); //From URL
   myUid$ = new BehaviorSubject<string>(null); //From URL
+  displayPicture$ = new BehaviorSubject<string>(null); //From URL
   myUid: string; //Authenticated user uid
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
-  inSnap: boolean;
-  lastScroll: number;
   mobileCheck: boolean;
+  tabletCheck: boolean;
 
-  lastHeight: number = 0;
-  currentScroll: number = 0;
-  triggerMultiplier = 0.03;
-  triggerArea: number;
-  scrolled: boolean; //scroll completed
-  scrolling: boolean;//scroll in progress
-  touchDown: boolean = false;
-  maxPostNumber: number = -2;
-
-  @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('post') post: ElementRef;
 
   profileStickerEdit: boolean = false;
+  showDashboard: boolean = false;
 
   constructor(private miscellaneousService: MiscellaneousService,
               private feedService: FeedService,
               private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
-              private scrollService: ScrollService) {
+              private scrollService: ScrollService,
+              private windowStateService: WindowStateService,
+              private usersService: UsersService) {
    }
 
 
   ngOnInit(): void {
-
-    this.feedList$ = new BehaviorSubject<PostDetails[]>(null);
+    const emptyPost = new PostDetails(null, "","",new Date(), null);
+    this.feedList$ = new BehaviorSubject<PostDetails[]>([emptyPost,emptyPost,emptyPost,emptyPost]);
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
       if (this.isAuthenticated) {
         this.myUid = response.id;
         this.myUid$.next(response.id);
+        this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
       }
     });
 
-    this.done = false;
-    this.failSafe = false;
-    this.loading = true;
-    this.inSnap = false;
-
     this.getPosts(this.router.url);
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.lastHeight = 0;
       this.getPosts(this.router.url);
     });
 
@@ -107,41 +90,48 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.uid$.next(params['id']);
       });
 
-    this.setUpScroll();
-    this.resetPostNumber();
-    this.postNumber$.pipe(takeUntil(this.notifier$)).subscribe(newNum => {
-      this.postNumber = newNum;
+    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$))
+      .subscribe(value => this.profileStickerEdit = value);
+
+    this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$))
+      .subscribe(value => this.showDashboard = value);
+
+    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
+      this.postNumber = this.currentPostNumber(scrollY);
       this.infiniteScroll();
     });
 
-    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
-  }
-
-  setUpScroll() {
-    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      this.postFocus(scrollY);
+    this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      if (!val) return
+      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
+      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
     });
+
   }
 
   getViewport() {
     try {
-      this.postMarginTop = 15;
-      this.postMarginBottom = this.mobileCheck ? 0 : 25;
       this.postHeight = this.post.nativeElement.offsetHeight;
-      this.viewPort = (this.postHeight+this.postMarginTop);
-      this.triggerArea = this.triggerMultiplier*this.viewPort;
+      this.viewPort = this.postHeight;
+      console.log(this.viewPort); //temp log
     } catch(error) {
       console.log(error);
     }
   }
 
   getPosts(currentRoute: string) {
-    if (currentRoute === this.lastRoute) {return}
+    if (currentRoute === this.lastRoute) return;
     this.lastRoute = currentRoute;
     currentRoute = currentRoute.split('/')[1]; //get parent route
     this.showProfileDisplay = false;
-    this.resetPostNumber();
+    this.done = true;
+    this.postNumber = 0;
     if (currentRoute === 'explore') {
+      this.myUid$.pipe(take(2)).subscribe(uid => {
+        if (!uid) return;
+        setTimeout(() => this.uid$.next(uid), 100);
+      });
       this.postsList$ = this.feedService.getExplorePage();
     } else if (currentRoute === 'collection') {
       const uid = this.route.snapshot.params['id']
@@ -169,12 +159,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.setUpPosts();
   }
 
-  resetPostNumber() {
-    this.postNumber = this.showProfileDisplay ? -1 : 0;
-    this.postNumber$.next(this.postNumber);
-    this.done = true;
-  }
-
   setUpPosts() {
     this.postsList$.pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (!response) {
@@ -185,14 +169,16 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.postsList = response;
       if (this.postsList) {
         this.initBatch();
-      } else { this.loading = false;}
+      }
     }, error => {
-      return;
+      this.feedList$.next([]);
+      this.done = true;
+      return console.log(error);
     });
   }
 
   initBatch() { // get initial batch of posts to render
-    this.loading = true;
+    this.batchNumber = 1;
     if (this.postsList.length <= this.batchSize) {
       this.feedList$.next(this.postsList);
       this.done = true;
@@ -200,7 +186,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize));
     }
     this.batchNumber++;
-    this.loading = false;
     setTimeout(() => {
       if (this.postsList.length === 0) return;
       this.getViewport();
@@ -208,7 +193,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   moreBatch() { // get the next batch of posts used for manual render
-    this.loading = true;
     if ((this.postsList.length - this.batchSize*this.batchNumber) <= 0) {
       this.feedList$.next(this.postsList);
       this.done = true;
@@ -216,31 +200,21 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
     this.batchNumber++;
-    this.loading = false;
   }
 
   infiniteScroll() {
-    if (!this.done && this.postNumber > this.maxPostNumber) {
-      if (this.postNumber >= (this.batchNumber-1)*this.batchSize - 2) {
-        this.moreBatch();
-      }
-      this.maxPostNumber = this.postNumber;
-    }
+    if (this.done) return;
+    if (this.postNumber >= ((this.batchNumber-1)*this.batchSize - 2)) this.moreBatch();
   }
 
-  //temp
-  postFocus(scrollY) {
+  currentPostNumber(scrollY): number {
+    scrollY = scrollY - this.feedPaddingTop;
     const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
-    this.postNumber$.next(Math.floor(scroll/this.viewPort));
+    if (scroll < 0) return 0;
+    return Math.round(scroll/this.viewPort);
   }
-
-  trackByFn(index, item) {
-    return index; // or item.id
-  }
-
 
   ngOnDestroy() {
-    console.log('destroy');
     this.notifier$.next();
     this.notifier$.complete();
     this.feedList$.complete();

@@ -3,7 +3,8 @@ export class ProfileDetails {
   constructor(
     public username: string,
     public description: string,
-    public link: string
+    public link: string,
+    public email: string
   ) {}
 }
 
@@ -28,9 +29,9 @@ export class PersonalDetails {
 
   constructor(
     public name: string,
-    public email: string,
     public dateOfBirth: Date,
-    public dateCreated: Date
+    public dateCreated: Date,
+    public email? : string
   ) {}
 }
 

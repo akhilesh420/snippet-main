@@ -18,7 +18,6 @@ import { CreateComponent } from './create/create.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedComponent } from './feed/feed.component';
 import { PostComponent } from './feed/post/post.component';
-import { PostEditComponent } from './feed/post/post-edit/post-edit.component';
 import { CommentsComponent } from './feed/post/comments/comments.component';
 import { CommentComponent } from './feed/post/comments/comment/comment.component';
 import { CommentListComponent } from './feed/post/comments/comment-list/comment-list.component';
@@ -27,7 +26,6 @@ import { StickerComponent } from './sticker/sticker.component';
 import { ProfileDisplayComponent } from './profile-display/profile-display.component';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
@@ -48,7 +46,6 @@ import { ReversePipe } from './shared/reverse.pipe';
     FeedbackComponent,
     FeedComponent,
     PostComponent,
-    PostEditComponent,
     CommentsComponent,
     CommentComponent,
     CommentListComponent,
@@ -81,7 +78,6 @@ import { ReversePipe } from './shared/reverse.pipe';
     ClickOutsideModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     TitleCasePipe,
     Title,
     PerformanceMonitoringService,

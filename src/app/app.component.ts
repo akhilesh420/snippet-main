@@ -1,14 +1,13 @@
+import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { AuthService } from './auth/auth.service';
 import { WindowStateService } from './shared/window.service';
-import { Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Title, Meta} from '@angular/platform-browser';
-import { Router, NavigationEnd } from '@angular/router';
-import { takeUntil,} from 'rxjs/operators';
+import { Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
+import { take, takeUntil,} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
-import * as screenfull from 'screenfull';
 
 @Component({
   selector: 'app-root',
@@ -37,18 +36,13 @@ export class AppComponent implements OnInit, OnDestroy {
               private router: Router,
               private infiniteScrollService: InfiniteScrollService,
               private miscellaneousService: MiscellaneousService,
+              private feedService: FeedService,
               private scrollService: ScrollService){
   }
 
-  ngOnInit(){
-    // if (screenfull.isEnabled) {
-    //   screenfull.request().catch(error => console.log(error));
-    //   screenfull.on('error', event => {console.log(event);});
-    // }
+  ngOnInit() {
 
-    // this.elem = document.documentElement;
-    // this.openFullscreen();
-    this.authService.autoLogin();
+    this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
 
     this.windowService.checkWidth();
     this.windowService.screenWidthValue.pipe(takeUntil(this.notifier$))
@@ -69,6 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
+      if (this.currentRoute != '/auth') this.miscellaneousService.lastRoute = this.currentRoute;
       this.onBoardingFailSafe();
     });
 
@@ -108,19 +103,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onResize(){
     this.windowService.checkWidth();
-  }
-
-  openFullscreen() {
-   if (this.elem.mozRequestFullScreen) {
-      /* Firefox */
-      this.elem.mozRequestFullScreen();
-    } else if (this.elem.webkitRequestFullscreen) {
-      /* Chrome, Safari and Opera */
-      this.elem.webkitRequestFullscreen();
-    } else if (this.elem.msRequestFullscreen) {
-      /* IE/Edge */
-      this.elem.msRequestFullscreen();
-    }
   }
 
   onWindowScroll($event){

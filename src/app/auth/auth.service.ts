@@ -1,24 +1,13 @@
-import { OnBoarding } from './../shared/profile.model';
-import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError, tap, take } from 'rxjs/operators';
-import { throwError, BehaviorSubject } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-
+import { BehaviorSubject } from 'rxjs';
+import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 export interface AuthResponseData {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
   localId: string;
-  registered?: boolean;
 }
 
 export interface ExclusiveID {
@@ -33,167 +22,119 @@ export interface ExclusiveID {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
-  APIKey = environment.firebaseConfig.apiKey;
-  private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient,
-              private router: Router,
+  constructor(private router: Router,
               private afs: AngularFirestore,
-              private miscellaneousService: MiscellaneousService) {}
-
-  signUp(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+this.APIKey,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap(resData => {
-          this.handleAuthentication(
-            resData.email,
-            resData.localId,
-            resData.idToken,
-            +resData.expiresIn
-          );
-        })
-      );
-  }
-
-  forgotPassword(email: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key='+this.APIKey,
-        {
-          requestType: 'PASSWORD_RESET',
-          email: email,
-        }
-      )
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  logIn(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+this.APIKey,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true
-        }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap(resData => {
-          this.handleAuthentication(
-            resData.email,
-            resData.localId,
-            resData.idToken,
-            +resData.expiresIn
-          );
-        })
-      );
-  }
-
-  logout(navigate:boolean = true) {
-    this.user.next(null);
-    if (navigate) this.router.navigate(['/auth']);
-    localStorage.removeItem('userData');
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
-    this.tokenExpirationTimer = null;
-  }
-
-  autoLogin() {
-
-    const userData: {
-      email: string;
-      id: string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));
-
-    if (!userData) {
-      return;
-    }
-
-    const loadedUser = new User(
-      userData.email,
-      userData.id,
-      userData._token,
-      new Date(userData._tokenExpirationDate)
-    );
-
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
-      const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
-      this.autoLogout(expirationDuration);
-    }
-    this.miscellaneousService.startOnBoarding(loadedUser.id);
-  }
-
-  autoLogout(expirationDuration: number) {
-    this.tokenExpirationTimer = setTimeout(() => {
-      this.logout();
-    }, expirationDuration);
-  }
-
-  deleteUser(token: string) {
-    return this.http
-    .post<AuthResponseData>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:delete?key='+this.APIKey,
-      {
-        idToken: token
+              public auth: AngularFireAuth) {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.user.next(new User(user.email, user.uid));
+        console.log("logged in:", this.user.value);
+      } else {
+        console.log("null");
+        this.user.next(null);
       }
-    )
+    });
   }
 
-  private handleAuthentication(
-    email: string,
-    userId: string,
-    token: string,
-    expiresIn: number
-  ) {
-    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-    const user = new User(email, userId, token, expirationDate);
-    this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));
+  async signUp(email: string, password: string) {
+    console.log('sign up');
+    let message = 'success';
+    await this.auth.setPersistence('local');
+    const user = await this.auth.createUserWithEmailAndPassword(email, password)
+    .then(async () => {
+      console.log("sign up", user);
+      (await this.auth.currentUser).sendEmailVerification()
+      .then(() => console.log('verification email sent'));
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      message = this.FirebaseErrors(errorCode);
+    });
+    return message
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
-    console.log(errorRes.error.error.message);
-    let errorMessage = 'we have no idea what happened...No cap';
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
+  async logIn(email: string, password: string) {
+    let message = 'success';
+    await this.auth.setPersistence('local');
+    await this.auth.signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      message = this.FirebaseErrors(errorCode);
+    });
+    return message
+  }
+
+  logout() {
+    this.auth.signOut().then(() => {
+      this.router.navigate(['/auth']);
+      console.log('signed out');
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  async forgotPassword(email: string) {
+    let message = 'success';
+    await this.auth.sendPasswordResetEmail(email)
+    .then(() => console.log("password reset email sent"))
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      message = this.FirebaseErrors(errorCode);
+    });
+    return message
+  }
+
+  private FirebaseErrors (errorCode: string): string {
+
+    let message: string;
+
+    switch (errorCode) {
+      case 'auth/wrong-password':
+        message = 'Invalid email or password';
+        break;
+      case 'auth/network-request-failed':
+        message = 'Please check your internet connection';
+        break;
+      case 'auth/too-many-requests':
+        message =
+          'We have detected too many requests from your device. Take a break please!';
+        break;
+      case 'auth/user-disabled':
+        message =
+          'Your account has been disabled or deleted. Please contact the system administrator.';
+        break;
+      case 'auth/requires-recent-login':
+        message = 'Please login again and try again!';
+        break;
+      case 'auth/email-already-exists':
+        message = 'Email address is already in use';
+        break;
+      case 'auth/user-not-found':
+        message =
+          'Email does not exist';
+        break;
+      case 'auth/phone-number-already-exists':
+        message = 'The phone number is already in use by an existing user.';
+        break;
+      case 'auth/invalid-phone-number':
+        message = 'The phone number is not a valid phone number!';
+        break;
+      case 'auth/invalid-email  ':
+        message = 'The email address is not a valid!';
+        break;
+      case 'auth/cannot-delete-own-user-account':
+        message = 'You cannot delete your own user account.';
+        break;
+        default:
+        message = 'Oops! Something went wrong. Try again later.';
+        break;
     }
-    switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        errorMessage = 'This email exists already';
-        break;
-      case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-        errorMessage = 'Too many attempts try again later';
-        break;
-      case 'EMAIL_NOT_FOUND':
-        errorMessage = 'Email does not exist';
-        break;
-      case 'INVALID_EMAIL':
-        errorMessage = 'Email is invalid';
-        break;
-      case 'INVALID_PASSWORD':
-        errorMessage = 'Email and password do not match';
-        break;
-    }
-    return throwError(errorMessage);
+    console.log(message);
+    return message;
   }
 
   getExclusiveDetails(id: string) {

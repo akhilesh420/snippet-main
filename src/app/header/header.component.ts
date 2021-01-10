@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   isAuthenticated = false;
   widthAuth: string =  '313.781px';
 
-  uid: string;
+  myUid: string;
 
   collapsed = true;
   size = 35;
@@ -38,6 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   dropdown: boolean = false;
   displayPicture$: BehaviorSubject<any>;
 
+  showDashboard: boolean = false;
+
   constructor(private authService: AuthService,
               private router: Router,
               private usersService: UsersService,
@@ -51,11 +53,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(user => {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
-        this.uid = user.id;
-        this.collectionRoute = "collection/" + this.uid;
-        this.profileRoute = "profile/" + this.uid;
+        this.myUid = user.id;
+        this.collectionRoute = "collection/" + this.myUid;
+        this.profileRoute = "profile/" + this.myUid;
         this.createRoute = "/create/content";
-        this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+        this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
       } else {
         this.collectionRoute = '/auth';
         this.profileRoute = '/auth';
@@ -70,6 +72,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   clickAuth() {
     this.isAuthenticated ? this.authService.logout() : this.router.navigate(['/auth']);
+  }
+
+  dashboardToggle() {
+    this.showDashboard = !this.showDashboard;
+    this.miscellaneousService.showDashboard.next(this.showDashboard);
   }
 
   ngOnDestroy() {

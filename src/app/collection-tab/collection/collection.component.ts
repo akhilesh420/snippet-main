@@ -35,11 +35,16 @@ export class CollectionComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
+    if (!this.collection) return;
     this.pid = this.collection.pid;
     this.postDetails$ = this.postService.getPostDetails(this.pid);
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     this.miscellaneousService.userStickerSelection.pipe(takeUntil(this.notifier$)).subscribe(value => this.userStickerSelected = value)
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value)
+  }
+
+  ngOnChanges() {
+    this.ngOnInit();
   }
 
   setUpUser(uid: string) {

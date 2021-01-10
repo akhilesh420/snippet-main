@@ -33,7 +33,7 @@
 
         <ul class = "no-margin-no-padding" *ngIf='isAuthenticated'>
 
-            <li *ngFor='let collection of collectionList' class = "no-margin-no-padding padding-bottom ">
+            <li *ngFor='let collection of collectionList; trackBy: trackByFn;' class = "no-margin-no-padding padding-bottom ">
               <app-collection [collection]='collection'></app-collection>
             </li>
 

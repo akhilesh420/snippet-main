@@ -38,6 +38,7 @@ export class FeedbackComponent implements OnInit {
         this.userService.getProfileDetails(response.id).pipe(takeUntil(this.notifier$)) //get username
         .subscribe(res => {
           if (res) {
+            this.email = res.email;
             this.username = res.username;
           }
         })
@@ -46,7 +47,6 @@ export class FeedbackComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             this.fullname = res.name;
-            this.email = res.email;
           }
         })
       }

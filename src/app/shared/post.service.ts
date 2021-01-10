@@ -120,6 +120,8 @@ export class PostService {
                 this.stickerContentList[secIndex].obs.next(response);
               }
             });
+          } else {
+            return;
           }
         });
       });
