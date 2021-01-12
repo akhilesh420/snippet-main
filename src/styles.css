@@ -4,20 +4,23 @@
 
 /* Font Family */
 html, body {
-    font-family: 'Comfortaa', cursive;
-    font-style: normal;
-    font-weight: normal;
-    background-color: #000000;
-    letter-spacing: 0.1em;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
+  height: 100%;
+  width: 100%;
+  font-family: 'Comfortaa', cursive;
+  font-style: normal;
+  font-weight: normal;
+  background-color: #000000;
+  letter-spacing: 0.1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 
-    -webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;     /* Firefox all */
-    -ms-user-select: none;      /* IE 10+ */
-    user-select: none;          /* Likely future */
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
+  outline: none;
 }
 
 ::-webkit-scrollbar {

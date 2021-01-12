@@ -19,6 +19,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   @Input() uid$: BehaviorSubject<string>;
+  @Input() editable?: boolean = true;
   uid: string;
 
   profileDetails$: BehaviorSubject<ProfileDetails>;
@@ -36,13 +37,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   myUid: string;
   stickerSize: string;
-  fetchingWindow: boolean;
   profileRoute: string;
-
-  usernameFontSize: number;
-  usernamePadding: string;
-  maxWidth: number;
-  multiplier: number = 1;
 
   inEditing: Boolean = false;
   dpLoaded: Boolean = false;
@@ -77,12 +72,15 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
                private usersService: UsersService,
                private activityService: ActivityService,
                private router: Router,
-               private windowService: WindowStateService,
                private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    this.fetchingWindow = true;
-    this.windowService.checkWidth();
+    this.miscellaneousService.overrideEdit.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      if (!this.editable) return;
+      this.inEditing = !response;
+      this.resetState();
+      this.inEditing = response; //incase data is not loaded
+    });
 
     this.auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
@@ -105,9 +103,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.index = undefined;
     });
 
-    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.editStickers = response;
-    });
+    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(response => this.editStickers = response);
 
     this.setUp();
   }
@@ -139,7 +135,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.dpLoaded = true;
     });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
-    this.profileStickers$.pipe(take(2)).subscribe(stickers => {
+    this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
       if (!stickers) return;
       stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
       this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
@@ -247,10 +243,12 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   resetState() {
     if (!this.dpLoaded && !this.stickerLoaded && !this.descLoaded) return;
+    if (!this.editable) return this.onNoEditable();
     this.inEditing = !this.inEditing;
     this.editDesc = false;
     this.editLink = false;
     this.index = undefined;
+    this.miscellaneousService.profileStickerEdit.next(false);
   }
 
   onPressEnter(event) {
@@ -316,7 +314,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   clickProfileSticker(sticker: any, index: number) {
-    if (sticker && !this.inEditing && !this.stickerLoaded) return;
+    if ((sticker && !this.inEditing && !this.stickerLoaded) && !this.allowEdit) return;
+    if (!this.editable) return this.onNoEditable('sticker');
     this.inEditing = true;
     this.index = index;
     this.miscellaneousService.profileStickerEdit.next(true);
@@ -331,6 +330,12 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.profileStickersChanged = true;
       this.miscellaneousService.userStickerSelection.next(this.profileStickers[this.index]);
     });
+  }
+
+  onNoEditable(type: string = 'button') {
+    this.miscellaneousService.showDashboard.next(true);
+    this.miscellaneousService.overrideEdit.next(true);
+    if (type === 'sticker') this.miscellaneousService.profileStickerEdit.next(true);
   }
 
   onClickBack () {
