@@ -1,7 +1,6 @@
 .master-container {
-    height: 100vh;
-    width: 100vw;
-    /* overflow: auto; */
+  height: 100vh;
+  width: 100vw;
 }
 
 .fit-dimension {
@@ -17,7 +16,7 @@
   margin: 0 0 0 0;
 }
 
-.header-margin {
-  margin-top: 54px;
+.header-padding {
+  padding-top: 54px;
 }
 

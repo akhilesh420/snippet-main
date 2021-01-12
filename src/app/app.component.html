@@ -2,12 +2,8 @@
   (window:resize)="onResize()"
   (window:scroll)="onWindowScroll($event)">
 
-  <div class="container-fluid fit-dimension no-margin no-padding">
-    <div class="row fit-dimension no-margin no-padding">
-      <div class="col-12 fit-dimension no-margin no-padding" [ngClass]='!mobileCheck ? "header-margin" : null'>
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+  <div [ngClass]='!mobileCheck ? "header-padding" : null'>
+    <router-outlet></router-outlet>
   </div>
 
   <div *ngIf="popUpVal | async as value;">
