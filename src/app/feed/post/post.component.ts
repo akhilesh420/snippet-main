@@ -31,6 +31,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   collectionList: Observable<Collection[]>;
 
   viewed: boolean = false;
+  holderListAnalysed: boolean = false;
   showDetails = false;
   showComments = false;
   holderToggle = false;
@@ -54,7 +55,8 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   constructor(private postService: PostService,
               private authService: AuthService,
-              private activityService: ActivityService) { }
+              private activityService: ActivityService,
+              private router: Router) { }
 
   ngOnInit(): void {
     if (!this.postDetails) return;
@@ -159,6 +161,15 @@ import { WindowStateService } from 'src/app/shared/window.service';
       short = Math.round((num/1000000) * 100) / 100;
       return short.toString() + 'M';
       }
+  }
+
+  holderAnalytics() {
+    if (this.holderListAnalysed) return;
+    this.holderListAnalysed = true;
+    const timeSpent = new Date().getTime() -  this.activityService.holderListStartTime;
+    this.activityService.holderListStartTime = new Date().getTime();
+    const analytics = {type: 'holder list', route: this.router.url.split('/')[1], timeSpent: timeSpent};
+    this.activityService.addAnalytics(this.myUid, 'holder list analytics', analytics);
   }
 
   ngOnDestroy() {
