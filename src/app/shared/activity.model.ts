@@ -11,8 +11,8 @@ export class View {
 export class Collection {
 
   constructor(
-    public collectorID: string,
-    public collecteeID: string,
+    public collectorID: string, // collectorID: UID of the person who collected the sticker
+    public collecteeID: string, // collecteeID: UID of the person whose sticker was collected
     public pid: string,
     public timeStamp: number
   ) {}

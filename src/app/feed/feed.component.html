@@ -1,14 +1,12 @@
 <div class="main-container">
   <div class="feed-container">
     <div class="feed">
-      <div *ngIf='mobileCheck && showProfileDisplay' class="secondary-profile-display">
-        <app-profile-display  [uid$]='uid$'></app-profile-display>
+      <div *ngIf='showProfileDisplay' class="profile-display">
+        <app-profile-display  [uid$]='uid$' [editable] ='false'></app-profile-display>
       </div>
 
       <div class = "profileNavigation"
-      *ngIf="(lastRoute.split('/')[1] === 'profile'
-              ||  lastRoute.split('/')[1] === 'collection')
-              && lastRoute.split('/')[2] === myUid">
+          *ngIf="showProfileNavigation">
 
         <div class = "backpanel row no-margin-no-padding">
 
@@ -41,7 +39,8 @@
             <div class = "row postsbuttonPanel no-margin-no-padding">
 
               <div class = "col-5 no-margin-no-padding dpContainer"
-                  [ngClass]="{'dpContainer-bck': displayPicture$ | async}">
+                  [ngClass]="{'dpContainer-bck': displayPicture$ | async,
+                              'dpContainer-active': lastRoute.split('/')[1] === 'profile'}">
                 <img *ngIf='displayPicture$ | async as picture' [src]="picture" alt="dp">
               </div>
 
@@ -83,10 +82,10 @@
         </div>
       </div>
       <ng-template #loader>
-        <app-loading-spinner [ngClass]='{"center-absolute": mobileCheck}'></app-loading-spinner>
+        <app-loading-spinner [ngClass]='{"center-absolute": tabletCheck}'></app-loading-spinner>
       </ng-template>
     </div>
-    <div class='feed dashboard' *ngIf='!mobileCheck' >
+    <div class="feed dashboard" *ngIf='!tabletCheck'>
       <div class='profile-display'>
         <app-profile-display [uid$]='uid$'></app-profile-display>
       </div>

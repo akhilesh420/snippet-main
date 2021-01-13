@@ -3,7 +3,7 @@
       [routerLink]='!isAuthenticated ? "/auth" : null'
       [ngStyle]='{"cursor": !isAuthenticated ? "pointer" : null}'>
 
-    <div class = "row no-margin-no-padding profileDisplayBorder" [ngClass]='inEditing ? "profileDB-edit" : null'>
+    <div class = "row no-margin-no-padding profileDisplayBorder" [ngClass]='{"profileDB-edit" : inEditing, "my-profileDisplayBorder" : uid === myUid}'>
       <ng-template #display>
         <div class = "col no-margin-no-padding" >
           <div class = "row no-margin-no-padding displayStickers">

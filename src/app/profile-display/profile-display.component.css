@@ -1,4 +1,4 @@
- .profileDisplay {
+  .profileDisplay {
     height: 234px;
     width: 353px;
     position: relative;
@@ -9,11 +9,16 @@
  }
 
 .profileDisplayBorder {
-   height: 100%;
-   width: 100%;
-   background-image: url("src/assets/icons/Profile Display/profileDisplayBorder.svg");
-
+  height: 100%;
+  width: 100%;
+  background-image: url("src/assets/icons/Profile Display/profileDisplayBorder.svg");
  }
+
+ .my-profileDisplayBorder {
+  height: 100%;
+  width: 100%;
+  background-image: url("src/assets/icons/Profile Display/profileDisplayBorder.svg");
+}
 
 .profileDB-edit {
   background-image: url("src/assets/icons/Profile Display/editModeBackground.svg");

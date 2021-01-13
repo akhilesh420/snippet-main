@@ -58,13 +58,11 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   ngOnInit(): void {
     if (!this.postDetails) return;
-    console.log('ngOnInit', this.pid);
     this.restartPost();
     this.postViewTime();
   }
 
   ngOnChanges() {
-    console.log('ngOnChanges', this.pid);
     this.postViewTime();
     this.allowToggle = true;
   }
@@ -83,7 +81,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
       console.log(errorMessage);
     });
 
-    if (!this.postDetails.pid) return;
+    if (this.postDetails.pid === null || this.postDetails.uid === null) return;
     // user profile setup
     this.uid = this.postDetails.uid;
 

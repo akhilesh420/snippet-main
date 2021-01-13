@@ -1,9 +1,9 @@
+import { UsersService } from './../../shared/users.service';
 import { Router } from '@angular/router';
 import { ProfileDetails, ProfileSticker } from './../../shared/profile.model';
-import { UsersService } from 'src/app/shared/users.service';
 import { PostDetails } from './../../shared/post.model';
 import { PostService } from './../../shared/post.service';
-import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Collection } from 'src/app/shared/activity.model';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
@@ -30,8 +30,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
 
   constructor(private postService: PostService,
-              private userService: UsersService,
               private miscellaneousService: MiscellaneousService,
+              private userService: UsersService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -55,6 +55,11 @@ export class CollectionComponent implements OnInit, OnDestroy {
     if (!this.postDetails$) return;
     if (!this.profileStickerEdit) this.router.navigate(['/post/' + this.pid]);
     if (this.profileStickerEdit) this.miscellaneousService.stickerEmitted.next(this.pid);
+  }
+
+  usernameClick() {
+    if (this.profileStickerEdit) return;
+    this.router.navigate(["/profile/" + this.collection.collecteeID]);
   }
 
   stickerSelected() {

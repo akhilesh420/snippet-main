@@ -68,7 +68,7 @@
 
   width: 100%;
   height: 100%;
-  font-size: 1.8vh;
+  font-size: 1.6vh;
   font-family: 'Comfortaa';
   font-weight: bold;
 
@@ -103,8 +103,8 @@
 
 .stickerHolder {
 
-  height: 2.8vh;
-  width: 2.8vh;
+  height: 3vh;
+  width: 3vh;
   position: absolute;
   right: 0%;
   top: 2.4vh;
@@ -124,47 +124,110 @@
 
 .stickerHolder-1 {
 
-  height: 2.8vh;
-  width: 2.8vh;
+  height: 3vh;
+  width: 3vh;
   position: absolute;
-  right: 11%;
+  right: 12%;
   top: 2.4vh;
 
 }
 
 .stickerHolder-2 {
 
-  height: 2.8vh;
-  width: 2.8vh;
+  height: 3vh;
+  width: 3vh;
   position: absolute;
-  right: 22%;
+  right: 24%;
   top: 2.4vh;
 
 }
 
 .stickerHolder-3 {
 
-  height: 2.8vh;
-  width: 2.8vh;
+  height: 3vh;
+  width: 3vh;
   position: absolute;
-  right: 33%;
+  right: 36%;
   top: 2.4vh;
 
 }
 
 .stickerHolder-4 {
 
-  height: 2.8vh;
-  width: 2.8vh;
+  height: 3vh;
+  width: 3vh;
   position: absolute;
-  right: 44%;
+  right: 48%;
   top: 2.4vh;
 
 }
 
 
 
+@media screen and (max-width: 550px) {
 
+.dpHolder {
+  left: -4%;
+}
+
+.dpContainer {
+  width: 7.2vh;
+  height: 7.2vh;
+}
+
+.collectionDate {
+  font-size: 1.4vh;
+}
+
+.usernameSpace {
+  font-size: 2vh;
+}
+
+.stickerHolder {
+
+  height: 3.4vh;
+  width: 3.4vh;
+  top: 2.5vh;
+
+}
+
+.stickerHolder-1 {
+
+  height: 3.4vh;
+  width: 3.4vh;
+  top: 2.5vh;
+
+}
+
+.stickerHolder-2 {
+
+  height: 3.4vh;
+  width: 3.4vh;
+  top: 2.5vh;
+
+}
+
+.stickerHolder-3 {
+
+  height: 3.4vh;
+  width: 3.4vh;
+  top: 2.5vh;
+
+}
+
+.stickerHolder-4 {
+
+  height: 3.4vh;
+  width: 3.4vh;
+  top: 2.5vh;
+
+}
+
+.holderDetails {
+  top: 18%;
+}
+
+}
 
 
 

@@ -14,19 +14,8 @@ import { UsersService } from '../shared/users.service';
 export class HeaderComponent implements OnInit, OnDestroy{
 
   isAuthenticated = false;
-  widthAuth: string =  '313.781px';
-
   myUid: string;
 
-  collapsed = true;
-  size = 35;
-  mobile: boolean = false;
-  marginBottom: string = '35px';
-  marginLeft: string;
-
-  windowWidth: number;
-
-  collectionRoute: string = '/auth';
   profileRoute: string = '/auth';
   createRoute: string = '/auth';
 
@@ -54,20 +43,18 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
         this.myUid = user.id;
-        this.collectionRoute = "collection/" + this.myUid;
-        this.profileRoute = "profile/" + this.myUid;
+        this.profileRoute = "/profile/" + this.myUid;
         this.createRoute = "/create/content";
         this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
       } else {
-        this.collectionRoute = '/auth';
         this.profileRoute = '/auth';
         this.createRoute =  '/auth';
       }
     });
 
-    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.currentRoute = this.router.url;
-    });
+    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => this.currentRoute = this.router.url);
+
+    this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => this.showDashboard = value);
   }
 
   clickAuth() {
