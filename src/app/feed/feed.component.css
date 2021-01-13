@@ -114,6 +114,18 @@
   left: 52px;
 }
 
+.fail-safe {
+
+  margin-top: 5px;
+  display: grid;
+  place-items: center;
+
+}
+
+.fail-safe > img {
+  transform: rotate(90deg);
+}
+
 @media only screen and (max-width: 800px) {
 
   .feed {
