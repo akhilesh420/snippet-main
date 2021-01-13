@@ -24,7 +24,7 @@
 
 .heading {
 
-    margin-top: 8.222%;
+    margin-top: calc(54px + 5vh);
 
 
 }
@@ -52,7 +52,6 @@
   letter-spacing: 0.1em;
   color: #FFFFFF;
   padding-left: 18px;
-  margin-top: 2vh;
 
 }
 
@@ -61,7 +60,6 @@
   top: 1vh;
   height: 3.611vh;
   width: 25.625vw;
-
 
 }
 
@@ -153,9 +151,9 @@
 
 .description {
 
-  position: relative;
-  top: 71.22222%;
-  left: 71.6417%;
+  position: absolute;
+  top: 80%;
+  right: 2.5%;
   height: 4.444vh;
   width: 20.5555vw;
 
@@ -173,18 +171,30 @@
 
 }
 
+.loginButton {
+  margin-top: 5vh;
+  margin-left: 12px;
+}
+
+
 
 input {
+  border: none;
   outline: none;
   padding-left: 10px;
   text-align: left;
+  font-family: 'ChampagneAndLimousines';
+  font-size: 2vh;
+  background:#9A9696;
 }
 
 input:focus,
 textarea:focus {
-  border: 2px solid #EAB430;
-  color: #EAB430;
-  background: #0B0B0B;
+  color: #000000;
+  outline: none;
+  background: #C4C4C4;
+  font-family: 'ChampagneAndLimousines';
+  font-size: 2vh;
 }
 
 
@@ -200,27 +210,6 @@ textarea:focus {
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-label,
-span{
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  font-size: 2.6vh;
-  letter-spacing: 0em;
-  color: rgba(255, 255, 255, 0.7);;
-  font-weight: bold;
-  margin-top: 3vh;
-}
 /*
 input {
   font-family: 'ChampagneAndLimousines';
@@ -245,6 +234,7 @@ textarea:focus {
   border: 2px solid #EAB430;
   color: #EAB430;
   background: #0B0B0B;
+  outline: none;
 }
 
 ::-webkit-calendar-picker-indicator {
@@ -262,8 +252,7 @@ textarea:focus {
   color: #EAB430;
   background: #131114;
   border-radius: 20px;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding-left: 12px;
   border: none;
 }
 
