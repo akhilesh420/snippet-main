@@ -1,3 +1,4 @@
+import { FeedService } from './../feed/feed.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
@@ -25,7 +26,8 @@ export class AuthService {
 
   constructor(private router: Router,
               private afs: AngularFirestore,
-              private auth: AngularFireAuth) {
+              private auth: AngularFireAuth,
+              private feedService: FeedService) {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.user.next(new User(user.email, user.uid));
@@ -69,6 +71,7 @@ export class AuthService {
 
   logout() {
     this.auth.signOut().then(() => {
+      this.feedService.$collectionPageList.next(undefined);
       this.router.navigate(['/auth']);
       console.log('signed out');
     }).catch((error) => {
