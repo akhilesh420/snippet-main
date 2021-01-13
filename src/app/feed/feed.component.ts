@@ -1,4 +1,3 @@
-import { DisplayPicture } from './../shared/profile.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { WindowStateService } from './../shared/window.service';
 import { AuthService } from './../auth/auth.service';
@@ -34,10 +33,14 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   //Video auto play and pause
   postHeight: number; //height of the posts
-  feedPaddingTop: number = 5; //top margin on each post;
-  postNumber: number = 0; //the index of the post thats being viewed
+  postPaddingTop: number = 5; //top margin on the entire feed;
+  postNumber: number = -1; //the index of the post thats being viewed
   showProfileDisplay: boolean; //weather or not to show the profile display tab
   profileDisplayHeight: number = 234; //height of the profile display
+  profileDisplayMargin: number = 20; //margin of the profile display
+  showProfileNavigation: boolean; //weather or not to show the profile display tab
+  profileNavigationHeight: number = 55; //height of the profile navigation buttons
+  profileNavigationMargin: number = 7; //margin of the profile navigation buttons
 
   viewPort: number;
 
@@ -45,6 +48,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   myUid$ = new BehaviorSubject<string>(null); //From URL
   displayPicture$ = new BehaviorSubject<string>(null); //From URL
   myUid: string; //Authenticated user uid
+  uid: string; //current profile uid
   isAuthenticated: boolean;
   lastRoute: string; //last route that user was on
   mobileCheck: boolean;
@@ -53,7 +57,6 @@ export class FeedComponent implements OnInit, OnDestroy {
   @ViewChild('post') post: ElementRef;
 
   profileStickerEdit: boolean = false;
-  showDashboard: boolean = false;
 
   constructor(private miscellaneousService: MiscellaneousService,
               private feedService: FeedService,
@@ -68,7 +71,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const emptyPost = new PostDetails(null, "","",new Date(), null);
-    this.feedList$ = new BehaviorSubject<PostDetails[]>([emptyPost,emptyPost,emptyPost,emptyPost]);
+    this.feedList$ = new BehaviorSubject<PostDetails[]>([emptyPost]);
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -79,33 +82,29 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.getPosts(this.router.url);
-    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.getPosts(this.router.url);
+    this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      if (!val) return;
+      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
+      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
     });
 
     this.route.params
     .subscribe(
       (params: Params) => {
         this.uid$.next(params['id']);
-      });
-
-    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$))
-      .subscribe(value => this.profileStickerEdit = value);
-
-    this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$))
-      .subscribe(value => this.showDashboard = value);
+    });
 
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
       this.postNumber = this.currentPostNumber(scrollY);
       this.infiniteScroll();
     });
 
-    this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
-    .subscribe(val => {
-      if (!val) return
-      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
-      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
+    this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
+
+    this.getPosts(this.router.url);
+    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
+      this.getPosts(this.router.url);
     });
 
   }
@@ -125,9 +124,11 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.lastRoute = currentRoute;
     currentRoute = currentRoute.split('/')[1]; //get parent route
     this.showProfileDisplay = false;
+    this.showProfileNavigation = false;
     this.done = true;
-    this.postNumber = 0;
+    this.postNumber = -1;
     if (currentRoute === 'explore') {
+      this.postNumber = 0;
       this.myUid$.pipe(take(2)).subscribe(uid => {
         if (!uid) return;
         setTimeout(() => this.uid$.next(uid), 100);
@@ -141,19 +142,22 @@ export class FeedComponent implements OnInit, OnDestroy {
         return;
       }
       this.postsList$ = this.feedService.getCollectionPage(uid);
-      this.showProfileDisplay = true;
+      if (this.tabletCheck) this.showProfileDisplay = true;
+      this.showProfileNavigation = true;
     } else if (currentRoute === 'profile') {
-      const uid = this.route.snapshot.params['id']
-      this.uid$.next(uid);
-      this.postsList$ = this.feedService.getProfilePage(uid);
-      this.showProfileDisplay = true;
+      this.uid = this.route.snapshot.params['id']
+      this.uid$.next(this.uid);
+      this.postsList$ = this.feedService.getProfilePage(this.uid);
+      if (this.tabletCheck) this.showProfileDisplay = true;
+      if (this.uid === this.myUid) this.showProfileNavigation = true;
     } else if (currentRoute === 'post') {
       const pid = this.route.snapshot.params['id'];
       this.postsList$ = this.feedService.getPostPage(pid);
       this.postsList$.pipe(take(1)).subscribe(res => {
-        this.uid$.next(res[0].uid);
+        this.uid = res[0].uid;
+        this.uid$.next(this.uid);
       });
-      this.showProfileDisplay = true;
+      if (this.tabletCheck) this.showProfileDisplay = true;
     }
 
     this.setUpPosts();
@@ -208,9 +212,10 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   currentPostNumber(scrollY): number {
-    scrollY = scrollY - this.feedPaddingTop;
-    const scroll = this.showProfileDisplay ? scrollY - this.profileDisplayHeight : scrollY;
-    if (scroll < 0) return 0;
+    let scroll = scrollY - this.postPaddingTop;
+    scroll = this.showProfileDisplay ? scroll - (this.profileDisplayHeight + this.profileDisplayMargin) : scroll;
+    scroll = this.showProfileNavigation ? scroll - (this.profileNavigationHeight + this.profileNavigationMargin) : scroll;
+    if (scroll < 0) return -1;
     return Math.round(scroll/this.viewPort);
   }
 

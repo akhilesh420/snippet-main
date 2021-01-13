@@ -45,6 +45,7 @@ export class MiscellaneousService {
   lastRoute  = '/explore';
 
   showDashboard = new Subject<boolean>();
+  overrideEdit = new Subject<boolean>();
 
   constructor(private userService: UsersService,
               private router: Router) { }

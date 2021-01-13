@@ -43,12 +43,7 @@
 }
 
 .collection-tab-edit {
-  transform: translate(59px, calc( -1 * (234px + 2.4444vh - 65px)));
-}
-
-.secondary-profile-display {
-  margin-left: calc((100vw - 353px)/2);
-  margin-bottom: 20px;
+  transform: translate(59px, -180px);
 }
 
 .center-absolute {
@@ -64,8 +59,13 @@
   position: relative;
   width: 340px;
   height: 55px;
+<<<<<<< HEAD
   margin-left: calc(((375 * (79vh) / 667) - 340px) / 2);
   margin-bottom: 1.22vh;
+=======
+  margin-left: calc(((9 * (79vh) / 16) - 340px) / 2);
+  margin-bottom: 7px;
+>>>>>>> 9100e70750a18b550fe81003393f635ed772f69e
 }
 
 .backpanel {
@@ -104,6 +104,10 @@
   background-color:transparent;
 }
 
+.dpContainer-active {
+  border: 2px solid #E2B33D;
+}
+
 .postsbuttonPanel {
   height: 100%;
   width: 100%;
@@ -115,25 +119,25 @@
   left: 52px;
 }
 
+@media only screen and (max-width: 800px) {
+
+  .feed {
+    display: grid;
+    place-items: center;
+  }
+
+  .profileNavigation {
+    margin-left: unset;
+  }
+}
+
 @media only screen and (min-width: 550px) and (max-width: 800px) {
-
-  .profile-display {
-    display: none;
-  }
-
-  .dashboard {
-    display: none;
-  }
 
   .feed-container {
     width: unset;
     padding-top: 5.444vh;
   }
 
-  .feed {
-    display: grid;
-    place-items: center;
-  }
 
   .post-container {
     height: 82vh;
@@ -161,6 +165,10 @@
     height: 100vh;
     width: 100vw;
     padding-top: 5px;
+  }
+
+  .feed {
+    padding-bottom: 54px;
   }
 
 }
