@@ -131,7 +131,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   const args1 = ['-i',
                   tempFilePath,
                   '-vf',
-                  'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=decrease',
+                  'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=increase',
                   outputFilePath1];
 
   const args2 = ['-strip',
@@ -195,7 +195,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   const args1 = ['-i',
                   tempFilePath,
                   '-vf',
-                  'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=decrease',
+                  'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=increase',
                   outputFilePath1];
 
   const args2 = ['-strip',
