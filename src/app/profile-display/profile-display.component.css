@@ -9,9 +9,13 @@
  }
 
 .profileDisplayBorder {
+  
   height: 100%;
   width: 100%;
-  background-image: url("src/assets/icons/Profile Display/profileDisplayBorder.svg");
+  border: #E2B33D;
+  border-radius: 13px;
+  border-width: 2px;
+  
  }
 
  .my-profileDisplayBorder {
