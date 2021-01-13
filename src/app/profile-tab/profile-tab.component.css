@@ -62,23 +62,6 @@
     height: 100%;
 }
 
-
-/* .displayStickers {
-    height: 100%;
-    position: relative;
-}
-
-.stickerContainer {
-    height: 2.466vh;
-    width: 2.466vh;
-    border-radius: 50%;
-    margin: 0;
-    position: absolute;
-    top: 20%;
-    left: -10%;
-    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-} */
-
 .sticker-bck {
   background-color: #8F8F8F;
 }
@@ -90,7 +73,10 @@
     position: absolute;
     top: 18%;
     right: 5%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+
 }
+
 
 .sticker-1 {
     height: 2.8vh;
@@ -99,6 +85,7 @@
     position: absolute;
     top: 18%;
     right: 28%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 .sticker-2 {
@@ -108,6 +95,7 @@
     position: absolute;
     top: 18%;
     right: 52%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 
@@ -118,6 +106,7 @@
     position: absolute;
     top: 18%;
     right: 76%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 .sticker-4 {
@@ -127,6 +116,7 @@
     position: absolute;
     top: 18%;
     right: 100%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 
