@@ -92,8 +92,8 @@
 
   position: absolute;
   height: 8.555vh;
-  width: 13.4027vw;
-  top: 84%;
+  width: 14.4027vw;
+  bottom: 1.5%;
   left: 15px;
 
 }
@@ -152,10 +152,10 @@
 .description {
 
   position: absolute;
-  top: 80%;
-  right: 2.5%;
-  height: 4.444vh;
-  width: 20.5555vw;
+  top: 70%;
+  right: 4%;
+  height: 12vh;
+  width: auto;
 
 }
 
@@ -171,8 +171,22 @@
 
 }
 
+.forgotPassword {
+
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;  
+  color: rgba(235, 221, 187, 0.9);
+  opacity: 0.7;
+  font-size: 1.8vh;
+  position: absolute;
+  margin-top: 1.2vh;
+  left: 18px;
+
+}
+
 .loginButton {
-  margin-top: 5vh;
+  margin-top: 6vh;
   margin-left: 12px;
 }
 
@@ -184,6 +198,7 @@ input {
   padding-left: 10px;
   text-align: left;
   font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
   font-size: 2vh;
   background:#9A9696;
 }
@@ -194,6 +209,7 @@ textarea:focus {
   outline: none;
   background: #C4C4C4;
   font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
   font-size: 2vh;
 }
 
@@ -276,14 +292,94 @@ input.invalidAmount {
 }
 
 .danger-alert {
-  margin-bottom: 2vh;
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 2.0vh;
   color:#891E13;
   width: 100%;
+  margin-top: 2vh;
+  padding-left: 18px;
 }
 
 .topPadding {
   padding-top: 20vh;
+}
+
+
+@media only screen and (max-width: 550px) {
+
+  .form {
+    width: 100%;
+    height: 60%;
+  }
+
+  .subLinks {
+    display: none;
+  }
+
+  .onBoarding {
+    width: 100%;
+    height: 40%;
+    position: absolute;
+    top: 53%;
+    margin-left: unset;
+  }
+
+  .description {
+    display: none;
+  }
+
+  .heading {
+    margin-top: 16px;
+
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .entryfieldOneTitle {
+    font-size: 22px;
+
+  }
+
+  .entryfield {
+    width: 90%;
+  }
+
+  .entryfieldOne {
+    height: 25px;
+    width: 100%;
+  }
+
+  .entryfieldTwoTitle {
+    font-size: 22px;
+    margin-top: 30px;
+  }
+
+  .forgotPassword {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  .loginButton {
+    margin-top: 40px;
+  }
+
+  .btn {
+    font-size: 16px;
+  }
+
+  .danger-alert {
+    margin-top: 6px;
+    font-size: 12px;
+    padding-left: 18px;
+  }
+
+  .clickPrompt {
+    position: absolute;
+    right: 2%;
+    bottom: 5%;
+    width: 200px;
+  }
 }
