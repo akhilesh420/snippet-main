@@ -184,6 +184,7 @@ input {
   padding-left: 10px;
   text-align: left;
   font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
   font-size: 2vh;
   background:#9A9696;
 }
@@ -194,6 +195,7 @@ textarea:focus {
   outline: none;
   background: #C4C4C4;
   font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
   font-size: 2vh;
 }
 
