@@ -125,15 +125,15 @@
 }
 
 .onBoarding {
-    
- 
+
+
   width: 69.791667%;
   height: 100%;
   margin-left: 30.208%;
   /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   background: linear-gradient(102.39deg, #632FDE 0.7%, #8451B4 15.32%, #E2B33D 46.6%, #DB7E3D 78.17%, #CF263C 100%);
   background-size: 400% 400%;
-  animation: gradient 15s ease infinite; 
+  animation: gradient 15s ease infinite;
 
 }
 
@@ -175,7 +175,7 @@
 
   font-family: "ChampagneAndLimousines";
   font-style: normal;
-  font-weight: bold;  
+  font-weight: bold;
   color: rgba(235, 221, 187, 0.9);
   opacity: 0.7;
   font-size: 1.8vh;
@@ -305,6 +305,14 @@ input.invalidAmount {
   padding-top: 20vh;
 }
 
+.title-forgot {
+  font-size: 4vh;
+}
+
+.back-to-sign {
+  margin-top: 14.4vh;
+}
+
 
 @media only screen and (max-width: 550px) {
 
@@ -338,9 +346,12 @@ input.invalidAmount {
     font-size: 32px;
   }
 
+  .title-forgot {
+    font-size: 28px;
+  }
+
   .entryfieldOneTitle {
     font-size: 22px;
-
   }
 
   .entryfield {
@@ -360,6 +371,10 @@ input.invalidAmount {
   .forgotPassword {
     font-size: 16px;
     margin-top: 5px;
+  }
+
+  .back-to-sign {
+    margin-top: 95px;
   }
 
   .loginButton {

@@ -35,7 +35,7 @@
 
     <div class = "row heading no-margin-no-padding">
 
-      <p class = "title">Sign {{isLoginMode ? 'In' : 'Up'}}</p>
+      <p class = "title" [ngClass]='{"title-forgot": isForgetMode}'>{{isForgetMode ? 'Trouble logging in?' : isLoginMode ? 'Sign In' : 'Sign Up'}}</p>
 
     </div>
 
@@ -43,7 +43,7 @@
 
       <div class = "row entryfieldOneTitle no-margin-no-padding">
 
-        <p>E-mail / Username</p>
+        <p>E-mail {{!isForgetMode ?  '/ Username' : ''}}</p>
 
       </div>
 
@@ -61,13 +61,13 @@
 
       </div>
 
-      <div class = "row entryfieldTwoTitle no-margin-no-padding">
+      <div *ngIf='!isForgetMode' class = "row entryfieldTwoTitle no-margin-no-padding">
 
         <p>Password</p>
 
       </div>
 
-      <div class = "row entryfield no-margin-no-padding">
+      <div *ngIf='!isForgetMode'  class = "row entryfield no-margin-no-padding">
 
         <input
               type="password"
@@ -82,9 +82,9 @@
 
       </div>
 
-      <div class = "row forgotPassword no-margin-no-padding">
+      <div class = "row forgotPassword no-margin-no-padding" [ngClass]='{"back-to-sign": isForgetMode}'>
 
-        <p>Forgot Password ?</p>
+        <p (click)='onSwitchMode("forget")'>{{isForgetMode ? 'Back to Sign In' : 'Forgot Password?'}}</p>
 
       </div>
 
