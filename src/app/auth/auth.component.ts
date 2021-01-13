@@ -25,7 +25,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   error: string = null;
   passwordError: string = null;
 
-  email: string;
+  credential: string;
   password: string;
   name: string;
   username: string;
@@ -112,10 +112,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
-    console.log(this.isLoginMode, this.isForgetMode); //temp log
     if (this.isLoading) return;
 
-    if (!this.email || this.email.length === 0) return this.error = "Email is required";
+    this.isLoading = true;
+
+    if (!this.credential || this.credential.length === 0) return this.errorMessage("Email or username is required");
 
     if (!this.isForgetMode) {
       if (!this.isLoginMode) {
@@ -125,31 +126,38 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.dob = new Date();
         this.name = "test";
 
-        if (!this.username || this.username.length === 0) return this.error = "Username is required"
+        if (!this.username || this.username.length === 0) return this.errorMessage("Username is required");
 
-        if (this.username && this.username.indexOf(' ') != -1) return this.error = "Username can't have spaces";
+        if (this.username && this.username.indexOf(' ') != -1) return this.errorMessage("Username can't have spaces");
 
-        if (this.username.length > 21) return this.error = "Username can't be longer than 21 characters";
+        if (this.username.length > 21) return this.errorMessage("Username can't be longer than 21 characters");
 
         const usernameRes = await this.userService.getProfileDetailsByKey('username', this.username).pipe(first()).toPromise();
 
-        if (Object.keys(usernameRes).length != 0) return this.error = "Username taken";
+        if (Object.keys(usernameRes).length != 0) return this.errorMessage("Username taken");
 
+      } else {
+        if (!this.validEmail(this.credential)) {
+          this.isLoading = true;
+          const usernameRes = await this.userService.getProfileDetailsByKey('username', this.credential).pipe(first()).toPromise();
+          if (usernameRes.length === 0) return this.errorMessage("Username does not exist");
+          this.credential = usernameRes[0].email;
+        }
       }
 
-      if (!this.password || this.password.length === 0) return this.error = "Password is required";
 
-      if (!this.password || this.password.length < 6) return this.error = "Password must be at least 6 characters";
+      if (!this.password || this.password.length === 0) return this.errorMessage("Password is required");
+
+      if (!this.password || this.password.length < 6) return this.errorMessage("Password must be at least 6 characters");
     }
 
-    this.isLoading = true;
     let message: string;
     if (this.isLoginMode && !this.isForgetMode) {
-      message = await this.authService.logIn(this.email, this.password);
+      message = await this.authService.logIn(this.credential, this.password);
     } else if (!this.isLoginMode && !this.isForgetMode){
-      message = await this.authService.signUp(this.email, this.password);
+      message = await this.authService.signUp(this.credential, this.password);
     } else if (this.isForgetMode) {
-      message = await this.authService.forgotPassword(this.email);
+      message = await this.authService.forgotPassword(this.credential);
     }
 
     if (message != 'success') {
@@ -166,7 +174,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (!this.isLoginMode && !this.isForgetMode) {
       const uid = this.authService.user.value.id;
 
-      const profileDetails  = new ProfileDetails(this.username, '','', this.email);
+      const profileDetails  = new ProfileDetails(this.username, '','', this.credential);
       const personalDetails = new PersonalDetails(this.name, this.dob, new Date());
       const displayPicture = new DisplayPicture(new Date(), 'null');
       // const onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
@@ -187,6 +195,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
+  errorMessage(error: string) {
+    this.error = error;
+    this.isLoading = false;
+  }
+
   avoidSpace(event) {
     let k = event.keyCode;
     if (k == 32) return false;
@@ -196,6 +209,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     let key = event.keyCode;
     return ((key >= 65 && key <= 90) || key == 8 || key == 32);
   }
+
+  validEmail(str) {
+    var pattern = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    return !!pattern.test(str);
+    }
 
   ngOnDestroy() {
     this.notifier$.next();
