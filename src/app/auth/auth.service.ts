@@ -25,7 +25,7 @@ export class AuthService {
 
   constructor(private router: Router,
               private afs: AngularFirestore,
-              public auth: AngularFireAuth) {
+              private auth: AngularFireAuth) {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.user.next(new User(user.email, user.uid));

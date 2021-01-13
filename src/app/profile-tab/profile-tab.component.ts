@@ -23,7 +23,7 @@ export class ProfileTabComponent implements OnInit {
 
   notifier$ = new Subject();
   profileDetails$: BehaviorSubject<ProfileDetails>;
-  profileStickers$: Observable<ProfileSticker[]>;
+  profileStickers: ProfileSticker[] = [null,null,null,null,null];
   stickerContent$: BehaviorSubject<any>;
   profileRoute: string;
   engagementProp = {'width': '0','background': '#E2B33D'};
@@ -35,6 +35,7 @@ export class ProfileTabComponent implements OnInit {
   postCollection: Collection[] = [];
   collectionLoaded = false;
   collectingSticker: boolean = false;
+  profileStickersLoaded: boolean = false;
 
   constructor(private postService: PostService,
               private usersService: UsersService,
@@ -68,8 +69,13 @@ export class ProfileTabComponent implements OnInit {
   }
 
   setUp() {
+    this.profileStickersLoaded = false;
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
-    this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
+    this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+      if (!response) return;
+      this.profileStickers = response;
+      this.profileStickersLoaded = true;
+    });;
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     // post collection list
     this.activityService.getPostCollection(this.pid).subscribe(response => {

@@ -36,24 +36,24 @@
 
                     </div> -->
 
-                    <div class = "sticker">
-
+                    <div class = "sticker" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+                      <app-sticker *ngIf='profileStickers[0] != null' [pid]="profileStickers[0].pid"></app-sticker>
                     </div>
 
-                    <div class = "sticker-1">
-
+                    <div class = "sticker-1" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+                      <app-sticker *ngIf='profileStickers[1] != null' [pid]="profileStickers[1].pid"></app-sticker>
                     </div>
 
-                    <div class = "sticker-2">
-
+                    <div class = "sticker-2" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+                      <app-sticker *ngIf='profileStickers[2] != null' [pid]="profileStickers[2].pid"></app-sticker>
                     </div>
 
-                    <div class = "sticker-3">
-
+                    <div class = "sticker-3" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+                      <app-sticker *ngIf='profileStickers[3] != null' [pid]="profileStickers[3].pid"></app-sticker>
                     </div>
 
-                    <div class = "sticker-4">
-
+                    <div class = "sticker-4" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+                      <app-sticker *ngIf='profileStickers[4] != null' [pid]="profileStickers[4].pid"></app-sticker>
                     </div>
 
                 </div>
