@@ -139,10 +139,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     } else if (currentRoute === 'collection') {
       const uid = this.route.snapshot.params['id']
       this.uid$.next(uid);
-      if (this.myUid != uid) { //Redirect if not your collection
-        this.router.navigate(['/explore']);
-        return;
-      }
       this.postsList$ = this.feedService.getCollectionPage(uid);
       if (this.tabletCheck) this.showProfileDisplay = true;
       this.showProfileNavigation = true;

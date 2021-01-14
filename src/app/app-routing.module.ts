@@ -6,22 +6,26 @@ import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-pag
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { map } from 'rxjs/operators';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth']);
+const onlyAllowSelf = (next) => map((user: any) => !!user && next.params.id === user.uid);
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/explore', pathMatch: 'full'},
   { path: 'explore', component: FeedComponent},
-  { path: 'collection/:id', component: FeedComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }},
-  { path: 'create/:step', component: CreateComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }},
-  { path: 'create', redirectTo: '/create/content', pathMatch: 'full', canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }},
+  { path: 'collection/:id', component: FeedComponent, ...canActivate(onlyAllowSelf)},
+  { path: 'create/:step', component: CreateComponent, ...canActivate(redirectUnauthorizedToLogin)},
+  { path: 'create', redirectTo: '/create/content', pathMatch: 'full', ...canActivate(redirectUnauthorizedToLogin)},
   { path: 'profile/:id', component: FeedComponent},
   { path: 'feedback', component: FeedbackComponent},
   { path: 'post/:id', component: FeedComponent},
   { path: 'auth', component: AuthComponent},
   { path: 'auth/:id', component: AuthComponent},
-  { path: 'tutorial', component: TutorialPageComponent}
+  { path: 'tutorial', component: TutorialPageComponent},
+  {path: '404', redirectTo: '/explore'},
+  {path: '**', redirectTo: '/explore'}
 ];
 
 
