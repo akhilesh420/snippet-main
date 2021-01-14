@@ -1,16 +1,12 @@
-import { MiscellaneousService, PopUp } from './../../shared/miscellaneous.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
-import { Subject, Subscription, Observable, BehaviorSubject } from 'rxjs';
-import { ProfileDetails, ProfileSticker} from './../../shared/profile.model';
+import { Subject,Observable, BehaviorSubject } from 'rxjs';
 import { PostService } from './../../shared/post.service';
-import { StickerDetails, PostDetails, PostContent } from './../../shared/post.model';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, ElementRef, ViewChild, AfterViewInit, OnChanges, AfterViewChecked } from '@angular/core';
-import { filter, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import { UsersService } from 'src/app/shared/users.service';
+import { PostDetails} from './../../shared/post.model';
+import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild, OnChanges, AfterViewChecked } from '@angular/core';
+import { takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
-import { WindowStateService } from 'src/app/shared/window.service';
 
 @Component({
   selector: 'app-post',
@@ -35,6 +31,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   showDetails = false;
   showComments = false;
   holderToggle = false;
+  fullscreenToggle = false;
   collected: string = '0';
   views: string = '0';
   engagementRatio: number = 0;
@@ -170,6 +167,11 @@ import { WindowStateService } from 'src/app/shared/window.service';
     this.activityService.holderListStartTime = new Date().getTime();
     const analytics = {type: 'holder list', route: this.router.url.split('/')[1], timeSpent: timeSpent};
     this.activityService.addAnalytics(this.myUid, 'holder list analytics', analytics);
+  }
+
+  stopPropagation(event) {
+    console.log(this.fullscreenToggle);
+    event.stopPropagation();
   }
 
   ngOnDestroy() {
