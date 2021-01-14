@@ -211,6 +211,14 @@ li {
   height: auto;
 }
 
+.fullscreenButton {
+  position: absolute;
+  bottom: 22%;
+  right: calc(1.8% + 4.2vh);
+  height: 2.8vh;
+  width: 2.8vw;
+  transform: translate(50%, 0%);
+}
 
 /* Animations */
 
