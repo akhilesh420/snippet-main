@@ -227,7 +227,7 @@ li {
   bottom: 22%;
   right: calc(1.8% + 4.2vh);
   height: 2.8vh;
-  width: 2.8vw;
+  width: auto;
   transform: translate(50%, 0%);
 }
 
@@ -404,6 +404,14 @@ li {
 
   .holderTitle {
     font-size: 2vh;
+  }
+
+  .fullscreenButton {
+  
+    bottom: 24%;
+    right: calc(1.8% + 5.24735vh);
+    height: 3.6vh;
+    
   }
 
 

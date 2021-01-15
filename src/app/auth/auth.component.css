@@ -1,3 +1,81 @@
+.backpanel {
+
+  position: absolute;
+  width: 340px;
+  height: 486px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background: #060606;
+  box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;  
+
+}
+
+.topHeading {
+
+  height: 132px;
+  width: 100%;
+
+}
+
+.headingSVG {
+  position: absolute;
+  top: 53px;
+  left: 19px;
+}
+
+.entry {
+  display: grid;
+  place-items: center;
+}
+
+.entryBox {
+  width: 312px;
+  height: 36px;
+  background: #9A9696;
+  border-radius: 13px;
+  margin-bottom: 15px;
+}
+
+.entryBoxLast {
+  margin-bottom: 68px;
+}
+
+
+.btnSignIn {
+  width: 190px;
+  height: 45px;
+  background: #E2B33D;
+  border-radius: 13px;
+  outline: none;
+  border: none;
+}
+
+.logoSignUp {
+  position: absolute;
+  bottom: 19px;
+  right: 25px;
+  height: 10.888vh;
+  width: 17.36111vw;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .authScreen {
 
   height: calc(100vh - 54px);
@@ -396,5 +474,14 @@ input.invalidAmount {
     right: 2%;
     bottom: 5%;
     width: 200px;
+  }
+
+  .backpanel {
+    top: 10%;
+    transform: translate(-50%, 0%);
+  }
+
+  .logoSignUp {
+    display: none;
   }
 }
