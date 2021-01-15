@@ -105,6 +105,10 @@ li {
   object-fit: contain;
 }
 
+.hide {
+  display: none;
+}
+
 .postDetails {
   width: 100%;
   height: 100%;
