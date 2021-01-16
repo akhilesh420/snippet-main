@@ -12,8 +12,7 @@
        (click)="toggleDashboard($event);"
        [ngClass]='showDashboard ? "show-dashboard " : "hide-dashboard"'>
 
-    <div style='position: relative'>
-      <div class="feed">
+       <div class="feed">
 
         <div class='profile-display' (click)="stopPropagation($event)">
           <app-profile-display [uid$]='myUid$'></app-profile-display>
@@ -24,7 +23,6 @@
         </div>
 
       </div>
-    </div>
 
   </div>
 
