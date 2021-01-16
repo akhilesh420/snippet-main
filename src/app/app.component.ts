@@ -63,7 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.miscellaneousService.showDashboard.next(false);
       this.activityService.collectionStartTime = new Date().getTime();
       this.activityService.holderListStartTime = new Date().getTime();
-      if (this.currentRoute != '/auth') this.miscellaneousService.lastRoute = this.currentRoute;
+      if (!this.currentRoute.includes('/auth')) this.miscellaneousService.lastRoute = this.currentRoute;
     });
 
     this.auth.onAuthStateChanged((user) => {

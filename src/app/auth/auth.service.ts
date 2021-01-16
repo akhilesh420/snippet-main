@@ -40,18 +40,18 @@ export class AuthService {
   }
 
   async signUp(email: string, password: string) {
-    console.log('sign up');
     let message = 'success';
     await this.auth.setPersistence('local');
-    const user = await this.auth.createUserWithEmailAndPassword(email, password)
-    .then(async () => {
-      console.log("sign up", user);
-      (await this.auth.currentUser).sendEmailVerification()
-      .then(() => console.log('verification email sent'));
-    })
+    await this.auth.createUserWithEmailAndPassword(email, password)
+    // .then(async () => {
+    //   console.log("signed up", user);
+      // (await this.auth.currentUser).sendEmailVerification()
+      // .then(() => console.log('verification email sent'));
+    // })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
+      console.log(errorMessage);
       message = this.FirebaseErrors(errorCode);
     });
     return message
@@ -127,7 +127,7 @@ export class AuthService {
         message = 'The phone number is not a valid phone number!';
         break;
       case 'auth/invalid-email  ':
-        message = 'The email address is not a valid!';
+        message = 'The email address is not valid!';
         break;
       case 'auth/cannot-delete-own-user-account':
         message = 'You cannot delete your own user account.';
@@ -136,7 +136,6 @@ export class AuthService {
         message = 'Oops! Something went wrong. Try again later.';
         break;
     }
-    console.log(message);
     return message;
   }
 

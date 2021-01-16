@@ -1,10 +1,10 @@
 import { UsersService } from './../shared/users.service';
-import { ProfileDetails, PersonalDetails, DisplayPicture, OnBoarding } from './../shared/profile.model';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { first, take, takeUntil } from 'rxjs/operators';
+import { ProfileDetails, PersonalDetails, DisplayPicture } from './../shared/profile.model';
+import { Subject, Subscription } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthService, AuthResponseData, ExclusiveID } from './auth.service';
+import { AuthService, ExclusiveID } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
@@ -29,12 +29,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   password: string;
   name: string;
   username: string;
-  dob: Date;
-  allowedDate: Date;
-  minAge: number = 13;
   passwordValidator = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$";
 
-  userSubs: Subscription;
   subProfileDetails: Subscription;
 
   isAuthenticated: boolean = false;
@@ -47,6 +43,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   exclusiveDetails: ExclusiveID;
   onBoarding: boolean = false;
   onBoardingStep: number;
+  errorField: number = -1; //sign up which field number has an error
 
   constructor(private authService: AuthService,
               private userService: UsersService,
@@ -57,31 +54,24 @@ export class AuthComponent implements OnInit, OnDestroy {
               private afs: AngularFirestore) {}
 
   ngOnInit(): void {
-    // let todayDate = new Date();
-    // this.allowedDate = new Date(todayDate.getFullYear() - this.minAge, todayDate.getMonth(), todayDate.getDate());
+    this.validID = false;
 
-    // this.validID = false;
+    this.exclusiveId = this.route.snapshot.params['id'];
+    this.isLoginMode = !this.exclusiveId; //switch to sign up if id exists
+    if (this.exclusiveId) {
+      this.checkID();
+    }
 
-    // this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-    //   this.onBoardingStep = step;
-    // });
-
-    // this.exclusiveId = this.route.snapshot.params['id'];
-    // this.isLoginMode = !this.exclusiveId; //switch to signup if id exists
-    // if (this.exclusiveId) {
-    //   this.checkID();
-    // }
-
-    // this.route.params
-    // .subscribe(
-    //   (params: Params) => {
-    //     this.exclusiveId = params['id'];
-    //     this.isLoginMode = !this.exclusiveId;
-    //     if (this.exclusiveId) {
-    //       this.checkID();
-    //     }
-    //   }
-    // );
+    this.route.params
+    .subscribe(
+      (params: Params) => {
+        this.exclusiveId = params['id'];
+        this.isLoginMode = !this.exclusiveId;
+        if (this.exclusiveId) {
+          this.checkID();
+        }
+      }
+    );
   }
 
   checkID() {
@@ -116,27 +106,31 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
 
-    if (!this.credential || this.credential.length === 0) return this.errorMessage("Email or username is required");
-
     if (!this.isForgetMode) {
-      if (!this.isLoginMode) {
+      if (!this.isLoginMode) { //sign up
 
         // if (!this.validID) return
-        this.username = this.afs.createId();
-        this.dob = new Date();
-        this.name = "test";
 
-        if (!this.username || this.username.length === 0) return this.errorMessage("Username is required");
+        if (!this.credential || this.credential.length === 0) return this.errorMessage("Email is required", 0);
 
-        if (this.username && this.username.indexOf(' ') != -1) return this.errorMessage("Username can't have spaces");
+        if (!this.validEmail(this.credential)) return this.errorMessage("Invalid email", 0);
 
-        if (this.username.length > 21) return this.errorMessage("Username can't be longer than 21 characters");
+        if (!this.name || this.name.length === 0) return this.errorMessage("Full name is required", 1);
+
+        if (!this.username || this.username.length === 0) return this.errorMessage("Username is required", 2);
+
+        if (this.username && this.username.indexOf(' ') != -1) return this.errorMessage("Username can't have spaces", 2);
+
+        if (this.username.length > 21) return this.errorMessage("Username can't be longer than 21 characters", 2);
 
         const usernameRes = await this.userService.getProfileDetailsByKey('username', this.username).pipe(first()).toPromise();
 
-        if (Object.keys(usernameRes).length != 0) return this.errorMessage("Username taken");
+        if (Object.keys(usernameRes).length != 0) return this.errorMessage("Username taken", 2);
 
-      } else {
+      } else { //sign in
+
+        if (!this.credential || this.credential.length === 0) return this.errorMessage("Email or username is required");
+
         if (!this.validEmail(this.credential)) {
           this.isLoading = true;
           const usernameRes = await this.userService.getProfileDetailsByKey('username', this.credential).pipe(first()).toPromise();
@@ -145,10 +139,12 @@ export class AuthComponent implements OnInit, OnDestroy {
         }
       }
 
+      //both sign in and sign up
+      if (!this.password || this.password.length === 0) return this.errorMessage("Password is required", 3);
 
-      if (!this.password || this.password.length === 0) return this.errorMessage("Password is required");
-
-      if (!this.password || this.password.length < 6) return this.errorMessage("Password must be at least 6 characters");
+      if (!this.password || this.password.length < 6) return this.errorMessage("Password must be at least 6 characters", 3);
+    } else {//forgot password mode
+      if (!this.credential || this.credential.length === 0) return this.errorMessage("Email is required");
     }
 
     let message: string;
@@ -160,10 +156,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       message = await this.authService.forgotPassword(this.credential);
     }
 
-    if (message != 'success') {
-      this.isLoading = false;
-      return this.error = message;
-    }
+    if (message != 'success') return this.errorMessage(message, 0);
 
     if (this.isForgetMode) {
       this.miscellaneousService.setPopUp(new PopUp("An email has been sent to your account",'okay', undefined, ['default', 'reject']));
@@ -175,9 +168,8 @@ export class AuthComponent implements OnInit, OnDestroy {
       const uid = this.authService.user.value.id;
 
       const profileDetails  = new ProfileDetails(this.username, '','', this.credential);
-      const personalDetails = new PersonalDetails(this.name, this.dob, new Date());
+      const personalDetails = new PersonalDetails(this.name, new Date(), new Date());
       const displayPicture = new DisplayPicture(new Date(), 'null');
-      // const onBoardingData = new OnBoarding(true, 2, this.exclusiveDetails.marketingRound, this.exclusiveDetails.batch, [0,0,0,0,0,0,0,0,0]);
 
       this.userService.addProfileDetails(uid, profileDetails);
       this.userService.addPersonalDetails(uid, personalDetails);
@@ -185,8 +177,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.userService.addDisplayPicture(uid, displayPicture, null);
       this.activityService.addActivity(uid, 'user');
 
-      // this.userService.addOnBoarding(uid, onBoardingData);
-      // this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.email});
+      // this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.credential});
     }
 
     this.router.navigate([this.miscellaneousService.lastRoute]);
@@ -195,7 +186,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
-  errorMessage(error: string) {
+  errorMessage(error: string, errorField: number = -1) {
+    this.errorField = errorField;
     this.error = error;
     this.isLoading = false;
   }
