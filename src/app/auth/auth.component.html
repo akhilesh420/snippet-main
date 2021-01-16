@@ -83,7 +83,7 @@
 
       <div class = "row forgotPassword no-margin-no-padding" [ngClass]='{"back-to-sign": isForgetMode}'>
 
-        <p (click)='onSwitchMode()'>{{isForgetMode ? 'Back to Sign In' : 'Forgot Password?'}}</p>
+        <p (click)='this.isForgetMode = !this.isForgetMode;'>{{isForgetMode ? 'Back to Sign In' : 'Forgot Password?'}}</p>
 
       </div>
 
@@ -188,6 +188,7 @@
         placeholder='Full name'
         required
         [ngClass]='{"invalid": errorField === 1}'
+        (input)='titleCase()'
         />
 
     </div>
