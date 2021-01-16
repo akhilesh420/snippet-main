@@ -1,3 +1,109 @@
+.backpanel {
+
+  position: absolute;
+  width: 340px;
+  height: 486px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background: #060606;
+  box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+
+}
+
+.topHeading {
+
+  height: 132px;
+  width: 100%;
+
+}
+
+.headingSVG {
+  position: absolute;
+  top: 53px;
+  left: 19px;
+}
+
+.entry {
+  display: grid;
+  place-items: center;
+}
+
+::placeholder {
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+.entryBox {
+  width: 312px;
+  height: 36px;
+  background: #9A9696;
+  border-radius: 13px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+}
+
+.entryBoxLast {
+  margin-bottom: 68px;
+}
+
+
+.btnSignIn {
+  width: 190px;
+  height: 45px;
+  background: #E2B33D;
+  border-radius: 13px;
+  outline: none;
+  border: none;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  font-family: 'ChampagneAndLimousines';
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+.logoSignUp {
+  position: absolute;
+  bottom: 19px;
+  right: 25px;
+  height: 10.888vh;
+  width: 17.36111vw;
+
+}
+
+.danger-alert-sign-up {
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  color:#891E13;
+  width: 100%;
+  margin-top: -53px;
+  margin-bottom: 29px;
+  font-size: 16px;
+  padding-left: 18px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .authScreen {
 
   height: calc(100vh - 54px);
@@ -24,7 +130,7 @@
 
 .heading {
 
-    margin-top: 8.222%;
+    margin-top: calc(54px + 5vh);
 
 
 }
@@ -52,7 +158,6 @@
   letter-spacing: 0.1em;
   color: #FFFFFF;
   padding-left: 18px;
-  margin-top: 2vh;
 
 }
 
@@ -61,7 +166,6 @@
   top: 1vh;
   height: 3.611vh;
   width: 25.625vw;
-
 
 }
 
@@ -72,6 +176,7 @@
   background-color: #9A9696;
   margin-left: 15px;
   border-radius: 8px;
+  font-size: 2vh;
 
 }
 
@@ -94,8 +199,8 @@
 
   position: absolute;
   height: 8.555vh;
-  width: 13.4027vw;
-  top: 84%;
+  width: 14.4027vw;
+  bottom: 1.5%;
   left: 15px;
 
 }
@@ -127,15 +232,15 @@
 }
 
 .onBoarding {
-    
- 
+
+
   width: 69.791667%;
   height: 100%;
   margin-left: 30.208%;
   /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   background: linear-gradient(102.39deg, #632FDE 0.7%, #8451B4 15.32%, #E2B33D 46.6%, #DB7E3D 78.17%, #CF263C 100%);
   background-size: 400% 400%;
-  animation: gradient 15s ease infinite; 
+  animation: gradient 15s ease infinite;
 
 }
 
@@ -153,11 +258,11 @@
 
 .description {
 
-  position: relative;
-  top: 71.22222%;
-  left: 71.6417%;
-  height: 4.444vh;
-  width: 20.5555vw;
+  position: absolute;
+  top: 70%;
+  right: 4%;
+  height: 12vh;
+  width: auto;
 
 }
 
@@ -173,18 +278,44 @@
 
 }
 
+.forgotPassword {
+
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  color: rgba(235, 221, 187, 0.9);
+  opacity: 0.7;
+  font-size: 1.8vh;
+  position: absolute;
+  margin-top: 1.2vh;
+  left: 18px;
+
+}
+
+.loginButton {
+  margin-top: 6vh;
+  margin-left: 12px;
+}
+
+
 
 input {
+  border: none;
   outline: none;
   padding-left: 10px;
   text-align: left;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  background:#9A9696;
 }
 
 input:focus,
 textarea:focus {
-  border: 2px solid #EAB430;
-  color: #EAB430;
-  background: #0B0B0B;
+  color: #000000;
+  outline: none;
+  background: #C4C4C4;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
 }
 
 
@@ -200,51 +331,12 @@ textarea:focus {
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-label,
-span{
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  font-size: 2.6vh;
-  letter-spacing: 0em;
-  color: rgba(255, 255, 255, 0.7);;
-  font-weight: bold;
-  margin-top: 3vh;
-}
-/*
-input {
-  font-family: 'ChampagneAndLimousines';
-  letter-spacing: 0em;
-  font-weight: bold;
-  font-size: 2.0vh;
-  outline: none;
-  color: #0b0b0b;
-  border: none;
-  background: #9A9696;
-  padding-left: 10px;
-  box-shadow: inset 0 2px 4px 0 hsla(0, 0%, 0%, 0.08);
-  margin-bottom: 2.6vh;
-  border-radius: 1.8vh;
-  width: 100%;
-  height: 3.8vh;
-  text-align: left;
-} */
-
 input:focus,
 textarea:focus {
   border: 2px solid #EAB430;
   color: #EAB430;
   background: #0B0B0B;
+  outline: none;
 }
 
 ::-webkit-calendar-picker-indicator {
@@ -262,8 +354,7 @@ textarea:focus {
   color: #EAB430;
   background: #131114;
   border-radius: 20px;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding-left: 12px;
   border: none;
 }
 
@@ -272,11 +363,7 @@ textarea:focus {
   color: #080708;
 }
 
-input.form-control.ng-invalid.ng-touched {
-  border: 2px solid #891E13;
-}
-
-input.invalidAmount {
+.invalid {
   border: 2px solid #891E13;
 }
 
@@ -287,14 +374,118 @@ input.invalidAmount {
 }
 
 .danger-alert {
-  margin-bottom: 2vh;
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   font-size: 2.0vh;
   color:#891E13;
   width: 100%;
+  margin-top: 2vh;
+  padding-left: 18px;
 }
 
 .topPadding {
   padding-top: 20vh;
+}
+
+.title-forgot {
+  font-size: 4vh;
+}
+
+.back-to-sign {
+  margin-top: 20vh;
+}
+
+
+@media only screen and (max-width: 550px) {
+
+  .form {
+    width: 100%;
+    height: 60%;
+  }
+
+  .subLinks {
+    display: none;
+  }
+
+  .onBoarding {
+    width: 100%;
+    height: 47%;
+    position: absolute;
+    top: 53%;
+    margin-left: unset;
+  }
+
+  .description {
+    display: none;
+  }
+
+  .heading {
+    margin-top: 20px;
+
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .title-forgot {
+    font-size: 28px;
+  }
+
+  .entryfieldOneTitle {
+    font-size: 22px;
+  }
+
+  .entryfield {
+    width: 90%;
+  }
+
+  .entryfieldOne {
+    height: 25px;
+    width: 100%;
+  }
+
+  .entryfieldTwoTitle {
+    font-size: 22px;
+    margin-top: 30px;
+  }
+
+  .forgotPassword {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  .back-to-sign {
+    margin-top: 110px;
+  }
+
+  .loginButton {
+    margin-top: 40px;
+  }
+
+  .btn {
+    font-size: 16px;
+  }
+
+  .danger-alert {
+    margin-top: 6px;
+    font-size: 12px;
+    padding-left: 18px;
+  }
+
+  .clickPrompt {
+    position: absolute;
+    right: 2%;
+    bottom: 5%;
+    width: 200px;
+  }
+
+  .backpanel {
+    top: 10%;
+    transform: translate(-50%, 0%);
+  }
+
+  .logoSignUp {
+    display: none;
+  }
 }

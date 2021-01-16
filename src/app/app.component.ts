@@ -1,3 +1,4 @@
+import { ActivityService } from 'src/app/shared/activity.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private router: Router,
               private infiniteScrollService: InfiniteScrollService,
               private miscellaneousService: MiscellaneousService,
+              private activityService: ActivityService,
               private feedService: FeedService,
               private scrollService: ScrollService,
               private auth: AngularFireAuth){
@@ -41,6 +43,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
+    this.activityService.collectionStartTime = new Date().getTime();
+    this.activityService.holderListStartTime = new Date().getTime();
 
     this.windowStateService.checkWidth();
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
@@ -57,7 +61,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
       this.miscellaneousService.showDashboard.next(false);
-      if (this.currentRoute != '/auth') this.miscellaneousService.lastRoute = this.currentRoute;
+      this.activityService.collectionStartTime = new Date().getTime();
+      this.activityService.holderListStartTime = new Date().getTime();
+      if (!this.currentRoute.includes('/auth')) this.miscellaneousService.lastRoute = this.currentRoute;
     });
 
     this.auth.onAuthStateChanged((user) => {

@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   myUid: string;
 
   profileRoute: string = '/auth';
-  createRoute: string = '/auth';
+  createRoute: string = "/create/content";
 
   currentRoute: string = '';
 
@@ -48,7 +48,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
       } else {
         this.profileRoute = '/auth';
-        this.createRoute =  '/auth';
       }
     });
 

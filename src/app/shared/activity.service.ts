@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import { Activity, Collection, View } from './activity.model';
 
@@ -11,6 +12,10 @@ import { Activity, Collection, View } from './activity.model';
 })
 export class ActivityService {
 
+  //Variables
+  public collectionStartTime = 0;
+  public holderListStartTime = 0;
+
   //Realtime database
   private viewsRef: any;
   private activityRef: any;
@@ -19,7 +24,8 @@ export class ActivityService {
   private collectionCollection: AngularFirestoreCollection<Collection>;
 
   constructor(private db: AngularFireDatabase,
-              private afs: AngularFirestore) {
+              private afs: AngularFirestore,
+              private router: Router) {
     this.viewsRef = db.list<View>('views');
     this.activityRef =  db.list<Activity>('activity');
     this.collectionCollection =  afs.collection<Collection>('collection');
@@ -97,6 +103,13 @@ export class ActivityService {
     const id = this.afs.createId();
     this.collectionCollection.doc(id).set(obj);
     this.updateActivity('collection', collection.collecteeID, collection.pid);
+
+    // collection analytics
+    if (collection.collectorID === collection.collecteeID) return;
+    const timeSpent = new Date().getTime() - this.collectionStartTime;
+    this.collectionStartTime = new Date().getTime();
+    const analytics = {type: 'collection', route: this.router.url.split('/')[1], timeSpent: timeSpent};
+    this.addAnalytics(collection.collectorID, 'collection analytics', analytics);
   }
 
   // get collection by uid
@@ -107,5 +120,12 @@ export class ActivityService {
   // get collection by pid
   getPostCollection(pid: string) {
     return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp', 'desc')).valueChanges();
+  }
+
+  // add analytics
+  addAnalytics(uid, type, obj) {
+    const analyticsCollection = this.afs.collection('user data/'+uid+'/'+type);
+    const id = this.afs.createId();
+    analyticsCollection.doc(id).set(obj);
   }
 }

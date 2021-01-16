@@ -62,51 +62,40 @@
     height: 100%;
 }
 
-
-/* .displayStickers {
-    height: 100%;
-    position: relative;
+.sticker-bck {
+  background-color: #8F8F8F;
 }
-
-.stickerContainer {
-    height: 2.466vh;
-    width: 2.466vh;
-    border-radius: 50%;
-    margin: 0;
-    position: absolute;
-    top: 20%;
-    left: -10%;
-    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-} */
 
 .sticker {
     height: 2.8vh;
     width: 2.8vh;
     border-radius: 50%;
-    background-color: #FFFFFF;
     position: absolute;
-    top: 16%;
+    top: 18%;
     right: 5%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+
 }
+
 
 .sticker-1 {
     height: 2.8vh;
     width: 2.8vh;
     border-radius: 50%;
-    background-color: #FFFFFF;
     position: absolute;
-    top: 16%;
+    top: 18%;
     right: 28%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 .sticker-2 {
     height: 2.8vh;
     width: 2.8vh;
     border-radius: 50%;
-    background-color: #FFFFFF;
     position: absolute;
-    top: 16%;
+    top: 18%;
     right: 52%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 
@@ -114,36 +103,32 @@
     height: 2.8vh;
     width: 2.8vh;
     border-radius: 50%;
-    background-color: #FFFFFF;
     position: absolute;
-    top: 16%;
+    top: 18%;
     right: 76%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 .sticker-4 {
     height: 2.8vh;
     width: 2.8vh;
     border-radius: 50%;
-    background-color: #FFFFFF;
     position: absolute;
-    top: 16%;
+    top: 18%;
     right: 100%;
+    filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
-
-
-.stickerContainer-bck {
-  background-color: #8F8F8F;
-}
 
 .postSticker {
     position: absolute;
     height: 8.4vh;
     width: 8.4vh;
     border-radius: 50%;
-    left: 80%;
+    right: 1.8%;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     top: -200%;
+    box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
 }
 
 .postSticker-bck {
@@ -162,17 +147,13 @@
     .profileTab {
         height: 8%;
     }
-    
-    
-    
-    .postSticker {
 
+    .postSticker {
         height: 10.4947vh;
         width: 10.4947vh;
         top: -160%;
-
     }
-    
+
     .username {
         top: 50%;
     }
@@ -181,39 +162,35 @@
         font-size: 2vh;
     }
 
-    /* .stickerContainer {
-        height: 3.6vh;
-        width: 3.6vh;
-        top: 21%;
-        left: -23%;
-    } */
-
     .sticker {
         height: 3.4vh;
         width: 3.4vh;
+        top: 20%;
     }
-    
+
     .sticker-1 {
         height: 3.4vh;
         width: 3.4vh;
+        top: 20%;
     }
-    
+
     .sticker-2 {
         height: 3.4vh;
         width: 3.4vh;
+        top: 20%;
     }
-    
-    
+
+
     .sticker-3 {
         height: 3.4vh;
         width: 3.4vh;
+        top: 20%;
     }
-    
+
     .sticker-4 {
         height: 3.4vh;
         width: 3.4vh;
+        top: 20%;
     }
-
-
 
 }

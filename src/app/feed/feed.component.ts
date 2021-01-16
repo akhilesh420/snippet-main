@@ -79,6 +79,7 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.myUid = response.id;
         this.myUid$.next(response.id);
         this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
+        if ((this.router.url.split('/')[1] === 'profile' || this.router.url.split('/')[1] === 'collection') && this.uid === this.myUid) this.showProfileNavigation = true;
       }
     });
 
@@ -103,6 +104,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
 
     this.getPosts(this.router.url);
+
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.getPosts(this.router.url);
     });
@@ -137,10 +139,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     } else if (currentRoute === 'collection') {
       const uid = this.route.snapshot.params['id']
       this.uid$.next(uid);
-      if (this.myUid != uid) { //Redirect if not your collection
-        this.router.navigate(['/explore']);
-        return;
-      }
       this.postsList$ = this.feedService.getCollectionPage(uid);
       if (this.tabletCheck) this.showProfileDisplay = true;
       this.showProfileNavigation = true;

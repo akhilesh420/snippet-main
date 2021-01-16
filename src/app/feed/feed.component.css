@@ -59,8 +59,13 @@
   position: relative;
   width: 340px;
   height: 55px;
+<<<<<<< HEAD
   margin-left: calc(((9 * (79vh) / 16) - 340px) / 2);
   margin-bottom: 7px;
+=======
+  margin-left: calc(((375 * (79vh) / 667) - 340px) / 2);
+  margin-bottom: 1.22vh;
+>>>>>>> 950c78bc71010fec6baed7c3d1870e710be205a2
 }
 
 .backpanel {
@@ -112,6 +117,18 @@
   position: absolute;
   top: 22%;
   left: 52px;
+}
+
+.fail-safe {
+
+  margin-top: 5px;
+  display: grid;
+  place-items: center;
+
+}
+
+.fail-safe > img {
+  transform: rotate(90deg);
 }
 
 @media only screen and (max-width: 800px) {

@@ -31,7 +31,6 @@ export class PersonalDetails {
     public name: string,
     public dateOfBirth: Date,
     public dateCreated: Date,
-    public email? : string
   ) {}
 }
 

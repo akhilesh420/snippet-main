@@ -55,20 +55,7 @@ export class UsersService {
       this.profileDetailsList.push({uid: uid, obs: new BehaviorSubject<ProfileDetails>(undefined)});
       let secIndex = this.profileDetailsList.length - 1;
       this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(async (response) => {
-        let temp: ProfileDetails;
-        if (!response.description) {
-          let email: string;
-          if (!response.email){
-           let personalDetails = await this.getPersonalDetails(uid).pipe(first()).toPromise();
-           console.log(personalDetails);
-           email = personalDetails.email;
-          } else email = response.email;;
-          temp = new ProfileDetails(response.username, '','', email);
-          this.addProfileDetails(uid, temp);
-        } else {
-          temp = response;
-        }
-        this.profileDetailsList[secIndex].obs.next(temp);
+        this.profileDetailsList[secIndex].obs.next(response);
       });
       return this.profileDetailsList[secIndex].obs;
     } else {
