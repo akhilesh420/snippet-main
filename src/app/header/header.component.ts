@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
         this.createRoute = "/create/content";
         this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
       } else {
+        this.myUid = undefined;
         this.profileRoute = '/auth';
       }
     });

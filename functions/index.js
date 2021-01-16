@@ -11,6 +11,25 @@ const runtimeOpts = {
   memory: '512MB'
 }
 
+
+exports.deleteUser = functions.https.onCall(async (data, context) => {
+
+  const uid = data.uid;
+  functions.logger.info(uid);
+
+  await admin
+        .auth()
+        .deleteUser(uid)
+        .then(() => {
+          functions.logger.info('Successfully deleted user');
+          return 'Successfully deleted user';
+        })
+        .catch((error) => {
+          functions.logger.info('Error deleting user:', error);
+          return 'Error deleting user:'+ error;
+        });
+});
+
 exports.contentCreate = functions.runWith(runtimeOpts).firestore
 .document('post content/{pid}')
 .onCreate(async (snap, context) => {
@@ -169,18 +188,8 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   functions.logger.info('File name:', fileName);
   functions.logger.info('File type:', contentType);
 
-  let filePath = 'Display picture/' + fileName;
-  const bucket = admin.storage().bucket(fileBucket);
-  const tempFilePath = path.join(os.tmpdir(), fileName);
   let outputFilePath1 = '';
   let outputFilePath2 = '';
-
-  await bucket.file(filePath).download({destination: tempFilePath});
-
-  functions.logger.info('File downloaded locally to', tempFilePath);
-
-  const dimension = '200';
-  filePath = 'Display picture/' + `sm_${fileName}`;
 
   if (contentType.startsWith('image/gif')) {
     outputFilePath1 =  path.join(os.tmpdir(), 'resized.gif');
@@ -191,6 +200,17 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   } else {
     return functions.logger.info('Unsupported file type');
   }
+
+  let filePath = 'Display picture/' + fileName;
+  const bucket = admin.storage().bucket(fileBucket);
+  const tempFilePath = path.join(os.tmpdir(), fileName);
+
+  await bucket.file(filePath).download({destination: tempFilePath});
+
+  functions.logger.info('File downloaded locally to', tempFilePath);
+
+  const dimension = '200';
+  filePath = 'Display picture/' + `sm_${fileName}`;
 
   const args1 = ['-i',
                   tempFilePath,
@@ -224,3 +244,5 @@ function finishUp(unlinkPaths) {
   unlinkPaths.forEach((filePath) => fs.unlinkSync(filePath));
   functions.logger.info('Finished execution');
 }
+
+
