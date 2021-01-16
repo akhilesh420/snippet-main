@@ -1,11 +1,12 @@
 .master-container{
   height:100%;
   width: 100%;
+  position: relative;
 }
 
-.fit {
-  height:100vh;
-  width: 100vw;
+.dashboard  {
+  height:100%;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -19,11 +20,8 @@
   opacity: 0.3;
 }
 
-.dashboard {
-  position: fixed;
-}
-
 .profile-display {
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 
@@ -40,15 +38,6 @@
   .feed {
     display: grid;
     place-items: center;
-  }
-
-  .dashboard {
-    top: 45%;
-    left: 50%;
-    -webkit-transform: translate(-50%,-50%);
-        -ms-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
-    margin-left: unset;
   }
 
   .collection-tab-edit {

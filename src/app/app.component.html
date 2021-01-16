@@ -6,21 +6,26 @@
     <router-outlet></router-outlet>
   </div>
 
-  <div class="fit"
+  <!-- Dashboard -->
+  <div class="dashboard"
        *ngIf = 'tabletCheck'
        (click)="toggleDashboard($event);"
        [ngClass]='showDashboard ? "show-dashboard " : "hide-dashboard"'>
-    <div class="dashboard feed">
 
-      <div class='profile-display' (click)="stopPropagation($event)">
-        <app-profile-display [uid$]='myUid$'></app-profile-display>
+    <div style='position: relative'>
+      <div class="feed">
+
+        <div class='profile-display' (click)="stopPropagation($event)">
+          <app-profile-display [uid$]='myUid$'></app-profile-display>
+        </div>
+
+        <div (click)="stopPropagation($event)" [ngClass]='{"collection-tab-edit": profileStickerEdit, "feed": tabletCheck}'>
+          <app-collection-tab></app-collection-tab>
+        </div>
+
       </div>
-
-      <div (click)="stopPropagation($event)" [ngClass]='{"collection-tab-edit": profileStickerEdit, "feed": tabletCheck}'>
-        <app-collection-tab></app-collection-tab>
-      </div>
-
     </div>
+
   </div>
 
   <div *ngIf="popUpVal | async as value;">
