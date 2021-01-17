@@ -203,11 +203,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     return !!pattern.test(str);
   }
 
-  titleCase() {
-    const arrStr = this.name.toLowerCase().split(' ');
-    this.name = arrStr.map((str) => (str.charAt(0).toUpperCase() + str.slice(1))).join(' ');
-  }
-
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
