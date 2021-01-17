@@ -21,7 +21,6 @@
 }
 
 .profile-display {
-  margin-top: 30px;
   margin-bottom: 20px;
 }
 
@@ -52,5 +51,9 @@
 @media screen and (max-width: 550px) {
   .spacing {
     padding-top: unset;
+  }
+
+  .profile-display {
+    margin-top: 30px;
   }
 }
