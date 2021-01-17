@@ -103,7 +103,7 @@
     </form>
 
     <ng-template #loader>
-      <app-loading-spinner></app-loading-spinner>
+      <app-loading-spinner class = "center"></app-loading-spinner>
     </ng-template>
 
     <div class = "row subLinks no-margin-no-padding">
@@ -188,7 +188,7 @@
         placeholder='Full name'
         required
         [ngClass]='{"invalid": errorField === 1}'
-        (input)='titleCase()'
+        appTitleCase
         />
 
     </div>
