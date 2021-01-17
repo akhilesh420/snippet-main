@@ -1,3 +1,21 @@
+.center {
+
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.center-signup {
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
 .backpanel {
 
   position: absolute;
@@ -90,19 +108,6 @@
   font-size: 16px;
   padding-left: 18px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .authScreen {
 
@@ -487,5 +492,15 @@ textarea:focus {
 
   .logoSignUp {
     display: none;
+  }
+
+  .entryfieldOne {
+    font-size: 14px;
+  }
+
+  .authScreen {
+
+    height: calc(100% - 54px);
+  
   }
 }
