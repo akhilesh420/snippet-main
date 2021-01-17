@@ -29,8 +29,6 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { TitleCaseDirective } from './shared/directives/title-case.directive';
 import { TitleCasePipe } from '@angular/common';
 import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-page.component';
-import { ScrollableDirective } from './shared/directives/scrollable.directive';
-import { NavbarComponent } from './navbar/navbar.component';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { CollectionTabComponent } from './collection-tab/collection-tab.component';
@@ -56,8 +54,6 @@ import { ReversePipe } from './shared/reverse.pipe';
     LoadingSpinnerComponent,
     TitleCaseDirective,
     TutorialPageComponent,
-    ScrollableDirective,
-    NavbarComponent,
     PopUpComponent,
     CollectionTabComponent,
     ProfileTabComponent,

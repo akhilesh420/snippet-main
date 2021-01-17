@@ -47,11 +47,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private userService: UsersService,
-              private activityService: ActivityService,
               private router: Router,
               private route: ActivatedRoute,
-              private miscellaneousService: MiscellaneousService,
-              private afs: AngularFirestore) {}
+              private miscellaneousService: MiscellaneousService) {}
 
   ngOnInit(): void {
     this.validID = false;
@@ -92,24 +90,23 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.error = "This link can't be used anymore";
         }
       } else {
+        this.validID = false;
         this.error = "Invalid link";
       }
     });
-  }
-
-  onSwitchMode() {
-    this.isForgetMode = !this.isForgetMode;
   }
 
   async onSubmit(form: NgForm) {
     if (this.isLoading) return;
 
     this.isLoading = true;
+    var signInEmail: string;
+
 
     if (!this.isForgetMode) {
       if (!this.isLoginMode) { //sign up
 
-        // if (!this.validID) return
+        if (!this.validID) return this.errorMessage(this.error);
 
         if (!this.credential || this.credential.length === 0) return this.errorMessage("Email is required", 0);
 
@@ -135,8 +132,8 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           const usernameRes = await this.userService.getProfileDetailsByKey('username', this.credential).pipe(first()).toPromise();
           if (usernameRes.length === 0) return this.errorMessage("Username does not exist");
-          this.credential = usernameRes[0].email;
-        }
+          signInEmail = usernameRes[0].email;
+        } else signInEmail = this.credential;
       }
 
       //both sign in and sign up
@@ -149,7 +146,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     let message: string;
     if (this.isLoginMode && !this.isForgetMode) {
-      message = await this.authService.logIn(this.credential, this.password);
+      message = await this.authService.logIn(signInEmail, this.password);
     } else if (!this.isLoginMode && !this.isForgetMode){
       message = await this.authService.signUp(this.credential, this.password);
     } else if (this.isForgetMode) {
@@ -170,14 +167,15 @@ export class AuthComponent implements OnInit, OnDestroy {
       const profileDetails  = new ProfileDetails(this.username, '','', this.credential);
       const personalDetails = new PersonalDetails(this.name, new Date(), new Date());
       const displayPicture = new DisplayPicture(new Date(), 'null');
+      const exclusiveObj = {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.credential};
 
-      this.userService.addProfileDetails(uid, profileDetails);
-      this.userService.addPersonalDetails(uid, personalDetails);
-      this.userService.addProfileStickers(uid, []);
-      this.userService.addDisplayPicture(uid, displayPicture, null);
-      this.activityService.addActivity(uid, 'user');
+      const success: boolean = await this.authService.newUser(uid, profileDetails, personalDetails, displayPicture, this.exclusiveId, exclusiveObj);
 
-      // this.authService.addExclusiveUser(this.exclusiveId, this.userNumber + 1, {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.credential});
+      if (!success) {
+        this.miscellaneousService.setPopUp(new PopUp("An error occurred while creating your account. Please try again later",'okay', undefined, ['default', 'reject']));
+        this.isLoading = false;
+        return await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
+      }
     }
 
     this.router.navigate([this.miscellaneousService.lastRoute]);
@@ -205,7 +203,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   validEmail(str) {
     var pattern = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     return !!pattern.test(str);
-    }
+  }
 
   ngOnDestroy() {
     this.notifier$.next();

@@ -83,7 +83,7 @@
 
       <div class = "row forgotPassword no-margin-no-padding" [ngClass]='{"back-to-sign": isForgetMode}'>
 
-        <p (click)='onSwitchMode()'>{{isForgetMode ? 'Back to Sign In' : 'Forgot Password?'}}</p>
+        <p (click)='this.isForgetMode = !this.isForgetMode;'>{{isForgetMode ? 'Back to Sign In' : 'Forgot Password?'}}</p>
 
       </div>
 
@@ -160,7 +160,7 @@
 
   </div>
 
-  <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading; else loader2" autocomplete="off">
+  <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading; else loader2">
 
     <div class = "row entry no-margin-no-padding">
 
@@ -188,6 +188,7 @@
         placeholder='Full name'
         required
         [ngClass]='{"invalid": errorField === 1}'
+        appTitleCase
         />
 
     </div>

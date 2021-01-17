@@ -6,11 +6,13 @@
     <router-outlet></router-outlet>
   </div>
 
-  <div class="fit"
+  <!-- Dashboard -->
+  <div class="dashboard"
        *ngIf = 'tabletCheck'
        (click)="toggleDashboard($event);"
        [ngClass]='showDashboard ? "show-dashboard " : "hide-dashboard"'>
-    <div class="dashboard feed">
+
+    <div class="feed">
 
       <div class='profile-display' (click)="stopPropagation($event)">
         <app-profile-display [uid$]='myUid$'></app-profile-display>
@@ -21,6 +23,7 @@
       </div>
 
     </div>
+
   </div>
 
   <div *ngIf="popUpVal | async as value;">

@@ -3,7 +3,7 @@
       [routerLink]='!isAuthenticated ? "/auth" : null'
       [ngStyle]='{"cursor": !isAuthenticated ? "pointer" : null}'>
 
-    <div class = "row no-margin-no-padding profileDisplayBorder" [ngClass]='{"profileDB-edit" : inEditing, "my-profileDisplayBorder" : uid === myUid}'>
+    <div class = "row no-margin-no-padding" [ngClass]='{"profileDB-edit" : inEditing, "my-profileDisplayBorder" : uid === myUid, "profileDisplayBorder" : uid != myUid}'>
       <ng-template #display>
         <div class = "col no-margin-no-padding" >
           <div class = "row no-margin-no-padding displayStickers">
@@ -83,10 +83,8 @@
                   *ngIf="inEditing && editDesc;"
                   contenteditable="true"
                   #descriptionRef
-                  [textContent]="tempDescription"
-                  (keydown)="inputEditable($event, 105, 'desc');"
-                  (paste)="inputEditable($event, 105, 'desc');"
-                  (keydown.enter)="onPressEnter($event)"
+                  [textContent]="description"
+                  (keypress)="charLimit($event, descriptionLimit);"
                   (focus)='setCaret(true)'>
               </div>
 
@@ -178,13 +176,11 @@
                   *ngIf="inEditing && editLink;"
                   contenteditable="true"
                   #linkRef
-                  [textContent]="tempLink"
+                  [textContent]="link"
                   role="textbox"
-                  (keydown)="inputEditable($event, 21, 'link');"
-                  (paste)="inputEditable($event, 21, 'link');"
+                  (keypress)="charLimit($event, linkLimit);"
                   (keydown.enter)="onPressEnter($event)"
                   (focus)='setCaret(false)'>
-                  {{link}}
               </div>
 
               <div class='fill input-cover'

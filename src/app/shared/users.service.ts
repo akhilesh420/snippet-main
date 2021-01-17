@@ -69,12 +69,6 @@ export class UsersService {
       return this.afs.collection<ProfileDetails>('profile details', ref => ref.where(key,'==',value)).valueChanges();
   }
 
-  // Add profile details from cloud firestore
-  addProfileDetails(uid: string, details: ProfileDetails) {
-    const obj = {...details};
-    this.profileDetailsCollection.doc(uid).set(obj);
-  }
-
   // Update profile details from cloud firestore
   updateProfileDetails(uid: string, details: any) {
     let obj = {...details};
@@ -85,12 +79,6 @@ export class UsersService {
   // Get personal details from cloud firestore by UID
   getPersonalDetails(uid: string) {
     return this.afs.doc<PersonalDetails>('personal details/' + uid).valueChanges();
-  }
-
-  // Add personal details from cloud firestore
-  addPersonalDetails(uid: string, details: PersonalDetails) {
-    const obj = {...details};
-    this.personalDetailsCollection.doc(uid).set(obj);
   }
 
   //--------------------------------------- Profile Stickers ---------------------------------------
@@ -119,15 +107,6 @@ export class UsersService {
     }
   }
 
-  // Add profile stickers from cloud firestore
-  addProfileStickers(uid: string, profileSticker: ProfileSticker[]) {
-    const stickerArray = [];
-    profileSticker.forEach(sticker => {
-      stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})
-    });
-    this.profileStickersCollection.doc(uid).set({stickers: stickerArray});
-  }
-
   // Update profile stickers from
   updateProfileSticker(uid: string, profileSticker: ProfileSticker[]) {
     const stickerArray = [];
@@ -144,16 +123,10 @@ export class UsersService {
     return this.afs.doc<DisplayPicture>('display picture/' + uid).valueChanges();
   }
 
-  // Add display picture from cloud firestore
-  private addDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
-    const dp = {name: uid, ...displayPicture}
-    this.displayPictureCollection.doc(uid).set(dp);
-  }
 
   // Update display picture from cloud firestore
   updateDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
     const dp = {...displayPicture}
-    console.log(dp);
     this.displayPictureCollection.doc(uid).update(dp);
   }
 
@@ -189,20 +162,6 @@ export class UsersService {
 
   displayPictureLoaded() {
     return this.dpLoadCheck;
-  }
-
-  // Add display picture from firebase storage
-  addDisplayPicture(uid: string, displayPicture: DisplayPicture, content: any) {
-    // Upload to cloud firestore
-    this.addDisplayPictureRef(uid, displayPicture); //remove from here
-    // Upload to storage
-    if (content) {
-      const file = content;
-      const filePath = 'Display picture/'+uid;
-      const ref = this.storage.ref(filePath);
-      const task = ref.put(file);
-      return task.percentageChanges();
-    }
   }
 
    // Update display picture from firebase storage

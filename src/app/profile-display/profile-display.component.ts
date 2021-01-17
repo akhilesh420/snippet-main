@@ -48,9 +48,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   editStickers: Boolean = false;
   username: string = '';
   description: string = '';
-  tempDescription: string = '';
   link: string = '';
-  tempLink: string = '';
   profileStickers: ProfileSticker[] = [null,null,null,null,null];
   userStickers:  ProfileSticker[] = [null,null,null,null,null];
   error: string;
@@ -66,7 +64,9 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   emittedPid: string;
   index: number;
-  buttonHeight: number;
+
+  descriptionLimit: number = 105;
+  linkLimit: number = 21;
 
   constructor( private auth: AngularFireAuth,
                private usersService: UsersService,
@@ -130,8 +130,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.description = details.description;
       this.link = details.link;
 
-      this.tempDescription = this.description;
-      this.tempLink = this.link;
       this.dpLoaded = true;
     });
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
@@ -195,8 +193,16 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.saving = true;
     let noChange = true;
     let message = 'Profile updated!';
+
     this.miscellaneousService.profileStickerEdit.next(false);
     this.miscellaneousService.userStickerSelection.next(null);
+
+    var tempDescription = this.description;
+    var tempLink  = this.link;
+
+    if (this.descriptionRef) tempDescription = this.descriptionRef.nativeElement.textContent;
+    if (this.linkRef) tempLink = this.linkRef.nativeElement.textContent;
+
     this.resetState();
 
     if (this.profileStickers.length > 5) { //in case of an error
@@ -211,10 +217,15 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.usersService.updateProfileSticker(this.uid,this.userStickers);
     }
 
-    if (this.description != this.tempDescription || this.link != this.tempLink) {
-      this.description = this.tempDescription;
-      this.link = this.tempLink;
-      this.usersService.updateProfileDetails(this.uid, {description: this.description, link: this.link});
+    if (this.description != tempDescription) {
+      this.description = tempDescription.slice(0,this.descriptionLimit);
+      this.usersService.updateProfileDetails(this.uid, {description: this.description});
+      noChange = false;
+    }
+
+    if (this.link != tempLink) {
+      this.link = tempLink.trim().slice(0,this.linkLimit);
+      this.usersService.updateProfileDetails(this.uid, {link: this.link});
       noChange = false;
     }
 
@@ -295,22 +306,9 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     sel.addRange(range);
   }
 
-  inputEditable(event, max, type) {
-    console.log(event.target.textContent.length);
-    if (event.target.textContent.length >= max
-        && event.keyCode != 8 //backspace
-        && event.keyCode != 46 //delete
-        && event.keyCode != 37 //arrow left
-        && event.keyCode != 38 //arrow up
-        && event.keyCode != 39 //arrow right
-        && event.keyCode != 40 //arrow down
-        && !event.ctrlKey) //ctrl key combos
-    {
-      return event.preventDefault();
-    }
-
-    if (type === 'desc') return this.tempDescription = event.target.textContent;
-    this.tempLink = event.target.textContent;
+  charLimit(event, max: number) {
+    const len = event.target.textContent.length;
+    return len < max;
   }
 
   clickProfileSticker(sticker: any, index: number) {

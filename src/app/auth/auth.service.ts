@@ -1,11 +1,17 @@
+import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './../shared/profile.model';
+import { UsersService } from './../shared/users.service';
 import { FeedService } from './../feed/feed.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ActivityService } from '../shared/activity.service';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { first } from 'rxjs/operators';
+import * as firebase from 'firebase/app';
 
 export interface AuthResponseData {
   localId: string;
@@ -27,7 +33,9 @@ export class AuthService {
   constructor(private router: Router,
               private afs: AngularFirestore,
               private auth: AngularFireAuth,
-              private feedService: FeedService) {
+              private feedService: FeedService,
+              private activityService: ActivityService,
+              private fns: AngularFireFunctions) {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.user.next(new User(user.email, user.uid));
@@ -51,7 +59,7 @@ export class AuthService {
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(errorMessage);
+      console.log(errorMessage, errorCode);
       message = this.FirebaseErrors(errorCode);
     });
     return message
@@ -69,10 +77,10 @@ export class AuthService {
     return message
   }
 
-  logout() {
+  logout(redirect: boolean = true) {
     this.auth.signOut().then(() => {
       this.feedService.$collectionPageList.next(undefined);
-      this.router.navigate(['/auth']);
+      if (redirect) this.router.navigate(['/auth']);
       console.log('signed out');
     }).catch((error) => {
       console.log(error);
@@ -116,6 +124,9 @@ export class AuthService {
       case 'auth/email-already-exists':
         message = 'Email address is already in use';
         break;
+      case 'auth/email-already-in-use':
+        message = 'Email address is already in use';
+        break;
       case 'auth/user-not-found':
         message =
           'Email does not exist';
@@ -126,7 +137,7 @@ export class AuthService {
       case 'auth/invalid-phone-number':
         message = 'The phone number is not a valid phone number!';
         break;
-      case 'auth/invalid-email  ':
+      case 'auth/invalid-email':
         message = 'The email address is not valid!';
         break;
       case 'auth/cannot-delete-own-user-account':
@@ -136,7 +147,51 @@ export class AuthService {
         message = 'Oops! Something went wrong. Try again later.';
         break;
     }
+
+    console.log(errorCode, message);
     return message;
+  }
+
+  async newUser(uid: string, profileDetails: ProfileDetails, personalDetails: PersonalDetails, displayPicture: DisplayPicture, exclusiveId: string, exclusiveObj: any): Promise<boolean> {
+
+    var success: boolean;
+
+    const batch = this.afs.firestore.batch();
+
+    const profileDetailsDoc = this.afs.firestore.doc('profile details/'+uid);
+    const personalDetailsDoc = this.afs.firestore.doc('personal details/'+uid);
+    const profileStickersDoc = this.afs.firestore.doc('profile stickers/'+uid);
+    const displayPictureDoc= this.afs.firestore.doc('display picture/'+uid);
+
+    const dp = {name: uid, ...displayPicture};
+
+    //Exclusive users
+    const key = this.afs.createId();
+    const exclusiveIdDoc = this.afs.firestore.doc('exclusive ID/'+exclusiveId);
+    const exclusiveUserDoc = this.afs.firestore.doc('exclusive ID/'+exclusiveId+'/users/'+key);
+
+    batch.set(profileDetailsDoc, {...profileDetails});
+    batch.set(personalDetailsDoc, {...personalDetails});
+    batch.set(profileStickersDoc, { stickers: [] });
+    batch.set(displayPictureDoc, dp);
+    batch.set(exclusiveUserDoc, exclusiveObj);
+    batch.update(exclusiveIdDoc, {used: firebase.firestore.FieldValue.increment(1)});
+
+    await batch.commit()
+          .then(() => {
+            this.activityService.addActivity(uid, 'user');
+            success =  true;
+          })
+          .catch(async (e) => {
+            console.log(e);
+            const callable = this.fns.httpsCallable('deleteUser');
+            const data$ = await callable({uid: uid}).pipe(first()).toPromise();
+            this.logout(false);
+            console.log(data$);
+            success =  false;
+          });
+
+    return success;
   }
 
   getExclusiveDetails(id: string) {
@@ -144,17 +199,4 @@ export class AuthService {
     return idDoc.valueChanges();
   }
 
-  updateIDused(id: string, userNumber: number) {
-    const idCollection = this.afs.collection('exclusive ID');
-    idCollection.doc(id).update({used: userNumber});
-  }
-
-  addExclusiveUser(id: string, userNumber: number, user: any) {
-    const key = 'user' + userNumber.toString();
-    const obj = {...user}
-    const idDoc = this.afs.doc('exclusive ID/'+id);
-    const idUserCollection = idDoc.collection('users');
-    this.updateIDused(id, userNumber);
-    idUserCollection.doc(key).set(obj);
-  }
 }
