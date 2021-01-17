@@ -493,4 +493,14 @@ textarea:focus {
   .logoSignUp {
     display: none;
   }
+
+  .entryfieldOne {
+    font-size: 14px;
+  }
+
+  .authScreen {
+
+    height: calc(100% - 54px);
+  
+  }
 }
