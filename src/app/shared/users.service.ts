@@ -38,12 +38,6 @@ export class UsersService {
     this.onBoardingCollection = afs.collection<OnBoarding>('on boarding');
   }
 
-  // Stops more than max connection from occurring
-  // NOT WORKING RN -> maybe a subscription array??
-  cleanUp(uid: string, folder: string, connectNumber: number) {
-    return this.connectCount === connectNumber + this.maxConnect;
-  }
-
   //--------------------------------------- Profile details ---------------------------------------
   // Get profile details from cloud firestore by UID
   getProfileDetails(uid: string) {
@@ -118,11 +112,6 @@ export class UsersService {
   }
 
   // --------------------------------------- Display Picture ---------------------------------------
-  // Get display picture from cloud firestore by UID
-  private getDisplayPictureRef(uid: string) {
-    return this.afs.doc<DisplayPicture>('display picture/' + uid).valueChanges();
-  }
-
 
   // Update display picture from cloud firestore
   updateDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {

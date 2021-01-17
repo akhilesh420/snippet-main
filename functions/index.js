@@ -14,8 +14,13 @@ const runtimeOpts = {
 
 exports.deleteUser = functions.https.onCall(async (data, context) => {
 
-  const uid = data.uid;
-  functions.logger.info(uid);
+  try {
+    const uid = data.uid;
+    functions.logger.info(uid);
+  } catch(e) {
+    functions.logger.info(e);
+  }
+
 
   await admin
         .auth()
@@ -47,7 +52,8 @@ exports.contentCreate = functions.runWith(runtimeOpts).firestore
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
 
-  await bucket.file(filePath).download({destination: tempFilePath});
+  await bucket.file(filePath).download({destination: tempFilePath})
+              .catch((e) => functions.logger.info(e));
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
@@ -103,10 +109,11 @@ exports.contentCreate = functions.runWith(runtimeOpts).firestore
   unlinkPaths = [tempFilePath, outputFilePath];
 
   functions.logger.info('started processing', command, args);
-  await spawn(command, args);
+  await spawn(command, args).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath, { destination: filePath });
+  await bucket.upload(outputFilePath, { destination: filePath })
+          .catch((e) => functions.logger.info(e));
   functions.logger.info('uploaded to storage');
   finishUp(unlinkPaths);
 });
@@ -130,7 +137,8 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   let outputFilePath1 = '';
   let outputFilePath2 = '';
 
-  await bucket.file(filePath).download({destination: tempFilePath});
+  await bucket.file(filePath).download({destination: tempFilePath})
+          .catch((e) => functions.logger.info(e));
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
@@ -164,13 +172,14 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   const unlinkPaths = [tempFilePath, outputFilePath1, outputFilePath2];
 
   functions.logger.info('started processing ffmpeg', args1);
-  await spawn('ffmpeg', args1);
+  await spawn('ffmpeg', args1).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing ffmpeg');
   functions.logger.info('started processing convert', args2);
-  await spawn('convert', args2);
+  await spawn('convert', args2).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath2, { destination: filePath });
+  await bucket.upload(outputFilePath2, { destination: filePath })
+          .catch((e) => functions.logger.info(e));
   functions.logger.info('uploaded to storage');
   finishUp(unlinkPaths);
 });
@@ -205,7 +214,8 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
 
-  await bucket.file(filePath).download({destination: tempFilePath});
+  await bucket.file(filePath).download({destination: tempFilePath})
+          .catch((e) => functions.logger.info(e));
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
@@ -229,13 +239,14 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   const unlinkPaths = [tempFilePath, outputFilePath1, outputFilePath2];
 
   functions.logger.info('started processing ffmpeg', args1);
-  await spawn('ffmpeg', args1);
+  await spawn('ffmpeg', args1).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing ffmpeg');
   functions.logger.info('started processing convert', args2);
-  await spawn('convert', args2);
+  await spawn('convert', args2).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath2, { destination: filePath });
+  await bucket.upload(outputFilePath2, { destination: filePath })
+          .catch((e) => functions.logger.info(e));
   functions.logger.info('uploaded to storage');
   finishUp(unlinkPaths);
 });
