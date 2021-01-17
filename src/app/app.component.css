@@ -43,6 +43,10 @@
   .collection-tab-edit {
     transform: translate(24.33px, -180px);
   }
+
+  .profile-display {
+    margin-top: 84px;
+  }
 }
 
 @media screen and (max-width: 550px) {
