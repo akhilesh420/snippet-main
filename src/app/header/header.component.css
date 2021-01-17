@@ -359,7 +359,15 @@ opacity: 0;
 
     }
 
+    .headerDropdownBorder {
 
+      top: unset;
+      bottom: calc(54px + 1vh);
+
+    }
+
+    
+    
     
 
   }
