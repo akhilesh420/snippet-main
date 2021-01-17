@@ -100,6 +100,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (this.isLoading) return;
 
     this.isLoading = true;
+    var signInEmail: string;
+
 
     if (!this.isForgetMode) {
       if (!this.isLoginMode) { //sign up
@@ -130,8 +132,8 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           const usernameRes = await this.userService.getProfileDetailsByKey('username', this.credential).pipe(first()).toPromise();
           if (usernameRes.length === 0) return this.errorMessage("Username does not exist");
-          this.credential = usernameRes[0].email;
-        }
+          signInEmail = usernameRes[0].email;
+        } else signInEmail = this.credential;
       }
 
       //both sign in and sign up
@@ -144,7 +146,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     let message: string;
     if (this.isLoginMode && !this.isForgetMode) {
-      message = await this.authService.logIn(this.credential, this.password);
+      message = await this.authService.logIn(signInEmail, this.password);
     } else if (!this.isLoginMode && !this.isForgetMode){
       message = await this.authService.signUp(this.credential, this.password);
     } else if (this.isForgetMode) {

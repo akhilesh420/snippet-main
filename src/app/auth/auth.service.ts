@@ -137,7 +137,7 @@ export class AuthService {
       case 'auth/invalid-phone-number':
         message = 'The phone number is not a valid phone number!';
         break;
-      case 'auth/invalid-email  ':
+      case 'auth/invalid-email':
         message = 'The email address is not valid!';
         break;
       case 'auth/cannot-delete-own-user-account':
@@ -147,6 +147,8 @@ export class AuthService {
         message = 'Oops! Something went wrong. Try again later.';
         break;
     }
+
+    console.log(errorCode, message);
     return message;
   }
 
