@@ -141,7 +141,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     });
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
     this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
-      if (!dp) return;
       this.tempDisplayPicture$.next(dp);
       this.dpLoaded = true;
     });
@@ -310,7 +309,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   clickProfileSticker(sticker: any, index: number) {
-    if ((sticker && !this.inEditing && !this.stickerLoaded) && !this.allowEdit) return;
+    if (((sticker && !this.inEditing && !this.stickerLoaded) && !this.allowEdit || this.uid != this.myUid)) return;
     if (!this.editable) return this.onNoEditable('sticker');
     this.inEditing = true;
     this.index = index;

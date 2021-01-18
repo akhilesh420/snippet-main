@@ -6,16 +6,16 @@
     backdrop-filter: blur(10px);
     border-radius: 13px;
     outline: none;
-    
+
  }
 
 .profileDisplayBorder {
-  
+
   height: 235px;
   width: 354px;
   border: 1px solid#E2B33D;
   border-radius: 13px;
-  
+
  }
 
  .my-profileDisplayBorder {
@@ -254,6 +254,10 @@
 .usernameSpace {
   height: 100%;
   margin-left: 2.7%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align:right;
 }
 
 .username {
@@ -455,4 +459,8 @@
   100% {
     background: rgba(11,11,11,0);
   }
+}
+
+.blue {
+  background-color: blue;
 }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { ActivityService } from './../shared/activity.service';
 import { AuthService } from './../auth/auth.service';
@@ -19,12 +20,13 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
   myUid: string;
   isAuthenticated: boolean = true;
   notifier$ = new Subject();
-  editMode: boolean;
+  editMode: boolean = false;
   userStickerSelected$: BehaviorSubject<ProfileSticker>;
 
   constructor(private auth: AngularFireAuth,
               private activityService: ActivityService,
-              private miscellaneousService: MiscellaneousService) { }
+              private miscellaneousService: MiscellaneousService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -53,6 +55,10 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
 
   trackByFn(index, item) {
     return index; // or item.id
+  }
+
+  goToCollection() {
+    this.router.navigate(["/collection/"+this.myUid]);
   }
 
   ngOnDestroy() {
