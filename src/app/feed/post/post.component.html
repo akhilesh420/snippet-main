@@ -1,4 +1,4 @@
-<div class="postContainer" (click)='postView()'>
+<div class="postContainer" (click)='postView()' #post>
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="post-content "
@@ -30,8 +30,6 @@
       (click)="showComments ? showDetails = false : showDetails = !showDetails;
               showComments = false;
               holderToggle = false;
-              playFailSafe = false;
-              allowToggle = true;
               videoToggle();">
 
       <div class="postTitle inline float-left pointer">
@@ -151,7 +149,7 @@
     <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
 
     <!-- Fail-safe button -->
-    <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='playFailSafe = false; allowToggle = true; videoToggle();'>
+    <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle();'>
       <img src = "assets/icons/Post Icons/failSafeButton.png">
     </div>
 </div>

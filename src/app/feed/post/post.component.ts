@@ -7,6 +7,7 @@ import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild, OnChanges, 
 import { takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
+import { ScrollService } from 'src/app/shared/scroll.service';
 
 @Component({
   selector: 'app-post',
@@ -16,7 +17,8 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
   export class PostComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
 
   @Input() postDetails: PostDetails;
-  @Input() postFocus: boolean;
+  // @Input() postFocus: boolean;
+  postFocus: boolean;
 
   pid: string;
   postContent$: BehaviorSubject<any>;
@@ -40,12 +42,13 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
   isAuthenticated: boolean;
 
   @ViewChild('videoPlayer') videoPlayer : ElementRef;
+  @ViewChild('post') post : ElementRef;
 
   viewTimer: any;
   viewTime: number = 1500; //how long for a viewed post in milliseconds
 
   playFailSafe: boolean = false;
-  allowToggle: boolean = true;
+  check: boolean = false;
 
   postCollection: Collection[];
   activity: Activity;
@@ -53,21 +56,36 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
   constructor(private postService: PostService,
               private authService: AuthService,
               private activityService: ActivityService,
+              private scrollService: ScrollService,
               private router: Router) { }
 
   ngOnInit(): void {
     if (!this.postDetails) return;
+
+    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
+      this.postInFrame();
+      this.videoToggle();
+    });
+
     this.restartPost();
     this.postViewTime();
   }
 
   ngOnChanges() {
     this.postViewTime();
-    this.allowToggle = true;
   }
 
   ngAfterViewChecked() {
+    this.postInFrame();
     this.videoToggle();
+  }
+
+  postInFrame() {
+    if (!this.post) return;
+    const rect = this.post.nativeElement.getBoundingClientRect();
+    const height = this.post.nativeElement.offsetHeight;
+    const midPoint = rect.top + height/2;
+    this.postFocus = midPoint - 87 >= 0 && midPoint - 87 - height <= 0;
   }
 
   restartPost() {
@@ -131,7 +149,7 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
 
   videoToggle() {
     try {
-      if (!this.postType.includes('video') || !this.allowToggle) return;
+      if (!this.postType.includes('video')) return;
       if (this.postFocus) {
         this.videoPlayer.nativeElement.play()
           .then(() => this.playFailSafe = false)
@@ -139,7 +157,6 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
       } else {
         this.videoPlayer.nativeElement.pause();
       }
-      this.allowToggle = false;
     } catch (error) {
       return;
     }
