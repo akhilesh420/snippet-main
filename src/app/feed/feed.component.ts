@@ -167,6 +167,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize));
     }
     this.batchNumber++;
+    this.feedService.currentPost.next(this.feedList$.value[0].pid);
   }
 
   moreBatch() { // get the next batch of posts used for manual render

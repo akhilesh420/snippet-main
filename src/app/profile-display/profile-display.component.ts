@@ -150,7 +150,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   setUpActivity() {
     this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (!response[0]) {
-        console.log('No activity found');
         return;
       }
       this.activity = response[0];
@@ -237,7 +236,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.displayPicture$.next(this.updatedDP);
       this.usersService.updateDisplayPicture(this.uid, this.displayPicture).pipe(takeUntil(this.notifier$))
       .subscribe(response => {
-        console.log(response);
         if (response === 100) {
           this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(new Date(), this.displayPicture.type));
           this.miscellaneousService.endLoading();
@@ -365,7 +363,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('profile display destroy')
     this.notifier$.next();
     this.notifier$.complete();
   }

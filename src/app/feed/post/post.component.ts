@@ -4,7 +4,7 @@ import { AuthService } from './../../auth/auth.service';
 import { Subject,Observable, BehaviorSubject } from 'rxjs';
 import { PostService } from './../../shared/post.service';
 import { PostDetails} from './../../shared/post.model';
-import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
@@ -16,7 +16,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-  export class PostComponent implements OnInit, AfterViewChecked, OnDestroy {
+  export class PostComponent implements OnInit, OnDestroy {
 
   @Input() postDetails: PostDetails;
   postFocus: boolean;
@@ -25,7 +25,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   postContent$: BehaviorSubject<any>;
   postType$: Subject<string>;
 
-  postType: string = 'image/jpeg';
+  postType: string = 'video/mp4';
   notifier$ = new Subject();
   collectionList: Observable<Collection[]>;
 
@@ -49,6 +49,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   viewTime: number = 1500; //how long for a viewed post in milliseconds
 
   playFailSafe: boolean = false;
+  buffering: boolean = false;
   check: boolean = false;
 
   postCollection: Collection[];
@@ -86,12 +87,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
     });
 
     this.restartPost();
-    this.postViewTime();
-  }
-
-  ngAfterViewChecked() {
-    this.postInFrame();
-    this.videoToggle();
   }
 
   postInFrame() {
@@ -120,6 +115,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
     // post setup
     this.pid = this.postDetails.pid; //exists because of id field
+
     this.setUpPost();
   }
 
@@ -128,6 +124,12 @@ import { WindowStateService } from 'src/app/shared/window.service';
     .subscribe(response => {
       this.postType = response.fileFormat;
       this.postContent$ = this.postService.getPostContent(this.pid, response);
+      this.postContent$.pipe(takeUntil(this.notifier$)).subscribe((val) => {
+        setTimeout(() => {
+          this.postInFrame();
+          this.videoToggle();
+        },300);
+      })
     });
     // post collection list
     this.activityService.getPostCollection(this.pid).pipe(takeUntil(this.notifier$))
@@ -144,7 +146,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   postView() {
     if (this.viewed || this.uid === this.myUid || !this.postDetails.pid || !this.postDetails.uid) return;
-    console.log('post viewed'); //temp log
     this.viewed = true;
     if (!this.isAuthenticated) {
       this.activityService.addViews(this.pid,this.uid);
@@ -166,10 +167,10 @@ import { WindowStateService } from 'src/app/shared/window.service';
   videoToggle() {
     try {
       if (!this.postType.includes('video')) return;
-      if (this.postFocus) {
+      if (this.feedService.currentPost.value === this.pid) {
         this.videoPlayer.nativeElement.play()
           .then(() => this.playFailSafe = false)
-          .catch((error) => this.playFailSafe = true);
+          .catch((e) => this.playFailSafe = true);
       } else {
         this.videoPlayer.nativeElement.pause();
       }
@@ -203,7 +204,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   stopPropagation(event) {
-    console.log(this.fullscreenToggle);
     event.stopPropagation();
   }
 
