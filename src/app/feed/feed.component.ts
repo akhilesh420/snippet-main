@@ -31,18 +31,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   batchNumber: number = 1; //start from 1
   done: boolean = true;
 
-  //Video auto play and pause
-  postHeight: number; //height of the posts
-  postPaddingTop: number = 5; //top margin on the entire feed;
-  postNumber: number = -1; //the index of the post thats being viewed
-  showProfileDisplay: boolean; //weather or not to show the profile display tab
-  profileDisplayHeight: number = 234; //height of the profile display
-  profileDisplayMargin: number = 20; //margin of the profile display
-  showProfileNavigation: boolean; //weather or not to show the profile display tab
-  profileNavigationHeight: number = 55; //height of the profile navigation buttons
-  profileNavigationMargin: number = 7; //margin of the profile navigation buttons
-
-  viewPort: number;
+  showProfileDisplay: boolean; //show the profile display tab
+  showProfileNavigation: boolean; //show the profile display tab
 
   uid$ = new BehaviorSubject<string>(null); //From URL
   myUid$ = new BehaviorSubject<string>(null); //From URL
@@ -63,7 +53,6 @@ export class FeedComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
-              private scrollService: ScrollService,
               private windowStateService: WindowStateService,
               private usersService: UsersService) {
    }
@@ -96,10 +85,12 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.uid$.next(params['id']);
     });
 
-    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
-      this.postNumber = this.currentPostNumber(scrollY);
-      this.infiniteScroll();
-    });
+    this.feedService.currentPost.pipe(takeUntil(this.notifier$)).subscribe(pid => {
+      if (!pid) return;
+      const currentFeed = this.feedList$.value
+      const index = currentFeed.findIndex(post => post.pid === pid);
+      if (index === currentFeed.length - 2) this.moreBatch();
+    })
 
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
 
@@ -111,15 +102,6 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   }
 
-  getViewport() {
-    try {
-      this.postHeight = this.post.nativeElement.offsetHeight;
-      this.viewPort = this.postHeight;
-    } catch(error) {
-      console.log(error);
-    }
-  }
-
   getPosts(currentRoute: string) {
     if (currentRoute === this.lastRoute) return;
     this.lastRoute = currentRoute;
@@ -127,9 +109,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.showProfileDisplay = false;
     this.showProfileNavigation = false;
     this.done = true;
-    this.postNumber = -1;
     if (currentRoute === 'explore') {
-      this.postNumber = 0;
       this.myUid$.pipe(take(2)).subscribe(uid => {
         if (!uid) return;
         setTimeout(() => this.uid$.next(uid), 100);
@@ -187,13 +167,10 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize));
     }
     this.batchNumber++;
-    setTimeout(() => {
-      if (this.postsList.length === 0) return;
-      this.getViewport();
-    }, 100);
   }
 
   moreBatch() { // get the next batch of posts used for manual render
+    if (this.done) return;
     if ((this.postsList.length - this.batchSize*this.batchNumber) <= 0) {
       this.feedList$.next(this.postsList);
       this.done = true;
@@ -201,19 +178,6 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
     this.batchNumber++;
-  }
-
-  infiniteScroll() {
-    if (this.done) return;
-    if (this.postNumber >= ((this.batchNumber-1)*this.batchSize - 2)) this.moreBatch();
-  }
-
-  currentPostNumber(scrollY): number {
-    let scroll = scrollY - this.postPaddingTop;
-    scroll = this.showProfileDisplay ? scroll - (this.profileDisplayHeight + this.profileDisplayMargin) : scroll;
-    scroll = this.showProfileNavigation ? scroll - (this.profileNavigationHeight + this.profileNavigationMargin) : scroll;
-    if (scroll < 0) return -1;
-    return Math.round(scroll/this.viewPort);
   }
 
   ngOnDestroy() {

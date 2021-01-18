@@ -1,23 +1,24 @@
+import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
 import { Subject,Observable, BehaviorSubject } from 'rxjs';
 import { PostService } from './../../shared/post.service';
 import { PostDetails} from './../../shared/post.model';
-import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild, OnChanges, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
 import { ScrollService } from 'src/app/shared/scroll.service';
+import { WindowStateService } from 'src/app/shared/window.service';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-  export class PostComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
+  export class PostComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @Input() postDetails: PostDetails;
-  // @Input() postFocus: boolean;
   postFocus: boolean;
 
   pid: string;
@@ -53,25 +54,38 @@ import { ScrollService } from 'src/app/shared/scroll.service';
   postCollection: Collection[];
   activity: Activity;
 
+  mobileCheck: boolean;
+  tabletCheck: boolean;
+  windowHeight: number;
+
+  frameOffset: number;
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private activityService: ActivityService,
               private scrollService: ScrollService,
+              private feedService: FeedService,
+              private windowStateService: WindowStateService,
               private router: Router) { }
 
   ngOnInit(): void {
     if (!this.postDetails) return;
 
-    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(scrollY => {
+    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(() => {
       this.postInFrame();
       this.videoToggle();
     });
 
-    this.restartPost();
-    this.postViewTime();
-  }
+    this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      if (!val) return;
+      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
+      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
+      const windowHeight = window.innerHeight;
+      this.frameOffset = this.mobileCheck ? 0 : 54 + 5.444*windowHeight/100;
+    });
 
-  ngOnChanges() {
+    this.restartPost();
     this.postViewTime();
   }
 
@@ -85,7 +99,9 @@ import { ScrollService } from 'src/app/shared/scroll.service';
     const rect = this.post.nativeElement.getBoundingClientRect();
     const height = this.post.nativeElement.offsetHeight;
     const midPoint = rect.top + height/2;
-    this.postFocus = midPoint - 87 >= 0 && midPoint - 87 - height <= 0;
+    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - height < 0;
+    this.postViewTime();
+    if (this.postFocus && this.feedService.currentPost.value != this.pid) this.feedService.currentPost.next(this.pid);
   }
 
   restartPost() {
