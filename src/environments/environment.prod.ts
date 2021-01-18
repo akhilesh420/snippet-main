@@ -10,5 +10,6 @@ export const environment = {
     appId: "1:66404037854:web:524cb216acdf27ac1cbe4f",
     measurementId: "G-9PQTNK63Q0"
   },
-  onBoardingPid: 'Ieu3tkV4SUrPJEsg4s71'
+  onBoardingPid: 'Ieu3tkV4SUrPJEsg4s71',
+  onBoardingUid: 'fH5fipY7jDb770BTJxp9gLoLDXm1'
 };

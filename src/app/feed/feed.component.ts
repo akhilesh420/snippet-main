@@ -43,6 +43,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   lastRoute: string; //last route that user was on
   mobileCheck: boolean;
   tabletCheck: boolean;
+  noPosts: boolean;
 
   @ViewChild('post') post: ElementRef;
 
@@ -148,8 +149,11 @@ export class FeedComponent implements OnInit, OnDestroy {
       }
       this.done = false;
       this.postsList = response;
-      if (this.postsList) {
+      this.noPosts = false;
+      if (this.postsList && this.postsList.length != 0) {
         this.initBatch();
+      } else {
+        this.noPosts = true;
       }
     }, error => {
       this.feedList$.next([]);

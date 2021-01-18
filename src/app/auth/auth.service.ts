@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './../shared/profile.model';
 import { UsersService } from './../shared/users.service';
 import { FeedService } from './../feed/feed.service';
@@ -12,6 +13,7 @@ import { ActivityService } from '../shared/activity.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
+import { Collection } from '../shared/activity.model';
 
 export interface AuthResponseData {
   localId: string;
@@ -152,6 +154,7 @@ export class AuthService {
   async newUser(uid: string, profileDetails: ProfileDetails, personalDetails: PersonalDetails, displayPicture: DisplayPicture, exclusiveId: string, exclusiveObj: any): Promise<boolean> {
 
     var success: boolean;
+    const collectionId = this.afs.createId();
 
     const batch = this.afs.firestore.batch();
 
@@ -159,8 +162,10 @@ export class AuthService {
     const personalDetailsDoc = this.afs.firestore.doc('personal details/'+uid);
     const profileStickersDoc = this.afs.firestore.doc('profile stickers/'+uid);
     const displayPictureDoc= this.afs.firestore.doc('display picture/'+uid);
+    const collectionDoc = this.afs.firestore.doc('collection/'+collectionId);
 
     const dp = {name: uid, ...displayPicture};
+    const collection: Collection = new Collection(uid, environment.onBoardingUid, environment.onBoardingPid, new Date().getTime());
 
     //Exclusive users
     const key = this.afs.createId();
@@ -172,6 +177,7 @@ export class AuthService {
     batch.set(profileStickersDoc, { stickers: [] });
     batch.set(displayPictureDoc, dp);
     batch.set(exclusiveUserDoc, exclusiveObj);
+    batch.set(collectionDoc, {...collection});
     batch.update(exclusiveIdDoc, {used: firebase.firestore.FieldValue.increment(1)});
 
     await batch.commit()
