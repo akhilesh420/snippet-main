@@ -141,13 +141,12 @@ export class CreateComponent implements OnInit, OnDestroy {
 
       let file: File = event.target.files[0];
       let newFile: File;
-
+      const og_file = file;
       reader.readAsDataURL(file);
       reader.onload = (event:any) => {
 
         if (file.type === 'video/quicktime') {
         // create new file with type as mp4
-
           const dataurl = event.target.result;
           let arr = dataurl.split(','),
               bstr = atob(arr[1]),
@@ -160,19 +159,19 @@ export class CreateComponent implements OnInit, OnDestroy {
           newFile  = new File([u8arr], "test.mp4", {type:'video/mp4', lastModified: new Date().getDate()});
           reader.readAsDataURL(newFile);
           reader.onload = (event:any) => {
-            this.contentFileDetails(newFile, event);
+            this.contentFileDetails(newFile, event, og_file);
           }
         } else {
-          this.contentFileDetails(file, event);
+          this.contentFileDetails(file, event, og_file);
         }
       }
     }
   }
 
-  contentFileDetails(file, event) {
+  contentFileDetails(file, event, og_file) {
     if (file.size < 80*1024*1024) {
       this.error = undefined;
-      this.storageFile = file;
+      this.storageFile = og_file;
       this.postType$.next(file.type);
       this.postContent$.next(event.target.result);
     } else {
