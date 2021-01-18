@@ -115,7 +115,6 @@ export class FeedComponent implements OnInit, OnDestroy {
     try {
       this.postHeight = this.post.nativeElement.offsetHeight;
       this.viewPort = this.postHeight;
-      console.log(this.viewPort); //temp log
     } catch(error) {
       console.log(error);
     }
