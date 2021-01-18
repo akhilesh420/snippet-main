@@ -55,7 +55,7 @@ export class ActivityService {
         )
       .subscribe((response) => {
         if (!response[0]) {
-          console.log('user activity not found');
+          return;
         } else {
           if (type === 'view') {
             this.activityRef.update(response[0].key, {views: response[0].views + 1});
@@ -89,7 +89,6 @@ export class ActivityService {
   // vieweeID: UID of the person whose post was viewed
   addViews(pid: string, vieweeID: string, viewerID: string = 'anonymous') {
     const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
-    console.log(pid, vieweeID, viewerID); //temp log
     this.viewsRef.push(obj);
     this.updateActivity('view', vieweeID, pid);
   }

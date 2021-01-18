@@ -17,7 +17,6 @@ export class UsersService {
 
   // Collection
   private profileDetailsCollection: AngularFirestoreCollection<ProfileDetails>;
-  private personalDetailsCollection: AngularFirestoreCollection<PersonalDetails>;
   private profileStickersCollection: AngularFirestoreCollection<ProfileSticker[]>;
   private displayPictureCollection: AngularFirestoreCollection<DisplayPicture>;
   private onBoardingCollection: AngularFirestoreCollection<OnBoarding>;
@@ -32,16 +31,9 @@ export class UsersService {
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage) {
     this.profileDetailsCollection = afs.collection<ProfileDetails>('profile details');
-    this.personalDetailsCollection = afs.collection<PersonalDetails>('personal details');
     this.profileStickersCollection = afs.collection<ProfileSticker[]>('profile stickers');
     this.displayPictureCollection = afs.collection<DisplayPicture>('display picture');
     this.onBoardingCollection = afs.collection<OnBoarding>('on boarding');
-  }
-
-  // Stops more than max connection from occurring
-  // NOT WORKING RN -> maybe a subscription array??
-  cleanUp(uid: string, folder: string, connectNumber: number) {
-    return this.connectCount === connectNumber + this.maxConnect;
   }
 
   //--------------------------------------- Profile details ---------------------------------------
@@ -118,11 +110,6 @@ export class UsersService {
   }
 
   // --------------------------------------- Display Picture ---------------------------------------
-  // Get display picture from cloud firestore by UID
-  private getDisplayPictureRef(uid: string) {
-    return this.afs.doc<DisplayPicture>('display picture/' + uid).valueChanges();
-  }
-
 
   // Update display picture from cloud firestore
   updateDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {

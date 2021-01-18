@@ -39,9 +39,7 @@ export class AuthService {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.user.next(new User(user.email, user.uid));
-        console.log("logged in:", this.user.value);
       } else {
-        console.log("null");
         this.user.next(null);
       }
     });
@@ -81,7 +79,6 @@ export class AuthService {
     this.auth.signOut().then(() => {
       this.feedService.$collectionPageList.next(undefined);
       if (redirect) this.router.navigate(['/auth']);
-      console.log('signed out');
     }).catch((error) => {
       console.log(error);
     });
@@ -187,7 +184,6 @@ export class AuthService {
             const callable = this.fns.httpsCallable('deleteUser');
             const data$ = await callable({uid: uid}).pipe(first()).toPromise();
             this.logout(false);
-            console.log(data$);
             success =  false;
           });
 

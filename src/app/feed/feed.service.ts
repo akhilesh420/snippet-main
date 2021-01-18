@@ -4,7 +4,7 @@ import { PostDetails } from 'src/app/shared/post.model';
 import { Injectable } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { PostService } from '../shared/post.service';
 
 @Injectable({
@@ -15,6 +15,7 @@ export class FeedService {
   excludePID: string[] = [environment.onBoardingPid];
   $explorePageList = new BehaviorSubject<(PostDetails)[]>(null);
   $collectionPageList = new BehaviorSubject<(PostDetails)[]>(null);
+  currentPost = new BehaviorSubject<string>(undefined);
 
   constructor(private activityService: ActivityService,
               private postService: PostService,

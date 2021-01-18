@@ -1,28 +1,31 @@
+import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../auth/auth.service';
 import { Subject,Observable, BehaviorSubject } from 'rxjs';
 import { PostService } from './../../shared/post.service';
 import { PostDetails} from './../../shared/post.model';
-import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild, OnChanges, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { Activity, Collection } from 'src/app/shared/activity.model';
+import { ScrollService } from 'src/app/shared/scroll.service';
+import { WindowStateService } from 'src/app/shared/window.service';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-  export class PostComponent implements OnInit, AfterViewChecked, OnChanges, OnDestroy {
+  export class PostComponent implements OnInit, OnDestroy {
 
   @Input() postDetails: PostDetails;
-  @Input() postFocus: boolean;
+  postFocus: boolean;
 
   pid: string;
   postContent$: BehaviorSubject<any>;
   postType$: Subject<string>;
 
-  postType: string = 'image/jpeg';
+  postType: string = 'video/mp4';
   notifier$ = new Subject();
   collectionList: Observable<Collection[]>;
 
@@ -40,34 +43,60 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
   isAuthenticated: boolean;
 
   @ViewChild('videoPlayer') videoPlayer : ElementRef;
+  @ViewChild('post') post : ElementRef;
 
   viewTimer: any;
   viewTime: number = 1500; //how long for a viewed post in milliseconds
 
   playFailSafe: boolean = false;
-  allowToggle: boolean = true;
+  buffering: boolean = false;
+  check: boolean = false;
 
   postCollection: Collection[];
   activity: Activity;
 
+  mobileCheck: boolean;
+  tabletCheck: boolean;
+  windowHeight: number;
+
+  frameOffset: number;
+
   constructor(private postService: PostService,
               private authService: AuthService,
               private activityService: ActivityService,
+              private scrollService: ScrollService,
+              private feedService: FeedService,
+              private windowStateService: WindowStateService,
               private router: Router) { }
 
   ngOnInit(): void {
     if (!this.postDetails) return;
+
+    this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(() => {
+      this.postInFrame();
+      this.videoToggle();
+    });
+
+    this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      if (!val) return;
+      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
+      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
+      const windowHeight = window.innerHeight;
+      this.frameOffset = this.mobileCheck ? 0 : 54 + 5.444*windowHeight/100;
+    });
+
     this.restartPost();
-    this.postViewTime();
   }
 
-  ngOnChanges() {
+  postInFrame() {
+    if (!this.post) return;
+    const rect = this.post.nativeElement.getBoundingClientRect();
+    const height = this.post.nativeElement.offsetHeight;
+    const midPoint = rect.top + height/2;
+    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - height < 0;
     this.postViewTime();
-    this.allowToggle = true;
-  }
-
-  ngAfterViewChecked() {
-    this.videoToggle();
+    if (this.postFocus && this.feedService.currentPost.value != this.pid) this.feedService.currentPost.next(this.pid);
   }
 
   restartPost() {
@@ -86,6 +115,7 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
 
     // post setup
     this.pid = this.postDetails.pid; //exists because of id field
+
     this.setUpPost();
   }
 
@@ -94,6 +124,12 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
     .subscribe(response => {
       this.postType = response.fileFormat;
       this.postContent$ = this.postService.getPostContent(this.pid, response);
+      this.postContent$.pipe(takeUntil(this.notifier$)).subscribe((val) => {
+        setTimeout(() => {
+          this.postInFrame();
+          this.videoToggle();
+        },300);
+      })
     });
     // post collection list
     this.activityService.getPostCollection(this.pid).pipe(takeUntil(this.notifier$))
@@ -110,7 +146,6 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
 
   postView() {
     if (this.viewed || this.uid === this.myUid || !this.postDetails.pid || !this.postDetails.uid) return;
-    console.log('post viewed'); //temp log
     this.viewed = true;
     if (!this.isAuthenticated) {
       this.activityService.addViews(this.pid,this.uid);
@@ -131,15 +166,17 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
 
   videoToggle() {
     try {
-      if (!this.postType.includes('video') || !this.allowToggle) return;
-      if (this.postFocus) {
+      if (!this.postType.includes('video')) return;
+      if (this.feedService.currentPost.value === this.pid) {
         this.videoPlayer.nativeElement.play()
           .then(() => this.playFailSafe = false)
-          .catch((error) => this.playFailSafe = true);
+          .catch((e) => {
+            console.log(e);
+            this.playFailSafe = true
+          });
       } else {
         this.videoPlayer.nativeElement.pause();
       }
-      this.allowToggle = false;
     } catch (error) {
       return;
     }
@@ -170,7 +207,6 @@ import { Activity, Collection } from 'src/app/shared/activity.model';
   }
 
   stopPropagation(event) {
-    console.log(this.fullscreenToggle);
     event.stopPropagation();
   }
 

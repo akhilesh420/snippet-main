@@ -74,7 +74,7 @@
 
       <div *ngIf="feedList$ | async; let posts; else loader">
         <div class="post-container" *ngFor="let postDetails of posts; let i = index;" #post>
-          <app-post [postDetails]="postDetails" [postFocus]='i === postNumber'> </app-post>
+          <app-post [postDetails]="postDetails"></app-post>
         </div>
         <div *ngIf="!done" class="fail-safe">
           <img src= "assets/icons/nextArrow.svg" alt="more posts" class="horizontal-center more-post"
