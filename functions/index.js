@@ -11,6 +11,11 @@ const runtimeOpts = {
   memory: '512MB'
 }
 
+const runtimeOpts_content = {
+  timeoutSeconds: 540,
+  memory: '1GB'
+}
+
 
 exports.deleteUser = functions.https.onCall(async (data, context) => {
 
@@ -35,7 +40,7 @@ exports.deleteUser = functions.https.onCall(async (data, context) => {
         });
 });
 
-exports.contentCreate = functions.runWith(runtimeOpts).firestore
+exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
 .document('post content/{pid}')
 .onCreate(async (snap, context) => {
 
@@ -112,7 +117,7 @@ exports.contentCreate = functions.runWith(runtimeOpts).firestore
   await spawn(command, args).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath, { destination: filePath })
+  await bucket.upload(outputFilePath, { destination: filePath, metadata: { contentType: contentType} })
           .catch((e) => functions.logger.info(e));
   functions.logger.info('uploaded to storage');
   finishUp(unlinkPaths);
@@ -178,7 +183,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   await spawn('convert', args2).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath2, { destination: filePath })
+  await bucket.upload(outputFilePath2, { destination: filePath, metadata: { contentType: contentType} })
           .catch((e) => functions.logger.info(e));
   functions.logger.info('uploaded to storage');
   finishUp(unlinkPaths);
@@ -245,7 +250,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   await spawn('convert', args2).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath2, { destination: filePath })
+  await bucket.upload(outputFilePath2, { destination: filePath, metadata: { contentType: contentType} })
           .catch((e) => functions.logger.info(e));
   functions.logger.info('uploaded to storage');
   finishUp(unlinkPaths);
