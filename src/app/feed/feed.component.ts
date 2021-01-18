@@ -8,7 +8,6 @@ import { PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { FeedService } from './feed.service';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
-import { ScrollService } from '../shared/scroll.service';
 
 @Component({
   selector: 'app-feed',

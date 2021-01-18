@@ -25,17 +25,6 @@
 
                 <div class = "profileStickers col-4 no-margin-no-padding">
 
-                    <!-- <div class = "displayStickers row no-margin-no-padding">
-
-                        <div class = "col no-margin-no-padding" *ngFor = 'let sticker of (profileStickers$ | async | reverse)'>
-                          <div class = "stickerContainer"
-                              [ngClass]="{'stickerContainer-bck': !(profileStickers$ | async)}">
-                          <app-sticker *ngIf='sticker != null' [pid]="sticker.pid"></app-sticker>
-                      </div>
-                        </div>
-
-                    </div> -->
-
                     <div class = "sticker" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
                       <app-sticker *ngIf='profileStickers[0] != null' [pid]="profileStickers[0].pid"></app-sticker>
                     </div>
