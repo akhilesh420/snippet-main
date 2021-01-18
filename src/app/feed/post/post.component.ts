@@ -170,7 +170,10 @@ import { WindowStateService } from 'src/app/shared/window.service';
       if (this.feedService.currentPost.value === this.pid) {
         this.videoPlayer.nativeElement.play()
           .then(() => this.playFailSafe = false)
-          .catch((e) => this.playFailSafe = true);
+          .catch((e) => {
+            console.log(e);
+            this.playFailSafe = true
+          });
       } else {
         this.videoPlayer.nativeElement.pause();
       }
