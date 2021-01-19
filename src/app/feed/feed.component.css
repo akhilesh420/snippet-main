@@ -18,6 +18,14 @@
   overflow: hidden;
 }
 
+
+.nopostsPlaceholder {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .feed-container {
   width: calc( ( 9 * (79vh) / 16 ) + 353px + 7.43vw );
   padding-top: 5.444vh;

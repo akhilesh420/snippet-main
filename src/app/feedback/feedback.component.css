@@ -1,75 +1,174 @@
-.heading {
-  padding-top: 5vh;
-}
 
-label{
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  font-size: 24px;
-  color: #D8B869;
-  width: 100%;
-}
+/* NEW VERSION */
 
-input,
-input:focus,
-textarea,
-textarea:focus {
-  font-family: 'ChampagneAndLimousines';
-  font-size: 18px;
-  color: #F7F7F7;
-  border: 2px solid #D8B869;
-  background: #131114;
-  margin-bottom: 35px;
-  border-radius: 10px;
-  width: 50vw;
-  outline-width: 0;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
 
-.horizontal-center {
+.backpanel {
+
   position: absolute;
+  top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%,0);
-      -ms-transform: translate(-50%,0);
-          transform: translate(-50%,0);
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 70%;
+  min-width: 550px;
+  background: linear-gradient(154.02deg, #3A38D4 1.48%, #8837A8 16.87%, #A73678 27.13%, #CF343C 47.66%, rgba(207, 52, 60, 0.844286) 62.99%, rgba(208, 52, 60, 0.621353) 75.11%, rgba(209, 52, 60, 0.18) 99.22%);
+  box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+
+}
+
+.title {
+  position: absolute;
+  top: 35px;
+  left: 4%;
+}
+
+.inputArea {
+  position: absolute;
+  width: 462px;
+  height: 253px;
+  left: 3%;
+  top: 95px;
+  background: linear-gradient(180deg, rgba(154, 150, 150, 0.5) 0%, rgba(154, 150, 150, 0) 100%);
+  border-radius: 13px;
+  overflow: auto;
+  padding: 5px;
+}
+
+/* Change css for editable div in focus here */
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus {
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  color: #ffffff;
+}
+
+.thankYouStyle {
+
+  position: absolute;
+  top: 25.7201%;
+  left: 4.333%;
+
+}
+
+.placeholderText {
+  position: absolute;
+  top: 13px;
+  left: 12px;
 }
 
 .btn {
   font-family: 'ChampagneAndLimousines';
+  font-style: normal;
   font-weight: bold;
   font-size: 24px;
-  color: #D8B869;
-  border: 2px solid #D8B869;
-  background: #131114;
-  border-radius: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: 0.1em;
+  color: #000000;
+
+  background: #E2B33D;
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 13px;
+  width: 190px;
+  height: 45px;
+
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
-.btn:enabled:hover{
-  background: #D8B869;
-  color: #080708;
+.logoSignUp {
+  position: absolute;
+  bottom: 1%;
+  right: 10px;
+  height: 10.888vh;
+  width: 17.36111vw;
+
 }
 
-.thank {
-  font-weight: bold;
-  font-size: 32px;
+.subLinks {
+
+  position: absolute;
+  height: 8.555vh;
+  width: 14.4027vw;
+  bottom: 1%;
+  left: 25px;
+
+}
+
+.Links {
+
+  height: 33.3333333333%;
+  width: 100%;
+
+}
+
+.colLinks {
+
   height: 100%;
-  color: #D8B869;
+  width: 100%;
+
+}
+
+.subTitle {
+
+  font-size: 2vh;
+  font-family: "ChampagneAndLimousines";
+  font-style: normal;
+  font-weight: bold;
+  line-height: 21px;
+  letter-spacing: 0.1em;
+  color: #EBDDBB;
+
 }
 
 
-@media screen and (max-width: 1000px) {
-  input,
-  input:focus,
-  textarea,
-  textarea:focus {
-    width: 80vw;
+@media only screen and (max-width: 800px) {
+
+  .subLinks {
+    display: none;
   }
+
 }
 
+  @media only screen and (max-width: 550px) {
+
+    .logoSignUp {
+      display: none;
+    }
+
+    .backpanel {
+      height: calc(100% - 54px);
+      width: 100%;
+      top: 0%;
+      left: 0%;
+      transform: translate(0%, 0%);
+      border-radius: 0%;
+      min-width: unset;
+    }
+
+    .btn {
+      right: unset;
+      left: 50%;
+      transform: translate(-50%, 0%);
+    }
+
+    .inputArea {
+      height: 70%;
+      width: 94%;
+    }
+  
+    .placeholderText {
+      width: 80vw;
+      height: auto;
+    }
 
 
+  }

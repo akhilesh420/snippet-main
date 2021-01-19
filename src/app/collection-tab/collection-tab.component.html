@@ -23,8 +23,8 @@
 
     </div>
 
-    <div class = "row no-margin-no-padding title">
-        <p class = "titleText" [routerLink]='isAuthenticated ? "/collection/" + myUid : null'> {{!editMode ? 'My Collection' : 'Choose a Sticker'}} </p>
+    <div class = "row no-margin-no-padding title" >
+        <p class = "titleText" (click)='goToCollection();' [ngStyle]='{"cursor": !editMode ? "pointer" : null}'> {{!editMode ? 'My Collection' : 'Choose a Sticker'}} </p>
     </div>
 
     <div class = "row no-margin-no-padding scroll">

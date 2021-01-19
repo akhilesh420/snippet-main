@@ -142,6 +142,9 @@ export class CreateComponent implements OnInit, OnDestroy {
       let file: File = event.target.files[0];
       let newFile: File;
       const og_file = file;
+
+      if (!file) return;
+
       reader.readAsDataURL(file);
       reader.onload = (event:any) => {
 

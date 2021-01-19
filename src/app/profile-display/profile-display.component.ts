@@ -77,9 +77,26 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.miscellaneousService.overrideEdit.pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (!this.editable) return;
-      this.inEditing = !response;
+      //ready editable state
+      this.inEditing = false;
       this.resetState();
-      this.inEditing = response; //incase data is not loaded
+
+      if (response) {
+        var index = this.profileStickers.findIndex(sticker => sticker === null);
+        if (index === -1 || !index) index = 0;
+        this.clickProfileSticker(this.profileStickers[index], index);
+      }
+    });
+
+    this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(response => {
+
+      if (response) return;
+
+      this.inEditing = false;
+      this.editDesc = false;
+      this.editLink = false;
+      this.index = undefined;
+      this.miscellaneousService.profileStickerEdit.next(false);
     });
 
     this.auth.onAuthStateChanged((user) => {
@@ -329,8 +346,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   onNoEditable(type: string = 'button') {
     this.miscellaneousService.showDashboard.next(true);
-    this.miscellaneousService.overrideEdit.next(true);
-    if (type === 'sticker') this.miscellaneousService.profileStickerEdit.next(true);
+    if (type === 'sticker') {this.miscellaneousService.overrideEdit.next(true);}
+    else {this.miscellaneousService.overrideEdit.next(false);};
   }
 
   onClickBack () {

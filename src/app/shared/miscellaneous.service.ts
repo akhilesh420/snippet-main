@@ -41,11 +41,11 @@ export class MiscellaneousService {
   profileStickerEdit = new Subject<boolean>();
   stickerEmitted = new Subject<string>();
   stickerSelectConfirm = new Subject<string>();
-  userStickerSelection = new BehaviorSubject<ProfileSticker>(null);
+  userStickerSelection = new BehaviorSubject<ProfileSticker>(undefined);
   lastRoute  = '/explore';
 
   showDashboard = new Subject<boolean>();
-  overrideEdit = new Subject<boolean>();
+  overrideEdit = new Subject<boolean>(); //true => both profile and sticker edit, false => just profile edit
 
   constructor(private userService: UsersService,
               private router: Router) { }

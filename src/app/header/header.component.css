@@ -145,7 +145,7 @@ right: 2.0vw;
 border-radius: 8px;
 background-color: rgba(11,11,11,1);
 -webkit-transform: translateY(-1000px);
-        transform: translateY(-1000px);    
+        transform: translateY(-1000px);
 box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
 opacity: 0;
 
@@ -164,8 +164,8 @@ opacity: 0;
   letter-spacing: 0.1em;
   color: #FFFFFF;
   position: relative;
-  
-   
+
+
 }
 
 .Text {
@@ -199,9 +199,10 @@ opacity: 0;
 }
 
 .loading-bar {
-  border-top: 2px solid #D8B869;
+  border-top: 2px solid #E2B33D;
   position: fixed;
-  width: 90vw;
+  top: 54px;
+  width: 100vw;
   animation-name: loadingAnim;
   animation-duration: 10s;
   animation-timing-function: linear;
@@ -291,9 +292,9 @@ opacity: 0;
       left: 82.881%;
       transform: translate(-50%, -50%);
       display: block;
-    
+
     }
-    
+
 
 }
 
@@ -305,11 +306,11 @@ opacity: 0;
       top: unset;
 
     }
-    
+
     .headerBackpanel {
-    
+
       background: #000000;
-    
+
     }
 
     .logoRow {
@@ -335,7 +336,7 @@ opacity: 0;
       left: 28.9855%;
       transform: translate(-50%, -50%);
       display: block;
-    
+
     }
 
     .profileButton {
@@ -346,7 +347,7 @@ opacity: 0;
       top: 50%;
       left: 71.014%;
       transform: translate(-50%, -50%);
-    
+
     }
 
 
@@ -366,9 +367,13 @@ opacity: 0;
 
     }
 
-    
-    
-    
+    .loading-bar {
+      border-top: 5px solid #E2B33D;
+      position: fixed;
+      top: 0;
+    }
+
+
 
   }
 
