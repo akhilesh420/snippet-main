@@ -81,13 +81,22 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.inEditing = false;
       this.resetState();
 
-      this.inEditing = true; //incase data is not loaded
-
       if (response) {
         var index = this.profileStickers.findIndex(sticker => sticker === null);
         if (index === -1 || !index) index = 0;
         this.clickProfileSticker(this.profileStickers[index], index);
       }
+    });
+
+    this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(response => {
+
+      if (response) return;
+
+      this.inEditing = false;
+      this.editDesc = false;
+      this.editLink = false;
+      this.index = undefined;
+      this.miscellaneousService.profileStickerEdit.next(false);
     });
 
     this.auth.onAuthStateChanged((user) => {

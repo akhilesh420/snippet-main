@@ -76,10 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
       this.showDashboard = value;
-      if (!value) {
-        this.miscellaneousService.overrideEdit.next(false);
-        this.miscellaneousService.userStickerSelection.next(null);
-      }
+      if (!value)this.miscellaneousService.userStickerSelection.next(null);
     });
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
   }
