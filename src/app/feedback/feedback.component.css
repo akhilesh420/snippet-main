@@ -2,7 +2,7 @@
 /* NEW VERSION */
 
 
-/* .backpanel {
+.backpanel {
 
   position: absolute;
   top: 50%;
@@ -30,6 +30,16 @@
   top: 95px;
   background: linear-gradient(180deg, rgba(154, 150, 150, 0.5) 0%, rgba(154, 150, 150, 0) 100%);
   border-radius: 13px;
+  overflow: auto;
+  padding: 5px;
+}
+
+/* Change css for editable div in focus here */
+[contenteditable="true"]:active,
+[contenteditable="true"]:focus {
+  border: 0.5px solid #E2B33D;
+  outline: none;
+  resize: none;
 }
 
 .placeholderText {
@@ -47,7 +57,7 @@
   text-align: center;
   letter-spacing: 0.1em;
   color: #000000;
-  
+
   background: #E2B33D;
   border: 0.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 13px;
@@ -102,13 +112,13 @@
   letter-spacing: 0.1em;
   color: #EBDDBB;
 
-} */
+}
 
 
 /* OLD VERSION */
 
 
-
+/*
  .heading {
   padding-top: 5vh;
 }
@@ -180,7 +190,7 @@ textarea:focus {
   textarea:focus {
     width: 80vw;
   }
-} 
+}
 
 
-
+ */
