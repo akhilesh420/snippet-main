@@ -8,8 +8,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 738px;
-  height: 486px;
+  width: 60%;
+  height: 70%;
   background: linear-gradient(154.02deg, #3A38D4 1.48%, #8837A8 16.87%, #A73678 27.13%, #CF343C 47.66%, rgba(207, 52, 60, 0.844286) 62.99%, rgba(208, 52, 60, 0.621353) 75.11%, rgba(209, 52, 60, 0.18) 99.22%);
   box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
@@ -37,9 +37,23 @@
 /* Change css for editable div in focus here */
 [contenteditable="true"]:active,
 [contenteditable="true"]:focus {
-  border: 0.5px solid #E2B33D;
+  border: none;
   outline: none;
   resize: none;
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  color: #ffffff;
+}
+
+.thankYouStyle {
+
+  position: absolute;
+  top: 25.7201%;
+  left: 4.333%;
+
 }
 
 .placeholderText {
