@@ -31,7 +31,7 @@
   <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle();'>
     <img src = "assets/icons/Post Icons/failSafeButton.png">
   </div>
-  
+
   <!-- post details -->
   <div class="postDetails"
       (click)="showComments ? showDetails = false : showDetails = !showDetails;
@@ -155,5 +155,4 @@
 
     <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
 
-    
 </div>

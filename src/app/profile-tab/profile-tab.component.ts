@@ -2,7 +2,7 @@ import { UsersService } from 'src/app/shared/users.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { PostService } from '../shared/post.service';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { StickerDetails } from '../shared/post.model';
 import { Activity, Collection } from '../shared/activity.model';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
@@ -104,7 +104,7 @@ export class ProfileTabComponent implements OnInit {
 
 
 
-  collectSticker() {
+  async collectSticker() {
     if (this.isAuthenticated) {
       if (!this.collectingSticker && this.collectionLoaded) {
         this.collectingSticker = true;
@@ -114,7 +114,13 @@ export class ProfileTabComponent implements OnInit {
         for (let key in this.postCollection) {
           if (this.postCollection[key].collectorID === this.myUid) {
             valid = false;
-            popUpObj = new PopUp("You already collected this sticker!",'Go to Collection','Stay Here', ['routing', 'default'],'collection/'+this.myUid);
+            popUpObj = new PopUp("You already collected this sticker! Select edit to display it!",'Go to Edit','Stay Here', ['routing', 'default']);
+            this.miscellaneousService.setPopUp(popUpObj);
+            const popUpVal = await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
+            if (popUpVal) {
+              this.miscellaneousService.showDashboard.next(true);
+              this.miscellaneousService.overrideEdit.next(true);
+            }
             break;
           } else {
             valid = true;
@@ -123,13 +129,19 @@ export class ProfileTabComponent implements OnInit {
         if (valid) {
           if (this.engagementRatio < 1) {
               this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-              popUpObj = new PopUp("Sticker collected! Go to My Collection and select Edit to use your new Sticker",'Go to Edit','Stay Here', ['routing', 'default'], 'profile/'+this.myUid+'/edit');
+              popUpObj = new PopUp("Sticker collected! Select edit to display it!",'Go to Edit','Stay Here', ['routing', 'default']);
+              this.miscellaneousService.setPopUp(popUpObj);
+              const popUpVal = await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
+              if (popUpVal) {
+                this.miscellaneousService.showDashboard.next(true);
+                this.miscellaneousService.overrideEdit.next(true);
+              }
           } else {
             popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
+            this.miscellaneousService.setPopUp(popUpObj);
           }
         }
 
-        this.miscellaneousService.setPopUp(popUpObj);
         this.collectingSticker = false;
       }
     } else {

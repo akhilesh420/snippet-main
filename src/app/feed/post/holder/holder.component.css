@@ -2,7 +2,7 @@
 
   margin: 0%;
   padding: 0%;
-  
+
 }
 
 .backpanel {
@@ -74,7 +74,7 @@
   font-family: 'Comfortaa';
   font-weight: bold;
   text-overflow: ellipsis;
-
+  overflow: hidden;
 
 }
 
@@ -85,7 +85,7 @@
   top: 0%;
   letter-spacing: 0.15em;
   line-height: 2.5vh;
-  
+
 }
 
 
