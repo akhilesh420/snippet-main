@@ -199,9 +199,9 @@ opacity: 0;
 }
 
 .loading-bar {
-  border-top: 2px solid #D8B869;
+  border-top: 2px solid #E2B33D;
   position: fixed;
-  width: 90vw;
+  width: 100vw;
   animation-name: loadingAnim;
   animation-duration: 10s;
   animation-timing-function: linear;
@@ -366,7 +366,11 @@ opacity: 0;
 
     }
 
-    
+    .loading-bar {
+      border-top: 5px solid #E2B33D;
+      position: fixed;
+      top: 0%;
+    }
     
     
 
