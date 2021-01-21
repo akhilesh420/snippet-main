@@ -3,7 +3,9 @@
   position: absolute;
   top: 35%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
 }
 
@@ -12,7 +14,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
 }
 
@@ -21,11 +25,14 @@
   position: absolute;
   width: 340px;
   height: 486px;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
   background: #060606;
-  box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
+          box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
 
 }
@@ -44,8 +51,45 @@
 }
 
 .entry {
+  display: -ms-grid;
   display: grid;
   place-items: center;
+}
+
+::-webkit-input-placeholder {
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+::-moz-placeholder {
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+:-ms-input-placeholder {
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+::-ms-input-placeholder {
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: #000000;
 }
 
 ::placeholder {
@@ -243,9 +287,11 @@
   height: 100%;
   margin-left: 30.208%;
   /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
+  background: -o-linear-gradient(347.61deg, #632FDE 0.7%, #8451B4 15.32%, #E2B33D 46.6%, #DB7E3D 78.17%, #CF263C 100%);
   background: linear-gradient(102.39deg, #632FDE 0.7%, #8451B4 15.32%, #E2B33D 46.6%, #DB7E3D 78.17%, #CF263C 100%);
   background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  -webkit-animation: gradient 15s ease infinite;
+          animation: gradient 15s ease infinite;
 
 }
 
@@ -324,6 +370,19 @@ textarea:focus {
 }
 
 
+@-webkit-keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -375,7 +434,9 @@ textarea:focus {
 .horizontal-center {
   position: absolute;
   left: 50%;
-  transform: translate(-50%,0);
+  -webkit-transform: translate(-50%,0);
+      -ms-transform: translate(-50%,0);
+          transform: translate(-50%,0);
 }
 
 .danger-alert {
@@ -487,7 +548,9 @@ textarea:focus {
 
   .backpanel {
     top: 10%;
-    transform: translate(-50%, 0%);
+    -webkit-transform: translate(-50%, 0%);
+        -ms-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
   }
 
   .logoSignUp {

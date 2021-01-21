@@ -1,128 +1,138 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 /* Welcome slide  */
 .container-fluid {
-    background-color:#000000;
-    height: 100vh;
-    width: 100vw;
+  background-color:#000000;
+  height: 100vh;
+  width: 100vw;
 }
 
 .title {
-    padding-top: 10vh;
-    font-family: 'Comfortaa';
-    font-weight: bold;
-    font-size: 5vh;
-    letter-spacing: 0.160em;
-    color: #eab430;
+  padding-top: 10vh;
+  font-family: 'Comfortaa';
+  font-weight: bold;
+  font-size: 5vh;
+  letter-spacing: 0.160em;
+  color: #eab430;
 }
 
 .para {
-    padding-top: 5vh;
-    font-family: 'ChampagneAndLimousines';
-    font-weight: normal;
-    font-size: 4vh;
-    letter-spacing: 0.050em;
-    color: #ffffff;
+  padding-top: 5vh;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: normal;
+  font-size: 4vh;
+  letter-spacing: 0.050em;
+  color: #ffffff;
 }
 
 .nextArrow {
-    height: calc(100vh / 14);
+  height: calc(100vh / 14);
 }
 
 .how{
-  padding-bottom: 7.24vh;
+padding-bottom: 7.24vh;
 }
 
 @media only screen and (max-width: 480px) {
-    .title {
-        padding-top: 10vh;
-        font-size: calc(100vw / 18)
-    }
+  .title {
+      padding-top: 10vh;
+      font-size: calc(100vw / 18)
+  }
 
-    .para {
-        padding-top: 3vh;
-        font-size: calc(100vw / 24);
-    }
+  .para {
+      padding-top: 3vh;
+      font-size: calc(100vw / 24);
+  }
 
 
 }
 
 .title-2 {
-    padding-top: 2vh;
-    text-align: center;
-    font-family: 'Comfortaa';
-    font-weight: bold;
-    font-size: 4vh;
-    letter-spacing: 0.160em;
-    color: #eab430;
+  padding-top: 2vh;
+  text-align: center;
+  font-family: 'Comfortaa';
+  font-weight: bold;
+  font-size: 4vh;
+  letter-spacing: 0.160em;
+  color: #eab430;
 }
 
 .paraTop {
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    text-align: center;
-    font-family: 'ChampagneAndLimousines';
-    font-weight: normal;
-    font-size: 2.4vh;
-    letter-spacing: 0.050em;
-    color: #ffffff;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  text-align: center;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: normal;
+  font-size: 2.4vh;
+  letter-spacing: 0.050em;
+  color: #ffffff;
 }
 
 .paraBottom {
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    text-align: center;
-    font-family: 'ChampagneAndLimousines';
-    font-weight: normal;
-    font-size: 2.4vh;
-    letter-spacing: 0.050em;
-    color: #ffffff;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  text-align: center;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: normal;
+  font-size: 2.4vh;
+  letter-spacing: 0.050em;
+  color: #ffffff;
 }
 
 .nextArrow-2 {
-  position: absolute;
-  top: 85vh;
-  left: 50%;
+position: absolute;
+top: 85vh;
+left: 50%;
 }
 
 .nextArrow-2 > img {
-  height: 3vh;
+height: 3vh;
 }
 
 .col-1 > img {
-    height: 3vh;
-    width: auto;
-    align-self: center;
+  height: 3vh;
+  width: auto;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .post {
-  width: 100vw;
-  height: 55vh;
-  overflow: hidden;
+width: 100vw;
+height: 55vh;
+overflow: hidden;
 }
 
 .post > img {
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
+-o-object-fit: contain;
+   object-fit: contain;
+width: 100%;
+height: 100%;
 }
 
 /* Media-Query */
 
 @media only screen and (max-width: 480px) {
-    .title {
-        padding-top: 2vh;
-        font-size: calc(100vw / 18);
-    }
+  .title {
+      padding-top: 2vh;
+      font-size: calc(100vw / 18);
+  }
 
-    .para {
-        padding-top: 1vh;
-        font-size: calc(100vw / 26);
-    }
+  .para {
+      padding-top: 1vh;
+      font-size: calc(100vw / 26);
+  }
 
-    .nextArrow-2 {
-      position: absolute;
-      top: 95vh;
-      left: 50%;
-    }
+  .nextArrow-2 {
+    position: absolute;
+    top: 95vh;
+    left: 50%;
+  }
 
 }
 
@@ -131,22 +141,11 @@
 /* nextArrow Animation */
 
 .rotate-center {
-	-webkit-animation: rotate-center 1.4s cubic-bezier(0.645, 0.045, 0.355, 1.000) 0.1s both;
-	        animation: rotate-center 1.4s cubic-bezier(0.645, 0.045, 0.355, 1.000) 0.1s both;
+-webkit-animation: rotate-center 1.4s cubic-bezier(0.645, 0.045, 0.355, 1.000) 0.1s both;
+        animation: rotate-center 1.4s cubic-bezier(0.645, 0.045, 0.355, 1.000) 0.1s both;
 }
 
 @-webkit-keyframes rotate-center {
-    0% {
-      -webkit-transform: rotate(0);
-              transform: rotate(0);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-              transform: rotate(360deg);
-    }
-  }
-
-@keyframes rotate-center {
   0% {
     -webkit-transform: rotate(0);
             transform: rotate(0);
@@ -157,111 +156,123 @@
   }
 }
 
+@keyframes rotate-center {
+0% {
+  -webkit-transform: rotate(0);
+          transform: rotate(0);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+}
 
-  /* Title Animation */
+
+/* Title Animation */
 
 .tracking-in-expand {
-	-webkit-animation: tracking-in-expand 0.9s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
-	        animation: tracking-in-expand 0.9s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+-webkit-animation: tracking-in-expand 0.9s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        animation: tracking-in-expand 0.9s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
 }
 
 @-webkit-keyframes tracking-in-expand {
-    0% {
-      letter-spacing: -0.5em;
-      opacity: 0;
-    }
-    40% {
-      opacity: 0.6;
-    }
-    100% {
-      opacity: 1;
-    }
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
   }
-  @keyframes tracking-in-expand {
-    0% {
-      letter-spacing: -0.5em;
-      opacity: 0;
-    }
-    40% {
-      opacity: 0.6;
-    }
-    100% {
-      opacity: 1;
-    }
+  40% {
+    opacity: 0.6;
   }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 /* para Animation */
 
 .focus-in-expand {
-	-webkit-animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.2s both;
-	        animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.2s both;
+-webkit-animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.2s both;
+        animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.2s both;
 }
 
 @-webkit-keyframes focus-in-expand {
-    0% {
-      letter-spacing: -0.5em;
-      -webkit-filter: blur(12px);
-              filter: blur(12px);
-      opacity: 0;
-    }
-    100% {
-      -webkit-filter: blur(0px);
-              filter: blur(0px);
-      opacity: 1;
-    }
+  0% {
+    letter-spacing: -0.5em;
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
   }
-  @keyframes focus-in-expand {
-    0% {
-      letter-spacing: -0.5em;
-      -webkit-filter: blur(12px);
-              filter: blur(12px);
-      opacity: 0;
-    }
-    100% {
-      -webkit-filter: blur(0px);
-              filter: blur(0px);
-      opacity: 1;
-    }
+  100% {
+    -webkit-filter: blur(0px);
+            filter: blur(0px);
+    opacity: 1;
   }
+}
+@keyframes focus-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+            filter: blur(0px);
+    opacity: 1;
+  }
+}
 
 
-  .inactive {
-    filter: grayscale(100);
-  }
+.inactive {
+  -webkit-filter: grayscale(100);
+          filter: grayscale(100);
+}
 
-  /* Pulsate */
+/* Pulsate */
 
 .pulsate-bck {
-	-webkit-animation: pulsate-bck 1s ease-in-out infinite both;
-          animation: pulsate-bck 1s ease-in-out infinite both;
-  cursor:pointer;
+-webkit-animation: pulsate-bck 1s ease-in-out infinite both;
+        animation: pulsate-bck 1s ease-in-out infinite both;
+cursor:pointer;
 }
 
 @-webkit-keyframes pulsate-bck {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  50% {
-    -webkit-transform: scale(0.9);
-            transform: scale(0.9);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
+0% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+50% {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+100% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
 }
 @keyframes pulsate-bck {
-  0% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  50% {
-    -webkit-transform: scale(0.9);
-            transform: scale(0.9);
-  }
-  100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
+0% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+50% {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+100% {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
 }
