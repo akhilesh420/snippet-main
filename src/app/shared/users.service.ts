@@ -17,7 +17,7 @@ export class UsersService {
 
   // Collection
   private profileDetailsCollection: AngularFirestoreCollection<ProfileDetails>;
-  private profileStickersCollection: AngularFirestoreCollection<ProfileSticker[]>;
+  private profileStickersCollection: AngularFirestoreCollection;
   private displayPictureCollection: AngularFirestoreCollection<DisplayPicture>;
   private onBoardingCollection: AngularFirestoreCollection<OnBoarding>;
 
@@ -101,7 +101,7 @@ export class UsersService {
 
   // Update profile stickers from
   updateProfileSticker(uid: string, profileSticker: ProfileSticker[]) {
-    const stickerArray = [];
+    const stickerArray: any[] = [];
     profileSticker.forEach(sticker => {
       if (sticker) {stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})}
       else {stickerArray.push("empty")}
