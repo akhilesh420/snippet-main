@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 
 /* NEW VERSION */
 
@@ -7,12 +14,16 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   width: 60%;
   height: 70%;
   min-width: 550px;
+  background: -o-linear-gradient(295.98deg, #3A38D4 1.48%, #8837A8 16.87%, #A73678 27.13%, #CF343C 47.66%, rgba(207, 52, 60, 0.844286) 62.99%, rgba(208, 52, 60, 0.621353) 75.11%, rgba(209, 52, 60, 0.18) 99.22%);
   background: linear-gradient(154.02deg, #3A38D4 1.48%, #8837A8 16.87%, #A73678 27.13%, #CF343C 47.66%, rgba(207, 52, 60, 0.844286) 62.99%, rgba(208, 52, 60, 0.621353) 75.11%, rgba(209, 52, 60, 0.18) 99.22%);
-  box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
+          box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
 
 }
@@ -29,6 +40,8 @@
   height: 253px;
   left: 3%;
   top: 95px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(154, 150, 150, 0.5)), to(rgba(154, 150, 150, 0)));
+  background: -o-linear-gradient(top, rgba(154, 150, 150, 0.5) 0%, rgba(154, 150, 150, 0) 100%);
   background: linear-gradient(180deg, rgba(154, 150, 150, 0.5) 0%, rgba(154, 150, 150, 0) 100%);
   border-radius: 13px;
   overflow: auto;
@@ -47,6 +60,13 @@
   font-size: 16px;
   line-height: 18px;
   color: #ffffff;
+}
+
+[contenteditable] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+   -ms-user-select: text;
+       user-select: text;
 }
 
 .thankYouStyle {
@@ -149,7 +169,9 @@
       width: 100%;
       top: 0%;
       left: 0%;
-      transform: translate(0%, 0%);
+      -webkit-transform: translate(0%, 0%);
+          -ms-transform: translate(0%, 0%);
+              transform: translate(0%, 0%);
       border-radius: 0%;
       min-width: unset;
     }
@@ -157,14 +179,16 @@
     .btn {
       right: unset;
       left: 50%;
-      transform: translate(-50%, 0%);
+      -webkit-transform: translate(-50%, 0%);
+          -ms-transform: translate(-50%, 0%);
+              transform: translate(-50%, 0%);
     }
 
     .inputArea {
       height: 70%;
       width: 94%;
     }
-  
+
     .placeholderText {
       width: 80vw;
       height: auto;

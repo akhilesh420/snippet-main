@@ -26,7 +26,7 @@
 
 
 
-<div class = "header no-margin-no-padding" #header>
+<div class = "header no-margin-no-padding">
 
   <div class = "row headerBackpanel no-margin-no-padding">
 
@@ -299,7 +299,6 @@
   </div>
 
   <div class="loading-bar"
-      [ngStyle]='{"top": header.offsetHeight.toString() +"px"}'
       *ngIf="loadingBar$ | async">
   </div>
 

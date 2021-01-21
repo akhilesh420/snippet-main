@@ -43,7 +43,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           if (res) {
             this.email = res.email;
-            // this.username = res.username;
+            this.username = res.username;
           }
         })
 

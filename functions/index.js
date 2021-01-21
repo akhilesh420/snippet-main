@@ -44,7 +44,7 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
 .document('post content/{pid}')
 .onCreate(async (snap, context) => {
 
-  const fileBucket = 'snippet-test-716cd.appspot.com';
+  const fileBucket = 'snippet-web-9818a.appspot.com';
 
   const newValue = snap.data();
   const fileName = newValue.name;
@@ -127,7 +127,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
 .document('sticker content/{pid}')
 .onCreate(async (snap, context) => {
 
-  const fileBucket = 'snippet-test-716cd.appspot.com';
+  const fileBucket = 'snippet-web-9818a.appspot.com';
 
   const newValue = snap.data();
   const fileName = newValue.name;
@@ -193,7 +193,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
 .document('display picture/{uid}')
 .onWrite(async (change, context) => {
 
-  const fileBucket = 'snippet-test-716cd.appspot.com';
+  const fileBucket = 'snippet-web-9818a.appspot.com';
 
   const newValue = change.after.data();
   const fileName = newValue.name;

@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 /* Classes for multiple components */
 
 .no-margin-no-padding {
@@ -79,7 +86,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
 }
 
@@ -89,7 +98,9 @@
   position: absolute;
   top: 50%;
   left: 88.020%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
 }
 
@@ -100,7 +111,9 @@
   position: absolute;
   top: 50%;
   left: 93.159%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
 }
 
@@ -124,14 +137,17 @@
   position: absolute;
   top: 50%;
   left: 97.6597%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
 }
 
 .dpContainer > img {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   border-radius: 50%;
 }
 
@@ -145,8 +161,10 @@ right: 2.0vw;
 border-radius: 8px;
 background-color: rgba(11,11,11,1);
 -webkit-transform: translateY(-1000px);
-        transform: translateY(-1000px);    
-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+        -ms-transform: translateY(-1000px);
+    transform: translateY(-1000px);
+-webkit-box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
 opacity: 0;
 
 }
@@ -164,8 +182,8 @@ opacity: 0;
   letter-spacing: 0.1em;
   color: #FFFFFF;
   position: relative;
-  
-   
+
+
 }
 
 .Text {
@@ -201,10 +219,14 @@ opacity: 0;
 .loading-bar {
   border-top: 2px solid #E2B33D;
   position: fixed;
+  top: 54px;
   width: 100vw;
-  animation-name: loadingAnim;
-  animation-duration: 10s;
-  animation-timing-function: linear;
+  -webkit-animation-name: loadingAnim;
+          animation-name: loadingAnim;
+  -webkit-animation-duration: 10s;
+          animation-duration: 10s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
 }
 
 
@@ -272,6 +294,11 @@ opacity: 0;
     }
   }
 
+  @-webkit-keyframes loadingAnim {
+    from { width: 0; };
+    to { width: 90vw; };
+  }
+
   @keyframes loadingAnim {
     from { width: 0; };
     to { width: 90vw; };
@@ -289,11 +316,13 @@ opacity: 0;
       position: absolute;
       top: 50%;
       left: 82.881%;
-      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
       display: block;
-    
+
     }
-    
+
 
 }
 
@@ -305,11 +334,11 @@ opacity: 0;
       top: unset;
 
     }
-    
+
     .headerBackpanel {
-    
+
       background: #000000;
-    
+
     }
 
     .logoRow {
@@ -324,7 +353,9 @@ opacity: 0;
       position: absolute;
       top: 50%;
       left: 8%;
-      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
 
     }
 
@@ -333,9 +364,11 @@ opacity: 0;
       position: absolute;
       top: 50%;
       left: 28.9855%;
-      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
       display: block;
-    
+
     }
 
     .profileButton {
@@ -345,8 +378,10 @@ opacity: 0;
       position: absolute;
       top: 50%;
       left: 71.014%;
-      transform: translate(-50%, -50%);
-    
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+
     }
 
 
@@ -355,7 +390,9 @@ opacity: 0;
       position: absolute;
       top: 50%;
       left: 92%;
-      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
 
     }
 
@@ -369,13 +406,12 @@ opacity: 0;
     .loading-bar {
       border-top: 5px solid #E2B33D;
       position: fixed;
-      top: 0%;
+      top: 0;
     }
-    
-    
+
+
 
   }
-
 
 
 
