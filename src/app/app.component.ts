@@ -31,6 +31,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   profileStickerEdit: boolean = false;
   showDashboard: boolean = false;
+
+  preloadImages = ['assets\images\Header Icons\createButtonActive.svg'];
+
   constructor(private windowStateService: WindowStateService,
               private router: Router,
               private infiniteScrollService: InfiniteScrollService,
@@ -45,6 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
     this.activityService.collectionStartTime = new Date().getTime();
     this.activityService.holderListStartTime = new Date().getTime();
+    this.miscellaneousService.preloadImages(this.preloadImages);
 
     this.windowStateService.checkWidth();
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))

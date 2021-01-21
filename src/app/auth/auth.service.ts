@@ -13,6 +13,7 @@ import { ActivityService } from '../shared/activity.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
+import 'firebase/firestore'
 import { Collection } from '../shared/activity.model';
 
 export interface AuthResponseData {
@@ -178,7 +179,8 @@ export class AuthService {
     batch.set(displayPictureDoc, dp);
     batch.set(exclusiveUserDoc, exclusiveObj);
     batch.set(collectionDoc, {...collection});
-    batch.update(exclusiveIdDoc, {used: firebase.firestore.FieldValue.increment(1)});
+    batch.update(exclusiveIdDoc, {used: firebase.default.firestore.FieldValue.increment(1)});
+    // batch.update(exclusiveIdDoc, {used: firebase.firestore.FieldValue.increment(1)});
 
     await batch.commit()
           .then(() => {

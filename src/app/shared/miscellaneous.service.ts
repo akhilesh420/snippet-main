@@ -47,6 +47,8 @@ export class MiscellaneousService {
   showDashboard = new Subject<boolean>();
   overrideEdit = new Subject<boolean>(); //true => both profile and sticker edit, false => just profile edit
 
+  images = [];
+
   constructor(private userService: UsersService,
               private router: Router) { }
 
@@ -135,5 +137,12 @@ export class MiscellaneousService {
   updateOnBoarding(uid: string) {
     if (!this.onBoardingDetails) return;
     this.userService.updateOnBoarding(uid, this.onBoarding$.value, this.onBoardingStep$.value, this.onBoardingDetails.timeTaken);
+  }
+
+  preloadImages(images: string[]) {
+    for (var i = 0; i < arguments.length; i++) {
+      this.images[i] = new Image();
+      this.images[i].src = images[i];
+    }
   }
 }

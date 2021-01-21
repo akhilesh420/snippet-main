@@ -23,6 +23,7 @@ html, body {
   outline: none;
 }
 
+::-moz-scrollbar,
 ::-webkit-scrollbar {
   display: none;
 }
