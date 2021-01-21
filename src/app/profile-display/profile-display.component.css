@@ -33,7 +33,7 @@ background-image: url("src/assets/icons/Profile Display/profileDisplayBorder.svg
 }
 
 .profileDB-edit {
-background-image: url("src/assets/icons/Profile Display/editModeBackground.svg");
+background-image: url("src/assets/images/Profile Display/editModeBackground.svg");
 -webkit-box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
         box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
 }
