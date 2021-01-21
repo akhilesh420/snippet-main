@@ -301,6 +301,12 @@
   resize: none;
 }
 
+[contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+
 .input-cover {
   background: rgba(196, 196, 196, 0.05);
   backdrop-filter: blur(1px);

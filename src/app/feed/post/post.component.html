@@ -13,7 +13,6 @@
            loop
            playsinline
            #videoPlayer
-           muted
            [src]='content'
            [ngClass]="{'opacity-out-details': !this.showDetails,
                       'opacity-in-details': this.showDetails,
@@ -27,17 +26,17 @@
       <app-loading-spinner class="center-absolute"></app-loading-spinner>
   </ng-template>
 
-  <!-- Fail-safe button -->
-  <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle();'>
-    <img src = "assets/icons/Post Icons/failSafeButton.png">
-  </div>
-
   <!-- post details -->
   <div class="postDetails"
       (click)="showComments ? showDetails = false : showDetails = !showDetails;
               showComments = false;
               holderToggle = false;
               videoToggle();">
+
+      <!-- Fail-safe button -->
+      <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
+        <img src = "assets/icons/Post Icons/failSafeButton.png">
+      </div>
 
       <div class="postTitle inline float-left pointer">
           {{postDetails.title}}

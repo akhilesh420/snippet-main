@@ -49,6 +49,11 @@
   color: #ffffff;
 }
 
+[contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 .thankYouStyle {
 
   position: absolute;
@@ -164,7 +169,7 @@
       height: 70%;
       width: 94%;
     }
-  
+
     .placeholderText {
       width: 80vw;
       height: auto;
