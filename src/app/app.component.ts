@@ -32,7 +32,21 @@ export class AppComponent implements OnInit, OnDestroy {
   profileStickerEdit: boolean = false;
   showDashboard: boolean = false;
 
-  preloadImages = ['/assets/images/Header%20Icons/createButtonActive.svg'];
+  preloadImages = ['/assets/images/Header%20Icons/createButtonActive.svg',
+                   '/assets/images/Header%20Icons/createButtonInactive.svg',
+                   '/assets/images/Header%20Icons/exploreActive.svg',
+                   '/assets/images/Header%20Icons/exploreInactive.svg',
+                   '/assets/images/Header%20Icons/optionsButtonActive.svg',
+                   '/assets/images/Header%20Icons/optionsButtonInactive.svg',
+                   '/assets/images/Header%20Icons/profileButtonActive.svg',
+                   '/assets/images/Header%20Icons/profileButtonInactive.svg',
+                   '/assets/images/Post/failSafeButton.png',
+                   '/assets/images/Post/postdetailDropdown.svg',
+                   '/assets/images/Profile%20Display/editModeBackground.svg',
+                   '/assets/images/Profile%20Display/profileDescription.svg',
+                   '/assets/images/Profile%20Display/profileDisplayBorder.svg',
+                   '/assets/images/Profile%20Display/profileLinkEdit.svg',
+                   '/assets/images/Profile%20Display/saveButton.svg'];
 
   constructor(private windowStateService: WindowStateService,
               private router: Router,
