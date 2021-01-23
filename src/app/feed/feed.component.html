@@ -93,7 +93,7 @@
     </div>
     <div class="feed dashboard" *ngIf='!tabletCheck'>
       <div class='profile-display'>
-        <app-profile-display [uid$]='uid$'></app-profile-display>
+        <app-profile-display [uid$]='uid$' [editable]='myUid === uid'></app-profile-display>
       </div>
       <div [ngClass]='{"collection-tab-edit": profileStickerEdit}'>
         <app-collection-tab ></app-collection-tab>

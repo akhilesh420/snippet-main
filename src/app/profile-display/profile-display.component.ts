@@ -104,7 +104,6 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       this.allowEdit = this.isAuthenticated;
       if (this.isAuthenticated)  {
         this.myUid = user.uid;
-        if (this.uid != this.myUid) this.editable = false;
       }
     });
 
