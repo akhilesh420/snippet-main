@@ -102,7 +102,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
       this.allowEdit = this.isAuthenticated;
-      if (this.isAuthenticated)  this.myUid = user.uid;
+      if (this.isAuthenticated)  {
+        this.myUid = user.uid;
+        if (this.uid != this.myUid) this.editable = false;
+      }
     });
 
     this.miscellaneousService.stickerSelectConfirm.pipe(takeUntil(this.notifier$)).subscribe(response => {
