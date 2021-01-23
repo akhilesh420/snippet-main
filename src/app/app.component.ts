@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   profileStickerEdit: boolean = false;
   showDashboard: boolean = false;
 
-  preloadImages = ['assets\images\Header Icons\createButtonActive.svg'];
+  preloadImages = ['/assets/images/Header%20Icons/createButtonActive.svg'];
 
   constructor(private windowStateService: WindowStateService,
               private router: Router,
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private activityService: ActivityService,
               private feedService: FeedService,
               private scrollService: ScrollService,
-              private auth: AngularFireAuth){
+              private auth: AngularFireAuth) {
   }
 
   ngOnInit() {

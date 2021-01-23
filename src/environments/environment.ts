@@ -15,7 +15,8 @@ export const environment = {
     measurementId: "G-758SLHKGPR"
   },
   onBoardingPid: 'TqsSoDk3tgo9w1Eo4UyG',
-  onBoardingUid: 'DMc0kQ5tj7UDC4u8m3uivR1eMLf2'
+  onBoardingUid: 'DMc0kQ5tj7UDC4u8m3uivR1eMLf2',
+  websitePath: 'https://snippet-test-716cd.web.app'
 };
 
 /*

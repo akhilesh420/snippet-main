@@ -11,5 +11,6 @@ export const environment = {
     measurementId: "G-9PQTNK63Q0"
   },
   onBoardingPid: 'Ieu3tkV4SUrPJEsg4s71',
-  onBoardingUid: 'fH5fipY7jDb770BTJxp9gLoLDXm1'
+  onBoardingUid: 'fH5fipY7jDb770BTJxp9gLoLDXm1',
+  websitePath: 'https://www.snippet.live'
 };

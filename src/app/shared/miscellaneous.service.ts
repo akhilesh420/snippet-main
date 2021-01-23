@@ -1,7 +1,8 @@
-import { OnBoarding, ProfileDetails, ProfileSticker } from './profile.model';
+import { environment } from './../../environments/environment';
+import { OnBoarding,  ProfileSticker } from './profile.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -142,7 +143,7 @@ export class MiscellaneousService {
   preloadImages(images: string[]) {
     for (var i = 0; i < arguments.length; i++) {
       this.images[i] = new Image();
-      this.images[i].src = images[i];
+      this.images[i].src = environment.websitePath + images[i];
     }
   }
 }
