@@ -12,7 +12,7 @@
         <div class = "col-10 no-margin-no-padding postDetails"
              *ngIf='(postDetails$ | async) as details;'>
 
-            <div class = "row no-margin-no-padding postTitle">
+            <div class = "no-margin-no-padding postTitle">
                 <p class = "title no-margin-no-padding"
                    [ngClass]='{"selectedSticker-title": stickerSelected()}'>{{details.title}}</p>
             </div>
