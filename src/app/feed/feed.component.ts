@@ -111,13 +111,14 @@ export class FeedComponent implements OnInit, OnDestroy {
     if (currentRoute === 'explore') {
       this.myUid$.pipe(take(2)).subscribe(uid => {
         if (!uid) return;
+        this.uid = uid;
         setTimeout(() => this.uid$.next(uid), 100);
       });
       this.postsList$ = this.feedService.getExplorePage();
     } else if (currentRoute === 'collection') {
-      const uid = this.route.snapshot.params['id']
-      this.uid$.next(uid);
-      this.postsList$ = this.feedService.getCollectionPage(uid);
+      this.uid = this.route.snapshot.params['id']
+      this.uid$.next(this.uid);
+      this.postsList$ = this.feedService.getCollectionPage(this.uid);
       if (this.tabletCheck) this.showProfileDisplay = true;
       this.showProfileNavigation = true;
     } else if (currentRoute === 'profile') {
