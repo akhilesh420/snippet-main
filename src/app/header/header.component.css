@@ -392,6 +392,18 @@ opacity: 0;
               transform: translate(-50%, -50%);
 
     }
+    
+    .activeexploreButton {
+
+      position: absolute;
+      top: unset;
+      bottom: 0%;
+      left: 8%;
+      -webkit-transform: translate(-50%, 0%);
+          -ms-transform: translate(-50%, 0%);
+              transform: translate(-50%, 0%);
+
+    }
 
     .displayButton {
 
@@ -418,16 +430,28 @@ opacity: 0;
 
     }
 
+    .activeprofileButton {
+      bottom: 0%;
+      left: 71.014%;
+    }
 
-    .optionsButton {
 
+    .optionsButtonActive {
+      position: absolute;
+      bottom: 0%;
+      left: 92%;
+      -webkit-transform: translate(-50%, 0%);
+          -ms-transform: translate(-50%, 0%);
+              transform: translate(-50%, 0%);
+    }
+
+    .optionsButtonInactive {
       position: absolute;
       top: 50%;
       left: 92%;
       -webkit-transform: translate(-50%, -50%);
           -ms-transform: translate(-50%, -50%);
               transform: translate(-50%, -50%);
-
     }
 
     .headerDropdownBorder {
@@ -438,9 +462,11 @@ opacity: 0;
     }
 
     .loading-bar {
+
       border-top: 5px solid #E2B33D;
       position: fixed;
       top: 0;
+
     }
 
 
