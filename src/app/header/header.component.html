@@ -54,7 +54,7 @@
 
     <a [routerLink]='createRoute'>
 
-      
+
 
         <!-- Inactive -->
 
@@ -65,9 +65,9 @@
 
         <img class = "createButtonActive" *ngIf='currentRoute.includes("create")' src = "assets/images/Header Icons/createButtonActive.svg">
 
-       
 
-      
+
+
 
     </a>
 
@@ -76,7 +76,7 @@
       <!-- Inactive -->
 
       <img class = "displaybuttonActive" *ngIf='!showDashboard; else activeDashboard' src = "assets/images/Header Icons/displaybuttonInactive.svg">
-      
+
 
       <!-- Active -->
       <ng-template #activeDashboard>
@@ -87,7 +87,7 @@
 
     <a routerLink="/explore">
 
-    
+
 
         <!-- Inactive -->
         <ng-template #inactiveExplore>
@@ -95,11 +95,13 @@
         </ng-template>
 
         <!-- Active -->
-         <img class = "activeexploreButton" *ngIf='currentRoute.includes("explore")
-          || ( currentRoute.includes("profile/")
-          && !currentRoute.includes("profile/"+myUid)); else inactiveExplore' src = "assets/images/Header Icons/exploreActive.svg">
+         <img class = "activeexploreButton"
+              *ngIf='currentRoute.includes("explore")
+                    || ( currentRoute.includes("profile/")
+                    && !currentRoute.includes("profile/"+myUid)); else inactiveExplore'
+              src = "assets/images/Header Icons/exploreActive.svg">
 
-      
+
 
     </a>
 
@@ -111,7 +113,7 @@
           <img *ngIf="isAuthenticated && (displayPicture$ | async) as dp"
           [src]="dp"
           alt="display picture">
-          
+
         </div>
 
         <!-- Inactive -->
@@ -124,12 +126,12 @@
         <!-- Active -->
 
         <img class = "activeprofileButton" *ngIf='currentRoute.includes("profile/"+myUid) || currentRoute.includes("collection/"+myUid); else inactiveProfile' src = "assets/images/Header Icons/profilebuttonActive.svg">
-        
+
       </div>
 
     </a>
 
-    <div 
+    <div
         style='cursor:pointer'
         (click)='dropdown = !dropdown'
         (clickOutside)="dropdown = false"
@@ -140,9 +142,9 @@
       <img class = "optionsButtonInactive" *ngIf='!(currentRoute.includes("auth") || currentRoute.includes("feedback")) ; else activeDropdown' src = "assets/images/Header Icons/optionsButtonInactive.svg">
 
       <!-- Active -->
-      
-      
-      
+
+
+
       <ng-template #activeDropdown>
         <img class = "optionsButtonActive" src = "assets/images/Header Icons/optionsButtonActive.svg">
       </ng-template>
