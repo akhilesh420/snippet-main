@@ -141,9 +141,10 @@ export class MiscellaneousService {
   }
 
   preloadImages(images: string[]) {
-    for (var i = 0; i < arguments.length; i++) {
+    for (var i = 0; i < images.length; i++) {
       this.images[i] = new Image();
       this.images[i].src = environment.websitePath + images[i];
+      console.log(this.images[i].src);
     }
   }
 }
