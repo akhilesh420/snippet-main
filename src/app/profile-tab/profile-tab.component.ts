@@ -10,6 +10,7 @@ import { ProfileDetails, ProfileSticker } from '../shared/profile.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-profile-tab',
@@ -29,7 +30,7 @@ export class ProfileTabComponent implements OnInit {
   engagementProp = {'width': '0','background': '#E2B33D'};
   stickerDetails: StickerDetails;
   activity: Activity;
-  engagementRatio: number = 0;
+  engagementRatio: number;
   myUid: string;
   isAuthenticated: boolean;
   postCollection: Collection[] = [];
@@ -40,22 +41,13 @@ export class ProfileTabComponent implements OnInit {
   constructor(private postService: PostService,
               private usersService: UsersService,
               private activityService: ActivityService,
-              private authService: AuthService,
+              private auth: AngularFireAuth,
               private miscellaneousService: MiscellaneousService,
               private router: Router) { }
 
   ngOnInit(): void {
 
     if (!this.pid || !this.uid) return;
-
-    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.isAuthenticated = !!response;
-      if (this.isAuthenticated) {
-        this.myUid = response.id;
-      }
-    }, errorMessage => {
-      console.log(errorMessage);
-    });
 
     this.profileRoute = "/profile/" + this.uid;
 
@@ -75,7 +67,7 @@ export class ProfileTabComponent implements OnInit {
       if (!response) return;
       this.profileStickers = response;
       this.profileStickersLoaded = true;
-    });;
+    });
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     // post collection list
     this.activityService.getPostCollection(this.pid).subscribe(response => {
@@ -102,11 +94,13 @@ export class ProfileTabComponent implements OnInit {
     }
   }
 
-
-
-  async collectSticker() {
-    if (this.isAuthenticated) {
-      if (!this.collectingSticker && this.collectionLoaded) {
+  collectSticker() {
+    if (this.collectingSticker || !this.collectionLoaded || !this.engagementRatio) return;
+    this.auth.onAuthStateChanged(async (user) => {
+      this.isAuthenticated = !!user;
+      console.log(this.isAuthenticated);
+      if (this.isAuthenticated)  {
+        this.myUid = user.uid;
         this.collectingSticker = true;
         let popUpObj: PopUp;
         let valid: boolean = false;
@@ -126,6 +120,7 @@ export class ProfileTabComponent implements OnInit {
             valid = true;
           }
         }
+
         if (valid) {
           if (this.engagementRatio < 1) {
               this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
@@ -143,9 +138,9 @@ export class ProfileTabComponent implements OnInit {
         }
 
         this.collectingSticker = false;
+      } else {
+        this.router.navigate(['/auth']);
       }
-    } else {
-      this.router.navigate(['/auth']);
-    }
+    });
   }
 }
