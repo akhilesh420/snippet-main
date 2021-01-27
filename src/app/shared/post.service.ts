@@ -1,5 +1,5 @@
 import { AngularFireStorage } from '@angular/fire/storage';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { PostContent, PostDetails, StickerDetails } from './post.model';
 
@@ -14,10 +14,10 @@ export class PostService {
 
   placeholderImg = 'assets/default image/blank_image@2x.png';
 
-  private postDetailsCollection: AngularFirestoreCollection<PostDetails>;
-  private postContentCollection: AngularFirestoreCollection<PostContent>;
-  private stickerDetailsCollection: AngularFirestoreCollection<StickerDetails>;
-  private stickerContentCollection: AngularFirestoreCollection<PostContent>;
+  private postDetailsCollection: any;
+  private postContentCollection: any;
+  private stickerDetailsCollection: any;
+  private stickerContentCollection: any;
 
   private stickerContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
   private postContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
