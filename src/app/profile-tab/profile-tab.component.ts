@@ -5,10 +5,9 @@ import { PostService } from '../shared/post.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { StickerDetails } from '../shared/post.model';
 import { Activity, Collection } from '../shared/activity.model';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { ProfileDetails, ProfileSticker } from '../shared/profile.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
-import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
