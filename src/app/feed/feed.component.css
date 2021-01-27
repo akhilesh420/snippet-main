@@ -213,10 +213,16 @@
 
   .first-post-gap-phone {
     display: inline-block;
+    width: 100vw;
+    height: 10vh;
+    display: grid;
+    place-items: center;
+    background-color: #0b0b0b;
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.08));
   }
 
   .placeholderSizing {
-    width: 100vw;
+    height: 70%;
   }
 
 
