@@ -1,16 +1,11 @@
-
-    <div class="first-post-gap-phone no-margin-no-padding">
-
-      <img class = "placeholderSizing no-margin-no-padding" src = "assets/images/Post/first-post-phone.svg">
-
-    </div>
-
 <div class="main-container">
-  
 
   <div class="feed-container">
     <div class="feed">
 
+      <div class="first-post-gap-phone" *ngIf='lastRoute.includes("explore")'>
+        <img class = "placeholderSizing" src = "assets/images/Post/first-post-phone.svg">
+      </div>
 
       <div *ngIf='showProfileDisplay' class="profile-display">
         <app-profile-display  [uid$]='uid$' [editable] ='false'></app-profile-display>
@@ -102,6 +97,7 @@
         <app-loading-spinner [ngClass]='{"center-absolute": tabletCheck}'></app-loading-spinner>
       </ng-template>
     </div>
+
     <div class="feed dashboard" *ngIf='!tabletCheck'>
       <div class='profile-display'>
         <app-profile-display [uid$]='uid$' [editable]='myUid === uid'></app-profile-display>
