@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase } from '@angular/fire/database';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import { Activity, Collection, View } from './activity.model';
@@ -21,7 +21,7 @@ export class ActivityService {
   private activityRef: any;
 
   //Firestore Collection
-  private collectionCollection: AngularFirestoreCollection<Collection>;
+  private collectionCollection: any;
 
   constructor(private db: AngularFireDatabase,
               private afs: AngularFirestore,
