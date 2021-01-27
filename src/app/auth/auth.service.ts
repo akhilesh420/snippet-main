@@ -1,6 +1,5 @@
 import { environment } from './../../environments/environment';
-import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture } from './../shared/profile.model';
-import { UsersService } from './../shared/users.service';
+import { ProfileDetails, PersonalDetails, DisplayPicture } from './../shared/profile.model';
 import { FeedService } from './../feed/feed.service';
 import { Feedback } from './../feedback/feedback.service';
 import { User } from './user.model';
