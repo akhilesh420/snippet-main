@@ -59,6 +59,21 @@
         [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
         style="cursor: pointer;"
         (click)='collectSticker()'>
+
+        <!-- Loading animation -->
+        
+        <!-- Checking -->
+        
+        <!-- <div class = "loading-ball"></div> -->
+
+        <!-- Confirmed -->
+
+        <!-- <div class = "confirm-ball"></div> -->
+
+        <!-- Rejected -->
+
+        <div class = "reject-ball"></div>
+        
       <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
     </div>
 
