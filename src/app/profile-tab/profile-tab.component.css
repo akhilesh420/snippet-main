@@ -226,7 +226,7 @@
     border-radius: 50%;
     animation: loading-bounce 1s linear infinite;
     position: absolute;
-    top: 30%;
+    top: 35%;
     left: 37%;
 
 }
@@ -240,7 +240,7 @@
     animation: confirm-bounce 3s ;
     animation-fill-mode: forwards;
     position: absolute;
-    top: 30%;
+    top: 35%;
     left: 37%;
 
 }
@@ -254,7 +254,7 @@
     animation: reject-bounce 3s ;
     animation-fill-mode: forwards;
     position: absolute;
-    top: 30%;
+    top: 35%;
     left: 37%;
 }
 
@@ -291,7 +291,7 @@
       background-color: #19812F;
       
     }
-    90% {
+    80% {
         transform: translate(0,0);
         background-color: #19812F;
         opacity: 1;
@@ -321,7 +321,7 @@
       transform: translate(0,0);
       background-color: #CF263C;
     }
-    90% {
+    80% {
         transform: translate(0,0);
         background-color: #CF263C;
         opacity: 1;
