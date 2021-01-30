@@ -1,11 +1,12 @@
+import { environment } from './../../environments/environment.prod';
 import { UsersService } from 'src/app/shared/users.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { PostService } from '../shared/post.service';
-import { first, takeUntil } from 'rxjs/operators';
+import { first, take, takeUntil } from 'rxjs/operators';
 import { StickerDetails } from '../shared/post.model';
 import { Activity, Collection } from '../shared/activity.model';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, forkJoin, combineLatest } from 'rxjs';
 import { ProfileDetails, ProfileSticker } from '../shared/profile.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { Router } from '@angular/router';
@@ -33,9 +34,11 @@ export class ProfileTabComponent implements OnInit {
   myUid: string;
   isAuthenticated: boolean;
   postCollection: Collection[] = [];
-  collectionLoaded = false;
-  collectingSticker: boolean = false;
   profileStickersLoaded: boolean = false;
+
+  stickerCollectionState: number;
+  collectionLoaded = new BehaviorSubject<boolean>(undefined);
+  engagementLoaded = new BehaviorSubject<boolean>(undefined);
 
   constructor(private postService: PostService,
               private usersService: UsersService,
@@ -71,7 +74,7 @@ export class ProfileTabComponent implements OnInit {
     // post collection list
     this.activityService.getPostCollection(this.pid).subscribe(response => {
       this.postCollection = response;
-      this.collectionLoaded = true;
+      this.collectionLoaded.next(true);
     });
   }
 
@@ -90,54 +93,61 @@ export class ProfileTabComponent implements OnInit {
       let percentage: string = (this.engagementRatio*100).toString() + '%';
       this.engagementProp.width = percentage;
       this.engagementProp.background = colour;
+      this.engagementLoaded.next(true);
     }
   }
 
+  allowProcessing() {
+    console.log('start request');
+    return new Promise<boolean>((resolve) => {
+      combineLatest([this.collectionLoaded,this.engagementLoaded]).subscribe(results => {
+        if (results[0] === true && results[1] === true) resolve(true);
+      }, async (error) => {
+        this.stickerCollectionState = -1; //reject
+        const popUpObj = new PopUp("An unknown error occurred! Try again later.",'Okay', undefined, ['default', 'default']);
+        this.miscellaneousService.setPopUp(popUpObj);
+        await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
+        return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
+      });
+    })
+  }
+
   collectSticker() {
-    if (this.collectingSticker || !this.collectionLoaded || !this.engagementRatio) return;
     this.auth.onAuthStateChanged(async (user) => {
       this.isAuthenticated = !!user;
-      console.log(this.isAuthenticated);
       if (this.isAuthenticated)  {
+
+        if (this.stickerCollectionState === 0) return;
+        this.stickerCollectionState = 0; //loading
+
+        const val = await this.allowProcessing();
+        console.log(val);
+
         this.myUid = user.uid;
-        this.collectingSticker = true;
-        let popUpObj: PopUp;
-        let valid: boolean = false;
 
         for (let key in this.postCollection) {
           if (this.postCollection[key].collectorID === this.myUid) {
-            valid = false;
-            popUpObj = new PopUp("You already collected this sticker! Select edit to display it!",'Go to Edit','Stay Here', ['routing', 'default']);
+            this.stickerCollectionState = -1; //reject
+            const popUpObj = new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']);
             this.miscellaneousService.setPopUp(popUpObj);
-            const popUpVal = await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
-            if (popUpVal) {
-              this.miscellaneousService.showDashboard.next(true);
-              this.miscellaneousService.overrideEdit.next(true);
-            }
-            break;
-          } else {
-            valid = true;
+            await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
+            return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
           }
         }
 
-        if (valid) {
-          if (this.engagementRatio < 1) {
-              this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-              popUpObj = new PopUp("Sticker collected! Select edit to display it!",'Go to Edit','Stay Here', ['routing', 'default']);
-              this.miscellaneousService.setPopUp(popUpObj);
-              const popUpVal = await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
-              if (popUpVal) {
-                this.miscellaneousService.showDashboard.next(true);
-                this.miscellaneousService.overrideEdit.next(true);
-              }
-          } else {
-            popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
-            this.miscellaneousService.setPopUp(popUpObj);
-          }
+        if (this.engagementRatio < 1) {
+          this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
+          this.stickerCollectionState = 1; //confirm
+          return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
+        } else {
+          this.stickerCollectionState = -1; //reject
+          const popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
+          this.miscellaneousService.setPopUp(popUpObj);
+          await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
+          return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
         }
-
-        this.collectingSticker = false;
       } else {
+        this.miscellaneousService.lastRoute='/post/' + this.pid;
         this.router.navigate(['/auth']);
       }
     });
