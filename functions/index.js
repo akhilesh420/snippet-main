@@ -17,8 +17,8 @@ const runtimeOpts_content = {
 }
 
 
-// const bucket = 'snippet-web-9818a.appspot.com'; //snippet production
-const bucket = 'snippet-test-716cd.appspot.com'; //snippet testing
+// const bucket_name = 'snippet-web-9818a.appspot.com'; //snippet production
+const bucket_name = 'snippet-test-716cd.appspot.com'; //snippet testing
 
 
 exports.deleteUser = functions.https.onCall(async (data, context) => {
@@ -48,7 +48,7 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
 .document('post content/{pid}')
 .onCreate(async (snap, context) => {
 
-  const fileBucket = bucket;
+  const fileBucket = bucket_name;
 
   const newValue = snap.data();
   const fileName = newValue.name;
@@ -71,7 +71,9 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   if (contentType.startsWith('image/gif')) {
     outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
     command = 'convert';
-    args = ['-coalesce',
+    args = ['-strip',
+            '-auto-orient',
+            '-coalesce',
             '-sampling-factor',
             '4:2:0',
             '-quality',
@@ -85,7 +87,9 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   } else if (contentType.startsWith('image/')) {
     outputFilePath =  path.join(os.tmpdir(), 'optimized.jpeg');
     command = 'convert';
-    args = ['-sampling-factor',
+    args = ['-strip',
+            '-auto-orient',
+            '-sampling-factor',
             '4:2:0',
             '-quality',
             '85',
@@ -129,7 +133,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
 .document('sticker content/{pid}')
 .onCreate(async (snap, context) => {
 
-  const fileBucket = bucket;
+  const fileBucket = bucket_name;
 
   const newValue = snap.data();
   const fileName = newValue.name;
@@ -168,7 +172,9 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
                   'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=increase',
                   outputFilePath1];
 
-  const args2 = ['-interlace',
+  const args2 = ['-strip',
+                 '-auto-orient',
+                 '-interlace',
                  'Plane',
                  '-colorspace',
                  'RGB',
@@ -194,7 +200,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
 .document('display picture/{uid}')
 .onWrite(async (change, context) => {
 
-  const fileBucket = bucket;
+  const fileBucket = bucket_name;
 
   const newValue = change.after.data();
   const fileName = newValue.name;
@@ -234,7 +240,9 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
                   'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=increase',
                   outputFilePath1];
 
-  const args2 = ['-interlace',
+  const args2 = ['-strip',
+                 '-auto-orient',
+                 '-interlace',
                  'Plane',
                  '-colorspace',
                  'RGB',
