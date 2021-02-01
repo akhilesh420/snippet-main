@@ -97,6 +97,8 @@ li {
   margin-bottom: 0px;
   border-top-left-radius: 1.5vh;
   border-top-right-radius: 1.5vh;
+  -webkit-border-top-right-radius: 1.5vh;
+  -webkit-border-top-left-radius: 1.5vh;
 }
 
 .post-content {
