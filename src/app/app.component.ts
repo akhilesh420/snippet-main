@@ -3,17 +3,19 @@ import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { WindowStateService } from './shared/window.service';
-import { Component,  OnDestroy, OnInit} from '@angular/core';
+import { Component,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
 import { take, takeUntil,} from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -21,9 +23,12 @@ export class AppComponent implements OnInit, OnDestroy {
   mobileCheck: boolean;
   tabletCheck: boolean;
   currentRoute: string;
+  lastScroll: number;
+
   notifier$ = new Subject();
 
   popUpVal: Subject<PopUp>;
+  modalState = new Subject<boolean>();
 
   isAuthenticated: boolean = false;
   myUid: string;
@@ -58,7 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
               private activityService: ActivityService,
               private feedService: FeedService,
               private scrollService: ScrollService,
-              private auth: AngularFireAuth) {
+              private auth: AngularFireAuth,
+              @Inject(DOCUMENT) private _document ) {
   }
 
   ngOnInit() {
@@ -73,6 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (!val) return;
       val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
       val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
+      if (!this.tabletCheck) this.miscellaneousService.showDashboard.next(false);
     });
 
     this.onResize();
@@ -97,9 +104,25 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
       this.showDashboard = value;
-      if (!value)this.miscellaneousService.userStickerSelection.next(null);
+      this.modalState.next(value);
+      if (!value) this.miscellaneousService.userStickerSelection.next(null);
     });
+
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
+
+    this.modalState.pipe(takeUntil(this.notifier$)).subscribe(state => {
+      if (!state) {
+        this._document.body.style.top = null;
+        this._document.body.classList.remove('body-no-scroll');
+        window.scroll(0, this.lastScroll);
+      } else {
+        this.lastScroll = window.scrollY;
+        this._document.body.style.top = (-1 * this.lastScroll).toString() + 'px';
+        this._document.body.classList.add('body-no-scroll');
+      }
+    });
+
+    this.popUpVal.pipe(takeUntil(this.notifier$)).subscribe(value => this.modalState.next(!!value));
   }
 
   onResize(){

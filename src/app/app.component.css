@@ -11,7 +11,7 @@
   position: relative;
 }
 
-.dashboard  {
+.dashboard-mobile  {
   height:100%;
   width: 100%;
   position: fixed;
@@ -23,11 +23,11 @@
   padding-top: 54px;
 }
 
-.dashboard-bck {
+.dashboard-bck-mobile {
   opacity: 0.3;
 }
 
-.profile-display {
+.profile-display-mobile {
   margin-bottom: 20px;
 }
 
@@ -37,6 +37,11 @@
 
 .hide-dashboard {
   display: none;
+}
+
+.body-no-scroll {
+  overflow: hidden;
+  position: fixed;
 }
 
 @media only screen and (max-width: 800px) {
