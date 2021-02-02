@@ -48,7 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
                    '/assets/images/Profile%20Display/profileLinkEdit.svg',
                    '/assets/images/Profile%20Display/saveButton.svg',
                    '/assets/images/Create_page/createPlus.svg',
-                   '/assets/images/nextArrow.svg'];
+                   '/assets/images/nextArrow.svg',
+                   '/assets/images/dpPlaceholder.svg'];
 
   constructor(private windowStateService: WindowStateService,
               private router: Router,
