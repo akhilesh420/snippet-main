@@ -12,13 +12,13 @@
        (click)="toggleDashboard($event);"
        [ngClass]='showDashboard ? "show-dashboard " : "hide-dashboard"'>
 
-    <div class="feed">
+    <div class="feed-mobile">
 
       <div class='profile-display-mobile' (click)="stopPropagation($event)">
         <app-profile-display [uid$]='myUid$'></app-profile-display>
       </div>
 
-      <div (click)="stopPropagation($event)" [ngClass]='{"collection-tab-edit": profileStickerEdit, "feed": tabletCheck}'>
+      <div (click)="stopPropagation($event)" [ngClass]='{"collection-tab-edit-mobile": profileStickerEdit, "feed-mobile": tabletCheck}'>
         <app-collection-tab></app-collection-tab>
       </div>
 
