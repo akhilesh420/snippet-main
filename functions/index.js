@@ -71,8 +71,8 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   if (contentType.startsWith('image/gif')) {
     outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
     command = 'convert';
-    args = ['-strip',
-            '-auto-orient',
+    args = ['-auto-orient',
+            '-strip',
             '-coalesce',
             '-sampling-factor',
             '4:2:0',
@@ -87,8 +87,8 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   } else if (contentType.startsWith('image/')) {
     outputFilePath =  path.join(os.tmpdir(), 'optimized.jpeg');
     command = 'convert';
-    args = ['-strip',
-            '-auto-orient',
+    args = ['-auto-orient',
+            '-strip',
             '-sampling-factor',
             '4:2:0',
             '-quality',
@@ -172,8 +172,8 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
                   'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=increase',
                   outputFilePath1];
 
-  const args2 = ['-strip',
-                 '-auto-orient',
+  const args2 = ['-auto-orient',
+                 '-strip',
                  '-interlace',
                  'Plane',
                  '-colorspace',
@@ -240,8 +240,8 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
                   'scale=w=' + dimension + ':h=' + dimension + ':force_original_aspect_ratio=increase',
                   outputFilePath1];
 
-  const args2 = ['-strip',
-                 '-auto-orient',
+  const args2 = ['-auto-orient',
+                 '-strip',
                  '-interlace',
                  'Plane',
                  '-colorspace',
