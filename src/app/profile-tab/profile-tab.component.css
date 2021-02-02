@@ -38,8 +38,7 @@
 
 .dpContainer {
 
-  height: 70%;
-  width: 12.5%;
+  height: 75%;
   background-color: #c4c4c4;
   border-radius: 50%;
   position: absolute;
@@ -81,7 +80,7 @@
 .usernameSpace {
   position: absolute;
   top: 2%;
-  left: 16.5%;
+  left: 17%;
   width: 75%;
 }
 
@@ -93,6 +92,7 @@
   line-height: 0px;
   letter-spacing: 0.05em;
   color: #FFFFFF;
+  padding-left: 1%;
 }
 
 
@@ -101,67 +101,68 @@
 }
 
 .sticker-bck {
-background-color: #8F8F8F;
+background-color: #c4c4c4;
 }
 
 .sticker {
-  height: 2.8vh;
-  width: 2.8vh;
+  
+  width: 6.5%;
   border-radius: 50%;
   position: absolute;
-  top: 18%;
-  right: 5%;
+  bottom: 22.5%;
+  right: 2%;
   -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
           filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 
 }
 
-
 .sticker-1 {
-  height: 2.8vh;
-  width: 2.8vh;
+
+  width: 6.5%;
   border-radius: 50%;
   position: absolute;
-  top: 18%;
-  right: 28%;
+  bottom: 22.5%;
+  right: 10.5%;
   -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
           filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+
 }
 
 .sticker-2 {
-  height: 2.8vh;
-  width: 2.8vh;
+
+  width: 6.5%;
   border-radius: 50%;
   position: absolute;
-  top: 18%;
-  right: 52%;
+  bottom: 22.5%;
+  right: 19.5%;
   -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
           filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+
 }
 
-
 .sticker-3 {
-  height: 2.8vh;
-  width: 2.8vh;
+
+  width: 6.5%;
   border-radius: 50%;
   position: absolute;
-  top: 18%;
-  right: 76%;
+  bottom: 22.5%;
+  right: 28.5%;
   -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
           filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+
 }
 
 .sticker-4 {
-  height: 2.8vh;
-  width: 2.8vh;
+
+  width: 6.5%;
   border-radius: 50%;
   position: absolute;
-  top: 18%;
-  right: 100%;
+  bottom: 22.5%;
+  right: 37.5%;
   -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
           filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-}
 
+}
 
 .postSticker {
   position: absolute;
@@ -178,7 +179,7 @@ background-color: #8F8F8F;
 }
 
 .postSticker-bck {
-background-color: #8F8F8F;
+background-color: #c4c4c4;
 }
 
 .postSticker > IMG {
