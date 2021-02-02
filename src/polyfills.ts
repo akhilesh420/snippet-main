@@ -61,3 +61,4 @@ import 'first-input-delay';
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+(window as any)['global'] = window;

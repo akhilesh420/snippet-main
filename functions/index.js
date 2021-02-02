@@ -17,6 +17,10 @@ const runtimeOpts_content = {
 }
 
 
+// const bucket_name = 'snippet-web-9818a.appspot.com'; //snippet production
+const bucket_name = 'snippet-test-716cd.appspot.com'; //snippet testing
+
+
 exports.deleteUser = functions.https.onCall(async (data, context) => {
 
   try {
@@ -44,7 +48,7 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
 .document('post content/{pid}')
 .onCreate(async (snap, context) => {
 
-  const fileBucket = 'snippet-web-9818a.appspot.com';
+  const fileBucket = bucket_name;
 
   const newValue = snap.data();
   const fileName = newValue.name;
@@ -67,10 +71,11 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   if (contentType.startsWith('image/gif')) {
     outputFilePath =  path.join(os.tmpdir(), 'optimized.gif');
     command = 'convert';
-    args = ['-coalesce',
+    args = ['-strip',
+            '-auto-orient',
+            '-coalesce',
             '-sampling-factor',
             '4:2:0',
-            '-strip',
             '-quality',
             '85',
             '-interlace',
@@ -82,9 +87,10 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   } else if (contentType.startsWith('image/')) {
     outputFilePath =  path.join(os.tmpdir(), 'optimized.jpeg');
     command = 'convert';
-    args = ['-sampling-factor',
+    args = ['-strip',
+            '-auto-orient',
+            '-sampling-factor',
             '4:2:0',
-            '-strip',
             '-quality',
             '85',
             '-interlace',
@@ -127,7 +133,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
 .document('sticker content/{pid}')
 .onCreate(async (snap, context) => {
 
-  const fileBucket = 'snippet-web-9818a.appspot.com';
+  const fileBucket = bucket_name;
 
   const newValue = snap.data();
   const fileName = newValue.name;
@@ -167,6 +173,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
                   outputFilePath1];
 
   const args2 = ['-strip',
+                 '-auto-orient',
                  '-interlace',
                  'Plane',
                  '-colorspace',
@@ -193,7 +200,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
 .document('display picture/{uid}')
 .onWrite(async (change, context) => {
 
-  const fileBucket = 'snippet-web-9818a.appspot.com';
+  const fileBucket = bucket_name;
 
   const newValue = change.after.data();
   const fileName = newValue.name;
@@ -234,6 +241,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
                   outputFilePath1];
 
   const args2 = ['-strip',
+                 '-auto-orient',
                  '-interlace',
                  'Plane',
                  '-colorspace',

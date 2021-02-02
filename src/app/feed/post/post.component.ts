@@ -60,6 +60,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   windowHeight: number;
 
   frameOffset: number;
+  activePost: string;
 
   constructor(private postService: PostService,
               private authService: AuthService,
@@ -74,7 +75,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(() => {
       this.postInFrame();
-      this.videoToggle();
     });
 
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
@@ -86,6 +86,13 @@ import { WindowStateService } from 'src/app/shared/window.service';
       this.frameOffset = this.mobileCheck ? 0 : 54 + 5.444*windowHeight/100;
     });
 
+    this.feedService.currentPost.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      this.activePost = val
+      this.videoToggle();
+      this.postViewTime();
+    });
+
     this.restartPost();
   }
 
@@ -95,7 +102,6 @@ import { WindowStateService } from 'src/app/shared/window.service';
     const height = this.post.nativeElement.offsetHeight;
     const midPoint = rect.top + height/2;
     this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - height < 0;
-    this.postViewTime();
     if (this.postFocus && this.feedService.currentPost.value != this.pid) this.feedService.currentPost.next(this.pid);
   }
 
@@ -156,7 +162,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 
   postViewTime() {
     if (this.viewed) return;
-    if (this.postFocus) {
+    if (this.activePost === this.pid) {
       this.viewTimer = setTimeout(() => this.postView(), this.viewTime);
     } else {
       if (!this.viewTimer) return;
@@ -167,7 +173,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   videoToggle() {
     try {
       if (!this.postType.includes('video')) return;
-      if (this.feedService.currentPost.value === this.pid) {
+      if (this.activePost === this.pid) {
         this.videoPlayer.nativeElement.play()
           .then(() => this.playFailSafe = false)
           .catch((e) => {
