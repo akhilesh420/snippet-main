@@ -24,6 +24,7 @@ export class ProfileTabComponent implements OnInit {
 
   notifier$ = new Subject();
   profileDetails$: BehaviorSubject<ProfileDetails>;
+  displayPicture$ = new BehaviorSubject<string>(null);
   profileStickers: ProfileSticker[] = [null,null,null,null,null];
   stickerContent$: BehaviorSubject<any>;
   profileRoute: string;
@@ -65,6 +66,7 @@ export class ProfileTabComponent implements OnInit {
   setUp() {
     this.profileStickersLoaded = false;
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
+    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
     this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (!response) return;
       this.profileStickers = response;

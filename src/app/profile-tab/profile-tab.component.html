@@ -13,7 +13,7 @@
                           [routerLink]='profileRoute'>
                           {{details.username}}
                     </span>
-                </div> 
+                </div>
 
                 <div class = "profileStickers col-4 no-margin-no-padding">
 
@@ -41,9 +41,12 @@
 
             </div> -->
 
-            <div class = "dpContainer" #dpContainer [ngStyle]='{"width": dpContainer.offsetHeight + "px"}' [ngClass]="{'dp-no-bck': $displayPicture.value}">
+            <div class = "dpContainer"
+                 #dpContainer
+                 [ngStyle]='{"width": dpContainer.offsetHeight + "px"}'
+                 [ngClass]="{'dp-no-bck': displayPicture$.value}">
 
-              <img *ngIf="$displayPicture | async as content;"
+              <img *ngIf="displayPicture$ | async as content;"
               class='dp'
               [src]="content"
               alt="display picture"
@@ -58,7 +61,7 @@
               *ngIf='profileDetails$ | async as details'
                           style="cursor: pointer;"
                           [routerLink]='profileRoute'>
-                          {{details.username}} 
+                          {{details.username}}
                          </span>
 
             </div>
