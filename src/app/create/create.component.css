@@ -308,6 +308,7 @@ textarea:focus {
   -webkit-animation: pulsate-bck-create 1s ease-in-out infinite both;
           animation: pulsate-bck-create 1s ease-in-out infinite both;
   color: #E2B33D;
+  cursor: pointer;
 }
 
 .inactivecreateBtn {
