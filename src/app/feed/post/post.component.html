@@ -1,4 +1,5 @@
 <div class="postContainer" (click)='postView()' #post>
+  <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="post-content "
@@ -152,6 +153,6 @@
 
     </div>
 
-    <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
+    
 
 </div>

@@ -13,9 +13,9 @@
 
 .profileTab {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  height: 6.404%;
+  height: 10%;
   width: 100%;
 }
 
@@ -26,12 +26,26 @@
 }
 
 .engagementBar {
-  height: 11.6279%;
+  height: 5%;
   width: 100%;
+  position: absolute;
+  bottom: 0%;
 }
 
 .engagement {
   height: 100%;
+}
+
+.dpContainer {
+
+  height: 80%;
+  width: 10%;
+  background-color: #c4c4c4;
+  border-radius: 50%;
+  position: absolute;
+  top: 7.5%;
+  left: 1%;
+
 }
 
 .profileDetails {
