@@ -303,6 +303,27 @@ textarea:focus {
           filter: grayscale(100);
 }
 
+.activecreateBtn {
+  -webkit-animation: pulsate-bck-create 1s ease-in-out infinite both;
+          animation: pulsate-bck-create 1s ease-in-out infinite both;
+  color: #E2B33D;
+  cursor: pointer;
+}
+
+.inactivecreateBtn {
+  color: #c4c4c4;
+  transform: translate(-50%, 0%);
+}
+
+.createBtn {
+  font-size: 18px;
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  bottom: 10%;
+  left: 50%;
+}
+
 /* Animations */
 
 /* Pulsate */
@@ -339,5 +360,35 @@ textarea:focus {
   100% {
     -webkit-transform: scale(1);
             transform: scale(1);
+  }
+}
+
+
+@-webkit-keyframes pulsate-bck-create {
+  0% {
+    -webkit-transform: translate(-50%, 0%) scale(1);
+            transform: translate(-50%, 0%) scale(1);
+  }
+  50% {
+    -webkit-transform: translate(-50%, 0%) scale(0.9);
+            transform: translate(-50%, 0%) scale(0.9);
+  }
+  100% {
+    -webkit-transform: translate(-50%, 0%) scale(1);
+            transform: translate(-50%, 0%) scale(1);
+  }
+}
+@keyframes pulsate-bck-create {
+  0% {
+    -webkit-transform: translate(-50%, 0%) scale(1);
+            transform: translate(-50%, 0%) scale(1);
+  }
+  50% {
+    -webkit-transform: translate(-50%, 0%) scale(0.9);
+            transform: translate(-50%, 0%) scale(0.9);
+  }
+  100% {
+    -webkit-transform: translate(-50%, 0%) scale(1);
+            transform: translate(-50%, 0%) scale(1);
   }
 }
