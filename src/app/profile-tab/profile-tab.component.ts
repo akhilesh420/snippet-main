@@ -107,9 +107,13 @@ export class ProfileTabComponent implements OnInit {
         const popUpObj = new PopUp("An unknown error occurred! Try again later.",'Okay', undefined, ['default', 'default']);
         this.miscellaneousService.setPopUp(popUpObj);
         await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
-        return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
+        return; //end
       });
     })
+  }
+
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   collectSticker() {
@@ -118,6 +122,8 @@ export class ProfileTabComponent implements OnInit {
       if (this.isAuthenticated)  {
 
         if (this.stickerCollectionState === 0) return;
+        this.stickerCollectionState = undefined; //intermediate state
+        await this.sleep(50);
         this.stickerCollectionState = 0; //loading
 
         const val = await this.allowProcessing();
@@ -130,21 +136,19 @@ export class ProfileTabComponent implements OnInit {
             this.stickerCollectionState = -1; //reject
             const popUpObj = new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']);
             this.miscellaneousService.setPopUp(popUpObj);
-            await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
-            return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
+            return; //end
           }
         }
 
         if (this.engagementRatio < 1) {
           this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
           this.stickerCollectionState = 1; //confirm
-          return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
+          return; //end
         } else {
           this.stickerCollectionState = -1; //reject
           const popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
           this.miscellaneousService.setPopUp(popUpObj);
-          await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
-          return setTimeout(() => this.stickerCollectionState = undefined, 2600); //end
+          return; //end
         }
       } else {
         this.miscellaneousService.lastRoute='/post/' + this.pid;
