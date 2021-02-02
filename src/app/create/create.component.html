@@ -154,15 +154,15 @@
         </div>
 
         <!-- Next arrow -->
-        <!-- <div class = "row justify-content-center nextArrow rotate-center">
+        <div *ngIf='currentStep != "sticker"' class = "row justify-content-center nextArrow rotate-center">
           <div class = "col-2 text-center" (click)='nextClick()'>
               <img [ngClass]='(second.valid && currentStep === "description") || (nextActive  && currentStep != "description") ? "pulsate-bck" : "inactive"'
                     src="assets/images/nextArrow.svg" >
           </div>
-        </div> -->
+        </div>
 
         <!-- Confirm button for last page -->
-        <p class = "confirmBtn">
+        <p class = "createBtn" (click)='nextClick()' *ngIf='currentStep === "sticker"' [ngClass] = "nextActive ? 'activecreateBtn': 'inactivecreateBtn'">
           Confirm
         </p>
 
