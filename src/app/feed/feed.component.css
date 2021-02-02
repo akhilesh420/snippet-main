@@ -23,7 +23,7 @@
 }
 
 .post-container {
-  height: 86vh;
+  height: 84vh;
   width: calc(375 * (79vh) / 667);
   max-width: 100vw;
   padding-bottom: 5.444vh;

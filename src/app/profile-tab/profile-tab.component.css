@@ -26,7 +26,7 @@
 }
 
 .engagementBar {
-  height: 5%;
+  height: 8%;
   width: 100%;
   position: absolute;
   bottom: 0%;
@@ -38,13 +38,13 @@
 
 .dpContainer {
 
-  height: 80%;
-  width: 10%;
+  height: 70%;
+  width: 12.5%;
   background-color: #c4c4c4;
   border-radius: 50%;
   position: absolute;
-  top: 7.5%;
-  left: 1%;
+  top: 2%;
+  left: 2.5%;
 
 }
 
@@ -54,7 +54,7 @@
 }
 
 
-.usernameSpace {
+/* .usernameSpace {
   height: 100%;
   font-family: 'Comfortaa';
   font-style: normal;
@@ -76,7 +76,25 @@
   position: absolute;
   top: 54%;
   left: 2.5%;
+} */
+
+.usernameSpace {
+  position: absolute;
+  top: 2%;
+  left: 16.5%;
+  width: 75%;
 }
+
+.username {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 75%;
+  line-height: 0px;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+}
+
 
 .profileStickers {
   height: 100%;
@@ -191,7 +209,7 @@ border-radius: 50%;
       font-size: 2vh;
   }
 
-  .sticker {
+  /* .sticker {
       height: 3.4vh;
       width: 3.4vh;
       top: 20%;
@@ -220,7 +238,7 @@ border-radius: 50%;
       height: 3.4vh;
       width: 3.4vh;
       top: 20%;
-  }
+  } */
 
 }
 
