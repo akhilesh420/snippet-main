@@ -124,7 +124,7 @@ export class UsersService {
     })
 
     if (index === -1) {
-      this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>(null)});
+      this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>('assets/images/dpPlaceholder.svg')});
       let secIndex = this.displayPictureList.length - 1;
       const ref = this.storage.ref('Display picture/' + `sm_${uid}`);
       ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
