@@ -162,7 +162,7 @@
         </div>
 
         <!-- Confirm button for last page -->
-        <p (click)='nextClick()' *ngIf='currentStep === "sticker"' [ngClass] = "{'confirmBtn': nextActive}">
+        <p class = "createBtn" (click)='nextClick()' *ngIf='currentStep === "sticker"' [ngClass] = "nextActive ? 'activecreateBtn': 'inactivecreateBtn'">
           Confirm
         </p>
 
