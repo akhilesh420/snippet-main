@@ -82,6 +82,7 @@
   top: 2%;
   left: 17%;
   width: 75%;
+  overflow: hidden;
 }
 
 .username {
@@ -93,7 +94,7 @@
   letter-spacing: 0.05em;
   color: #FFFFFF;
   padding-left: 1%;
-  overflow: hidden;
+  
 }
 
 
