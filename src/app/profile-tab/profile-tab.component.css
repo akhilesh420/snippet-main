@@ -1,15 +1,10 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
+
 
 /* Classes for multiple objects */
 
 .no-margin-no-padding {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -17,201 +12,201 @@
 
 
 .profileTab {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 6.404%;
-    width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 6.404%;
+  width: 100%;
 }
 
 .backpanel {
-    height: 100%;
-    width: 100%;
-    background: rgba(11, 11, 11, 0.5);
+  height: 100%;
+  width: 100%;
+  background: rgba(11, 11, 11, 0.5);
 }
 
 .engagementBar {
-    height: 11.6279%;
-    width: 100%;
+  height: 11.6279%;
+  width: 100%;
 }
 
 .engagement {
-    height: 100%;
+  height: 100%;
 }
 
 .profileDetails {
-    width: 100%;
-    height: 88.3721%;
+  width: 100%;
+  height: 88.3721%;
 }
 
 
 .usernameSpace {
-    height: 100%;
-    font-family: 'Comfortaa';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 1.755vh;
-    line-height: 0px;
-    letter-spacing: 0.05em;
-    color: #FFFFFF;
-    text-align: left;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-       text-overflow: ellipsis;
+  height: 100%;
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.755vh;
+  line-height: 0px;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  text-align: left;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
 }
 
 .username {
-    margin: 0;
-    position: absolute;
-    top: 54%;
-    left: 2.5%;
+  margin: 0;
+  position: absolute;
+  top: 54%;
+  left: 2.5%;
 }
 
 .profileStickers {
-    height: 100%;
+  height: 100%;
 }
 
 .sticker-bck {
-  background-color: #8F8F8F;
+background-color: #8F8F8F;
 }
 
 .sticker {
-    height: 2.8vh;
-    width: 2.8vh;
-    border-radius: 50%;
-    position: absolute;
-    top: 18%;
-    right: 5%;
-    -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-            filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+  height: 2.8vh;
+  width: 2.8vh;
+  border-radius: 50%;
+  position: absolute;
+  top: 18%;
+  right: 5%;
+  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 
 }
 
 
 .sticker-1 {
-    height: 2.8vh;
-    width: 2.8vh;
-    border-radius: 50%;
-    position: absolute;
-    top: 18%;
-    right: 28%;
-    -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-            filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+  height: 2.8vh;
+  width: 2.8vh;
+  border-radius: 50%;
+  position: absolute;
+  top: 18%;
+  right: 28%;
+  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 .sticker-2 {
-    height: 2.8vh;
-    width: 2.8vh;
-    border-radius: 50%;
-    position: absolute;
-    top: 18%;
-    right: 52%;
-    -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-            filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+  height: 2.8vh;
+  width: 2.8vh;
+  border-radius: 50%;
+  position: absolute;
+  top: 18%;
+  right: 52%;
+  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 
 .sticker-3 {
-    height: 2.8vh;
-    width: 2.8vh;
-    border-radius: 50%;
-    position: absolute;
-    top: 18%;
-    right: 76%;
-    -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-            filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+  height: 2.8vh;
+  width: 2.8vh;
+  border-radius: 50%;
+  position: absolute;
+  top: 18%;
+  right: 76%;
+  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 .sticker-4 {
-    height: 2.8vh;
-    width: 2.8vh;
-    border-radius: 50%;
-    position: absolute;
-    top: 18%;
-    right: 100%;
-    -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-            filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+  height: 2.8vh;
+  width: 2.8vh;
+  border-radius: 50%;
+  position: absolute;
+  top: 18%;
+  right: 100%;
+  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
 }
 
 
 .postSticker {
-    position: absolute;
-    height: 8.4vh;
-    width: 8.4vh;
-    border-radius: 50%;
-    right: 1.8%;
-    -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-    top: -200%;
-    -webkit-box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-            box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-    
+  position: absolute;
+  height: 8.4vh;
+  width: 8.4vh;
+  border-radius: 50%;
+  right: 1.8%;
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  top: -200%;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
+          box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
+  
 }
 
 .postSticker-bck {
-  background-color: #8F8F8F;
+background-color: #8F8F8F;
 }
 
 .postSticker > IMG {
-  height: 100%;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 50%;
+height: 100%;
+width: 100%;
+-o-object-fit: cover;
+   object-fit: cover;
+border-radius: 50%;
 }
 
 @media only screen and (max-width: 550px) {
 
-    .profileTab {
-        height: 8%;
-    }
+  .profileTab {
+      height: 8%;
+  }
 
-    .postSticker {
-        height: 10.4947vh;
-        width: 10.4947vh;
-        top: -160%;
-    }
+  .postSticker {
+      height: 10.4947vh;
+      width: 10.4947vh;
+      top: -160%;
+  }
 
-    .username {
-        top: 50%;
-    }
+  .username {
+      top: 50%;
+  }
 
-    .usernameSpace {
-        font-size: 2vh;
-    }
+  .usernameSpace {
+      font-size: 2vh;
+  }
 
-    .sticker {
-        height: 3.4vh;
-        width: 3.4vh;
-        top: 20%;
-    }
+  .sticker {
+      height: 3.4vh;
+      width: 3.4vh;
+      top: 20%;
+  }
 
-    .sticker-1 {
-        height: 3.4vh;
-        width: 3.4vh;
-        top: 20%;
-    }
+  .sticker-1 {
+      height: 3.4vh;
+      width: 3.4vh;
+      top: 20%;
+  }
 
-    .sticker-2 {
-        height: 3.4vh;
-        width: 3.4vh;
-        top: 20%;
-    }
+  .sticker-2 {
+      height: 3.4vh;
+      width: 3.4vh;
+      top: 20%;
+  }
 
 
-    .sticker-3 {
-        height: 3.4vh;
-        width: 3.4vh;
-        top: 20%;
-    }
+  .sticker-3 {
+      height: 3.4vh;
+      width: 3.4vh;
+      top: 20%;
+  }
 
-    .sticker-4 {
-        height: 3.4vh;
-        width: 3.4vh;
-        top: 20%;
-    }
+  .sticker-4 {
+      height: 3.4vh;
+      width: 3.4vh;
+      top: 20%;
+  }
 
 }
 
@@ -220,105 +215,196 @@
 
 .loading-ball {
 
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(137.48deg, #E2B33D 14.56%, rgba(226, 179, 61, 0) 84.46%);
-    border-radius: 50%;
-    animation: loading-bounce 1s linear infinite;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    
+  width: 100%;
+  height: 100%;
+  background-image: -o-linear-gradient(312.52deg, #E2B33D 14.56%, rgba(226, 179, 61, 0) 84.46%);
+  background-image: linear-gradient(137.48deg, #E2B33D 14.56%, rgba(226, 179, 61, 0) 84.46%);
+  border-radius: 50%;
+  -webkit-animation: loading-bounce 1s linear infinite;
+          animation: loading-bounce 1s linear infinite;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  
 
 }
 
 .confirm-ball {
 
-    animation: confirm-bounce 2.6s ;
-    border-radius: 50%;
-    animation-fill-mode: forwards;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  -webkit-animation: confirm-bounce 2.6s ;
+
+          animation: confirm-bounce 2.6s ;
+  border-radius: 50%;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
 }
 
 .reject-ball {
 
-   
-    border-radius: 50%;
-    animation: reject-bounce 2.6s ;
-    animation-fill-mode: forwards;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+ 
+  border-radius: 50%;
+  -webkit-animation: reject-bounce 2.6s ;
+          animation: reject-bounce 2.6s ;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
+}
+
+
+@-webkit-keyframes loading-bounce {
+0%, 100% {
+  -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+          animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+}
+0% {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+50% {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
 }
 
 
 @keyframes loading-bounce {
+0%, 100% {
+  -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+          animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+}
+0% {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+50% {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+}
+
+@-webkit-keyframes confirm-bounce {
   0%, 100% {
-    animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
   }
   0% {
-    transform: rotate(0deg);
+    background-color: #19812F;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
   }
   50% {
-    transform: rotate(180deg);
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
   }
   100% {
-    transform: rotate(360deg);
+    opacity: 0;
   }
+
+  
 }
 
 @keyframes confirm-bounce {
-    0%, 100% {
-      animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-    }
-    0% {
-      background-color: #19812F;;
-      height: 0%;
-      width: 0%;
-      opacity: 1;
-    }
-    50% {
-      height: 50%;
-      width: 50%;
-    }
-    70% {
-        height: 100%;
-        width: 100%;
-    }
-    100% {
-      opacity: 0;
-    }
-
-    
+  0%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+  }
+  0% {
+    background-color: #19812F;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
+  }
+  100% {
+    opacity: 0;
   }
 
-  @keyframes reject-bounce {
-    0%, 100% {
-      animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-    }
-    0% {
-      background-color:#CF263C;;;
-      height: 0%;
-      width: 0%;
-      opacity: 1;
-    }
-    50% {
-      height: 50%;
-      width: 50%;
-    }
-    70% {
-        height: 100%;
-        width: 100%;
-    }
-    100% {
-      opacity: 0;
-    } 
+  
+}
+
+@-webkit-keyframes reject-bounce {
+  0%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
   }
+  0% {
+    background-color:#CF263C;;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
+  }
+  100% {
+    opacity: 0;
+  } 
+}
+
+@keyframes reject-bounce {
+  0%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+  }
+  0% {
+    background-color:#CF263C;;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
+  }
+  100% {
+    opacity: 0;
+  } 
+}
+
+
+
+
 
 
