@@ -1,5 +1,5 @@
 <div class="postContainer" (click)='postView()' #post>
-  <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
+  <app-profile-tab [uid]='uid' [engagementProp]='engagementProp'></app-profile-tab>
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="post-content "
@@ -39,18 +39,16 @@
         <img src = "assets/images/Post/failSafeButton.png">
       </div>
 
-      
-
       <div class = "postSticker"
-      [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
-      style="cursor: pointer;"
-      (click)='collectSticker()'>
+          [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
+          style="cursor: pointer;"
+          (click)='collectSticker()'>
 
-      <!-- Loading animation -->
+        <!-- Loading animation -->
 
-      <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
-                         "confirm-ball": stickerCollectionState === 1,
-                         "reject-ball": stickerCollectionState === -1}'></div>
+        <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
+                          "confirm-ball": stickerCollectionState === 1,
+                          "reject-ball": stickerCollectionState === -1}'></div>
 
         <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
       </div>
@@ -168,7 +166,5 @@
       </div>
 
     </div>
-
-    
 
 </div>
