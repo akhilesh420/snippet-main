@@ -1,5 +1,19 @@
 <div class="postContainer" (click)='postView()' #post>
+ <!-- Top Title -->
+  <div class = "postTop">
+
+    <div class="postTitle inline float-left pointer">
+      {{postDetails.title}}
+    </div>
+
+    <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
+      <img src='assets/images/Post/postdetailDropdown.svg'>
+    </div>
+
+  </div>
+
   <app-profile-tab [uid]='uid' [engagementProp]='engagementProp'></app-profile-tab>
+
   <!-- post content -->
   <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="post-content "
@@ -53,9 +67,7 @@
         <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
       </div>
 
-      <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
-        <img src='assets/images/Post/postdetailDropdown.svg'>
-      </div>
+      
 
       <div class = "postMetrics">
 
@@ -129,9 +141,7 @@
 
         </div>
 
-        <div class="postTitle inline float-left pointer">
-          {{postDetails.title}}
-        </div>
+        
 
         <div class = "descriptionSpace">
 

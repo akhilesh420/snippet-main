@@ -13,7 +13,7 @@
 
 .profileTab {
   position: absolute;
-  top: 0;
+  top: 5%;
   left: 0;
   height: 10%;
   width: 100%;
@@ -22,7 +22,6 @@
 .backpanel {
   height: 100%;
   width: 100%;
-  background: rgba(11, 11, 11, 0.5);
 }
 
 .engagementBar {

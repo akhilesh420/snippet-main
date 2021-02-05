@@ -5,10 +5,17 @@
   padding: 0%;
 }
 
-.descriptionSpace {
-  height: 19%;
+.postTop {
+  position: absolute;
+  top: 0%;
   width: 100%;
-  margin-top: 9%;
+  height: 5%;
+}
+
+.descriptionSpace {
+  height: 15%;
+  width: 100%;
+  margin-top: 2%;
   -webkit-animation: none;
           animation: none;
   overflow-wrap: break-word;
@@ -119,17 +126,15 @@ li {
 
 .postDetails {
   width: 100%;
-  height: 90%;
+  height: 85%;
   position: absolute;
-  top: 10%;
+  top: 15%;
   left: 0px;
-  background-color:  #0B0B0B;;
   font-family: 'ChampagneAndLimousines';
   font-size: 12px;
   font-weight: bold;
   color: #FFFFFF;
   letter-spacing: 0.1em;
-  /* padding: 4.8% 4% 15% 4%; */
 }
 
 .postMetrics {
@@ -167,8 +172,9 @@ li {
 }
 
 .postTitle{
-  font-size: 2.33vh;
+  font-size: 112%;
   font-weight: 700;
+  font-family: 'ChampagneAndLimousines';
   letter-spacing: 0em;
   text-align: left;
   line-height: normal;
@@ -178,8 +184,7 @@ li {
   -o-text-overflow: ellipsis;
      text-overflow: ellipsis;
   width: calc(100% - 20px);
-  margin-left: 2%;
-  margin-top: 1%;
+  margin-left: 4%;
 }
 
 .pointer {
@@ -187,7 +192,7 @@ li {
 }
 
 .showDetails {
-  top: -10.5%;
+  top: -58%;
   height: 2vh;
   width: 20px;
   position: relative;
@@ -256,7 +261,7 @@ li {
   right: 1.8%;
   -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
           box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-  top: 87%;
+  top: 86.5%;
   -webkit-box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
           box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
 
