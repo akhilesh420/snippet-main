@@ -14,39 +14,40 @@
 
   <app-profile-tab [uid]='uid' [engagementProp]='engagementProp'></app-profile-tab>
 
-  <!-- post content -->
-  <div *ngIf="(postContent$ | async) as content; else loading">
-    <img  class="post-content "
-          [src]='content'
-          alt="post content"
-          [ngClass]="{'opacity-out-details': !this.showDetails,
-                      'opacity-in-details': this.showDetails,
-                      'fit-cover': !fullscreenToggle,
-                      'fit-contain': fullscreenToggle}"
-          *ngIf='postType.includes("image")'>
-    <video class='post-content '
-           loop
-           playsinline
-           #videoPlayer
-           [src]='content'
-           [ngClass]="{'opacity-out-details': !this.showDetails,
-                      'opacity-in-details': this.showDetails,
-                      'fit-cover': !fullscreenToggle,
-                      'fit-contain': fullscreenToggle}"
-           *ngIf='postType.includes("video")'>
-    </video>
-  </div>
-  <!-- loading spinner -->
-  <ng-template #loading>
-      <app-loading-spinner class="center-absolute"></app-loading-spinner>
-  </ng-template>
-
   <!-- post details -->
   <div class="postDetails"
       (click)="showComments ? showDetails = false : showDetails = !showDetails;
               showComments = false;
               holderToggle = false;
               videoToggle();">
+
+      <!-- post content -->
+      <div class='post-content-container' *ngIf="(postContent$ | async) as content; else loading">
+        <img  class="post-content "
+              [src]='content'
+              alt="post content"
+              [ngClass]="{'opacity-out-details': !this.showDetails,
+                          'opacity-in-details': this.showDetails,
+                          'fit-cover': !fullscreenToggle,
+                          'fit-contain': fullscreenToggle}"
+              *ngIf='postType.includes("image")'>
+        <video class='post-content '
+              loop
+              playsinline
+              #videoPlayer
+              [src]='content'
+              [ngClass]="{'opacity-out-details': !this.showDetails,
+                          'opacity-in-details': this.showDetails,
+                          'fit-cover': !fullscreenToggle,
+                          'fit-contain': fullscreenToggle}"
+              *ngIf='postType.includes("video")'>
+        </video>
+      </div>
+
+      <!-- loading spinner -->
+      <ng-template #loading>
+          <app-loading-spinner class="center-absolute"></app-loading-spinner>
+      </ng-template>
 
       <!-- Fail-safe button -->
       <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
@@ -67,7 +68,7 @@
         <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
       </div>
 
-      
+
 
       <div class = "postMetrics">
 
@@ -141,7 +142,7 @@
 
         </div>
 
-        
+
 
         <div class = "descriptionSpace">
 
