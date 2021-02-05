@@ -34,8 +34,6 @@ export class PostComponent implements OnInit, OnDestroy {
   viewed: boolean = false;
   holderListAnalysed: boolean = false;
   showDetails = false;
-  showComments = false;
-  holderToggle = false;
   fullscreenToggle = false;
   collected: string = '0';
   views: string = '0';

@@ -1,6 +1,6 @@
 <div class="postContainer" (click)='postView()' #post>
  <!-- Top Title -->
-  <div class = "postTop">
+  <div class = "postTop" (click)="showDetails = !showDetails; videoToggle();">
 
     <div class="postTitle inline float-left pointer">
       {{postDetails.title}}
@@ -16,10 +16,7 @@
 
   <!-- post details -->
   <div class="postDetails"
-      (click)="showComments ? showDetails = false : showDetails = !showDetails;
-              showComments = false;
-              holderToggle = false;
-              videoToggle();">
+      (click)="showDetails = !showDetails; videoToggle();">
 
       <!-- post content -->
       <div class='post-content-container' *ngIf="(postContent$ | async) as content; else loading">
@@ -57,7 +54,7 @@
       <div class = "postSticker"
           [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
           style="cursor: pointer;"
-          (click)='collectSticker()'>
+          (click)='collectSticker(); stopPropagation($event);'>
 
         <!-- Loading animation -->
 
@@ -137,17 +134,12 @@
       </ng-template>
 
       <div class = "fade-in-top" *ngIf="showDetails === true">
+
         <div class="post-metrics float-left">
-
-
         </div>
 
-
-
         <div class = "descriptionSpace">
-
           <span class = "description">{{postDetails.description}}</span>
-
         </div>
 
         <!-- Holder List -->
