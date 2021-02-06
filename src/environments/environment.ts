@@ -5,17 +5,17 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyCQvOMfmPku4OljNXBiDdHK23jLGRj5FhE",
-    authDomain: "snippet-test-716cd.firebaseapp.com",
-    databaseURL: "https://snippet-test-716cd.firebaseio.com",
-    projectId: "snippet-test-716cd",
-    storageBucket: "snippet-test-716cd.appspot.com",
-    messagingSenderId: "553339153200",
-    appId: "1:553339153200:web:075605584446c6bc11f6f5",
-    measurementId: "G-758SLHKGPR"
+    apiKey: "AIzaSyACM_RWsgy2XC_JXEPaPlqg_AH3x6obxz0",
+    authDomain: "snippet-test2.firebaseapp.com",
+    databaseURL: "https://snippet-test2-default-rtdb.firebaseio.com",
+    projectId: "snippet-test2",
+    storageBucket: "snippet-test2.appspot.com",
+    messagingSenderId: "136731973343",
+    appId: "1:136731973343:web:5205b68be85459482ffb6a",
+    measurementId: "G-MLMGEFPKCE"
   },
-  onBoardingPid: 'TqsSoDk3tgo9w1Eo4UyG',
-  onBoardingUid: 'DMc0kQ5tj7UDC4u8m3uivR1eMLf2',
+  onBoardingPid: 'nJSSYrYmNWOf2zugcZtj',
+  onBoardingUid: '3otbaSiaIwcbSxXDcxqFLlqxIHR2',
   websitePath: 'https://snippet-test-716cd.web.app'
 };
 
