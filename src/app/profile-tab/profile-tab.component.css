@@ -87,7 +87,7 @@
 .usernameSpace {
   position: absolute;
   top: 2%;
-  left: 17%;
+  left: 15%;
   width: 75%;
   overflow: hidden;
 }
@@ -96,12 +96,10 @@
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: bold;
-  font-size: 75%;
-  line-height: 0px;
-  letter-spacing: 0.05em;
-  color: #FFFFFF;
+  font-size: 1.8vh;
+  letter-spacing: 0.10em;
+  color: rgba(255, 255, 255, 0.90);
   padding-left: 1%;
-
 }
 
 

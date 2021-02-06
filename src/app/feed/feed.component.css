@@ -23,9 +23,9 @@
 }
 
 .post-container {
-  height: 86vh;
-  width: calc(375 * (79vh) / 650);
-  max-width: 100vw;
+  height: 92vh;
+  width: calc(375 * (79vh) / 550);
+  max-width: 440px;
   padding-bottom: 5.444vh;
   overflow: hidden;
 }
@@ -41,12 +41,12 @@
 }
 
 .feed-container {
-  width: calc( ( 9 * (79vh) / 16 ) + 353px + 7.43vw );
+  width: calc( ( 375 * (79vh) / 550 ) + 353px + 7.43vw );
   padding-top: 5.444vh;
 }
 
 .dashboard {
-  margin-left: calc((9 * (79vh) / 16) + 7.43vw);
+  margin-left: calc((375 * (79vh) / 550) + 7.43vw);
   position: fixed;
 }
 
@@ -83,7 +83,7 @@
   position: relative;
   width: 340px;
   height: 55px;
-  margin-left: calc(((375 * (79vh) / 667) - 340px) / 2);
+  margin-left: calc(((375 * (79vh) / 550) - 340px) / 2);
   margin-bottom: 1.22vh;
 }
 
