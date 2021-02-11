@@ -25,7 +25,7 @@ export class ProfileTabComponent implements OnInit {
   notifier$ = new Subject();
   profileDetails$: BehaviorSubject<ProfileDetails>;
   profileStickers: ProfileSticker[] = [null,null,null,null,null];
-  stickerContent$: BehaviorSubject<any>;
+  stickerContent$: Observable<any>;
   profileRoute: string;
   engagementProp = {'width': '0','background': '#E2B33D'};
   stickerDetails: StickerDetails;

@@ -302,12 +302,10 @@ export class CreateComponent implements OnInit, OnDestroy {
   createPost() {
     this.isCreating = true;
     let pid = this.afs.createId();
-    let pcid = this.afs.createId();
-    let scid = this.afs.createId();
     let dateCreated = new Date();
 
-    let postSubs =  this.postService.addContent(pcid,this.storageFile);
-    let stickerSubs = this.postService.addContent(scid,this.stickerContent);
+    let postSubs =  this.postService.addPostContent(pid,this.storageFile, );
+    let stickerSubs = this.postService.addStickerContent(pid,this.stickerContent);
 
     this.miscellaneousService.endOnBoarding(this.uid); //end on boarding for local machine
     this.miscellaneousService.startLoading();
@@ -317,8 +315,8 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.miscellaneousService.updateOnBoarding(this.uid); //end on boarding on server
 
         this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
-        this.postService.addPostContentRef(pid, new PostContent(pcid, this.storageFile.type));
-        this.postService.addStickerContentRef(pid, new PostContent(scid, this.stickerContent.type));
+        this.postService.addPostContentRef(pid, new PostContent(pid, this.storageFile.type));
+        this.postService.addStickerContentRef(pid, new PostContent(pid, this.stickerContent.type));
         this.postService.addStickerDetails(pid, new StickerDetails(this.amount, 0));
 
         this.activityService.addActivity(pid, 'post');
