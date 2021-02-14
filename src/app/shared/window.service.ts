@@ -27,15 +27,14 @@ export class WindowStateService {
     width < 800 ? this.tabletCheck = true : this.tabletCheck = false;
     width < 550 ? this.mobileCheck = true : this.mobileCheck = false;
 
-    document.documentElement.style.setProperty('--desk-x', (width/this.designDeskWidth).toString());
-    document.documentElement.style.setProperty('--mobile-x', (width/this.designMobileWidth).toString());
 
-    if (!this.tabletCheck) this.setHeights();
+    document.documentElement.style.setProperty('--norm-width', (width/(this.mobileCheck ? this.designMobileWidth : this.designDeskWidth)).toString());
+
+    if (!this.tabletCheck) this.setHeight();
   }
 
-  public setHeights() {
-    document.documentElement.style.setProperty('--desk-y', (this.height/this.designDeskHeight).toString());
-    document.documentElement.style.setProperty('--mobile-y', (this.height/this.designMobileHeight).toString());
+  public setHeight() {
+    document.documentElement.style.setProperty('--norm-height', (this.height/(this.mobileCheck ? this.designMobileHeight : this.designDeskHeight)).toString());
   }
 
 }

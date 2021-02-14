@@ -1,8 +1,6 @@
 :root {
-  --desk-x: 1;
-  --desk-y: 1;
-  --mobile-x: 1;
-  --mobile-y: 1;
+  --norm-width: 1;
+  --norm-height: 1;
 }
 
 .master-container{
