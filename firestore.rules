@@ -48,7 +48,7 @@ service cloud.firestore {
       allow read: true;
       allow create: allowCollection(resource.data);
       allow update: false;
-      allow delete: false;
+      allow delete: false;a
     }
   }
 }
