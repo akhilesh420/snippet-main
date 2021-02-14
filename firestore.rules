@@ -71,15 +71,18 @@ service cloud.firestore {
         }
       }
     }
+
     match /display picture/{uid} {
       allow read: true;
       allow write: isUser(uid);
     }
-     match /personal details/{uid} {
-      allow read: true;
+
+    match /personal details/{uid} {
+      allow read: isUser(uid);
       allow write: isUser(uid);
     }
-     match /user data/{uid} {
+
+    match /user data/{uid} {
       allow read: false;
       allow create: isUser(uid);
       allow update: false;
@@ -93,7 +96,7 @@ function allowCollection(data){
   return isUser(data.collectorID)
          && (get(/databases/$(database)/documents/activity/$(data.pid)).collected
               / get(/databases/$(database)/documents/sticker details/$(data.pid)).amountReleased ) < 1
-         && !(exists(/databases/$(database)/documents/feed/$(data.collectorID))) //person doesnt exist 
+         && !(exists(/databases/$(database)/documents/feed/$(data.collectorID))) //person doesnt exist
 }
 
 // Helper functions
@@ -108,22 +111,8 @@ function isSignedIn() {
   return request.auth.uid != null;
 }
 
-// Check if user matches current data owner
-function isOwner(){
-  return isUser(currentData().owner);
-}
-
-// Check if user matches future data owner (if write completes)
-function willBeOwner(){
-  return isUser(incomingData().owner);
-}
-
 // Get data being read
 function currentData() {
   return resource.data;
 }
 
-// Get data being written (merged with current data)
-function incomingData() {
-  return request.resource.data;
-}
