@@ -1,0 +1,2483 @@
+API endpoint: http://localhost:8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=localhost:8080
+
+Dev App Server is now running.
+
+Feb 14, 2021 9:00:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:00:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+Feb 14, 2021 9:00:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:00:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:01:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:01:04 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:01:04 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:01:04 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:01:04 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:01:14 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:01:14 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:01:41 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:01:41 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:01:42 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:01:42 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:01:46 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:01:46 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:01:50 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:01:50 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:02:00 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:02:00 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:02:10 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:02:10 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:02:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:02:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:02:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:02:18 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.commitHelper(CloudFirestoreV1.java:817)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.internalCommit(CloudFirestoreV1.java:731)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.internalCommit(CloudFirestoreV1.java:715)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.write(CloudFirestoreV1.java:704)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.handleRequest(CloudFirestoreV1WriteStream.java:208)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.write(CloudFirestoreV1WriteStream.java:136)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.onNext(CloudFirestoreV1WriteStream.java:92)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.onNext(CloudFirestoreV1WriteStream.java:25)
+	at com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler.onMessage(FirestoreV1WebChannelAdapter.java:141)
+	at com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler.onMessage(FirestoreV1WebChannelAdapter.java:111)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.onMessage(ChannelInternalImpl.java:485)
+	at com.google.net.webchannel.server.v8.ForwardChannel.deliverMessage(ForwardChannel.java:114)
+	at com.google.net.webchannel.server.v8.ForwardChannel.processPendingRequest(ForwardChannel.java:93)
+	at com.google.net.webchannel.server.v8.ForwardChannel.consume(ForwardChannel.java:67)
+	at com.google.net.webchannel.server.v8.ForwardChannel.add(ForwardChannel.java:60)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.handleRequestParams(ChannelInternalImpl.java:260)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.processSessionRequest(ChannelInternalImpl.java:317)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.handle(ChannelInternalImpl.java:142)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.consume(ChannelInternalImpl.java:78)
+	at com.google.net.webchannel.server.common.ChannelProcessor.run(ChannelProcessor.java:80)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 22 more
+
+Feb 14, 2021 9:02:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:02:18 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+Feb 14, 2021 9:02:20 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:02:20 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:02:30 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:02:30 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:02:40 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:02:40 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:02:50 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:02:50 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:03:00 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:03:00 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:03:02 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:03:02 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:03:02 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:03:02 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.commitHelper(CloudFirestoreV1.java:817)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.internalCommit(CloudFirestoreV1.java:731)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.internalCommit(CloudFirestoreV1.java:715)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.write(CloudFirestoreV1.java:704)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.handleRequest(CloudFirestoreV1WriteStream.java:208)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.write(CloudFirestoreV1WriteStream.java:136)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.onNext(CloudFirestoreV1WriteStream.java:92)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.onNext(CloudFirestoreV1WriteStream.java:25)
+	at com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler.onMessage(FirestoreV1WebChannelAdapter.java:141)
+	at com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler.onMessage(FirestoreV1WebChannelAdapter.java:111)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.onMessage(ChannelInternalImpl.java:485)
+	at com.google.net.webchannel.server.v8.ForwardChannel.deliverMessage(ForwardChannel.java:114)
+	at com.google.net.webchannel.server.v8.ForwardChannel.processPendingRequest(ForwardChannel.java:93)
+	at com.google.net.webchannel.server.v8.ForwardChannel.consume(ForwardChannel.java:67)
+	at com.google.net.webchannel.server.v8.ForwardChannel.add(ForwardChannel.java:60)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.handleRequestParams(ChannelInternalImpl.java:260)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.processSessionRequest(ChannelInternalImpl.java:317)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.handle(ChannelInternalImpl.java:142)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.consume(ChannelInternalImpl.java:78)
+	at com.google.net.webchannel.server.common.ChannelProcessor.run(ChannelProcessor.java:80)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 22 more
+
+Feb 14, 2021 9:03:02 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:03:02 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+Feb 14, 2021 9:03:16 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:03:16 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:03:27 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:03:27 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:03:33 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:03:33 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:03:43 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:03:43 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:03:53 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:03:53 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:03:58 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:03:58 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:04:45 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:04:45 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:04:49 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:04:49 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:04:54 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:04:54 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:05:22 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:05:22 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:05:28 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:05:28 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:05:32 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:05:32 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:05:42 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:05:42 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:05:52 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:05:52 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:06:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:06:16 PM io.gapi.emulators.netty.NotFoundHandler handleRequest
+INFO: Unknown request URI: /favicon.ico
+Feb 14, 2021 9:06:26 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:06:26 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:06:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:06:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:06:35 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.commitHelper(CloudFirestoreV1.java:817)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.internalCommit(CloudFirestoreV1.java:731)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.internalCommit(CloudFirestoreV1.java:715)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.write(CloudFirestoreV1.java:704)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.handleRequest(CloudFirestoreV1WriteStream.java:208)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.write(CloudFirestoreV1WriteStream.java:136)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.onNext(CloudFirestoreV1WriteStream.java:92)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1WriteStream.onNext(CloudFirestoreV1WriteStream.java:25)
+	at com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler.onMessage(FirestoreV1WebChannelAdapter.java:141)
+	at com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler.onMessage(FirestoreV1WebChannelAdapter.java:111)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.onMessage(ChannelInternalImpl.java:485)
+	at com.google.net.webchannel.server.v8.ForwardChannel.deliverMessage(ForwardChannel.java:114)
+	at com.google.net.webchannel.server.v8.ForwardChannel.processPendingRequest(ForwardChannel.java:93)
+	at com.google.net.webchannel.server.v8.ForwardChannel.consume(ForwardChannel.java:67)
+	at com.google.net.webchannel.server.v8.ForwardChannel.add(ForwardChannel.java:60)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.handleRequestParams(ChannelInternalImpl.java:260)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.processSessionRequest(ChannelInternalImpl.java:317)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.handle(ChannelInternalImpl.java:142)
+	at com.google.net.webchannel.server.v8.ChannelInternalImpl.consume(ChannelInternalImpl.java:78)
+	at com.google.net.webchannel.server.common.ChannelProcessor.run(ChannelProcessor.java:80)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 22 more
+
+Feb 14, 2021 9:06:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Feb 14, 2021 9:06:36 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+Feb 14, 2021 9:06:36 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:06:36 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:06:42 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:06:42 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+Feb 14, 2021 9:06:52 PM com.google.cloud.datastore.emulator.impl.util.WrappedStreamObserver onError
+INFO: operation failed: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+com.google.cloud.datastore.core.exception.DatastoreException: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.asDatastoreException(EmulatorRulesCompiler.java:105)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.checkCompilationSucceeded(EmulatorRulesCompiler.java:65)
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$EmulatorCompilationResult.getAuthorizer(EmulatorRulesCompiler.java:58)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1.listCollectionIds(CloudFirestoreV1.java:503)
+	at com.google.cloud.datastore.emulator.impl.CloudFirestoreV1Router.listCollectionIds(CloudFirestoreV1Router.java:172)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.lambda$listCollectionIds$11(FirestoreV1GrpcAdapter.java:190)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.unary(FirestoreV1GrpcAdapter.java:67)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter.access$000(FirestoreV1GrpcAdapter.java:39)
+	at com.google.cloud.datastore.emulator.firestore.v1.FirestoreV1GrpcAdapter$1.listCollectionIds(FirestoreV1GrpcAdapter.java:190)
+	at com.google.firestore.v1.FirestoreGrpc$MethodHandlers.invoke(FirestoreGrpc.java:1239)
+	at io.grpc.stub.ServerCalls$UnaryServerCallHandler$UnaryServerCallListener.onHalfClose(ServerCalls.java:182)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.PartialForwardingServerCallListener.onHalfClose(PartialForwardingServerCallListener.java:35)
+	at io.grpc.ForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:23)
+	at io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener.onHalfClose(ForwardingServerCallListener.java:40)
+	at io.grpc.Contexts$ContextualizedServerCallListener.onHalfClose(Contexts.java:86)
+	at io.grpc.internal.ServerCallImpl$ServerStreamListenerImpl.halfClosed(ServerCallImpl.java:331)
+	at io.grpc.internal.ServerImpl$JumpToApplicationThreadServerStreamListener$1HalfClosed.runInContext(ServerImpl.java:797)
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: com.google.cloud.datastore.emulator.impl.rules.AutoValue_EmulatorRulesCompiler_CompilerException
+	at com.google.cloud.datastore.emulator.impl.rules.EmulatorRulesCompiler$CompilerException.of(EmulatorRulesCompiler.java:91)
+	... 25 more
+
+Feb 14, 2021 9:06:52 PM io.gapi.emulators.netty.HttpHandler$1 onError
+INFO: Exception when handling request: INVALID_ARGUMENT: Error compiling rules:
+L5:11 Missing 'match' keyword before path.
+L5:20 Unexpected 'details'.
+L5:20 mismatched input 'details' expecting {'{', '/', PATH_SEGMENT}
+L5:27 Missing 'match' keyword before path.
+L6:7 missing '}' at 'allow'
+L10:11 Missing 'match' keyword before path.
+L10:20 Unexpected 'stickers'.
+L10:20 mismatched input 'stickers' expecting {'{', '/', PATH_SEGMENT}
+L10:28 Missing 'match' keyword before path.
+L11:7 mismatched input 'allow' expecting {'{', '/', PATH_SEGMENT}
+L15:5 Unexpected 'match'.
+L82:62 Unexpected 'details'.
