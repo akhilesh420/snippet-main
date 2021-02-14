@@ -12,10 +12,13 @@ service cloud.firestore {
       allow write: if isUser(uid);
     }
 
-    match /activity/{
+    match /post details/{pid}{
       allow read, write: true;
     }
 
+    match /activity/{
+      allow read, write: true;
+    }
   }
 }
 
