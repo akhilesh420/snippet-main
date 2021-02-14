@@ -50,6 +50,27 @@ service cloud.firestore {
       allow update: false;
       allow delete: false;a
     }
+
+    match /views/{vid} {
+      allow read: true;
+      allow create: true;
+      allow update: false;
+      allow delete: false;
+    }
+
+    match /exclusive ID {
+      allow read: false;
+
+      match /{eid} {
+       allow read: false;
+       allow write: currentData().data.used < currentData().allowUsed;
+
+        match /users/{uid} {
+          allow read: false;
+          allow write: if isUser(uid);
+        }
+      }
+    }
   }
 }
 
@@ -58,7 +79,7 @@ function allowCollection(data){
   return isUser(data.collectorID)
          && (get(/databases/$(database)/documents/activity/$(data.pid)).collected
               / get(/databases/$(database)/documents/sticker details/$(data.pid)).amountReleased ) < 1
-         && !(exists(/databases/$(database)/documents/feed/$(data.collectorID)))
+         && !(exists(/databases/$(database)/documents/feed/$(data.collectorID)));
 }
 
 // Helper functions
