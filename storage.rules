@@ -1,8 +1,65 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if true;
+    match /display pictures/{uid} {
+      allow read: if true;
+      allow write: if writeDP(uid);
+    }
+
+    match /posts/{pid} {
+      allow read: if true;
+      allow write: if writePost(uid);
+      allow update: if false;
+    }
+
+    match /stickers/{pid} {
+      allow read: if true;
+      allow write: if writeSticker(uid);
+      allow update: if false;
     }
   }
+}
+
+//Write functions
+
+function writeDP(uid) {
+  return isUser(uid)
+         && isvalidSize(15)
+         && isValidType('image/.*');
+}
+
+function writePost(uid) {
+  return isSignedIn()
+         && request.resource.metadata.uid === uid
+         && isvalidSize(80)
+         && (isValidType('image/.*') || isValidType('video/.*'));
+}
+
+function writeSticker(uid) {
+  return isSignedIn()
+         && request.resource.metadata.uid === uid
+         && isvalidSize(15)
+         && isValidType('image/.*');
+}
+
+// Helper functions
+
+// Check if user has the specified uid
+function isUser(uid) {
+  return isSignedIn() && request.auth.uid == uid;
+}
+
+// Check if user is signed in
+function isSignedIn() {
+  return request.auth.uid != null;
+}
+
+//Check if content size is smaller than allowed size
+function isvalidSize(allowedSize) { //allowedSize in MB
+  return if request.resource.size <= allowedSize * 1024 * 1024
+}
+
+//check if content type matches allowed type
+function isvalidType(allowedType) { //allowedType is string -> format: 'image/.*', 'video/.*'
+  return request.resource.contentType.matches(allowedType);
 }
