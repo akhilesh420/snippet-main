@@ -2,6 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // Users
+
     match /profile details/{uid}{
       allow read: if true;
       allow write: if isUser(uid);
@@ -14,11 +16,85 @@ service cloud.firestore {
       allow delete: false;
     }
 
+    match /display picture/{uid} {
+      allow read: true;
+      allow write: isUser(uid);
+    }
+
+    match /personal details/{uid} {
+      allow read: isUser(uid);
+      allow write: isUser(uid);
+    }
+
+    match /user data/{uid} {
+      allow read: false;
+      allow create: isUser(uid);
+      allow update: false;
+      allow delete: false;
+    }
+
     match /activity/{
       allow read, write: true;
       allow delete: false;
     }
 
+    match /collection/{cid} {
+      allow read: true;
+      allow create: allowCollection(resource.data);
+      allow update: false;
+      allow delete: false;
+    }
+
+    match /views/{vid} {
+      allow read: true;
+      allow create: true;
+      allow update: false;
+      allow delete: false;
+    }
+
+    match /feed/ {
+
+      allow read: true;
+
+      match /{uid}{
+      allow read: true;
+      allow create: if isUser(uid);
+      allow delete: false;
+
+        match /collection/{
+            allow read: if isUser(uid);
+            allow update: if isUser(uid);
+            allow create: if isUser(uid);
+            allow delete: false;
+        }
+      }
+      match /explore/global{
+       allow read: true;
+       allow create: isSignedIn();
+       allow update: false;
+      }
+    }
+
+    match /exclusive ID/{eid} {
+      allow read: false;
+      allow create: false;
+      allow delete: false;
+      allow update: currentData().data.amount < get(/databases/$(database)/documents/exclusive ID/$(eid)/private/details).data.allowUse;
+
+      match /private/details {
+        allow read: false;
+        allow write: false;
+      }
+
+      match /users/{uid} {
+        allow read: false;
+        allow create: if isUser(uid);
+        allow update: false;
+        allow delete: false;
+      }
+    }
+
+    // Posts
     match /post details/{pid}{
       allow read: true;
       allow create: if isUser(resource.data.uid);
@@ -47,69 +123,6 @@ service cloud.firestore {
       allow delete: false;
     }
 
-    match /collection/{cid} {
-      allow read: true;
-      allow create: allowCollection(resource.data);
-      allow update: false;
-      allow delete: false;
-    }
-
-    match /views/{vid} {
-      allow read: true;
-      allow create: true;
-      allow update: false;
-      allow delete: false;
-    }
-
-    match /exclusive ID/{eid} {
-      allow read: false;
-      allow write: currentData().data.used < currentData().allowUsed;
-
-      match /users/{uid} {
-        allow read: false;
-        allow write: if isUser(uid);
-      }
-    }
-
-    match /display picture/{uid} {
-      allow read: true;
-      allow write: isUser(uid);
-    }
-
-    match /personal details/{uid} {
-      allow read: isUser(uid);
-      allow write: isUser(uid);
-    }
-
-    match /user data/{uid} {
-      allow read: false;
-      allow create: isUser(uid);
-      allow update: false;
-      allow delete: false;
-    }
-
-    match /feed/ {
-
-      allow read: true;
-
-      match /{uid}{
-      allow read: true;
-      allow create: if isUser(uid);
-      allow delete: false;
-
-        match /collection/{
-            allow read: if isUser(uid);
-            allow update: if isUser(uid);
-            allow write: if isUser(uid);
-            allow delete: false;
-        }
-      }
-      match /explore/global{
-       allow read: true;
-       allow create: isSignedIn();
-       allow update: false; 
-      }
-    }
   }
 }
 
