@@ -107,9 +107,7 @@ service cloud.firestore {
             allow write: if isUser(uid);
             allow delete: false;
         }
-
       }
-  
       match /explore/global{
        allow read: true;
        allow create: isSignedIn();
