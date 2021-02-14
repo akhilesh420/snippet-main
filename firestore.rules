@@ -58,17 +58,13 @@ service cloud.firestore {
       allow delete: false;
     }
 
-    match /exclusive ID {
+    match /exclusive ID/{eid} {
       allow read: false;
+      allow write: currentData().data.used < currentData().allowUsed;
 
-      match /{eid} {
-       allow read: false;
-       allow write: currentData().data.used < currentData().allowUsed;
-
-        match /users/{uid} {
-          allow read: false;
-          allow write: if isUser(uid);
-        }
+      match /users/{uid} {
+        allow read: false;
+        allow write: if isUser(uid);
       }
     }
 
