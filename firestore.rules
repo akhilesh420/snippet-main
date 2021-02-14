@@ -85,6 +85,31 @@ service cloud.firestore {
       allow update: false;
       allow delete: false;
     }
+
+    match /feed/ {
+
+      allow read: true;
+
+      match /{uid}{
+      allow read: true;
+      allow create: if isUser(uid);
+      allow delete: false;
+
+        match /collection/{
+            allow read: if isUser(uid);
+            allow update: if isUser(uid);
+            allow write: if isUser(uid);
+            allow delete: false;
+        }
+
+      }
+  
+      match /explore/global{
+       allow read: true;
+       allow create: isSignedIn();
+       allow update: false; 
+      }
+    }
   }
 }
 
