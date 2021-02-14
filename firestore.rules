@@ -48,7 +48,7 @@ service cloud.firestore {
       allow read: true;
       allow create: allowCollection(resource.data);
       allow update: false;
-      allow delete: false;a
+      allow delete: false;
     }
 
     match /views/{vid} {
@@ -71,6 +71,20 @@ service cloud.firestore {
         }
       }
     }
+    match /display picture/{uid} {
+      allow read: true;
+      allow write: isUser(uid);
+    }
+     match /personal details/{uid} {
+      allow read: true;
+      allow write: isUser(uid);
+    }
+     match /user data/{uid} {
+      allow read: false;
+      allow create: isUser(uid);
+      allow update: false;
+      allow delete: false;
+    }
   }
 }
 
@@ -79,7 +93,7 @@ function allowCollection(data){
   return isUser(data.collectorID)
          && (get(/databases/$(database)/documents/activity/$(data.pid)).collected
               / get(/databases/$(database)/documents/sticker details/$(data.pid)).amountReleased ) < 1
-         && !(exists(/databases/$(database)/documents/feed/$(data.collectorID)));
+         && !(exists(/databases/$(database)/documents/feed/$(data.collectorID))) //person doesnt exist 
 }
 
 // Helper functions
