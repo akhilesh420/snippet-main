@@ -14,6 +14,7 @@ service cloud.firestore {
 //ur mom a hoe
     match /post details/{pid}{
       allow read, write: true;
+//u r a returd
     }
 
     match /activity/{
