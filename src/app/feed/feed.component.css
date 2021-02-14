@@ -19,7 +19,9 @@
 .post-container {
   height: calc(825px * var(--norm-height));
   width: calc(420px * var(--norm-width));
-  max-width: 400px;
+  /* max-width: 420px;
+  min-width: 380px;
+  min-height: 640px; */
   padding-bottom: 5.444vh;
   overflow: hidden;
 }
@@ -35,12 +37,12 @@
 }
 
 .feed-container {
-  width: calc( ( 375 * (79vh) / 550 ) + 353px + 7.43vw );
+  width: calc( ( 420px * var(--norm-width)) + 353px + 7.43vw );
   padding-top: 5.444vh;
 }
 
 .dashboard {
-  margin-left: calc((375 * (79vh) / 550) + 7.43vw);
+  margin-left: calc((420px * var(--norm-width)) + 7.43vw);
   position: fixed;
 }
 
@@ -77,7 +79,7 @@
   position: relative;
   width: 340px;
   height: 55px;
-  margin-left: calc(((375 * (79vh) / 550) - 340px) / 2);
+  margin-left: calc(((420px * var(--norm-width)) - 340px) / 2);
   margin-bottom: 1.22vh;
 }
 
