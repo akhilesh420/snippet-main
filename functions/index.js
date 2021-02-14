@@ -17,13 +17,8 @@ const runtimeOpts_content = {
 }
 
 
-<<<<<<< HEAD
-const bucket_name = 'snippet-web-9818a.appspot.com'; //snippet production
-// const bucket_name = 'snippet-test-716cd.appspot.com'; //snippet testing
-=======
 // const bucket_name = 'snippet-web-9818a.appspot.com'; //snippet production
 const bucket_name = 'snippet-test2.appspot.com'; //snippet testing
->>>>>>> 8d3e995e26d7675d083c48126b44784ca7b62132
 
 
 exports.deleteUser = functions.https.onCall(async (data, context) => {
