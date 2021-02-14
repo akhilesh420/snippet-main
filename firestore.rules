@@ -9,12 +9,17 @@ service cloud.firestore {
     match /profile stickers/{uid}{
       allow read, write: if isUser(uid);
     }
-    
 
+    match /post details/{pid} {
+      allow read: if true;
+      allow create: if isUser(resource.data.uid);
+      allow update: if false;
+      allow delete: if false;
+    }
   }
 }
 
-// Helper functions 
+// Helper functions
 
 // Check if user has the specified uid
 function isUser(uid) {
