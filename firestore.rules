@@ -17,9 +17,45 @@ service cloud.firestore {
     }
 
     match /post details/{pid}{
-      allow read, write: true;
+      allow read: true;
+      allow create: if isUser(resource.data.uid);
+      allow update: false;
+      allow delete: false;
+    }
+
+    match /post content/{pid}{
+      allow read: true;
+      allow create: isSignedIn() && !!(resource.data.fileFormat);
+      allow update: false;
+      allow delete: false;
+    }
+
+    match /sticker content/{pid}{
+      allow read: true;
+      allow create: isSignedIn() && !!(resource.data.fileFormat);
+      allow update: false;
+      allow delete: false;
+    }
+
+    match /sticker details/{pid}{
+      allow read: true;
+      allow create: isSignedIn() && !!(resource.data.amountReleased <= 30); //only allow maximum of 30 stickers
+      allow update: false;
+      allow delete: false;
+    }
+
+    match /collection/{cid} {
+      allow read: true;
+      allow create: allowCollection(resource.data.collectorID);
+      allow update: false;
+      allow delete: false;
     }
   }
+}
+
+//Write functions
+function allowCollection(uid){
+  return
 }
 
 // Helper functions
