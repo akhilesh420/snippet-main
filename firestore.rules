@@ -4,11 +4,21 @@ service cloud.firestore {
 
     match /profile details/{uid}{
       allow read, write: if isUser(uid);
+      allow update: if isUser(uid);
+      allow delete: if isUser(uid);
     }
 
     match /profile stickers/{uid}{
       allow read, write: if isUser(uid);
+      allow update: if isUser(uid);
+      allow delete: if isUser(uid);
     }
+
+    match /activity/{
+      allow read, write: true;
+    }
+
+
     
 
   }
