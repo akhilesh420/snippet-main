@@ -1,9 +1,7 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
+:root {
+  --norm-width: 1;
+  --norm-height: 1;
+}
 
 .master-container{
   height:100%;
@@ -11,7 +9,7 @@
   position: relative;
 }
 
-.dashboard  {
+.dashboard-mobile  {
   height:100%;
   width: 100%;
   position: fixed;
@@ -23,11 +21,11 @@
   padding-top: 54px;
 }
 
-.dashboard-bck {
+.dashboard-bck-mobile {
   opacity: 0.3;
 }
 
-.profile-display {
+.profile-display-mobile {
   margin-bottom: 20px;
 }
 
@@ -39,21 +37,26 @@
   display: none;
 }
 
+.body-no-scroll {
+  overflow: hidden;
+  position: fixed;
+}
+
 @media only screen and (max-width: 800px) {
 
-  .feed {
+  .feed-mobile {
     display: -ms-grid;
     display: grid;
     place-items: center;
   }
 
-  .collection-tab-edit {
+  .collection-tab-edit-mobile {
     -webkit-transform: translate(24.33px, -180px);
         -ms-transform: translate(24.33px, -180px);
             transform: translate(24.33px, -180px);
   }
 
-  .profile-display {
+  .profile-display-mobile {
     margin-top: 84px;
   }
 }
@@ -63,7 +66,7 @@
     padding-top: unset;
   }
 
-  .profile-display {
+  .profile-display-mobile {
     margin-top: 30px;
   }
 }
