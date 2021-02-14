@@ -46,7 +46,7 @@ service cloud.firestore {
 
     match /collection/{cid} {
       allow read: true;
-      allow create: allowCollection(resource.data.collectorID);
+      allow create: allowCollection(resource.data);
       allow update: false;
       allow delete: false;
     }
@@ -54,8 +54,11 @@ service cloud.firestore {
 }
 
 //Write functions
-function allowCollection(uid){
-  return
+function allowCollection(data){
+  return isUser(data.collectorID)
+         && (get(/databases/$(database)/documents/activity/$(data.pid)).collected
+              / get(/databases/$(database)/documents/sticker details/$(data.pid)).amountReleased ) < 1
+         && !(exists(/databases/$(database)/documents/feed/$(data.collectorID)))
 }
 
 // Helper functions
