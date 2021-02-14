@@ -22,7 +22,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
   postFocus: boolean;
 
   pid: string;
-  postContent$: BehaviorSubject<any>;
+  postContent$: Observable<any>;
   postType$: Subject<string>;
 
   postType: string = 'video/mp4';
@@ -126,17 +126,20 @@ import { WindowStateService } from 'src/app/shared/window.service';
   }
 
   setUpPost() {
-    this.postService.getPostContentRef(this.pid).pipe(takeUntil(this.notifier$))
-    .subscribe(response => {
-      this.postType = response.fileFormat;
-      this.postContent$ = this.postService.getPostContent(this.pid, response);
-      this.postContent$.pipe(takeUntil(this.notifier$)).subscribe((val) => {
-        setTimeout(() => {
-          this.postInFrame();
-          this.videoToggle();
-        },300);
-      })
+    this.postContent$ = this.postService.getPostContent(this.pid);
+    this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(() => {
+      setTimeout(() => {
+        this.postInFrame();
+      },300);
     });
+
+    this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
+      this.postType = response.contentType;
+      setTimeout(() => {
+        this.videoToggle();
+      },300);
+    });
+
     // post collection list
     this.activityService.getPostCollection(this.pid).pipe(takeUntil(this.notifier$))
     .subscribe(response => {

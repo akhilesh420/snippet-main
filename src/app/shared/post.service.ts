@@ -19,9 +19,6 @@ export class PostService {
   private stickerDetailsCollection: any;
   private stickerContentCollection: any;
 
-  private stickerContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
-  private postContentList: {pid: string, obs: BehaviorSubject<any>}[] = [];
-
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage) {
     this.postDetailsCollection = afs.collection<PostDetails>('post details');
@@ -55,103 +52,71 @@ export class PostService {
   }
 
   // --------------------------------------- Post content ---------------------------------------
-  // Get post content from cloud firestore by UID
-  getPostContentRef(pid: string) {
-    return this.afs.doc<PostContent>('post content/' + pid).valueChanges();
-  }
-
   // Add post content from cloud firestore
-  addPostContentRef(pid: string, content: PostContent) {
-    const obj = {...content}
+  addPostContentRef(pid: string, contentRef: PostContent) {
+    const obj = {...contentRef}
     this.postContentCollection.doc(pid).set(obj);
   }
 
   // Get post content from firebase storage by UID
-  getPostContent(pid: string, postContentRef: PostContent) {
-    let index = this.postContentList.findIndex(details => {
-      return details.pid === pid;
-    })
-
-    if (index === -1) {
-      this.postContentList.push({pid: pid, obs: new BehaviorSubject<any>(undefined)});
-      let secIndex = this.postContentList.length - 1;
-      const ref = this.storage.ref('Post/' + postContentRef.name);
-      ref.getDownloadURL().subscribe(response => {
-        this.postContentList[secIndex].obs.next(response);
-      });
-      return this.postContentList[secIndex].obs
-    } else {
-      return this.postContentList[index].obs
-    }
+  getPostContent(pid: string) {
+    const ref = this.storage.ref('posts/' + pid +'/original');
+    return ref.getDownloadURL();
   }
 
+  // Get post metadata from firebase storage by UID
+  getPostMetadata(pid: string) {
+    const ref = this.storage.ref('posts/' + pid +'/original');
+    return ref.getMetadata();
+  }
+
+  // Add post content for post from firebase storage
+  addPostContent(pid: string, content: any, customMetadata: any) {
+    // Upload to storage
+    const file = content;
+    const filePath = 'posts/'+pid+'/original';
+    const ref = this.storage.ref(filePath);
+    const metadataUp = {contentType: file.type, ...customMetadata};
+    const task = ref.put(file, metadataUp);
+    return task.percentageChanges();
+  }
   // --------------------------------------- Sticker content ---------------------------------------
-  // Get sticker content from cloud firestore by UID
-  private getStickerContentRef(pid: string) {
-    return this.afs.doc<PostContent>('sticker content/' + pid).valueChanges();
-  }
 
   // Add sticker content from cloud firestore
-  addStickerContentRef(pid: string, content: PostContent) {
-    const obj = {...content}
+  addStickerContentRef(pid: string, contentRef: PostContent) {
+    const obj = {...contentRef}
     this.stickerContentCollection.doc(pid).set(obj);
   }
 
   // Get sticker content from firebase storage by UID
-  getStickerContent(pid: string, size: string='sm_') {
-    let index = this.stickerContentList.findIndex(details => {
-      return details.pid === pid;
-    })
-
-    if (index === -1) {
-      this.stickerContentList.push({pid: pid, obs: new BehaviorSubject<any>(null)});
-      let secIndex = this.stickerContentList.length - 1;
-      this.getStickerContentRef(pid).pipe(catchError(this.handleError)).subscribe((response: PostContent) => {
-        const ref = this.storage.ref('Post/' + size + response.name);
-        ref.getDownloadURL().subscribe(response => {
-          if (response) {
-            this.stickerContentList[secIndex].obs.next(response);
-          }
-        }, error => {
-          if (error.code_ === "storage/object-not-found") {
-            const ref = this.storage.ref('Post/' + response.name);
-            ref.getDownloadURL().subscribe(response => {
-              if (response) {
-                this.stickerContentList[secIndex].obs.next(response);
-              }
-            });
-          } else {
-            return;
-          }
-        });
-      });
-      return this.stickerContentList[secIndex].obs
-    } else {
-      return this.stickerContentList[index].obs
-    }
+  getStickerContent(pid: string) {
+    const ref = this.storage.ref('stickers/' + pid +'/small');
+    return ref.getDownloadURL();
   }
 
-  // --------------------------------------- Content storage ---------------------------------------
-  // Add content for post from firebase storage
-  addContent(name: string, content: any) {
+  // Add sticker content for post from firebase storage
+  addStickerContent(pid: string, content: any, customMetadata: any) {
     // Upload to storage
     const file = content;
-    const filePath = 'Post/'+name;
+    const filePath = 'stickers/'+pid+'/original';
     const ref = this.storage.ref(filePath);
-    const task = ref.put(file);
+    const metadataUp = {contentType: file.type, ...customMetadata};
+    const task = ref.put(file, metadataUp);
     return task.percentageChanges();
   }
 
-    // --------------------------------------- Error handling ---------------------------------------
-    handleError(error) {
-      let errorMessage = 'Unknown error!';
-      if (error.error instanceof ErrorEvent) {
-        // Client-side errors
-        errorMessage = `Error: ${error.error.message}`;
-      } else {
-        // Server-side errors
-        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      }
-      return throwError(errorMessage);
+
+
+  // --------------------------------------- Error handling ---------------------------------------
+  handleError(error) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
+    return throwError(errorMessage);
+  }
 }
