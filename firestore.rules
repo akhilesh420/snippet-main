@@ -11,13 +11,12 @@ service cloud.firestore {
       allow read: true;
       allow write: if isUser(uid);
     }
-//ur mom a hoe
-    match /post details/{pid}{
-      allow read, write: true;
-//u r a returd
-    }
 
     match /activity/{
+      allow read, write: true;
+    }
+
+    match /post details/{pid}{
       allow read, write: true;
     }
   }
