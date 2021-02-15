@@ -119,6 +119,13 @@ service cloud.firestore {
       allow write: true;
     }
 
+     match /credentials {
+      allow read: true;
+      allow create: if isUser(uid);
+      allow update: false;
+      allow delete: false;
+    }
+
     // Posts
     match /post details/{pid}{
       allow read: true;
