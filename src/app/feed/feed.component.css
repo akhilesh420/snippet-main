@@ -17,9 +17,10 @@
 }
 
 .post-container {
-  height: calc(825px * var(--norm-height));
-  width: calc(420px * var(--norm-width));
-  max-width: 400px;
+  height: auto;
+  width: calc(440px * var(--norm-width));
+  max-width: 440px;
+  min-width: 385px;
   padding-bottom: 5.444vh;
   overflow: hidden;
 }
@@ -35,12 +36,12 @@
 }
 
 .feed-container {
-  width: calc( ( 9 * (79vh) / 16 ) + 353px + 7.43vw );
+  width: 800px;
   padding-top: 5.444vh;
 }
 
 .dashboard {
-  margin-left: calc((9 * (79vh) / 16) + 7.43vw);
+  margin-left: 440px;
   position: fixed;
 }
 
@@ -148,6 +149,16 @@
   -webkit-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
           transform: rotate(90deg);
+}
+
+@media only screen and (min-width: 1320px) {
+
+.dashboard {
+  margin-left: 500px;
+}
+
+
+
 }
 
 @media only screen and (max-width: 800px) {

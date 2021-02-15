@@ -1,6 +1,45 @@
 <div class="postContainer" (click)='postView()' #post>
+
+  <div class="titleTop">
+
+    <div class="postTitle">
+
+      <p>Title of the post is suck my pee-pee hee hee ooh ooh
+      </p>
+
+    </div>
+
+    <div class="dropdownButton">
+
+      <img class = "dropdownButton" src = "assets/images/Post/postdetailDropdown.svg">
+
+    </div>
+
+  </div>
+
+  <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'>
+
+  </app-profile-tab> 
+
+  <div class = "postContent">
+
+    <div class="postSticker">
+
+    </div>
+
+    <div class="postMetrics">
+
+    </div>
+
+  </div>
+
+
+
+  
+
+
   <!-- post content -->
-  <div *ngIf="(postContent$ | async) as content; else loading">
+  <!-- <div *ngIf="(postContent$ | async) as content; else loading">
     <img  class="post-content "
           [src]='content'
           alt="post content"
@@ -20,21 +59,21 @@
                       'fit-contain': fullscreenToggle}"
            *ngIf='postType.includes("video")'>
     </video>
-  </div>
+  </div> -->
   <!-- loading spinner -->
-  <ng-template #loading>
+  <!-- <ng-template #loading>
       <app-loading-spinner class="center-absolute"></app-loading-spinner>
-  </ng-template>
+  </ng-template> -->
 
   <!-- post details -->
-  <div class="postDetails"
+  <!-- <div class="postDetails"
       (click)="showComments ? showDetails = false : showDetails = !showDetails;
               showComments = false;
               holderToggle = false;
-              videoToggle();">
+              videoToggle();"> -->
 
       <!-- Fail-safe button -->
-      <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
+      <!-- <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
         <img src = "assets/images/Post/failSafeButton.png">
       </div>
 
@@ -87,21 +126,21 @@
         </div>
 
 
-      </div>
+      </div> -->
 
       <!-- Fullscreen buttons -->
       <!-- Enter Fullscreen -->
-      <svg *ngIf='!fullscreenToggle; else exitFullscreen' (click)='fullscreenToggle = true; stopPropagation($event);' class = "fullscreenButton" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- <svg *ngIf='!fullscreenToggle; else exitFullscreen' (click)='fullscreenToggle = true; stopPropagation($event);' class = "fullscreenButton" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g>
         <path d="M9.54546 0H0.636384C0.284634 0 0 0.284634 0 0.636384V9.54546C0 9.89721 0.284634 10.1818 0.636384 10.1818H1.90909C2.26084 10.1818 2.54548 9.89721 2.54548 9.54546V2.54548H9.54546C9.89721 2.54548 10.1818 2.26084 10.1818 1.90909V0.636384C10.1818 0.284634 9.89721 0 9.54546 0Z" fill="white"/>
         <path d="M27.3634 0H18.4543C18.1025 0 17.8179 0.284634 17.8179 0.636384V1.90909C17.8179 2.26084 18.1025 2.54548 18.4543 2.54548H25.4542V9.54546C25.4542 9.89721 25.7388 10.1818 26.0906 10.1818H27.3633C27.715 10.1818 27.9997 9.89721 27.9997 9.54546V0.636384C27.9997 0.284634 27.7151 0 27.3634 0Z" fill="white"/>
         <path d="M27.3634 17.8184H26.0907C25.7389 17.8184 25.4543 18.103 25.4543 18.4547V25.4547H18.4543C18.1025 25.4547 17.8179 25.7394 17.8179 26.0911V27.3638C17.8179 27.7156 18.1025 28.0002 18.4543 28.0002H27.3633C27.715 28.0002 27.9997 27.7156 27.9997 27.3638V18.4547C27.9997 18.1029 27.7151 17.8184 27.3634 17.8184Z" fill="white"/>
         <path d="M9.54546 25.4543H2.54548V18.4543C2.54548 18.1025 2.26084 17.8179 1.90909 17.8179H0.636384C0.284634 17.8179 0 18.1025 0 18.4543V27.3633C0 27.715 0.284634 27.9997 0.636384 27.9997H9.54546C9.89721 27.9997 10.1818 27.715 10.1818 27.3633V26.0906C10.1818 25.7389 9.89721 25.4543 9.54546 25.4543Z" fill="white"/>
         </g>
-        </svg>
+        </svg> -->
 
       <!-- Exit Fullscreen -->
-      <ng-template #exitFullscreen>
+      <!-- <ng-template #exitFullscreen>
         <svg (click)='fullscreenToggle = false; stopPropagation($event);' class = "fullscreenButton" width="375" height="470" viewBox="0 0 375 470" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g>
           <path d="M118 0H96.667C90.771 0 86 4.771 86 10.667V128H-31.333C-37.229 128 -42 132.771 -42 138.667V160C-42 165.896 -37.229 170.667 -31.333 170.667H118C123.896 170.667 128.667 165.896 128.667 160V10.667C128.667 4.771 123.896 0 118 0Z" fill="white"/>
@@ -122,10 +161,10 @@
 
           <span class = "description">{{postDetails.description}}</span>
 
-        </div>
+        </div> -->
 
         <!-- Holder List -->
-        <div class = "holderList" (click)='holderAnalytics(); stopPropagation($event)'>
+        <!-- <div class = "holderList" (click)='holderAnalytics(); stopPropagation($event)'>
 
           <div class = "row holderListTitle no-margin-no-padding">
 
@@ -152,6 +191,6 @@
 
     </div>
 
-    <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
+    <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab> -->
 
 </div>

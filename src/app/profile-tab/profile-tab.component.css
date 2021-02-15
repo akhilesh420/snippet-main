@@ -1,4 +1,4 @@
-
+/* 
 
 /* Classes for multiple objects */
 
@@ -10,7 +10,59 @@
 
 /* Single Object classes */
 
+.profileTab {
+  height: calc(70px * var(--norm-height));
+  width: 100%;
+  background-color: #E2B33D;
+  min-height: 70px;
 
+}
+
+.profilePicture {
+  height: calc(68px * var(--norm-height));
+  width: calc(68px * var(--norm-height));
+  min-width: 60px;
+  min-height: 60px;
+  background-color: #c4c4c4;
+  padding-left: calc(10px * var(--norm-width));
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.username {
+  width: 80%;
+  height: calc(17px * var(--norm-height));
+  padding-left: 4px;
+  padding-top: 8px;
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  font-size: calc(16px * var(--norm-height));
+  line-height: calc(16px * var(--norm-width));
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+@media only screen and (max-height: 700px) {
+
+  .username {
+    font-size: 12px;
+    line-height: 16px;
+    width: 296px;
+    height: 17px;
+  }
+
+  .profilePicture {
+    left: 10px;
+
+  }
+
+
+}
+/* 
 .profileTab {
   position: absolute;
   bottom: 0;
@@ -208,7 +260,7 @@ border-radius: 50%;
       top: 20%;
   }
 
-}
+} */
 
 /* Animations */
 
@@ -407,4 +459,4 @@ border-radius: 50%;
 
 
 
-
+ 
