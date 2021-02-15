@@ -54,8 +54,8 @@
   min-width: 30px;
   border-radius: 50%;
   background-color: #FFFFFF;
-  top: calc(32px * var(--norm-height));
-  right: calc(10px * var(--norm-width));
+  top: calc(34px * var(--norm-height));
+  right: 10px;
 
 }
 
@@ -67,8 +67,8 @@
   min-width: 30px;
   border-radius: 50%;
   background-color: #FFFFFF;
-  top: calc(32px * var(--norm-height));
-  right: calc(50px * var(--norm-width));
+  top: calc(34px * var(--norm-height));
+  right: 50px;
 }
 
 .displaySticker-3 {
@@ -79,8 +79,8 @@
   min-width: 30px;
   border-radius: 50%;
   background-color: #FFFFFF;
-  top: calc(32px * var(--norm-height));
-  right: calc(90px * var(--norm-width));
+  top: calc(34px * var(--norm-height));
+  right: 90px;
 }
 
 .displaySticker-4 {
@@ -91,8 +91,8 @@
   min-width: 30px;
   border-radius: 50%;
   background-color: #FFFFFF;
-  top: calc(32px * var(--norm-height));
-  right: calc(130px * var(--norm-width));
+  top: calc(34px * var(--norm-height));
+  right: 130px;
 }
 
 .displaySticker-5 {
@@ -103,8 +103,8 @@
   min-width: 30px;
   border-radius: 50%;
   background-color: #FFFFFF;
-  top: calc(32px * var(--norm-height));
-  right: calc(170px * var(--norm-width));
+  top: calc(34px * var(--norm-height));
+  right: 170px;
 }
 
 
