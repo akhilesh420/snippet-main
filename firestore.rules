@@ -2,60 +2,96 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    //Write functions
+
+    function getExclusive(collectionWspace, eid) {
+      return get(/databases/$(database)/documents/$(collectionWspace)/$(eid)/private/details);
+    }
+
+    function allowCollection(data, collectionWspace){
+      return isUser(data.collectorID)
+            && (get(/databases/$(database)/documents/activity/$(data.pid)).collected
+                  / get(/databases/$(database)/documents/$(collectionWspace)/$(data.pid)).amountReleased ) < 1
+            && !(exists(/databases/$(database)/documents/feed/$(data.collectorID))) //person doesnt exist
+    }
+
+    function allowCollectionUpdate(id, collectionWspace) {
+      return isSignedIn()
+            && (existsAfter(/databases/$(database)/documents/feed/$(request.auth.uid)/collection/$(id)) //post activity
+            || existsAfter(/databases/$(database)/documents/$(collectionWspace)/$(resource.data.lastPID)/holders/$(request.auth.uid))); //user activity
+    }
+
+    // Helper functions
+
+    // Check if user has the specified uid
+    function isUser(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Check if user is signed in
+    function isSignedIn() {
+      return request.auth.uid != null;
+    }
+
+    // Get data being read
+    function currentData() {
+      return resource.data;
+    }
+
     // Users
-    match /credentials/ {
+    match /credentials/{uid} {
       allow read: if true;
       allow create: if isUser(uid);
       allow update: if false;
       allow delete: if false;
     }
 
-    match /profile%20details/{uid}/ {
+    match /profile%20details/{uid} {
       allow read: if true;
       allow write: if isUser(uid);
       allow delete: if false;
     }
 
-    match /profile%20stickers/{uid}/ {
+    match /profile%20stickers/{uid} {
       allow read: if true;
       allow write: if isUser(uid);
       allow delete: if false;
     }
 
-    match /display%20picture/{uid}/ {
+    match /display%20picture/{uid} {
       allow read: if true;
       allow write: if isUser(uid);
     }
 
-    match /personal%20details/{uid}/ {
+    match /personal%20details/{uid} {
       allow read: if isUser(uid);
       allow write: if isUser(uid);
     }
 
-    match /user%20data/{uid}/ {
+    match /user%20data/{uid} {
       allow read: if false;
       allow create: if isUser(uid);
       allow update: if false;
       allow delete: if false;
     }
 
-    match /activity/{id}/{
+    match /activity/{id} {
 
-      match /collection/ {
+      match /collection {
         allow read: if true;
-        allow update: if allowCollectionUpdate(id);
+        allow update: if allowCollectionUpdate(id, "holder list");
         allow delete: if false;
         allow create: if true;
       }
 
-      match /views/ {
+      match /views {
         allow read: if true;
         allow update: if true;
         allow create: if true;
         allow delete: if false;
       }
 
-      match /{private}/ {
+      match /{private} {
         allow read: if false;
         allow create: if true;
         allow update: if false;
@@ -63,37 +99,37 @@ service cloud.firestore {
       }
     }
 
-    match /collection/{cid}/ {
+    match /collection/{cid} {
       allow read: if true;
-      allow create: if allowCollection(resource.data);
+      allow create: if allowCollection(resource.data, "sticker details");
       allow update: if false;
       allow delete: if false;
     }
 
-    match /views/{vid}/ {
+    match /views/{vid} {
       allow read: if true;
       allow create: if true;
       allow update: if false;
       allow delete: if false;
     }
 
-    match /feed/ {
+    match /feed {
 
       allow read: if true;
 
-      match /{uid}/{
+      match /{uid} {
       allow read: if true;
       allow create: if isUser(uid);
       allow delete: if false;
 
-        match /collection/{
+        match /collection {
             allow read: if isUser(uid);
             allow update: if isUser(uid);
             allow create: if isUser(uid);
             allow delete: if false;
         }
       }
-      match /explore/global/{
+      match /explore/global {
        allow read: if true;
        allow create: if isSignedIn();
        allow update: if false;
@@ -101,18 +137,18 @@ service cloud.firestore {
       }
     }
 
-    match /exclusive%20ID/{eid}/ {
+    match /exclusive%20ID/{eid} {
       allow read: if false;
       allow create: if false;
       allow delete: if false;
-      allow update: if currentData().data.amount < get("/databases/$(database)/documents/exclusive ID/$(eid)/private/details").data.allowUse;
+      allow update: if currentData().data.amount < getExclusive('exclusive ID', eid).data.allowUse;
 
-      match /private/details/ {
+      match /private/details {
         allow read: if false;
         allow write: if false;
       }
 
-      match /users/{uid}/ {
+      match /users/{uid} {
         allow read: if false;
         allow create: if isUser(uid);
         allow update: if false;
@@ -120,34 +156,34 @@ service cloud.firestore {
       }
     }
 
-    match /feedback/ {
+    match /feedback {
       allow read: if false;
       allow write: if true;
     }
 
     // Posts
-    match /post%20details/{pid}/{
+    match /post%20details/{pid} {
       allow read: if true;
       allow create: if isUser(resource.data.uid);
       allow update: if false;
       allow delete: if false;
     }
 
-    match /post%20content/{pid}/{
+    match /post%20content/{pid} {
       allow read: if true;
       allow create: if isSignedIn() && !!(resource.data.fileFormat);
       allow update: if false;
       allow delete: if false;
     }
 
-    match /sticker%20content/{pid}/{
+    match /sticker%20content/{pid} {
       allow read: if true;
       allow create: if isSignedIn() && !!(resource.data.fileFormat);
       allow update: if false;
-      allow delete: false;
+      allow delete: if false;
     }
 
-    match /sticker%20details/{pid}/{
+    match /sticker%20details/{pid} {
       allow read: if true;
       allow create: if isSignedIn() && !!(resource.data.amountReleased <= 30); //only allow maximum of 30 stickers
       allow update: if false;
@@ -157,34 +193,4 @@ service cloud.firestore {
   }
 }
 
-//Write functions
-function allowCollection(data){
-  return isUser(data.collectorID)
-         && (get(/databases/$(database)/documents/activity/$(data.pid)).collected
-              / get("/databases/$(database)/documents/sticker details/$(data.pid)").amountReleased ) < 1
-         && !(exists("/databases/$(database)/documents/feed/$(data.collectorID)")) //person doesnt exist
-}
-
-function allowCollectionUpdate(id) {
-  return isSignedIn()
-         && (existsAfter("/databases/$(database)/documents/feed/$(request.auth.uid)/collection/$(id)") //post activity
-         || existsAfter("/databases/$(database)/documents/holder list/$(resource.data.lastPID)/holders/$(request.auth.uid)")); //user activity
-}
-
-// Helper functions
-
-// Check if user has the specified uid
-function isUser(uid) {
-  return isSignedIn() && request.auth.uid == uid;
-}
-
-// Check if user is signed in
-function isSignedIn() {
-  return request.auth.uid != null;
-}
-
-// Get data being read
-function currentData() {
-  return resource.data;
-}
 
