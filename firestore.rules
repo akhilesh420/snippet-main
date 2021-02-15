@@ -4,7 +4,7 @@ service cloud.firestore {
 
     // Users
 
-    match /profile details/{uid}{
+    match /profile details/{uid} {
       allow read: if true;
       allow write: if isUser(uid);
       allow delete: false;
