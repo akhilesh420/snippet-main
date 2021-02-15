@@ -4,154 +4,154 @@ service cloud.firestore {
 
     // Users
     match /credentials/ {
-      allow read: true;
+      allow read: if true;
       allow create: if isUser(uid);
-      allow update: false;
-      allow delete: false;
+      allow update: if false;
+      allow delete: if false;
     }
 
-    match /profile%20details/{uid} {
+    match /profile%20details/{uid}/ {
       allow read: if true;
       allow write: if isUser(uid);
-      allow delete: false;
+      allow delete: if false;
     }
 
-    match /profile%20stickers/{uid}{
-      allow read: true;
+    match /profile%20stickers/{uid}/ {
+      allow read: if true;
       allow write: if isUser(uid);
-      allow delete: false;
+      allow delete: if false;
     }
 
     match /display%20picture/{uid} {
-      allow read: true;
-      allow write: isUser(uid);
+      allow read: if true;
+      allow write: if isUser(uid);
     }
 
     match /personal%20details/{uid} {
-      allow read: isUser(uid);
-      allow write: isUser(uid);
+      allow read: if isUser(uid);
+      allow write: if isUser(uid);
     }
 
     match /user%20data/{uid} {
-      allow read: false;
-      allow create: isUser(uid);
-      allow update: false;
-      allow delete: false;
+      allow read: if false;
+      allow create: if isUser(uid);
+      allow update: if false;
+      allow delete: if false;
     }
 
     match /activity/{id}/{
 
       match /collection/ {
-        allow read: true;
-        allow update: allowCollectionUpdate(id);
-        allow delete: false;
-        allow create: true;
+        allow read: if true;
+        allow update: if allowCollectionUpdate(id);
+        allow delete: if false;
+        allow create: if true;
       }
 
       match /views/ {
-        allow read: true;
-        allow update: true;
-        allow create: true;
-        allow delete: false;
+        allow read: if true;
+        allow update: if true;
+        allow create: if true;
+        allow delete: if false;
       }
 
       match /{private}/ {
-        allow read: false;
-        allow create: true;
-        allow update: false;
-        allow delete: false;
+        allow read: if false;
+        allow create: if true;
+        allow update: if false;
+        allow delete: if false;
       }
     }
 
     match /collection/{cid} {
-      allow read: true;
-      allow create: allowCollection(resource.data);
-      allow update: false;
-      allow delete: false;
+      allow read: if true;
+      allow create: if allowCollection(resource.data);
+      allow update: if false;
+      allow delete: if false;
     }
 
     match /views/{vid} {
-      allow read: true;
-      allow create: true;
-      allow update: false;
-      allow delete: false;
+      allow read: if true;
+      allow create: if true;
+      allow update: if false;
+      allow delete: if false;
     }
 
     match /feed/ {
 
-      allow read: true;
+      allow read: if true;
 
       match /{uid}{
-      allow read: true;
+      allow read: if true;
       allow create: if isUser(uid);
-      allow delete: false;
+      allow delete: if false;
 
         match /collection/{
             allow read: if isUser(uid);
             allow update: if isUser(uid);
             allow create: if isUser(uid);
-            allow delete: false;
+            allow delete: if false;
         }
       }
       match /explore/global{
-       allow read: true;
-       allow create: isSignedIn();
-       allow update: false;
-       allow delete: false;
+       allow read: if true;
+       allow create: if isSignedIn();
+       allow update: if false;
+       allow delete: if false;
       }
     }
 
     match /exclusive%20ID/{eid} {
-      allow read: false;
-      allow create: false;
-      allow delete: false;
-      allow update: currentData().data.amount < get("/databases/$(database)/documents/exclusive ID/$(eid)/private/details").data.allowUse;
+      allow read: if false;
+      allow create: if false;
+      allow delete: if false;
+      allow update: if currentData().data.amount < get("/databases/$(database)/documents/exclusive ID/$(eid)/private/details").data.allowUse;
 
       match /private/details {
-        allow read: false;
-        allow write: false;
+        allow read: if false;
+        allow write: if false;
       }
 
       match /users/{uid} {
-        allow read: false;
+        allow read: if false;
         allow create: if isUser(uid);
-        allow update: false;
-        allow delete: false;
+        allow update: if false;
+        allow delete: if false;
       }
     }
 
     match /feedback/ {
-      allow read: false;
-      allow write: true;
+      allow read: if false;
+      allow write: if true;
     }
 
     // Posts
     match /post%20details/{pid}{
-      allow read: true;
+      allow read: if true;
       allow create: if isUser(resource.data.uid);
-      allow update: false;
-      allow delete: false;
+      allow update: if false;
+      allow delete: if false;
     }
 
     match /post%20content/{pid}{
-      allow read: true;
-      allow create: isSignedIn() && !!(resource.data.fileFormat);
-      allow update: false;
-      allow delete: false;
+      allow read: if true;
+      allow create: if isSignedIn() && !!(resource.data.fileFormat);
+      allow update: if false;
+      allow delete: if false;
     }
 
     match /sticker%20content/{pid}{
-      allow read: true;
-      allow create: isSignedIn() && !!(resource.data.fileFormat);
-      allow update: false;
+      allow read: if true;
+      allow create: if isSignedIn() && !!(resource.data.fileFormat);
+      allow update: if false;
       allow delete: false;
     }
 
     match /sticker%20details/{pid}{
-      allow read: true;
-      allow create: isSignedIn() && !!(resource.data.amountReleased <= 30); //only allow maximum of 30 stickers
-      allow update: false;
-      allow delete: false;
+      allow read: if true;
+      allow create: if isSignedIn() && !!(resource.data.amountReleased <= 30); //only allow maximum of 30 stickers
+      allow update: if false;
+      allow delete: if false;
     }
 
   }
