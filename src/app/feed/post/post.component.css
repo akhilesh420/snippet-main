@@ -1,5 +1,5 @@
 p {
-  margin-bottom: 1%;
+  margin-bottom: 4%;
 }
 
 
@@ -11,9 +11,9 @@ p {
 
 .postContent {
   width: 100%;
-  min-height: calc(300px * var(--norm-height));
+  min-height: calc(400px * var(--norm-height));
   max-height: calc(850px * var(--norm-height));
-  background-color: aqua;
+  background-color: #c4c4c4;
   position: relative;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -37,10 +37,10 @@ p {
 .dropdownButton {
 
   position: absolute;
-  width: calc(16.95px * var(--norm-width));
-  height: calc(17.99px * var(--norm-height));
+  width: calc(20.95px * var(--norm-width));
+  height: calc(21.99px * var(--norm-height));
   right: calc(5px * var(--norm-width));
-  top: calc(8px * var(--norm-height));
+  top: calc(7px * var(--norm-height));
 
 }
 
@@ -68,8 +68,8 @@ p {
   }
 
   .dropdownButton {
-    width: 16px;
-    height: 17px;
+    width: 17px;
+    height: 18px;
     top: 6px;
     right: 5px;
 
@@ -187,7 +187,6 @@ li {
   border-top-right-radius: 1.5vh;
   -webkit-border-top-right-radius: 1.5vh;
   -webkit-border-top-left-radius: 1.5vh;
-  background-color: #c4c4c4;
 }
 
 /* .post-content {
