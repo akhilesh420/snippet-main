@@ -33,9 +33,28 @@ service cloud.firestore {
       allow delete: false;
     }
 
-    match /activity/{
-      allow read, write: true;
-      allow delete: false;
+    match /activity/{id}/{
+
+      match /collection/ {
+        allow read: true;
+        allow update: allowCollectionUpdate(id);
+        allow delete: false;
+        allow create: true;
+      }
+
+      match /views/ {
+        allow read: true;
+        allow update: true;
+        allow create: true;
+        allow delete: false;
+      }
+
+      match /{private}/ {
+        allow read: false;
+        allow create: true;
+        allow update: false;
+        allow delete: false;
+      }
     }
 
     match /collection/{cid} {
@@ -72,6 +91,7 @@ service cloud.firestore {
        allow read: true;
        allow create: isSignedIn();
        allow update: false;
+       allow delete: false;
       }
     }
 
@@ -92,6 +112,11 @@ service cloud.firestore {
         allow update: false;
         allow delete: false;
       }
+    }
+
+    match /feedback {
+      allow read: false;
+      allow write: true;
     }
 
     // Posts
@@ -132,6 +157,12 @@ function allowCollection(data){
          && (get(/databases/$(database)/documents/activity/$(data.pid)).collected
               / get(/databases/$(database)/documents/sticker details/$(data.pid)).amountReleased ) < 1
          && !(exists(/databases/$(database)/documents/feed/$(data.collectorID))) //person doesnt exist
+}
+
+function allowCollectionUpdate(id) {
+  return isSignedIn()
+         && (existsAfter(/databases/$(database)/documents/feed/$(request.auth.uid)/collection/$(id)) //post activity
+         || existsAfter(/databases/$(database)/documents/holder list/$(resource.data.lastPID)/holders/$(request.auth.uid))); //user activity
 }
 
 // Helper functions
