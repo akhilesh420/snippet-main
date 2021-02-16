@@ -48,19 +48,19 @@ service cloud.firestore {
       return request.resource.data;
     }
 
-    allow read, write: if false;
-
     // Users
     match /credentials/{uid} {
       allow read: if true;
-      allow create: if isUser(uid) && !!(incomingData().length.username <= 26);
+      allow create: if isUser(uid)
+                      && (incomingData().email == request.auth.token.email)
+                      && (incomingData().username.size() <= 26);
       allow update: if false;
       allow delete: if false;
     }
 
     match /profile%20details/{uid} {
       allow read: if true;
-      allow write: if isUser(uid) && !!(incomingData().length.description <= 300) && !!(incomingData().length.link <= 45);
+      allow write: if isUser(uid) && (incomingData().description.size() <= 300) && (incomingData().link.size() <= 45);
       allow delete: if false;
     }
 
@@ -77,7 +77,7 @@ service cloud.firestore {
 
     match /personal%20details/{uid} {
       allow read: if isUser(uid);
-      allow write: if isUser(uid) && !!(incomingData().length.name <= 69);
+      allow write: if isUser(uid) && (incomingData().name.size() <= 69);
     }
 
     match /user%20data/{uid} {
@@ -180,7 +180,7 @@ service cloud.firestore {
     // Posts
     match /post%20details/{pid} {
       allow read: if true;
-      allow create: if isUser(incomingData().uid) && !!(incomingData().length.description <= 300)&& !!(incomingData().length.title <= 30);
+      allow create: if isUser(incomingData().uid) && (incomingData().description.size() <= 300) && (incomingData().title.size() <= 30);
       allow update: if false;
       allow delete: if false;
     }
@@ -201,7 +201,7 @@ service cloud.firestore {
 
     match /sticker%20details/{pid} {
       allow read: if true;
-      allow create: if isSignedIn() && !!(incomingData().amountReleased <= 30); //only allow maximum of 30 stickers
+      allow create: if isSignedIn() && (incomingData().amountReleased <= 30); //only allow maximum of 30 stickers
       allow update: if false;
       allow delete: if false;
     }
