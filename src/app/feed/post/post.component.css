@@ -240,6 +240,8 @@ li {
     border-bottom-left-radius: 0px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+    min-height: calc((100vh * (3 / 5)) - 54px);
+    max-height: calc(100vh - 54px);
   }
 
 }
