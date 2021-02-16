@@ -25,6 +25,10 @@ service cloud.firestore {
       return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
     }
 
+    function isHolder(pid, uid){
+      return (exists(/databases/$(database)/documents/$('holder list')/$(resource.data.pid)/holders/$(uid))
+    }
+
 
     // Helper functions
 
@@ -66,7 +70,7 @@ service cloud.firestore {
 
     match /profile%20stickers/{uid} {
       allow read: if true;
-      allow write: if isUser(uid);
+      allow write: if isUser(uid) && isHolder(incomingData().pid ,uid);
       allow delete: if false;
     }
 
