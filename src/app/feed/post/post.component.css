@@ -225,6 +225,23 @@ li {
     min-height: 28px;
   }
 
+  .holderList {
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .engagementBar {
+    border-top-left-radius: 0px;
+    height: 6px;
+  }
+
+  .postContent {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
 }
 
 
