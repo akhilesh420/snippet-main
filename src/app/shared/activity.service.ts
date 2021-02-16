@@ -78,9 +78,9 @@ export class ActivityService {
     batch.set(this.afs.firestore.doc('holder list/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
 
     //Update Activity
-    batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collection'),
+    batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
                   {counter: firebase.default.firestore.FieldValue.increment(1)}); //user
-    batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collection'),
+    batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
                   {counter: firebase.default.firestore.FieldValue.increment(1)}); //post
 
     // Collection analytics

@@ -146,20 +146,20 @@ import { WindowStateService } from 'src/app/shared/window.service';
       this.postCollection = response;
     });
 
-    this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.activity = response[0];
-      this.views = this.convertToShort(this.activity.views);
-      this.collected = this.convertToShort(this.activity.collected);
-    });
+    // this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+    //   this.activity = response[0];
+    //   this.views = this.convertToShort(this.activity.views);
+    //   this.collected = this.convertToShort(this.activity.collected);
+    // });
   }
 
   postView() {
     if (this.viewed || this.uid === this.myUid || !this.postDetails.pid || !this.postDetails.uid) return;
     this.viewed = true;
     if (!this.isAuthenticated) {
-      this.activityService.addViews(this.pid,this.uid);
+      // this.activityService.addViews(this.pid,this.uid);
     } else {
-      this.activityService.addViews(this.pid,this.uid,this.myUid);
+      // this.activityService.addViews(this.pid,this.uid,this.myUid);
     }
   }
 

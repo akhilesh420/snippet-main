@@ -22,7 +22,7 @@ service cloud.firestore {
     }
 
     function getCollectionData(cid) {
-      return (getAfter(/databases/$(database)/$('post details')/$(cid)).data;
+      return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
     }
 
 
@@ -137,7 +137,7 @@ service cloud.firestore {
 
         match /collection {
             allow read: if isUser(uid);
-            allow update: false;
+            allow update: if false;
             allow create: if isUser(uid)
                           && getCollectionData(incomingData().cid).pid == request.resource.id
                           && getCollectionData(incomingData().cid).uid == uid;
@@ -212,7 +212,7 @@ service cloud.firestore {
       allow update: if false;
       allow delete: if false;
 
-      match /holders/ {
+      match /holders {
         allow read: if true;
         allow write: if isSignedIn()
                         && getCollectionData(incomingData().cid).uid == request.resource.id

@@ -79,10 +79,10 @@ export class ProfileTabComponent implements OnInit {
   }
 
   setUpActivity() {
-    this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.activity = response[0];
-      this.setUpEngagement();
-    });
+    // this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+    //   this.activity = response[0];
+    //   this.setUpEngagement();
+    // });
   }
 
   setUpEngagement(){
