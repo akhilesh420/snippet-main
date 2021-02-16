@@ -2,6 +2,11 @@ p {
   margin-bottom: 4%;
 }
 
+.no-margin-no-padding {
+  margin: 0%;
+  padding: 0%;
+}
+
 
 .titleTop {
   height: auto;
@@ -13,7 +18,7 @@ p {
   width: 100%;
   min-height: calc(400px * var(--norm-height));
   max-height: calc(850px * var(--norm-height));
-  background-color: #c4c4c4;
+  background-color: #C4C4C4;
   position: relative;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -40,7 +45,7 @@ p {
   width: calc(20.95px * var(--norm-width));
   height: calc(21.99px * var(--norm-height));
   right: calc(5px * var(--norm-width));
-  top: calc(7px * var(--norm-height));
+  top: calc(6.8px * var(--norm-height));
 
 }
 
@@ -53,8 +58,119 @@ p {
   min-width: 70px;
   min-height: 70px;
   border-radius: 50%;
-  background-color: #c4c4c4;
+  background-color: #0b0b0b;
 }
+
+.engagementBar {
+  position: absolute;
+  top: 0px;
+  height: calc(8px * var(--norm-height));
+  width: 80%;
+  background-color: #E2B33D;
+  border-top-left-radius: 10px;
+  overflow: hidden;
+}
+
+.postDescription {
+  height: 25%;
+  width: 95%;
+  padding-left: 2.5%;
+  padding-top: calc(14px * var(--norm-height));
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: calc(16px * var(--norm-height));
+  line-height: calc(20px * var(--norm-height));
+  color: rgba(255, 255, 255, 0.9);
+  word-wrap: break-word;
+}
+
+
+
+.postMetrics {
+
+  height: 4.8vh;
+  width: 10vh;
+  bottom: calc(6px * var(--norm-height));
+  position: absolute;
+  left: 1%;
+
+}
+
+.metricsSymbols {
+
+  height: 60%;
+  width: 100%;
+  text-align: center;
+
+}
+
+.sizeSVG{
+
+  height: 2.0vh;
+  width: auto;
+
+}
+
+.metricsNumbers {
+
+  height: 40%;
+  width: 100%;
+  font-size: 1.4vh;
+  text-align: center;
+  padding-top: 1%;
+  font-family: 'ChampagneAndLimousines';
+  color: #ffffff;
+
+}
+
+.holderList {
+  width: 90%;
+  height: 70%;
+  background-color: #0b0b0b;
+  margin-left: 5%;
+  border-radius: 10px;
+  
+}
+
+.holderlistTitle {
+
+  height: 20px;
+  font-size: calc(16px * var(--norm-height));
+  font-family: 'Comfortaa';
+  font-weight: bold;
+  color: #E2B33D;
+  padding-left: 12px;
+  padding-bottom: 25px;
+  padding-top: 5px;
+  line-height: calc(24px * var(--norm-height));
+
+
+}
+
+.holderSpace {
+ 
+  padding-top: 20px;
+  margin:0%;
+  padding: 0%;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+
+  
+}
+
+li {
+  list-style: none;
+  height: 60px;
+  width: 98%;
+  margin-left: 1%;
+}
+
+
+
+
+
 
 
 
@@ -72,9 +188,19 @@ p {
     height: 18px;
     top: 6px;
     right: 5px;
-
   }
 
+  .engagementBar {
+    height: 6px;
+  }
+
+  .holderlistTitle {
+    font-size: 14px;
+  }
+ 
+  .postDescription {
+    font-size: 12px;
+  }
 }
 
 
@@ -122,14 +248,14 @@ p {
 } */
 
 
-li {
+/* li {
   list-style: none;
   height: 17.24%;
   width: 100%;
   margin-bottom: 8.2%;
-}
+} */
 
-.holderList {
+/* .holderList {
   width: 100%;
   height: 60%;
   margin-top: 3%;
@@ -173,7 +299,7 @@ li {
   padding-right: 2.8%;
   padding-top: 1.98%;
   padding-bottom: 1.98%;
-}
+} */
 
 
 .postContainer {

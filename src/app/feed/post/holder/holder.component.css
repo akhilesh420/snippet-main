@@ -1,11 +1,163 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
+
+/* Classes for multiple objects */
 
 .no-margin-no-padding {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Single Object classes */
+
+.profileTab {
+  height: calc(50px * var(--norm-height));
+  width: 100%;
+  min-height: 70px;
+  position: relative;
+
+}
+
+.profilePicture {
+  height: calc(48px * var(--norm-height));
+  width: calc(48px * var(--norm-height));
+  min-width: 48px;
+  min-height: 48px;
+  background-color: #c4c4c4;
+  margin-left: calc(4px * var(--norm-width));
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.username {
+  width: 80%;
+  height: calc(14px * var(--norm-height));
+  padding-left: 2px;
+  padding-top: 5px;
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  font-size: calc(14px * var(--norm-height));
+  line-height: calc(14px * var(--norm-width));
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.displaySticker-1 {
+  position: absolute;
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 10px;
+
+}
+
+.displaySticker-2 {
+  position: absolute;
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 50px;
+}
+
+.displaySticker-3 {
+  position: absolute;
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 90px;
+}
+
+.displaySticker-4 {
+  position: absolute;
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 130px;
+}
+
+.displaySticker-5 {
+  position: absolute;
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 170px;
+}
+
+
+
+
+
+@media only screen and (max-height: 700px) {
+
+  .username {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .profilePicture {
+    left: 10px;
+
+  }
+
+  .displaySticker-1 {
+    top: 24px;
+    right: 10px;
+  }
+
+  .displaySticker-2 {
+    top: 24px;
+    right: 50px;
+  }
+
+  .displaySticker-3 {
+    top: 24px;
+    right: 90px;
+  }
+
+  .displaySticker-4 {
+    top: 24px;
+    right: 130px;
+  }
+
+  .displaySticker-5 {
+    top: 24px;
+    right: 170px;
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* .no-margin-no-padding {
 
   margin: 0%;
   padding: 0%;
@@ -16,7 +168,7 @@
 
   width: 100%;
   height: 100%;
-
+  
 }
 
 
@@ -66,6 +218,7 @@
   height: 100%;
   width: 100%;
   top: 14%;
+  left: -3%;
 }
 
 .detailsTop {
@@ -127,20 +280,11 @@
   right: 0%;
   top: 2.4vh;
 
-}
-
-/* .sticker {
-
-  position: relative;
-  border-radius: 50%;
-  width: 100%;
-  height: auto;
-  padding-top: 100%;
-  background: white;
-
 } */
 
-.stickerHolder-1 {
+
+
+/* .stickerHolder-1 {
 
   height: 3vh;
   width: 3vh;
@@ -252,7 +396,7 @@
   .usernameSpace {
     padding-left: 2%;
   }
-}
+} */
 
 
 
