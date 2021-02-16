@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable, forkJoin, Subject } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PostContent, PostDetails, StickerDetails } from './../shared/post.model';
+import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './../shared/post.model';
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PostService } from '../shared/post.service';
@@ -10,9 +10,6 @@ import { ActivityService } from '../shared/activity.service';
 import { Collection } from '../shared/activity.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { take, takeUntil } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
-// import { faststart } from 'moov-faststart';
-// import * as fs from 'fs';
 
 @Component({
   selector: 'app-create',
@@ -25,9 +22,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   @ViewChild('contentInput') contentInput: ElementRef<HTMLElement>;
   @ViewChild('stickerInput') stickerInput: ElementRef<HTMLElement>;
 
+
   postDetails: PostDetails;
   stickerDetails: StickerDetails;
-  stickerContent: any;
 
   postContent$ = new BehaviorSubject<any>(null);
   postType$ = new BehaviorSubject<any>(null);
@@ -52,17 +49,18 @@ export class CreateComponent implements OnInit, OnDestroy {
   nextActive: boolean = false;
 
   storageFile: File;
+  stickerContent: File;
 
-  onBoarding: boolean = false;
-  onBoardingStep: number;
+  contentMetadata: CustomMetadata;
+  stickerMetadata: CustomMetadata;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
               private postService: PostService,
               private activityService: ActivityService,
               private afs: AngularFirestore,
-              private miscellaneousService: MiscellaneousService,
-              public sanitizer: DomSanitizer) { }
+              private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
@@ -70,18 +68,6 @@ export class CreateComponent implements OnInit, OnDestroy {
     }, errorMessage => {
       this.handleError(errorMessage);
     });
-
-    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.onBoarding = val;
-      if (val) {
-        this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-          this.onBoardingStep = step;
-          if (step != 8) {
-            this.router.navigate(['/tutorial']);
-          }
-        });
-      }
-    })
 
     this.route.params
     .subscribe(
@@ -101,9 +87,6 @@ export class CreateComponent implements OnInit, OnDestroy {
         }
 
         if (this.currentStep === 'content') {
-          if (this.onBoarding) {
-            this.miscellaneousService.setPopUp(new PopUp("It's time to make your first post !",'Okay',undefined, ['default', 'reject']));
-          }
           this.nextActive = !!this.postContent$.value;
           this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
             this.nextActive = !!value;
@@ -217,7 +200,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  nextClick() {
+  async nextClick() {
     if (this.isCreating) return;
 
     if (this.currentStep === 'content') {
@@ -225,6 +208,10 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.error = "Trust me, click the BIG plus button";
         return;
       }
+
+      const dimensions = await this.miscellaneousService.getDimension(this.storageFile, this.storageFile.type);
+      this.contentMetadata = new CustomMetadata(dimensions.width, dimensions.height, this.uid);
+
       this.error = undefined;
       ++this.stepCounter;
       this.router.navigate(['/create/description']);
@@ -262,6 +249,11 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.error = "A sticker is required! Click the plus sign on the bottom right of the post";
         return;
       }
+
+
+      const dimensions = await this.miscellaneousService.getDimension(this.stickerContent, this.stickerContent.type);
+      this.contentMetadata = new CustomMetadata(dimensions.width, dimensions.height, this.uid);
+
       if (!Number.isInteger(this.amount)) {
         this.error = "Number of stickers must be whole numbers!";
         return;
@@ -304,8 +296,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     let pid = this.afs.createId();
     let dateCreated = new Date();
 
-    let postSubs =  this.postService.addPostContent(pid,this.storageFile, );
-    let stickerSubs = this.postService.addStickerContent(pid,this.stickerContent);
+    let postSubs =  this.postService.addPostContent(pid,this.storageFile, this.contentMetadata);
+    let stickerSubs = this.postService.addStickerContent(pid,this.stickerContent, this.stickerMetadata);
 
     this.miscellaneousService.endOnBoarding(this.uid); //end on boarding for local machine
     this.miscellaneousService.startLoading();

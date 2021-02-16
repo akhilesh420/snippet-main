@@ -146,4 +146,49 @@ export class MiscellaneousService {
       this.images[i].src = environment.websitePath + images[i];
     }
   }
+
+  getDimension(file: File, type: string): Promise<{width: number; height: number}> {
+    return new Promise((resolve) => {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event:any) => {
+        let width: number;
+        let height: number;
+        if (type.includes('image')) {
+          const img = new Image();
+          img.onload = () => {
+            width = img.naturalWidth;
+            height = img.naturalHeight;
+            resolve({width: width, height: height});
+          }
+          img.src = event.target.result;
+        } else {
+          let newFile: File;
+          const dataurl = event.target.result;
+          let arr = dataurl.split(','),
+              bstr = atob(arr[1]),
+              n = bstr.length,
+              u8arr = new Uint8Array(n);
+
+          while(n--){
+              u8arr[n] = bstr.charCodeAt(n);
+          }
+          newFile  = new File([u8arr], "test.mp4", {type:'video/mp4', lastModified: new Date().getDate()});
+          let reader2 = new FileReader();
+          reader2.readAsDataURL(newFile);
+          reader2.onload = (event:any) => {
+            var video = document.createElement("video");
+            video.setAttribute("src", event.target.result);
+            video.onloadedmetadata = () => {
+              console.log('metadata loaded');
+              width = video.videoWidth;
+              height = video.videoHeight;
+              resolve({width: width, height: height});
+            }
+          }
+        }
+      }
+    })
+  }
+
 }

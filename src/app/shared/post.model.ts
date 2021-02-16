@@ -43,23 +43,11 @@ export class Holder {
   ) {}
 }
 
-export class Post {
+export class CustomMetadata {
 
   constructor(
-    public postDetails?: PostDetails,
-    public postContent?: PostContent,
-    public stickerContent? : PostContent,
-    public stickerDetails? : StickerDetails,
-    public holderList?: Holder[],
-    public commentList?: Comment[]
-  ) {}
-}
-
-
-export class Posts {
-
-  constructor(
-    public pid: string,
-    public post: Post
+    public width: number,
+    public height: number,
+    public uid: string
   ) {}
 }

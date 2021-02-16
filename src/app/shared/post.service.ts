@@ -1,7 +1,7 @@
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { PostContent, PostDetails, StickerDetails } from './post.model';
+import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './post.model';
 
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
@@ -71,7 +71,7 @@ export class PostService {
   }
 
   // Add post content for post from firebase storage
-  addPostContent(pid: string, content: any, customMetadata: any) {
+  addPostContent(pid: string, content: any, customMetadata: CustomMetadata) {
     // Upload to storage
     const file = content;
     const filePath = 'posts/'+pid+'/original';
@@ -95,7 +95,7 @@ export class PostService {
   }
 
   // Add sticker content for post from firebase storage
-  addStickerContent(pid: string, content: any, customMetadata: any) {
+  addStickerContent(pid: string, content: any, customMetadata: CustomMetadata) {
     // Upload to storage
     const file = content;
     const filePath = 'stickers/'+pid+'/original';
