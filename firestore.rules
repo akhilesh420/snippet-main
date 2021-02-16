@@ -53,14 +53,14 @@ service cloud.firestore {
     // Users
     match /credentials/{uid} {
       allow read: if true;
-      allow create: if isUser(uid);
+      allow create: if isUser(uid) && !!(incomingData().length.username <= 26);
       allow update: if false;
       allow delete: if false;
     }
 
     match /profile%20details/{uid} {
       allow read: if true;
-      allow write: if isUser(uid);
+      allow write: if isUser(uid) && !!(incomingData().length.description <= 300) && !!(incomingData().length.link <= 45);
       allow delete: if false;
     }
 
@@ -77,7 +77,7 @@ service cloud.firestore {
 
     match /personal%20details/{uid} {
       allow read: if isUser(uid);
-      allow write: if isUser(uid);
+      allow write: if isUser(uid) && !!(incomingData().length.name <= 69);
     }
 
     match /user%20data/{uid} {
@@ -180,7 +180,7 @@ service cloud.firestore {
     // Posts
     match /post%20details/{pid} {
       allow read: if true;
-      allow create: if isUser(incomingData().uid);
+      allow create: if isUser(incomingData().uid) && !!(incomingData().length.description <= 300)&& !!(incomingData().length.title <= 30);
       allow update: if false;
       allow delete: if false;
     }
