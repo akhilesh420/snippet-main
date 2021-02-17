@@ -4,7 +4,7 @@ service cloud.firestore {
 
     //Write functions
 
-    function getExclusive(collectionWspace, eid) {
+    function getExclusivePrivate(collectionWspace, eid) {
       return get(/databases/$(database)/documents/$(collectionWspace)/$(eid)/private/details);
     }
 
@@ -49,11 +49,20 @@ service cloud.firestore {
     }
 
     // Users
-    match /credentials/{uid} {
+    match /username/{uid} {
       allow read: if true;
       allow create: if isUser(uid)
+                      && getAfter(/databases/$(database)/credentials/$(incomingData().username)).data.uid == uid;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /credentials/{username} {
+      allow read: if true;
+      allow create: if isUser(incomingData().uid)
+                      && !(exists(/databases/$(database)/credentials/$(username)))
                       && (incomingData().email == request.auth.token.email)
-                      && (incomingData().username.size() <= 26);
+                      && (request.resource.id.size() <= 26);
       allow update: if false;
       allow delete: if false;
     }
@@ -156,7 +165,7 @@ service cloud.firestore {
       allow read: if false;
       allow create: if false;
       allow delete: if false;
-      allow update: if incomingData().used < getExclusive('exclusive ID', eid).data.allowUse
+      allow update: if incomingData().used < getExclusivePrivate('exclusive ID', eid).data.allowUse
                     && incomingData().used == currentData().used + 1;
 
       match /private/details {
@@ -180,14 +189,17 @@ service cloud.firestore {
     // Posts
     match /post%20details/{pid} {
       allow read: if true;
-      allow create: if isUser(incomingData().uid) && (incomingData().description.size() <= 300) && (incomingData().title.size() <= 30);
+      allow create: if isUser(incomingData().uid)
+                      && (incomingData().description.size() <= 300)
+                      && (incomingData().title.size() <= 30);
       allow update: if false;
       allow delete: if false;
     }
 
     match /post%20content/{pid} {
       allow read: if true;
-      allow create: if isSignedIn() && !!(incomingData().fileFormat);
+      allow create: if isSignedIn()
+                      && !!(incomingData().fileFormat);
       allow update: if false;
       allow delete: if false;
     }
