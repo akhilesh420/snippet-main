@@ -25,8 +25,8 @@ service cloud.firestore {
       return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
     }
 
-    function isValidUsername(username) {
-      return username.matches('^(?=[a-zA-Z0-9._]{1,26}$)(?!.*[_.]{2})[^_.].*[^_.]$');
+    function isValid(value, regex) {
+      return value.matches(regex);
     }
 
 
@@ -64,10 +64,9 @@ service cloud.firestore {
     match /credentials/{username} {
       allow read: if true;
       allow create: if isUser(incomingData().uid)
-                      && isValidUsername(username)
+                      && isValid(username, '^(?=[a-zA-Z0-9._?!$%&*+-]{2,26}$)')
                       && !(exists(/databases/$(database)/credentials/$(username)))
-                      && (incomingData().email == request.auth.token.email)
-                      && (request.resource.id.size() <= 26);
+                      && (incomingData().email == request.auth.token.email);
       allow update: if false;
       allow delete: if false;
     }
@@ -170,7 +169,7 @@ service cloud.firestore {
       allow read: if false;
       allow create: if false;
       allow delete: if false;
-      allow update: if incomingData().used < getExclusivePrivate('exclusive ID', eid).data.allowUse
+      allow update: if incomingData().used <= getExclusivePrivate('exclusive ID', eid).data.allowUse
                     && incomingData().used == currentData().used + 1;
 
       match /private/details {
