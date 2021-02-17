@@ -12,7 +12,7 @@ service cloud.firestore {
       return isUser(data.collectorID)
             && (getAfter( /databases/$(database)/documents/activity/$(data.pid)/metrics/collected ).data.counter
                   / get(/databases/$(database)/documents/$(collectionWspace)/$(data.pid)).data.amountReleased ) <= 1 //sticker remaining (<= because getAfter)
-            && !(exists(/databases/$(database)/documents/$('holder list')/$(data.pid)/holders/$(data.data.collectorID))) //collection doesn't exist on post
+            && !(isHolder(data.pid, data.collectorID)) //collection doesn't exist on post
     }
 
     function allowCollectionUpdate(id, collectionWspace) {
@@ -30,10 +30,18 @@ service cloud.firestore {
     }
 
     function isValidName(name){
-      return name.matches('^[a-z]+\s[A-Z][a-z]*$');
+       return name.matches('[A-Za-z ]+');
     }
 
+     function isHolder(pid, uid) {
+      return exists(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
+    }
 
+    function allowProfileSticker(sticker) {
+      if (!sticker) return false;
+      if (sticker == 'empty') return true;
+      return isHolder(sticker, request.auth.uid);
+    }
 
     // Helper functions
 
@@ -70,7 +78,7 @@ service cloud.firestore {
       allow read: if true;
       allow create: if isUser(incomingData().uid)
                       && isValid(username, '^[a-zA-Z0-9._?!$%&*+-]{2,27}$')
-                      && !!(currentData)
+                      && !!(currentData())
                       // && !(exists(/databases/$(database)/credentials/$(username))) very smart akhiles
                       && (incomingData().email == request.auth.token.email);
       allow update: if false;
@@ -87,6 +95,12 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isUser(uid);
       allow update: if incomingData().stickers.size()<=5;
+        allow update: if incomingData().stickers.size() == 5
+                       && allowProfileSticker(incomingData.stickers[0])
+                       && allowProfileSticker(incomingData.stickers[1])
+                       && allowProfileSticker(incomingData.stickers[2])
+                       && allowProfileSticker(incomingData.stickers[3])
+                       && allowProfileSticker(incomingData.stickers[4]);
       allow delete: if false;
     }
 
