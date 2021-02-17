@@ -12,7 +12,7 @@ service cloud.firestore {
       return isUser(data.collectorID)
             && (getAfter( /databases/$(database)/documents/activity/$(data.pid)/metrics/collected ).data.counter
                   / get(/databases/$(database)/documents/$(collectionWspace)/$(data.pid)).data.amountReleased ) <= 1 //sticker remaining (<= because getAfter)
-            && !(exists(/databases/$(database)/documents/$('holder list')/$(data.pid)/holders/$(data.data.collectorID))) //collection doesn't exist on post
+            && !(isHolder(data.pid, data.collectorID)) //collection doesn't exist on post
     }
 
     function allowCollectionUpdate(id, collectionWspace) {
@@ -33,7 +33,15 @@ service cloud.firestore {
       return name.matches('[A-Za-z]{2,27}');
     }
 
+    function isHolder(pid, uid) {
+      return exists(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
+    }
 
+    function allowProfileSticker(sticker) {
+      if (!sticker) return false;
+      if (sticker == 'empty') return true;
+      return isHolder(sticker, request.auth.uid);
+    }
 
     // Helper functions
 
@@ -86,7 +94,12 @@ service cloud.firestore {
     match /profile%20stickers/{uid} {
       allow read: if true;
       allow write: if isUser(uid);
-      allow update: if incomingData().stickers.size()<=5;
+      allow update: if incomingData().stickers.size() == 5
+                       && allowProfileSticker(incomingData.stickers[0])
+                       && allowProfileSticker(incomingData.stickers[1])
+                       && allowProfileSticker(incomingData.stickers[2])
+                       && allowProfileSticker(incomingData.stickers[3])
+                       && allowProfileSticker(incomingData.stickers[4]);
       allow delete: if false;
     }
 
