@@ -25,9 +25,19 @@ service cloud.firestore {
       return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
     }
 
+<<<<<<< HEAD
     function isValid(value, regex) {
       return value.matches(regex);
+=======
+    function isValidUsername(username) {
+      return username.matches('^[a-zA-Z0-9._?!$%&*+-]{2,27}$');
+>>>>>>> ee51d727ab7202a5f46b756b01450a5f9383c6ee
     }
+
+    function isValidName(name){
+      return name.matches('[A-Za-z]{2,27}');
+    }
+
 
 
     // Helper functions
@@ -53,7 +63,7 @@ service cloud.firestore {
     }
 
     // Users
-    match /username/{uid} {
+        match /username/{uid} {
       allow read: if true;
       allow create: if isUser(uid)
                       && getAfter(/databases/$(database)/credentials/$(incomingData().username)).data.uid == uid;
@@ -80,6 +90,7 @@ service cloud.firestore {
     match /profile%20stickers/{uid} {
       allow read: if true;
       allow write: if isUser(uid);
+      allow update: if incomingData().stickers.size()<=5;
       allow delete: if false;
     }
 
@@ -90,7 +101,8 @@ service cloud.firestore {
 
     match /personal%20details/{uid} {
       allow read: if isUser(uid);
-      allow write: if isUser(uid) && (incomingData().name.size() <= 69);
+      allow create: if isUser(uid) && isValidName(incomingData().name);
+      allow update: if false;
     }
 
     match /user%20data/{uid} {
@@ -193,7 +205,7 @@ service cloud.firestore {
     // Posts
     match /post%20details/{pid} {
       allow read: if true;
-      allow create: if isUser(incomingData().uid)
+       allow create: if isUser(incomingData().uid)
                       && (incomingData().description.size() <= 300)
                       && (incomingData().title.size() <= 30);
       allow update: if false;
@@ -238,5 +250,10 @@ service cloud.firestore {
 
   }
 }
+
+
+//check if when you put a value, if doesnt exist return false, if empty return true - should be a pid , match
+
+
 
 
