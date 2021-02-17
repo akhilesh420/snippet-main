@@ -30,16 +30,22 @@ service cloud.firestore {
     }
 
     function isValidName(name){
-      return name.matches('[A-Za-z]{2,27}');
+       return name.matches('[A-Za-z ]+');
     }
 
     function isHolder(pid, uid) {
       return exists(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
     }
 
+    function willBeHolder(pid, uid) {
+      return existsAfter(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
+    }
+
     function allowProfileSticker(sticker) {
       return !!sticker
-              && (isHolder(sticker, request.auth.uid) || sticker == 'empty');
+              && (isHolder(sticker, request.auth.uid)
+                  || willBeHolder(sticker, request.auth.uid)
+                  || sticker == 'empty');
     }
 
     // Helper functions
@@ -91,8 +97,15 @@ service cloud.firestore {
 
     match /profile%20stickers/{uid} {
       allow read: if true;
-      allow write: if isUser(uid);
-      allow update: if incomingData().stickers.size() == 5
+      allow create: if isUser(uid)
+                        && incomingData().stickers.size() == 5
+                        && allowProfileSticker(incomingData().stickers[0])
+                        && allowProfileSticker(incomingData().stickers[1])
+                        && allowProfileSticker(incomingData().stickers[2])
+                        && allowProfileSticker(incomingData().stickers[3])
+                        && allowProfileSticker(incomingData().stickers[4]);
+      allow update: if isUser(uid)
+                       && incomingData().stickers.size() == 5
                        && allowProfileSticker(incomingData().stickers[0])
                        && allowProfileSticker(incomingData().stickers[1])
                        && allowProfileSticker(incomingData().stickers[2])
