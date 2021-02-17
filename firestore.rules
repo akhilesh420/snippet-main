@@ -22,7 +22,7 @@ service cloud.firestore {
     }
 
     function getCollectionData(cid) {
-      return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
+      return (getAfter(/databases/$(database)/documents/$('post details')/$(cid))).data;
     }
 
     function isValid(value, regex) {
@@ -38,9 +38,8 @@ service cloud.firestore {
     }
 
     function allowProfileSticker(sticker) {
-      if (!sticker) return false;
-      if (sticker == 'empty') return true;
-      return isHolder(sticker, request.auth.uid);
+      return !!sticker
+              && (isHolder(sticker, request.auth.uid) || sticker == 'empty');
     }
 
     // Helper functions
@@ -66,10 +65,10 @@ service cloud.firestore {
     }
 
     // Users
-        match /username/{uid} {
+    match /username/{uid} {
       allow read: if true;
       allow create: if isUser(uid)
-                      && getAfter(/databases/$(database)/credentials/$(incomingData().username)).data.uid == uid;
+                      && getAfter(/databases/$(database)/documents/credentials/$(incomingData().username)).data.uid == uid;
       allow update: if false;
       allow delete: if false;
     }
@@ -78,8 +77,7 @@ service cloud.firestore {
       allow read: if true;
       allow create: if isUser(incomingData().uid)
                       && isValid(username, '^[a-zA-Z0-9._?!$%&*+-]{2,27}$')
-                      && !!(currentData())
-                      // && !(exists(/databases/$(database)/credentials/$(username)))
+                      && !(exists(/databases/$(database)/documents/credentials/$(username)))
                       && (incomingData().email == request.auth.token.email);
       allow update: if false;
       allow delete: if false;
@@ -95,11 +93,11 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isUser(uid);
       allow update: if incomingData().stickers.size() == 5
-                       && allowProfileSticker(incomingData.stickers[0])
-                       && allowProfileSticker(incomingData.stickers[1])
-                       && allowProfileSticker(incomingData.stickers[2])
-                       && allowProfileSticker(incomingData.stickers[3])
-                       && allowProfileSticker(incomingData.stickers[4]);
+                       && allowProfileSticker(incomingData().stickers[0])
+                       && allowProfileSticker(incomingData().stickers[1])
+                       && allowProfileSticker(incomingData().stickers[2])
+                       && allowProfileSticker(incomingData().stickers[3])
+                       && allowProfileSticker(incomingData().stickers[4]);
       allow delete: if false;
     }
 
