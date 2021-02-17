@@ -26,13 +26,13 @@ service cloud.firestore {
     }
 
     function isValidUsername(username) {
-      return username.matches('^(?=[a-zA-Z0-9._?!$%&*+-]{2,26}$)');
+      return username.matches('^[a-zA-Z0-9._?!$%&*+-]{2,27}$');
     }
 
     function isValidName(name){
-      return name.matches('^(?=[a-zA-Z- ]{2,26}$)');
+      return name.matches('[A-Za-z]{2,27}');
     }
-    }
+
 
 
     // Helper functions
@@ -98,7 +98,7 @@ service cloud.firestore {
     match /personal%20details/{uid} {
       allow read: if isUser(uid);
       allow create: if isUser(uid) && isValidName(incomingData().name);
-      allow update: false;
+      allow update: if false;
     }
 
     match /user%20data/{uid} {
