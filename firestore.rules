@@ -25,7 +25,7 @@ service cloud.firestore {
       return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
     }
 
-    function isValidUser(username) {
+    function isValidUsername(username) {
       return username.matches(^(?=[a-zA-Z0-9._]{1,26}$)(?!.*[_.]{2})[^_.].*[^_.]$);
     }
 
