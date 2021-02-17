@@ -4,7 +4,7 @@ service cloud.firestore {
 
     //Write functions
 
-    function getExclusive(collectionWspace, eid) {
+    function getExclusivePrivate(collectionWspace, eid) {
       return get(/databases/$(database)/documents/$(collectionWspace)/$(eid)/private/details);
     }
 
@@ -25,8 +25,8 @@ service cloud.firestore {
       return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
     }
 
-    function isHolder(pid, uid){
-      return (exists(/databases/$(database)/documents/$('holder list')/$(resource.data.pid)/holders/$(uid))
+    function isValidUsername(username) {
+      return username.matches('^(?=[a-zA-Z0-9._]{1,26}$)(?!.*[_.]{2})[^_.].*[^_.]$');
     }
 
 
@@ -53,11 +53,21 @@ service cloud.firestore {
     }
 
     // Users
-    match /credentials/{uid} {
+        match /username/{uid} {
       allow read: if true;
       allow create: if isUser(uid)
+                      && getAfter(/databases/$(database)/credentials/$(incomingData().username)).data.uid == uid;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /credentials/{username} {
+      allow read: if true;
+      allow create: if isUser(incomingData().uid)
+                      && isValidUsername(username)
+                      && !(exists(/databases/$(database)/credentials/$(username)))
                       && (incomingData().email == request.auth.token.email)
-                      && (incomingData().username.size() <= 26);
+                      && (request.resource.id.size() <= 26);
       allow update: if false;
       allow delete: if false;
     }
@@ -70,7 +80,8 @@ service cloud.firestore {
 
     match /profile%20stickers/{uid} {
       allow read: if true;
-      allow write: if isUser(uid) && isHolder(incomingData().pid ,uid);
+      allow write: if isUser(uid);
+      allow update: if incomingData().stickers.size()<=5;
       allow delete: if false;
     }
 
@@ -160,7 +171,7 @@ service cloud.firestore {
       allow read: if false;
       allow create: if false;
       allow delete: if false;
-      allow update: if incomingData().used < getExclusive('exclusive ID', eid).data.allowUse
+      allow update: if incomingData().used < getExclusivePrivate('exclusive ID', eid).data.allowUse
                     && incomingData().used == currentData().used + 1;
 
       match /private/details {
@@ -184,14 +195,17 @@ service cloud.firestore {
     // Posts
     match /post%20details/{pid} {
       allow read: if true;
-      allow create: if isUser(incomingData().uid) && (incomingData().description.size() <= 300) && (incomingData().title.size() <= 30);
+       allow create: if isUser(incomingData().uid)
+                      && (incomingData().description.size() <= 300)
+                      && (incomingData().title.size() <= 30);
       allow update: if false;
       allow delete: if false;
     }
 
     match /post%20content/{pid} {
       allow read: if true;
-      allow create: if isSignedIn() && !!(incomingData().fileFormat);
+      allow create: if isSignedIn()
+                      && !!(incomingData().fileFormat);
       allow update: if false;
       allow delete: if false;
     }
@@ -226,5 +240,10 @@ service cloud.firestore {
 
   }
 }
+
+
+//check if when you put a value, if doesnt exist return false, if empty return true - should be a pid , match
+
+
 
 
