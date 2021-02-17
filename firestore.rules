@@ -78,7 +78,7 @@ service cloud.firestore {
       allow read: if true;
       allow create: if isUser(incomingData().uid)
                       && isValid(username, '^[a-zA-Z0-9._?!$%&*+-]{2,27}$')
-                      && !!(currentData)
+                      && !!(currentData())
                       // && !(exists(/databases/$(database)/credentials/$(username)))
                       && (incomingData().email == request.auth.token.email);
       allow update: if false;
