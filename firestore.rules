@@ -25,6 +25,10 @@ service cloud.firestore {
       return (getAfter(/databases/$(database)/$('post details')/$(cid))).data;
     }
 
+    function isValidUser(username) {
+      return username.matches(^(?=[a-zA-Z0-9._]{1,26}$)(?!.*[_.]{2})[^_.].*[^_.]$);
+    }
+
 
     // Helper functions
 
@@ -60,6 +64,7 @@ service cloud.firestore {
     match /credentials/{username} {
       allow read: if true;
       allow create: if isUser(incomingData().uid)
+                      && isValidUsername(username)
                       && !(exists(/databases/$(database)/credentials/$(username)))
                       && (incomingData().email == request.auth.token.email)
                       && (request.resource.id.size() <= 26);
