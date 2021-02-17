@@ -30,7 +30,7 @@ service cloud.firestore {
     }
 
     function isValidName(name){
-      return name.matches('[A-Za-z]{2,27}');
+      return name.matches('^[a-z]+\s[A-Z][a-z]*$');
     }
 
 
@@ -71,7 +71,7 @@ service cloud.firestore {
       allow create: if isUser(incomingData().uid)
                       && isValid(username, '^[a-zA-Z0-9._?!$%&*+-]{2,27}$')
                       && !!(currentData)
-                      // && !(exists(/databases/$(database)/credentials/$(username)))
+                      // && !(exists(/databases/$(database)/credentials/$(username))) very smart akhiles
                       && (incomingData().email == request.auth.token.email);
       allow update: if false;
       allow delete: if false;
