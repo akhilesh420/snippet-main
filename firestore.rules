@@ -48,6 +48,10 @@ service cloud.firestore {
                   || sticker == 'empty');
     }
 
+    function isEmpty(text){
+      return text.matches('^\\s+$') || text.size()==0;
+    }
+
     // Helper functions
 
     // Check if user has the specified uid
@@ -227,7 +231,8 @@ service cloud.firestore {
       allow read: if true;
        allow create: if isUser(incomingData().uid)
                       && (incomingData().description.size() <= 300)
-                      && (incomingData().title.size() <= 30);
+                      && (incomingData().title.size() <= 30)
+                      && !(isEmpty(incomingData().title));
       allow update: if false;
       allow delete: if false;
     }
@@ -273,6 +278,7 @@ service cloud.firestore {
 
 
 //check if when you put a value, if doesnt exist return false, if empty return true - should be a pid , match
+
 
 
 
