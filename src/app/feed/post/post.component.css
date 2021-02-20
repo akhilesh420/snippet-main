@@ -190,7 +190,7 @@ li {
 
 
 
-@media only screen and (max-height: 700px) {
+@media only screen and (max-height: 900px) {
 
   .postTitle {
     padding-left: 11px;

@@ -110,7 +110,12 @@
 
 
 
-@media only screen and (max-height: 700px) {
+@media only screen and (max-height: 900px) {
+
+  .profilePicture {
+    max-width: 65px;
+    max-height: 65px;
+  }
 
   .username {
     font-size: 14px;
