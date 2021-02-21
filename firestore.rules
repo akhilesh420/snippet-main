@@ -180,17 +180,17 @@ service cloud.firestore {
       allow read: if true;
 
       match /{uid} {
-      allow read: if true;
-      allow create: if isUser(uid);
-      allow delete: if false;
+        allow read: if true;
+        allow create: if isUser(uid);
+        allow delete: if false;
 
-        match /collection {
-            allow read: if isUser(uid);
-            allow update: if false;
-            allow create: if isUser(uid)
-                          && getCollectionData(incomingData().cid).pid == request.resource.id
-                          && getCollectionData(incomingData().cid).uid == uid;
-            allow delete: if false;
+        match /collection/{pid} {
+          allow read: if isUser(uid);
+          allow update: if false;
+          allow create: if isUser(uid)
+                        && getCollectionData(incomingData().cid).pid == request.resource.id
+                        && getCollectionData(incomingData().cid).uid == uid;
+          allow delete: if false;
         }
       }
       match /explore/global/{pid} {
