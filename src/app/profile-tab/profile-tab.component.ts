@@ -120,40 +120,8 @@ export class ProfileTabComponent implements OnInit {
     this.auth.onAuthStateChanged(async (user) => {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated)  {
-
-        if (this.stickerCollectionState === 0) return;
-        this.stickerCollectionState = undefined; //intermediate state
-        await this.sleep(50);
-        this.stickerCollectionState = 0; //loading
-
-        const val = await this.allowProcessing();
-        console.log(val);
-
         this.myUid = user.uid;
-
-        for (let key in this.postCollection) {
-          if (this.postCollection[key].collectorID === this.myUid) {
-            this.stickerCollectionState = -1; //reject
-            const popUpObj = new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']);
-            this.miscellaneousService.setPopUp(popUpObj);
-            return; //end
-          }
-        }
-
-        if (this.engagementRatio < 1) {
-          this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-          this.stickerCollectionState = 1; //confirm
-          return; //end
-        } else {
-          this.stickerCollectionState = -1; //reject
-          const popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
-          this.miscellaneousService.setPopUp(popUpObj);
-          return; //end
-        }
-      } else {
-        this.miscellaneousService.lastRoute='/post/' + this.pid;
-        this.router.navigate(['/auth']);
-      }
-    });
+        this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
+    }});
   }
 }
