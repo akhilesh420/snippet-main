@@ -2,7 +2,7 @@
 
 .titleOne {
     position: absolute;
-    bottom: 586px;
+    bottom: calc(586px * var(--norm-height));
     left: 94px;
 }
 
@@ -101,19 +101,81 @@
 
 .titleTwo {
     position: absolute;
-    left: 90px;
-    top: 195px;
+    left: calc(95px * var(--norm-width));
+    top: calc(124px * var(--norm-height));
 }
 
 .titleTwoSizing {
-    height: 45px;
+    height: calc(45px * var(--norm-height));
     width: auto;
 }
 
 .contentSpace {
     position: absolute;
     bottom: 0%;
-    height: 722px;
+    height: calc(688px * var(--norm-height));
     width: 100%;
     background: linear-gradient(104deg, #0B0B0B 0.57%, rgba(11, 11, 11, 0.0537661) 65.17%, rgba(11, 11, 11, 0) 99.36%);
+}
+
+.subTitleOnePageTwo {
+
+    position: relative;
+    top: calc(41px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+
+}
+
+.subTitleOneSizingPageTwo {
+
+    height: calc(37px * var(--norm-height));
+    width: auto;
+
+}
+
+.paraOnePageTwo {
+    
+    position: relative;
+    top: calc(70px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+    font-family: 'ChampagneAndLimousines';
+    font-style: normal;
+    font-weight: normal;
+    font-size: calc(26px * var(--norm-height));
+    line-height: calc(35px * var(--norm-height));
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+
+}
+
+.subTitleTwoPageTwo {
+    position: relative;
+    top: calc(100px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+}
+
+.subTitleTwoSizingPageTwo {
+    height: calc(37px * var(--norm-height));
+    width: auto;
+}
+
+.paraTwoPageTwo {
+    position: relative;
+    top: calc(130px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+    font-family: 'ChampagneAndLimousines';
+    font-style: normal;
+    font-weight: normal;
+    font-size: calc(26px * var(--norm-height));
+    line-height: calc(35px * var(--norm-height));
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+}
+
+.nextButtonPageTwo {
+    position: absolute;
+    bottom: calc(54px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+    width: 190px;
+    height: 80px;
 }
