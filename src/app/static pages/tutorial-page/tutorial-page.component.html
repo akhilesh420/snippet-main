@@ -1,69 +1,48 @@
-<!-- Welcome slide -->
-<div class = "container-fluid" *ngIf='onBoardingStep === 0'>
-    <div class = "row title">
-        <div class = "col-lg-6 col-md-8 col-sm-10 col-12 title offset-lg-2 offset-md-1 text-wrap">
-            <p>Welcome to Snippet,</p>
-        </div>
-    </div>
+<!-- Page 1 -->
+<!-- 
+<div class = "titleOne">
 
-    <div class = "row para">
-        <div class = "col-lg-8 col-md-10 col-sm-12 col-12 para offset-lg-2 offset-md-1 text-wrap">
-            <p>We are a new social media platform that is changing how
-            Creative Content is consumed and shared online.</p>
-             <br>
-            <p>We are in our closed alpha stage, and would like to
-            invite you to be a part of our first group of creators.</p>
-        </div>
-
-    </div>
-
-    <div class = "row nextArrow justify-content-center">
-        <div class = "col-1" (click)='clickNext()'>
-          <img [ngClass]="activeNext ? 'pulsate-bck' : 'inactive'" src="assets/icons/nextArrow.svg">
-        </div>
-    </div>
+    <img class = "titleOneSize" src = "assets/images/Tutorial/Tutorial_title-1.svg">
 
 </div>
 
-<!-- How it works slide -->
-<div class="how" *ngIf='onBoardingStep != 0'>
-  <div class = "row justify-content-center title-2">
-      <div class = "col-lg-6 col-md-8 col-sm-10 col-12 text-wrap tracking-in-expand">
-          <p>How it works</p>
-      </div>
-  </div>
-
-  <div class = "row justify-content-center paraTop">
-
-      <div class = "col-lg-8 col-md-10 col-sm-12 col-12 text-wrap focus-in-expand">
-        <p>{{messageTop1}}<br>
-          {{messageTop2}}</p>
-      </div>
-
-  </div>
-
-  <div class = "row justify-content-center postPosition">
-
-  <div class='col-lg-4 col-md-6 col-sm-8 col-12 post'>
-    <!-- <app-post *ngIf='(onBoardingStep === 2 || onBoardingStep === 4) && !loadingPost' [postDetails]="postDetails" [postFocus]="true" [tutorial]="true"> </app-post> -->
-    <img *ngIf='(onBoardingStep === 7)' src = "assets/images/Onbaording holder list SVG.svg">
+<div class = "subTitleOne">
+    <p class = "subTitleOneSizing">A social-media space for creatives.</p>
 </div>
 
+<div class = "nextButton">
+   
+    <div class = "button">
+
+        <p class = "buttonText">Next</p>
+
+    </div>
+
+    <div class = "stepIndicator">
+
+        <div class="circleOne"></div>
+
+        <div class="circleTwo"></div>
+
+        <div class="circleThree"></div>
+
+    </div>
+
+</div> -->
+
+<!-- Page 2  -->
+
+<div class="titleTwo">
+
+ <img class = "titleTwoSize" src = "assets/images/Tutorial/Tutorial_title-2.svg">
+
+</div>
+
+<div class = "contentSpace">
 
 
-  </div>
 
-  <div class = "row justify-content-center no-gutters paraBottom">
 
-      <div class = "col-lg-8 col-md-10 col-sm-12 col-12 no-gutters focus-in-expand">
-          <p>{{messageBottom1}}<br>
-              {{messageBottom2}}</p>
-      </div>
 
-  </div>
-
-  <div class = "nextArrow-2" (click)='clickNext()' *ngIf='onBoardingStep != 2'>
-          <img [ngClass]="activeNext ? 'pulsate-bck' : 'inactive'" src="assets/icons/nextArrow.svg">
-  </div>
 
 </div>
