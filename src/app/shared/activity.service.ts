@@ -99,7 +99,7 @@ export class ActivityService {
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('collectorID','==',uid).orderBy('timeStamp', 'desc')).valueChanges();
+    return this.afs.collection<Collection>('feed/' + uid +'/collection').valueChanges({idField: 'pid'});
   }
 
   // get collection by pid

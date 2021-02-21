@@ -46,18 +46,18 @@ service firebase.storage {
       return request.resource.contentType.matches(allowedType);
     }
 
-    match /display%20pictures/{uid} {
+    match /display%20pictures/{uid}/{anything} {
       allow read: if true;
       allow write: if writeDP(uid);
     }
 
-    match /posts/{pid} {
+    match /posts/{pid}/{anything} {
       allow read: if true;
       allow write: if writePost();
       allow update: if false;
     }
 
-    match /stickers/{pid} {
+    match /stickers/{pid}/{anything} {
       allow read: if true;
       allow write: if writeSticker();
       allow update: if false;

@@ -21,7 +21,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   pid: string;
   postDetails$: Observable<PostDetails>;
   profileDetails$: BehaviorSubject<ProfileDetails>;
-  stickerContent$: BehaviorSubject<any>;
+  stickerContent$: Observable<any>;
 
   profileStickerEdit: boolean = false;
   selectedPID: string;
