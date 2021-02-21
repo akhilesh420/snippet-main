@@ -74,6 +74,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.miscellaneousService.preloadImages(this.preloadImages);
 
     this.windowStateService.checkWidth();
+    this.windowStateService.setHeight();
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (!val) return;
