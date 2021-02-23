@@ -79,9 +79,11 @@ export class ActivityService {
 
     //Update Activity
     batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
-                  {counter: firebase.default.firestore.FieldValue.increment(1)}); //user
+                  {counter: firebase.default.firestore.FieldValue.increment(1),
+                    cid: cid}); //user
     batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
-                  {counter: firebase.default.firestore.FieldValue.increment(1)}); //post
+                  {counter: firebase.default.firestore.FieldValue.increment(1),
+                    cid: cid}); //post
 
     // Collection analytics
     if (collection.collectorID != collection.collecteeID) {
@@ -99,7 +101,7 @@ export class ActivityService {
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.afs.collection<Collection>('feed/' + uid +'/collection').valueChanges({idField: 'pid'});
+    return this.afs.collection<Collection>('feed/' + uid +'/collection', ref => ref.orderBy('timeStamp', 'desc')).valueChanges({idField: 'pid'});
   }
 
   // get collection by pid
