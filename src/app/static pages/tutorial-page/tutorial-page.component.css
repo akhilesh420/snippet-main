@@ -179,3 +179,126 @@
     width: 190px;
     height: 80px;
 }
+
+.titleThree {
+    position: absolute;
+    left: calc(95px * var(--norm-width));
+    top: calc(124px * var(--norm-height));
+}
+
+.titleThreeSize {
+    height: calc(45px * var(--norm-height));
+    width: auto;
+}
+
+.subTitleOnePageThree {
+    position: relative;
+    top: calc(41px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+}
+
+.subTitleOneSizingPageThree {
+
+    height: calc(37px * var(--norm-height));
+    width: auto;
+
+}
+
+.subTitleTwoPageThree {
+    position: relative;
+    top: calc(120px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+}
+
+.subTitleTwoSizingPageThree {
+    height: calc(37px * var(--norm-height));
+    width: auto;
+}
+
+.paraOnePageThree {
+    position: relative;
+    top: calc(70px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+    font-family: 'ChampagneAndLimousines';
+    font-style: normal;
+    font-weight: normal;
+    font-size: calc(26px * var(--norm-height));
+    line-height: calc(35px * var(--norm-height));
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+}
+
+.paraTwoPageThree {
+    position: relative;
+    top: calc(150px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+    font-family: 'ChampagneAndLimousines';
+    font-style: normal;
+    font-weight: normal;
+    font-size: calc(26px * var(--norm-height));
+    line-height: calc(35px * var(--norm-height));
+    letter-spacing: 0.1em;
+    color: #FFFFFF;
+}
+
+.nextButtonPageThree {
+    position: absolute;
+    bottom: calc(54px * var(--norm-height));
+    left: calc(88px * var(--norm-width));
+    width: 190px;
+    height: 80px;
+}
+
+.titleAnimation {
+    -webkit-animation: slide-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.contentSpaceAnimation {
+    -webkit-animation: slide-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s both;
+	        animation: slide-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s both;
+}
+
+/* Animations */
+
+@-webkit-keyframes slide-right {
+    0% {
+      -webkit-transform: translateX(-300px);
+              transform: translateX(-300px);
+    }
+    100% {
+      -webkit-transform: translateX(0px);
+              transform: translateX(0px);
+    }
+  }
+  @keyframes slide-right {
+    0% {
+      -webkit-transform: translateX(-300px);
+              transform: translateX(-300px);
+    }
+    100% {
+      -webkit-transform: translateX(0px);
+              transform: translateX(0px);
+    }
+  }
+
+  @-webkit-keyframes slide-top {
+    0% {
+      -webkit-transform: translateY(calc(700px * var(--norm-height)));
+              transform: translateY(calc(700px * var(--norm-height)));
+    }
+    100% {
+      -webkit-transform: translateY(0px);
+              transform: translateY(0px);
+    }
+  }
+  @keyframes slide-top {
+    0% {
+      -webkit-transform: translateY(calc(700px * var(--norm-height)));
+              transform: translateY(calc(700px * var(--norm-height)));
+    }
+    100% {
+      -webkit-transform: translateY(0px);
+              transform: translateY(0px);
+    }
+  }
