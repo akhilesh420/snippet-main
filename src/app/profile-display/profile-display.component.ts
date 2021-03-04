@@ -166,14 +166,14 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   setUpActivity() {
-    this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-      if (!response[0]) {
-        return;
-      }
-      this.activity = response[0];
-      this.views = this.convertToShort(this.activity.views);
-      this.collected = this.convertToShort(this.activity.collected);
-    });
+    // this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
+    //   if (!response[0]) {
+    //     return;
+    //   }
+    //   this.activity = response[0];
+    //   this.views = this.convertToShort(this.activity.views);
+    //   this.collected = this.convertToShort(this.activity.collected);
+    // });
   }
 
   convertToShort(num: number): string {

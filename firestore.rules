@@ -36,10 +36,8 @@ service cloud.firestore {
     }
 
     function allowProfileSticker(sticker) {
-      return !!sticker
-              && (isHolder(sticker, request.auth.uid)
-                  || willBeHolder(sticker, request.auth.uid)
-                  || sticker == 'empty');
+      return isHolder(sticker, request.auth.uid)
+              || sticker == 'empty';
     }
 
     function isEmpty(text){
@@ -58,6 +56,11 @@ service cloud.firestore {
       return request.auth.uid != null;
     }
 
+    // Check if user is admin
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
     // Get data being read
     function currentData() {
       return resource.data;
@@ -72,16 +75,16 @@ service cloud.firestore {
     match /username/{uid} {
       allow read: if true;
       allow create: if isUser(uid)
-                      && getAfter(/databases/$(database)/documents/credentials/$(incomingData().username)).data.uid == uid;
+                      && getAfter(/databases/$(database)/documents/credential/$(incomingData().username)).data.uid == uid;
       allow update: if false;
       allow delete: if false;
     }
 
-    match /credentials/{username} {
+    match /credential/{username} {
       allow read: if true;
       allow create: if isUser(incomingData().uid)
                       && isValid(username, '^[a-zA-Z0-9._?!$%&*+-]{2,27}$')
-                      && !(exists(/databases/$(database)/documents/credentials/$(username)))
+                      && !(exists(/databases/$(database)/documents/credential/$(username)))
                       && (incomingData().email == request.auth.token.email);
       allow update: if false;
       allow delete: if false;
@@ -89,7 +92,8 @@ service cloud.firestore {
 
     match /profile%20details/{uid} {
       allow read: if true;
-      allow write: if isUser(uid) && (incomingData().description.size() <= 300) && (incomingData().link.size() <= 45);
+      allow create: if isUser(uid) && (incomingData().description.size() <= 300) && (incomingData().link.size() <= 45);
+      allow update: if isUser(uid) && (incomingData().description.size() <= 300) && (incomingData().link.size() <= 45);
       allow delete: if false;
     }
 
@@ -198,18 +202,18 @@ service cloud.firestore {
 
     match /exclusive%20ID/{eid} {
       allow read: if false;
-      allow create: if false;
+      allow create: if isAdmin();
       allow delete: if false;
       allow update: if incomingData().used <= getExclusivePrivate('exclusive ID', eid).data.allowUse
                     && incomingData().used == currentData().used + 1;
 
       match /private/details {
         allow read: if false;
-        allow write: if false;
+        allow write: if isAdmin();
       }
 
       match /users/{uid} {
-        allow read: if false;
+        allow read: if isAdmin();
         allow create: if isUser(uid);
         allow update: if false;
         allow delete: if false;

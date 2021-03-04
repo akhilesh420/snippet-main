@@ -29,11 +29,6 @@ export class ActivityService {
   //   return this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(id)).valueChanges();
   // }
 
-  //create new activity entry for user or post
-  // addActivity(id: string, type: string) {
-  //   this.activityRef.push({id: id, type: type, views: 0, collected: 0})
-  // }
-
   //update activity for view or collection
   async updateActivity(type: string, uid: string, pid: string) {
     const batch = this.afs.firestore.batch();
@@ -96,7 +91,9 @@ export class ActivityService {
 
     await batch.commit().catch(async (e) => {
       console.log("error in collection", e);
+      throw new Error('Error in sticker collection');
     });
+    return true
   }
 
   // get collection by uid

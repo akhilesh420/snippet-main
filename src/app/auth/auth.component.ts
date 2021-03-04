@@ -1,14 +1,12 @@
 import { UsersService } from './../shared/users.service';
-import { ProfileDetails, PersonalDetails, DisplayPicture } from './../shared/profile.model';
+import { ProfileDetails, PersonalDetails, DisplayPicture, Credential } from './../shared/profile.model';
 import { Subject, Subscription } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService, ExclusiveID } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivityService } from '../shared/activity.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
-import { AngularFirestore } from '@angular/fire/firestore';
 
 
 
@@ -23,7 +21,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   isForgetMode = false;
   isLoading = false;
   error: string = null;
-  passwordError: string = null;
 
   credential: string;
   password: string;
@@ -31,18 +28,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   username: string;
   passwordValidator = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$";
 
-  subProfileDetails: Subscription;
-
   isAuthenticated: boolean = false;
 
   exclusiveId: string;
-  validID: boolean = false;
   userNumber: number;
   notifier$ = new Subject();
 
-  exclusiveDetails: ExclusiveID;
-  onBoarding: boolean = false;
-  onBoardingStep: number;
   errorField: number = -1; //sign up which field number has an error
 
   constructor(private authService: AuthService,
@@ -52,43 +43,16 @@ export class AuthComponent implements OnInit, OnDestroy {
               private miscellaneousService: MiscellaneousService) {}
 
   ngOnInit(): void {
-    this.validID = false;
-
     this.exclusiveId = this.route.snapshot.params['id'];
     this.isLoginMode = !this.exclusiveId; //switch to sign up if id exists
-    if (this.exclusiveId) {
-      this.checkID();
-    }
 
     this.route.params
     .subscribe(
       (params: Params) => {
         this.exclusiveId = params['id'];
         this.isLoginMode = !this.exclusiveId;
-        if (this.exclusiveId) {
-          this.checkID();
-        }
       }
     );
-  }
-
-  checkID() {
-
-    this.authService.getExclusiveDetails(this.exclusiveId).pipe(takeUntil(this.notifier$)).subscribe(response => {
-      if (response) {
-        this.exclusiveDetails = response;
-        if (response.used <= 2) {
-          this.userNumber = response.used;
-          this.validID = true;
-        } else {
-          this.validID = false;
-          this.error = "This link can't be used anymore";
-        }
-      } else {
-        this.validID = false;
-        this.error = "Invalid link";
-      }
-    });
   }
 
   async onSubmit(form: NgForm) {
@@ -100,8 +64,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     if (!this.isForgetMode) {
       if (!this.isLoginMode) { //sign up
-
-        if (!this.validID) return this.errorMessage(this.error);
 
         if (!this.credential || this.credential.length === 0) return this.errorMessage("Email is required", 0);
 
@@ -115,20 +77,20 @@ export class AuthComponent implements OnInit, OnDestroy {
 
         if (this.username.length > 21) return this.errorMessage("Username can't be longer than 21 characters", 2);
 
-        const usernameRes = await this.userService.getProfileDetailsByKey('username', this.username).pipe(first()).toPromise();
+        const usernameRes = await this.userService.getCredential(this.username).pipe(first()).toPromise();
 
-        if (Object.keys(usernameRes).length != 0) return this.errorMessage("Username taken", 2);
+        if (usernameRes) return this.errorMessage("Username taken", 2);
 
       } else { //sign in
 
         if (!this.credential || this.credential.length === 0) return this.errorMessage("Email or username is required");
 
-        if (!this.validEmail(this.credential)) {
+        if (!this.validEmail(this.credential)) { //used username to sign in
           this.isLoading = true;
-          const usernameRes = await this.userService.getProfileDetailsByKey('username', this.credential).pipe(first()).toPromise();
-          if (usernameRes.length === 0) return this.errorMessage("Username does not exist");
-          signInEmail = usernameRes[0].email;
-        } else signInEmail = this.credential;
+          const usernameRes = await this.userService.getCredential(this.credential).pipe(first()).toPromise();
+          if (!usernameRes) return this.errorMessage("Username does not exist");
+          signInEmail = usernameRes.email;
+        } else signInEmail = this.credential; // used email to sign in
       }
 
       //both sign in and sign up
@@ -159,16 +121,29 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (!this.isLoginMode && !this.isForgetMode) {
       const uid = this.authService.user.value.id;
 
-      const profileDetails  = new ProfileDetails(this.username, '','', this.credential);
+      const credential = new Credential(uid, this.credential);
+      const profileDetails  = new ProfileDetails('','');
       const personalDetails = new PersonalDetails(this.name, new Date(), new Date());
       const displayPicture = new DisplayPicture(new Date(), 'null');
       const exclusiveObj = {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.credential};
 
-      const success: boolean = await this.authService.newUser(uid, profileDetails, personalDetails, displayPicture, this.exclusiveId, exclusiveObj);
-
+      const success: boolean = await this.authService.newUser(uid,
+                                                              this.username,
+                                                              credential,
+                                                              profileDetails,
+                                                              personalDetails,
+                                                              displayPicture,
+                                                              this.exclusiveId,
+                                                              exclusiveObj)
+                                                        .catch((e) => {
+                                                          console.log('error occurred while creating new user:', e);
+                                                          return false;
+                                                        });
+      console.log(success);
       if (!success) {
         this.miscellaneousService.setPopUp(new PopUp("An error occurred while creating your account. Please try again later",'okay', undefined, ['default', 'reject']));
         this.isLoading = false;
+        this.error = undefined;
         return await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
       }
     }

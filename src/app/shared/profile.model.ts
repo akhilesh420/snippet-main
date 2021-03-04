@@ -1,9 +1,14 @@
 export class ProfileDetails {
 
   constructor(
-    public username: string,
     public description: string,
     public link: string,
+  ) {}
+}
+
+export class Credential {
+  constructor(
+    public uid: string,
     public email: string
   ) {}
 }

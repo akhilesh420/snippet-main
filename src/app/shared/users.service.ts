@@ -1,6 +1,6 @@
 import { BehaviorSubject, throwError} from 'rxjs';
 import { catchError, first, take } from 'rxjs/operators';
-import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoarding } from './profile.model';
+import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoarding, Credential } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -55,10 +55,10 @@ export class UsersService {
     }
   }
 
-  // Get profile details from cloud firestore by key
+  // Get credential with key as username
   // Used by auth service for username verification
-  getProfileDetailsByKey(key: string, value: any) {
-      return this.afs.collection<ProfileDetails>('profile details', ref => ref.where(key,'==',value)).valueChanges();
+  getCredential(username: string) {
+      return this.afs.doc<Credential>('credential/' + username).valueChanges();
   }
 
   // Update profile details from cloud firestore

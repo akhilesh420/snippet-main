@@ -25,23 +25,44 @@ exports.deleteUser = functions.https.onCall(async (data, context) => {
 
   try {
     const uid = data.uid;
-    functions.logger.info(uid);
+    functions.logger.info('Deleting user with uid:', uid);
+
+    await admin
+    .auth()
+    .deleteUser(uid)
+    .then(() => {
+      functions.logger.info('Successfully deleted user');
+      return 'Successfully deleted user';
+    })
+    .catch((error) => {
+      functions.logger.info('Error deleting user:', error);
+      return 'Error deleting user:'+ error;
+    });
   } catch(e) {
     functions.logger.info(e);
   }
+});
 
+exports.createAdmin = functions.https.onCall(async (data, context) => {
 
-  await admin
-        .auth()
-        .deleteUser(uid)
-        .then(() => {
-          functions.logger.info('Successfully deleted user');
-          return 'Successfully deleted user';
-        })
-        .catch((error) => {
-          functions.logger.info('Error deleting user:', error);
-          return 'Error deleting user:'+ error;
-        });
+  try {
+    const uid = data.uid;
+    functions.logger.info('Creating admin with uid:', uid);
+
+    await admin
+    .auth()
+    .setCustomUserClaims(uid, {admin: true})
+    .then(() => {
+      functions.logger.info('Successfully created admin');
+      return { message: 'success'};
+    })
+    .catch((error) => {
+      functions.logger.info('Error creating admin:', error);
+      return  { message: 'Error creating admin:' + error};
+    });
+  } catch(e) {
+    functions.logger.info(e);
+  }
 });
 
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
