@@ -1,50 +1,71 @@
 <div class="postContainer" (click)='postView()' #post>
-  <!-- post content -->
-  <div *ngIf="(postContent$ | async) as content; else loading">
-    <img  class="post-content "
-          [src]='content'
-          alt="post content"
-          [ngClass]="{'opacity-out-details': !this.showDetails,
-                      'opacity-in-details': this.showDetails,
-                      'fit-cover': !fullscreenToggle,
-                      'fit-contain': fullscreenToggle}"
-          *ngIf='postType.includes("image")'>
-    <video class='post-content '
-           loop
-           playsinline
-           #videoPlayer
-           [src]='content'
-           [ngClass]="{'opacity-out-details': !this.showDetails,
-                      'opacity-in-details': this.showDetails,
-                      'fit-cover': !fullscreenToggle,
-                      'fit-contain': fullscreenToggle}"
-           *ngIf='postType.includes("video")'>
-    </video>
+ <!-- Top Title -->
+  <div class = "postTop" (click)="showDetails = !showDetails; videoToggle();">
+
+    <div class="postTitle inline float-left pointer">
+      {{postDetails.title}}
+    </div>
+
+    <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
+      <img src='assets/images/Post/postdetailDropdown.svg'>
+    </div>
+
   </div>
-  <!-- loading spinner -->
-  <ng-template #loading>
-      <app-loading-spinner class="center-absolute"></app-loading-spinner>
-  </ng-template>
+
+  <app-profile-tab [uid]='uid' [engagementProp]='engagementProp'></app-profile-tab>
 
   <!-- post details -->
   <div class="postDetails"
-      (click)="showComments ? showDetails = false : showDetails = !showDetails;
-              showComments = false;
-              holderToggle = false;
-              videoToggle();">
+      (click)="showDetails = !showDetails; videoToggle();">
+
+      <!-- post content -->
+      <div class='post-content-container' *ngIf="(postContent$ | async) as content; else loading">
+        <img  class="post-content "
+              [src]='content'
+              alt="post content"
+              [ngClass]="{'opacity-out-details': !this.showDetails,
+                          'opacity-in-details': this.showDetails,
+                          'fit-cover': !fullscreenToggle,
+                          'fit-contain': fullscreenToggle}"
+              *ngIf='postType.includes("image")'>
+        <video class='post-content '
+              loop
+              playsinline
+              #videoPlayer
+              [src]='content'
+              [ngClass]="{'opacity-out-details': !this.showDetails,
+                          'opacity-in-details': this.showDetails,
+                          'fit-cover': !fullscreenToggle,
+                          'fit-contain': fullscreenToggle}"
+              *ngIf='postType.includes("video")'>
+        </video>
+      </div>
+
+      <!-- loading spinner -->
+      <ng-template #loading>
+          <app-loading-spinner class="center-absolute"></app-loading-spinner>
+      </ng-template>
 
       <!-- Fail-safe button -->
       <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
         <img src = "assets/images/Post/failSafeButton.png">
       </div>
 
-      <div class="postTitle inline float-left pointer">
-          {{postDetails.title}}
+      <div class = "postSticker"
+          [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
+          style="cursor: pointer;"
+          (click)='collectSticker(); stopPropagation($event);'>
+
+        <!-- Loading animation -->
+
+        <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
+                          "confirm-ball": stickerCollectionState === 1,
+                          "reject-ball": stickerCollectionState === -1}'></div>
+
+        <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
       </div>
 
-      <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
-        <img src='assets/images/Post/postdetailDropdown.svg'>
-      </div>
+
 
       <div class = "postMetrics">
 
@@ -113,15 +134,12 @@
       </ng-template>
 
       <div class = "fade-in-top" *ngIf="showDetails === true">
+
         <div class="post-metrics float-left">
-
-
         </div>
 
         <div class = "descriptionSpace">
-
           <span class = "description">{{postDetails.description}}</span>
-
         </div>
 
         <!-- Holder List -->
@@ -151,7 +169,5 @@
       </div>
 
     </div>
-
-    <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
 
 </div>
