@@ -141,7 +141,7 @@ export class AuthComponent implements OnInit, OnDestroy {
                                                         });
       console.log(success);
       if (!success) {
-        this.miscellaneousService.setPopUp(new PopUp("An error occurred while creating your account. Please try again later",'okay', undefined, ['default', 'reject']));
+        this.miscellaneousService.setPopUp(new PopUp("An error occurred while creating your account. Please try again later",'Okay', undefined, ['default', 'reject']));
         this.isLoading = false;
         this.error = undefined;
         return await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();

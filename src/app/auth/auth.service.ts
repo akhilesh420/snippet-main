@@ -193,9 +193,9 @@ export class AuthService {
 
     //Alpha sticker collection
     const collection: Collection = new Collection(uid,
-      environment.onBoardingUid,
-      environment.onBoardingPid,
-      new Date().getTime());
+                                                  environment.onBoardingUid,
+                                                  environment.onBoardingPid,
+                                                  new Date().getTime());
 
     const cid = this.afs.createId();
 

@@ -1,10 +1,13 @@
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { BehaviorSubject, forkJoin, throwError } from 'rxjs';
 import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './post.model';
 
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
+import { MiscellaneousService, PopUp } from './miscellaneous.service';
+import { Collection } from './activity.model';
+import * as firebase from 'firebase';
 
 
 @Injectable({
@@ -14,17 +17,9 @@ export class PostService {
 
   placeholderImg = 'assets/default image/blank_image@2x.png';
 
-  private postDetailsCollection: any;
-  private postContentCollection: any;
-  private stickerDetailsCollection: any;
-  private stickerContentCollection: any;
-
   constructor(private afs: AngularFirestore,
-              private storage: AngularFireStorage) {
-    this.postDetailsCollection = afs.collection<PostDetails>('post details');
-    this.postContentCollection = afs.collection<PostContent>('post content');
-    this.stickerDetailsCollection = afs.collection<StickerDetails>('sticker details');
-    this.stickerContentCollection = afs.collection<PostContent>('sticker content');
+              private storage: AngularFireStorage,
+              private miscellaneousService: MiscellaneousService) {
    }
 
   //--------------------------------------- Post details ---------------------------------------
@@ -33,30 +28,13 @@ export class PostService {
     return this.afs.doc<PostDetails>('post details/' + pid).valueChanges();
   }
 
-  // Add post details from cloud firestore
-  addPostDetails(pid: string, details: PostDetails) {
-    const obj = {uid: details.uid, title: details.title, description: details.description, dateCreated: details.dateCreated};
-    this.postDetailsCollection.doc(pid).set(obj);
-  }
-
   //--------------------------------------- Stickers details ---------------------------------------
   // Get sticker details from cloud firestore by PID
   getStickerDetails(pid: string) {
     return this.afs.doc<StickerDetails>('sticker details/' + pid).valueChanges();
   }
 
-  // Add sticker details from cloud firestore
-  addStickerDetails(pid: string, details: StickerDetails) {
-    const obj = {amountReleased: details.amountReleased, price: details.price};
-    this.stickerDetailsCollection.doc(pid).set(obj);
-  }
-
   // --------------------------------------- Post content ---------------------------------------
-  // Add post content from cloud firestore
-  addPostContentRef(pid: string, contentRef: PostContent) {
-    const obj = {...contentRef}
-    this.postContentCollection.doc(pid).set(obj);
-  }
 
   // Get post content from firebase storage by UID
   getPostContent(pid: string) {
@@ -71,7 +49,7 @@ export class PostService {
   }
 
   // Add post content for post from firebase storage
-  addPostContent(pid: string, content: any, customMetadata: CustomMetadata) {
+  addPostContent(pid: string, content: File, customMetadata: CustomMetadata) {
     // Upload to storage
     const file = content;
     const filePath = 'posts/'+pid+'/original';
@@ -82,12 +60,6 @@ export class PostService {
   }
   // --------------------------------------- Sticker content ---------------------------------------
 
-  // Add sticker content from cloud firestore
-  addStickerContentRef(pid: string, contentRef: PostContent) {
-    const obj = {...contentRef}
-    this.stickerContentCollection.doc(pid).set(obj);
-  }
-
   // Get sticker content from firebase storage by UID
   getStickerContent(pid: string) {
     const ref = this.storage.ref('stickers/' + pid +'/small');
@@ -95,7 +67,7 @@ export class PostService {
   }
 
   // Add sticker content for post from firebase storage
-  addStickerContent(pid: string, content: any, customMetadata: CustomMetadata) {
+  addStickerContent(pid: string, content: File, customMetadata: CustomMetadata) {
     // Upload to storage
     const file = content;
     const filePath = 'stickers/'+pid+'/original';
@@ -105,7 +77,94 @@ export class PostService {
     return task.percentageChanges();
   }
 
+  // --------------------------------------- Create new post ---------------------------------------
 
+  async newPost(postFile: File,
+                postMeta: CustomMetadata,
+                stickerFile: File,
+                stickerMeta: CustomMetadata,
+                postDetails: PostDetails,
+                stickerDetails: StickerDetails) {
+
+    var success: boolean = true;
+    try {
+      let pid = this.afs.createId();
+
+      let postSubs =  this.addPostContent(pid, postFile, postMeta);
+      let stickerSubs = this.addStickerContent(pid, stickerFile, stickerMeta);
+
+      this.miscellaneousService.startLoading();
+
+      const subs = forkJoin([postSubs, stickerSubs]).subscribe(async results => {
+        if (results[0] != 100 && results[1] != 100) return;
+
+        const uid = postDetails.uid;
+        const batch = this.afs.firestore.batch();
+
+        const postDetailsDoc = this.afs.firestore.doc('post details/'+pid);
+        const postContentDoc = this.afs.firestore.doc('post content/'+pid);
+        const stickerDetailsDoc = this.afs.firestore.doc('sticker details/'+pid);
+        const stickerContentDoc = this.afs.firestore.doc('sticker content/'+pid);
+
+        const activityPrivateDoc = this.afs.firestore.doc('activity/'+uid+'/private/details');
+        const activityCollectedDoc = this.afs.firestore.doc('activity/'+uid+'/metrics/collected');
+        const activityViewsDoc = this.afs.firestore.doc('activity/'+uid+'/metrics/views');
+
+        const profileFeedDoc = this.afs.firestore.doc('feed/'+uid+'/posts/'+pid);
+        const exploreFeedDoc = this.afs.firestore.doc('feed/explore/global/'+pid);
+
+        // post
+        batch.set(postDetailsDoc, {...postDetails});
+        batch.set(postContentDoc, {...new PostContent(pid, postFile.type)});
+        batch.set(stickerDetailsDoc, {...stickerDetails});
+        batch.set(stickerContentDoc, {...new PostContent(pid, stickerFile.type)});
+        batch.set(postDetailsDoc, {...postDetails});
+
+        // activity
+        batch.set(activityPrivateDoc, {id: pid, type: 'post'});
+        batch.set(activityCollectedDoc, {counter: 0});
+        batch.set(activityViewsDoc, {counter: 0});
+
+        // feed
+        batch.set(profileFeedDoc, {dateCreated: postDetails.dateCreated})
+        batch.set(exploreFeedDoc, {dateCreated: postDetails.dateCreated})
+
+        //User sticker collection
+        const collection: Collection = new Collection(uid, uid, pid, postDetails.dateCreated.getTime());
+
+        const cid = this.afs.createId();
+
+        //Add collection
+        batch.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+
+        //Add holder and user collection
+        const collectionObj = {cid: cid, timeStamp: collection.timeStamp };
+
+        batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
+        batch.set(this.afs.firestore.doc('holder list/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+
+        //Update Activity
+        batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
+                      {counter: firebase.default.firestore.FieldValue.increment(1),
+                        cid: cid}); //user
+        batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
+                      {counter: firebase.default.firestore.FieldValue.increment(1),
+                        cid: cid}); //post
+
+        await batch.commit()
+                    .then(() => subs.unsubscribe())
+                    .catch(async (e) => {
+                      success =  false;
+                    });
+      });
+    } catch (e) {
+      console.log('Post creation failed:', e);
+      success =  false;
+    }
+    this.miscellaneousService.endLoading();
+    if (!success) this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",'Okey', undefined, ['default', 'reject']));
+    return success;
+  }
 
   // --------------------------------------- Error handling ---------------------------------------
   handleError(error) {

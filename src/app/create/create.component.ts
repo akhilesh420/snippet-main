@@ -252,7 +252,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
 
       const dimensions = await this.miscellaneousService.getDimension(this.stickerContent, this.stickerContent.type);
-      this.contentMetadata = new CustomMetadata(dimensions.width, dimensions.height, this.uid);
+      this.stickerMetadata = new CustomMetadata(dimensions.width, dimensions.height, this.uid);
 
       if (!Number.isInteger(this.amount)) {
         this.error = "Number of stickers must be whole numbers!";
@@ -293,36 +293,18 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   createPost() {
     this.isCreating = true;
-    let pid = this.afs.createId();
     let dateCreated = new Date();
 
-    let postSubs =  this.postService.addPostContent(pid,this.storageFile, this.contentMetadata);
-    let stickerSubs = this.postService.addStickerContent(pid,this.stickerContent, this.stickerMetadata);
-
-    this.miscellaneousService.endOnBoarding(this.uid); //end on boarding for local machine
-    this.miscellaneousService.startLoading();
-    forkJoin([postSubs, stickerSubs]).subscribe(results => {
-      if (results[0] === 100 && results[1] === 100) {
-        this.miscellaneousService.endLoading();
-        this.miscellaneousService.updateOnBoarding(this.uid); //end on boarding on server
-
-        this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
-        this.postService.addPostContentRef(pid, new PostContent(pid, this.storageFile.type));
-        this.postService.addStickerContentRef(pid, new PostContent(pid, this.stickerContent.type));
-        this.postService.addStickerDetails(pid, new StickerDetails(this.amount, 0));
-
-        this.activityService.addActivity(pid, 'post');
-        this.activityService.addCollection(new Collection(this.uid,this.uid,pid,dateCreated.getTime())); //add your own collection
-      }
-    }, error => {
-      this.miscellaneousService.endLoading();
-    });
+    this.postService.newPost(this.storageFile,
+                            this.contentMetadata,
+                            this.stickerContent,
+                            this.stickerMetadata,
+                            new PostDetails(this.uid,this.title, this.desc, dateCreated),
+                            new StickerDetails(this.amount, 0));
 
     this.miscellaneousService.setPopUp(new PopUp("You are all set! Feel free to explore but please don't close the tab while your post is being processed",'Explore', undefined, ['default', 'reject']));
-    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-      this.router.navigate(['/explore']);
-      this.isCreating = false;
-    });
+    this.router.navigate(['/explore']);
+    this.isCreating = false;
   }
 
   previousClick() {
