@@ -94,11 +94,11 @@
 
             </div>
 
-        </div>
+        <!-- </div>
 
 
 
-    </div>
+    </div> -->
 
     <!-- <div class = "postSticker"
         [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
@@ -114,7 +114,7 @@
       <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
     </div> -->
 
-</div> -->
+<!-- </div>  -->
 
 <div class="profileTab">
 
@@ -127,10 +127,10 @@
 
     <p *ngIf='profileDetails$ | async as details'
     style="cursor: pointer;"
-    [routerLink]='profileRoute'> 
-    
+    [routerLink]='profileRoute'>
+
     {{details.username}}
-    
+
     </p>
 
   </div>
@@ -150,6 +150,6 @@
   <div class="displaySticker-5"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
     <app-sticker *ngIf='profileStickers[4] != null' [pid]="profileStickers[4].pid"></app-sticker></div>
 
-  
+
 
 </div>

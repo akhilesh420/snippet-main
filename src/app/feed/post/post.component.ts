@@ -1,6 +1,5 @@
 import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
-import { AuthService } from './../../auth/auth.service';
 import { Subject,Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { PostService } from './../../shared/post.service';
 import { PostDetails, StickerDetails} from './../../shared/post.model';

@@ -13,6 +13,7 @@ import { ProfileDetails, ProfileSticker } from '../shared/profile.model';
 export class ProfileTabComponent implements OnInit {
 
   @Input() uid: string;
+  @Input() pid: string;
   @Input() engagementProp: any;
 
   notifier$ = new Subject();

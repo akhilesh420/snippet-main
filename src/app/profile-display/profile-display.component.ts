@@ -145,7 +145,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
     this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
       if (!details) return;
-      this.username = details.username;
+      // this.username = details.username;
       this.description = details.description;
       this.link = details.link;
 
