@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   { path: 'post/:id', component: FeedComponent},
   { path: 'auth', component: AuthComponent},
   { path: 'auth/:id', component: AuthComponent},
-  // { path: 'tutorial', component: TutorialPageComponent},
+  { path: 'tutorial', component: TutorialPageComponent},
   {path: '404', redirectTo: '/explore'},
   {path: '**', redirectTo: '/explore'}
 ];
