@@ -1,4 +1,4 @@
-<div class = "profileTab">
+<!-- <div class = "profileTab">
 
     <div class = "backpanel row no-margin-no-padding">
 
@@ -113,5 +113,43 @@
 
       <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
     </div> -->
+
+</div> -->
+
+<div class="profileTab">
+
+  <div class="profilePicture">
+
+
+  </div>
+
+  <div class = "username">
+
+    <p *ngIf='profileDetails$ | async as details'
+    style="cursor: pointer;"
+    [routerLink]='profileRoute'> 
+    
+    {{details.username}}
+    
+    </p>
+
+  </div>
+
+  <div class="displaySticker-1" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers[0] != null' [pid]="profileStickers[0].pid"></app-sticker></div>
+
+  <div class="displaySticker-2"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers[1] != null' [pid]="profileStickers[1].pid"></app-sticker></div>
+
+  <div class="displaySticker-3" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers[2] != null' [pid]="profileStickers[2].pid"></app-sticker></div>
+
+  <div class="displaySticker-4"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers[3] != null' [pid]="profileStickers[3].pid"></app-sticker></div>
+
+  <div class="displaySticker-5"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers[4] != null' [pid]="profileStickers[4].pid"></app-sticker></div>
+
+  
 
 </div>

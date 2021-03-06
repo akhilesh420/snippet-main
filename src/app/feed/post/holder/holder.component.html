@@ -1,31 +1,36 @@
-<!-- <div class="row master">
-  <div class="col" style="padding: 0" #usernameCol>
-    <span class="float-left username"
-          #usernameRef
-          [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}"
-          (click)="navigate()">
-      {{username}}
-    </span>
-  </div>
-   profile stickers
-   <div class="col" style="padding: 0px">
-      <div class="row" style="width: 100%" *ngIf="profileStickers$ | async as stickers">
-        <div class="col"
-          *ngFor="let i of getEmptySlots(stickers)"
-          style="padding: 0px;"
-          [ngStyle]="{'width': stickerSize, 'height': stickerSize}">
-        </div>
-        <div class="col"
-          *ngFor="let sticker of stickers"
-          style="padding: 0px;"
-          [ngStyle]="{'width': stickerSize, 'height': stickerSize}">
-          <app-sticker [pid]="sticker.pid"></app-sticker>
-        </div>
-    </div>
-  </div>
-</div> -->
+<div class="profileTab">
 
-<div class = "backpanel row no-margin-no-padding">
+  <div class="profilePicture">
+
+
+  </div>
+
+  <div class = "username">
+
+    <p>Name of the user</p>
+
+  </div>
+
+  <div class="displaySticker-1"></div>
+
+  <div class="displaySticker-2"></div>
+
+  <div class="displaySticker-3"></div>
+
+  <div class="displaySticker-4"></div>
+
+  <div class="displaySticker-5"></div>
+
+  
+
+</div>
+
+
+
+
+
+
+<!-- <div class = "backpanel row no-margin-no-padding">
 
     <div class = "col-2 no-margin-no-padding">
 
@@ -113,7 +118,9 @@
 
     </div>
 
-</div>
+</div> -->
+
+
 
 
 

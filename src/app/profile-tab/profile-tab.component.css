@@ -10,247 +10,153 @@
 
 /* Single Object classes */
 
-
 .profileTab {
-  position: absolute;
-  top: 5%;
-  left: 0;
-  height: 10%;
+  height: calc(70px * var(--norm-height));
   width: 100%;
-}
-
-.backpanel {
-  height: 100%;
-  width: 100%;
-}
-
-.engagementBar {
-  height: 8%;
-  width: 100%;
-  position: absolute;
-  bottom: 0%;
-}
-
-.engagement {
-  height: 100%;
-}
-
-.dpContainer {
-
-  height: 75%;
-  background-color: #c4c4c4;
-  border-radius: 50%;
-  position: absolute;
-  top: 2%;
-  left: 2.5%;
-  overflow: hidden;;
-  -o-object-fit: cover;
-   object-fit: cover;
-}
-
-.dpContainer > img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-
-.profileDetails {
-  width: 100%;
-  height: 88.3721%;
-}
-
-
-/* .usernameSpace {
-  height: 100%;
-  font-family: 'Comfortaa';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 1.755vh;
-  line-height: 0px;
-  letter-spacing: 0.05em;
-  color: #FFFFFF;
-  text-align: left;
+  min-height: 70px;
   position: relative;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
+
+}
+
+.profilePicture {
+  height: calc(68px * var(--norm-height));
+  width: calc(68px * var(--norm-height));
+  min-width: 60px;
+  min-height: 60px;
+  background-color: #c4c4c4;
+  margin-left: calc(10px * var(--norm-width));
+  border-radius: 50%;
+  display: inline-block;
 }
 
 .username {
-  margin: 0;
-  position: absolute;
-  top: 54%;
-  left: 2.5%;
-} */
-
-.usernameSpace {
-  position: absolute;
-  top: 2%;
-  left: 17%;
-  width: 75%;
-  overflow: hidden;
-}
-
-.username {
+  width: 80%;
+  height: calc(17px * var(--norm-height));
+  padding-left: 4px;
+  padding-top: 8px;
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: bold;
-  font-size: 75%;
-  line-height: 0px;
+  font-size: calc(16px * var(--norm-height));
+  line-height: calc(16px * var(--norm-width));
   letter-spacing: 0.05em;
   color: #FFFFFF;
-  padding-left: 1%;
-
+  display: inline-block;
+  vertical-align: top;
 }
 
-
-.profileStickers {
-  height: 100%;
-}
-
-.sticker-bck {
-background-color: #c4c4c4;
-}
-
-.sticker {
-
-  width: 6.5%;
-  border-radius: 50%;
+.displaySticker-1 {
   position: absolute;
-  bottom: 22.5%;
-  right: 2%;
-  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-
-}
-
-.sticker-1 {
-
-  width: 6.5%;
+  height: calc(30px * var(--norm-width));
+  width: calc(30px * var(--norm-width));
+  min-height: 30px;
+  min-width: 30px;
   border-radius: 50%;
-  position: absolute;
-  bottom: 22.5%;
-  right: 10.5%;
-  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
+  background-color: #FFFFFF;
+  top: calc(34px * var(--norm-height));
+  right: 10px;
 
 }
 
-.sticker-2 {
-
-  width: 6.5%;
+.displaySticker-2 {
+  position: absolute;
+  height: calc(30px * var(--norm-width));
+  width: calc(30px * var(--norm-width));
+  min-height: 30px;
+  min-width: 30px;
   border-radius: 50%;
-  position: absolute;
-  bottom: 22.5%;
-  right: 19.5%;
-  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-
+  background-color: #FFFFFF;
+  top: calc(34px * var(--norm-height));
+  right: 50px;
 }
 
-.sticker-3 {
-
-  width: 6.5%;
+.displaySticker-3 {
+  position: absolute;
+  height: calc(30px * var(--norm-width));
+  width: calc(30px * var(--norm-width));
+  min-height: 30px;
+  min-width: 30px;
   border-radius: 50%;
-  position: absolute;
-  bottom: 22.5%;
-  right: 28.5%;
-  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-
+  background-color: #FFFFFF;
+  top: calc(34px * var(--norm-height));
+  right: 90px;
 }
 
-.sticker-4 {
-
-  width: 6.5%;
+.displaySticker-4 {
+  position: absolute;
+  height: calc(30px * var(--norm-width));
+  width: calc(30px * var(--norm-width));
+  min-height: 30px;
+  min-width: 30px;
   border-radius: 50%;
-  position: absolute;
-  bottom: 22.5%;
-  right: 37.5%;
-  -webkit-filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-          filter: drop-shadow(1px 4px 6px rgba(0, 0, 0, 0.35));
-
+  background-color: #FFFFFF;
+  top: calc(34px * var(--norm-height));
+  right: 130px;
 }
 
-.postSticker {
+.displaySticker-5 {
   position: absolute;
-  height: 8.4vh;
-  width: 8.4vh;
+  height: calc(30px * var(--norm-width));
+  width: calc(30px * var(--norm-width));
+  min-height: 30px;
+  min-width: 30px;
   border-radius: 50%;
-  right: 1.8%;
-  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-  top: 87%;
-  -webkit-box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-          box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-
+  background-color: #FFFFFF;
+  top: calc(34px * var(--norm-height));
+  right: 170px;
 }
 
-.postSticker-bck {
-background-color: #c4c4c4;
-}
 
-.postSticker > IMG {
-height: 100%;
-width: 100%;
--o-object-fit: cover;
-   object-fit: cover;
-border-radius: 50%;
-}
 
-@media only screen and (max-width: 550px) {
 
-  .profileTab {
-      height: 8%;
-  }
 
-  .postSticker {
-      height: 10.4947vh;
-      width: 10.4947vh;
-      top: -160%;
+@media only screen and (max-height: 900px) {
+
+  .profilePicture {
+    max-width: 65px;
+    max-height: 65px;
   }
 
   .username {
-      top: 50%;
+    font-size: 14px;
+    line-height: 16px;
+    width: 296px;
+    height: 17px;
   }
 
-  .usernameSpace {
-      font-size: 2vh;
+  .profilePicture {
+    left: 10px;
+
   }
 
-  /* .sticker {
-      height: 3.4vh;
-      width: 3.4vh;
-      top: 20%;
+  .displaySticker-1 {
+    top: 28px;
+    right: 10px;
   }
 
-  .sticker-1 {
-      height: 3.4vh;
-      width: 3.4vh;
-      top: 20%;
+  .displaySticker-2 {
+    top: 28px;
+    right: 50px;
   }
 
-  .sticker-2 {
-      height: 3.4vh;
-      width: 3.4vh;
-      top: 20%;
+  .displaySticker-3 {
+    top: 28px;
+    right: 90px;
   }
 
-
-  .sticker-3 {
-      height: 3.4vh;
-      width: 3.4vh;
-      top: 20%;
+  .displaySticker-4 {
+    top: 28px;
+    right: 130px;
   }
 
-  .sticker-4 {
-      height: 3.4vh;
-      width: 3.4vh;
-      top: 20%;
-  } */
+  .displaySticker-5 {
+    top: 28px;
+    right: 170px;
+  }
+
 
 }
+
 
 /* Animations */
 

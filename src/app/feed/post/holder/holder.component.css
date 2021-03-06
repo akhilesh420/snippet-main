@@ -1,285 +1,156 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
+
+/* Classes for multiple objects */
 
 .no-margin-no-padding {
-
-  margin: 0%;
-  padding: 0%;
-
-}
-
-.backpanel {
-
-  width: 100%;
-  height: 100%;
-
-}
-
-
-.dpHolder {
-
-  position: absolute;
-  left: -8%;
-  height: 90%;
-  width: 80%;
-  margin-top: 5%;
-
-}
-
-.dpContainer {
-
-  position: relative;
-  border-radius: 50%;
-  width: 6vh;
-  height: 6vh;
-  -webkit-box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-          box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-
-}
-
-.dp-no-bck {
-  background: transparent;
-}
-
-.dp {
-  width: 100%;
-  height: 100%;
   margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  -o-object-fit: cover;
-     object-fit: cover;
+  padding: 0;
+}
+
+
+/* Single Object classes */
+
+.profileTab {
+  height: calc(50px * var(--norm-height));
+  width: 100%;
+  min-height: 70px;
+  position: relative;
+
+}
+
+.profilePicture {
+  height: calc(48px * var(--norm-height));
+  width: calc(48px * var(--norm-height));
+  min-width: 48px;
+  min-height: 48px;
+  background-color: #c4c4c4;
+  margin-left: calc(4px * var(--norm-width));
   border-radius: 50%;
-  -webkit-box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-          box-shadow: inset 0 0 0 1px rgba(15, 28, 63, 0.25);
-}
-
-.holderDetails {
-  height: 100%;
-  width: 100%;
-  top: 14%;
-}
-
-.detailsTop {
-  width: 100%;
-  height: 40%;
-}
-
-.detailsBottom {
-  width: 100%;
-  height: 60%;
-}
-
-.usernameSpace {
-
-  width: 100%;
-  height: 100%;
-  font-size: 1.6vh;
-  font-family: 'Comfortaa';
-  font-weight: bold;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
-  overflow: hidden;
-
+  display: inline-block;
 }
 
 .username {
-
-  text-align: left;
-  position: absolute;
-  top: 0%;
-  letter-spacing: 0.15em;
-  line-height: 2.5vh;
-
-}
-
-
-.collectionDate {
-
-  width: 100%;
-  height: 100%;
-  font-size: 1.3vh;
+  width: 80%;
+  height: calc(14px * var(--norm-height));
+  padding-left: 2px;
+  padding-top: 5px;
   font-family: 'Comfortaa';
-
+  font-style: normal;
+  font-weight: bold;
+  font-size: calc(14px * var(--norm-height));
+  line-height: calc(14px * var(--norm-width));
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  display: inline-block;
+  vertical-align: top;
 }
 
-.dateCollected {
-
-  right: 0%;
+.displaySticker-1 {
   position: absolute;
-  top: 0%;
-
-}
-
-.stickerHolder {
-
-  height: 3vh;
-  width: 3vh;
-  position: absolute;
-  right: 0%;
-  top: 2.4vh;
-
-}
-
-/* .sticker {
-
-  position: relative;
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
   border-radius: 50%;
-  width: 100%;
-  height: auto;
-  padding-top: 100%;
-  background: white;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 10px;
 
-} */
+}
 
-.stickerHolder-1 {
-
-  height: 3vh;
-  width: 3vh;
+.displaySticker-2 {
   position: absolute;
-  right: 12%;
-  top: 2.4vh;
-
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 50px;
 }
 
-.stickerHolder-2 {
-
-  height: 3vh;
-  width: 3vh;
+.displaySticker-3 {
   position: absolute;
-  right: 24%;
-  top: 2.4vh;
-
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 90px;
 }
 
-.stickerHolder-3 {
-
-  height: 3vh;
-  width: 3vh;
+.displaySticker-4 {
   position: absolute;
-  right: 36%;
-  top: 2.4vh;
-
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 130px;
 }
 
-.stickerHolder-4 {
-
-  height: 3vh;
-  width: 3vh;
+.displaySticker-5 {
   position: absolute;
-  right: 48%;
-  top: 2.4vh;
-
+  height: calc(25px * var(--norm-width));
+  width: calc(25px * var(--norm-width));
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  top: calc(26px * var(--norm-height));
+  right: 170px;
 }
 
 
 
-@media screen and (max-width: 550px) {
 
-.dpHolder {
-  left: -4%;
-}
 
-.dpContainer {
-  width: 7.2vh;
-  height: 7.2vh;
-}
+@media only screen and (max-height: 900px) {
 
-.collectionDate {
-  font-size: 1.4vh;
-}
-
-.usernameSpace {
-  font-size: 1.7vh;
-}
-
-.stickerHolder {
-
-  height: 3.4vh;
-  width: 3.4vh;
-  top: 2.5vh;
-
-}
-
-.stickerHolder-1 {
-
-  height: 3.4vh;
-  width: 3.4vh;
-  top: 2.5vh;
-
-}
-
-.stickerHolder-2 {
-
-  height: 3.4vh;
-  width: 3.4vh;
-  top: 2.5vh;
-
-}
-
-.stickerHolder-3 {
-
-  height: 3.4vh;
-  width: 3.4vh;
-  top: 2.5vh;
-
-}
-
-.stickerHolder-4 {
-
-  height: 3.4vh;
-  width: 3.4vh;
-  top: 2.5vh;
-
-}
-
-.holderDetails {
-  top: 18%;
-}
-
-}
-
-@media screen and (max-width: 375px) {
-
-  .usernameSpace {
-    padding-left: 2%;
+  .username {
+    font-size: 12px;
+    line-height: 16px;
   }
+
+  .profilePicture {
+    left: 10px;
+
+  }
+
+  .displaySticker-1 {
+    top: 24px;
+    right: 10px;
+  }
+
+  .displaySticker-2 {
+    top: 24px;
+    right: 50px;
+  }
+
+  .displaySticker-3 {
+    top: 24px;
+    right: 90px;
+  }
+
+  .displaySticker-4 {
+    top: 24px;
+    right: 130px;
+  }
+
+  .displaySticker-5 {
+    top: 24px;
+    right: 170px;
+  }
+
+
 }
 
 
 
-
-
-
-
-
-/* .username {
-  font-size: 2.5vh;
-  color: #F7F7F7;
-  letter-spacing: 0.16em;
-  position: absolute;
-  top: 50%;
-  left: 0%;
-  -webkit-transform: translate(0%,-50%);
-      -ms-transform: translate(0%,-50%);
-          transform: translate(0%,-50%);
-  cursor: pointer;
-}
-
-.master {
-  padding:0;
-  width: 100%;
-  margin-top: 5px;
-  margin-bottom: 10px;
-} */
 
 
 

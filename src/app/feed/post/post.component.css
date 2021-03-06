@@ -1,9 +1,5 @@
-.post-content-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+p {
+  margin-bottom: 4%;
 }
 
 .no-margin-no-padding {
@@ -11,89 +7,12 @@
   padding: 0%;
 }
 
-.postTop {
-  position: absolute;
-  top: 0%;
+
+.titleTop {
+  height: auto;
   width: 100%;
-  height: 5%;
+  min-height: 38px;
 }
-
-.descriptionSpace {
-  height: 15%;
-  width: 100%;
-  margin-top: 2%;
-  -webkit-animation: none;
-          animation: none;
-  overflow-wrap: break-word;
-}
-
-.description {
-  font: 'ChampagneAndLimousines';
-  font-size: 1.9vh;
-  font-weight: bold;
-  position: absolute;
-  left: 4%;
-  -webkit-animation: none;
-          animation: none;
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
-
-
-li {
-  list-style: none;
-  height: 17.24%;
-  width: 100%;
-  margin-bottom: 8.2%;
-}
-
-.holderList {
-  width: 95%;
-  height: 60%;
-  margin-top: 3%;
-  margin-left: 2.5%;
-}
-
-.holderListTitle {
-  width: 100%;
-  height: 11%;
-  background: #0B0B0B;
-  border-bottom: 1px solid #000000;
-  border-radius: 16px 16px 0px 0px;
-  display: -ms-grid;
-  display: grid;
-  place-items: center;
-}
-
-.holderTitle {
-  font-size: 1.6vh;
-  letter-spacing: 0.1em;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-
-}
-
-.holderListScrollSpace {
-  height: 89.62%;
-  background: rgba(11, 11, 11, 0.98);
-  -webkit-backdrop-filter: blur(30px);
-          backdrop-filter: blur(30px);
-  border-radius: 0px 0px 16px 16px;
-  -webkit-box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
-          box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-.listScrollSpace {
-  height: 100%;
-  width: 100%;
-  padding-left: 2.8%;
-  padding-right: 2.8%;
-  padding-top: 1.98%;
-  padding-bottom: 1.98%;
-}
-
 
 .postContainer {
   width: 100%;
@@ -104,50 +23,84 @@ li {
   margin-bottom: 0px;
 }
 
-.post-content {
-  margin: 0 0;
-  /* position: absolute;
-  bottom: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%); */
+.postContent {
   width: 100%;
-  height: 100%;
+  min-height: calc(400px * var(--norm-height));
+  max-height: calc(850px * var(--norm-height));
+  background-color: #C4C4C4;
+  position: relative;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
-.fit-cover {
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-.fit-contain {
-  -o-object-fit: contain;
-  object-fit: contain;
-}
-
-.hide {
-  display: none;
-}
-
-.postDetails {
-  width: 100%;
-  height: 85%;
-  position: absolute;
-  top: 15%;
-  left: 0px;
+.postTitle {
+  width: 90%;
+  padding-left: calc(11px * var(--norm-width));
+  padding-top: calc(10px * var(--norm-height));
   font-family: 'ChampagneAndLimousines';
-  font-size: 12px;
+  font-style: normal;
   font-weight: bold;
-  color: #FFFFFF;
-  letter-spacing: 0.1em;
+  font-size: calc(20px * var(--norm-height));
+  line-height: calc(23px * var(--norm-height));
+  color: rgba(255, 255, 255, 0.9);
+  word-wrap: break-word;
 }
+
+.dropdownButton {
+
+  position: absolute;
+  width: calc(20.95px * var(--norm-width));
+  height: calc(21.99px * var(--norm-height));
+  right: calc(5px * var(--norm-width));
+  top: calc(6.8px * var(--norm-height));
+
+}
+
+.postSticker {
+  position: absolute;
+  bottom: calc(10px * var(--norm-height));
+  right: calc(10px * var(--norm-height));
+  height: calc(75px * var(--norm-width));
+  width: calc(75px * var(--norm-width));
+  min-width: 70px;
+  min-height: 70px;
+  border-radius: 50%;
+  background-color: #0b0b0b;
+}
+
+.engagementBar {
+  position: absolute;
+  top: 0px;
+  height: 10px;
+  width: 80%;
+  background-color: #E2B33D;
+  border-top-left-radius: 10px;
+  overflow: hidden;
+}
+
+.postDescription {
+  height: 25%;
+  width: 95%;
+  padding-left: 2.5%;
+  padding-top: calc(14px * var(--norm-height));
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: calc(16px * var(--norm-height));
+  line-height: calc(20px * var(--norm-height));
+  color: rgba(255, 255, 255, 0.9);
+  word-wrap: break-word;
+}
+
+
 
 .postMetrics {
 
   height: 4.8vh;
   width: 10vh;
-  top: 92.5%;
+  bottom: calc(6px * var(--norm-height));
   position: absolute;
   left: 1%;
 
@@ -174,89 +127,119 @@ li {
   width: 100%;
   font-size: 1.4vh;
   text-align: center;
-
-}
-
-.postTitle{
-  font-size: 2.4vh;
-  font-weight: 700;
+  padding-top: 1%;
   font-family: 'ChampagneAndLimousines';
-  letter-spacing: 0em;
-  text-align: left;
-  line-height: normal;
-  color: #FFFFFF;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
-  width: calc(100% - 20px);
-  margin-left: 4%;
+  color: #ffffff;
+
 }
 
-.pointer {
-  cursor: pointer;
+.holderList {
+  width: 90%;
+  min-width: 346px;
+  height: 70%;
+  background-color: #0b0b0b;
+  margin-left: 5%;
+  border-radius: 10px;
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+
 }
 
-.showDetails {
-  top: -58%;
-  height: 2vh;
-  width: 20px;
-  position: relative;
-  right: 2%
+.holderlistTitle {
+
+  height: 20px;
+  font-size: calc(16px * var(--norm-height));
+  font-family: 'Comfortaa';
+  font-weight: bold;
+  color: #E2B33D;
+  padding-left: 12px;
+  padding-bottom: 25px;
+  padding-top: 5px;
+  line-height: calc(24px * var(--norm-height));
+
+
 }
 
-.showDetails > img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
+.holderSpace {
+
+  padding-top: 20px;
+  margin:0%;
+  padding: 0%;
+  overflow-y: scroll;
   width: 100%;
   height: 100%;
+
+
+}
+
+li {
+  list-style: none;
+  height: 60px;
+  width: 98%;
+  margin-left: 1%;
 }
 
 
-.height-auto {
-  height: auto;
+
+
+
+
+
+
+@media only screen and (max-height: 900px) {
+
+  .postTitle {
+    padding-left: 11px;
+    padding-top: 10px;
+    line-height: 18px;
+    font-size: 17px;
+  }
+
+  .dropdownButton {
+    width: 17px;
+    height: 18px;
+    top: 6px;
+    right: 5px;
+  }
+
+  .engagementBar {
+    height: 10px;
+  }
+
+  .holderlistTitle {
+    font-size: 14px;
+  }
+
+  .postDescription {
+    font-size: 12px;
+  }
 }
 
+@media only screen and (max-width:550px) {
 
-.center-absolute {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
-}
+  .titleTop {
+    min-height: 28px;
+  }
 
-.textFontSize {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0em;
-}
+  .holderList {
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+  }
 
-.fail-safe {
-  width: 30%;
-  height: auto;
-  cursor:pointer;
-}
+  .engagementBar {
+    border-top-left-radius: 0px;
+    height: 6px;
+  }
 
-.fail-safe > img {
-  width: 100%;
-  height: auto;
-}
+  .postContent {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    min-height: calc((100vh * (3 / 5)) - 54px);
+    max-height: calc(100vh - 54px);
+  }
 
-.fullscreenButton {
-  position: absolute;
-  bottom: 16%;
-  right: calc(1.8% + 4.2vh);
-  height: 2.8vh;
-  width: auto;
-  -webkit-transform: translate(50%, 0%);
-      -ms-transform: translate(50%, 0%);
-          transform: translate(50%, 0%);
 }
 
 .postSticker {
@@ -622,47 +605,6 @@ background-color: #c4c4c4;
   100% {
     opacity: 1;
   }
-}
-
-@media screen and (max-width: 550px) {
-
-  .postContainer {
-    border: none;
-    border-radius: unset;
-  }
-
-
-  .postDetails {
-    padding: 4.8vh 4vw 15% 4vw;
-  }
-
-  .postTitle {
-    font-size: 2.8vh;
-  }
-
-  .description {
-    font-size: 2.2vh;
-  }
-
-  .postMetrics {
-
-    top: 85.4%;
-
-  }
-
-  .holderTitle {
-    font-size: 2vh;
-  }
-
-  .fullscreenButton {
-
-    bottom: 24%;
-    right: calc(1.8% + 5.24735vh);
-    height: 3.6vh;
-
-  }
-
-
 }
 
 
