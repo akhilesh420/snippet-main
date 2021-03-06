@@ -4,7 +4,7 @@ import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
-import { PostDetails } from './../shared/post.model';
+import { Feed, PostDetails } from './../shared/post.model';
 import { take, takeUntil } from 'rxjs/operators';
 import { FeedService } from './feed.service';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
@@ -17,12 +17,12 @@ import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 export class FeedComponent implements OnInit, OnDestroy {
 
-  postsList$: Observable<PostDetails[]> | BehaviorSubject<PostDetails[]>;
+  pidList$: Observable<Feed[]>;
 
-  feedList$: BehaviorSubject<PostDetails[]>;
+  feedList$: BehaviorSubject<Feed[]>;
   notifier$ = new Subject();
 
-  postsList: PostDetails[];
+  postsList: Feed[];
 
   batch: number = 0;
   maxBatch: number = 0;
@@ -58,8 +58,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    const emptyPost = new PostDetails(null, "","",new Date(), null);
-    this.feedList$ = new BehaviorSubject<PostDetails[]>([emptyPost]);
+    const emptyPost = new Feed('', '', new Date());
+    this.feedList$ = new BehaviorSubject<Feed[]>([emptyPost]);
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -114,24 +114,24 @@ export class FeedComponent implements OnInit, OnDestroy {
         this.uid = uid;
         setTimeout(() => this.uid$.next(uid), 100);
       });
-      this.postsList$ = this.feedService.getExplorePage();
+      this.pidList$ = this.feedService.getExplorePage();
     } else if (currentRoute === 'collection') {
       this.uid = this.route.snapshot.params['id']
       this.uid$.next(this.uid);
-      this.postsList$ = this.feedService.getCollectionPage(this.uid);
+      this.pidList$ = this.feedService.getCollectionPage(this.uid);
       if (this.tabletCheck) this.showProfileDisplay = true;
       this.showProfileNavigation = true;
     } else if (currentRoute === 'profile') {
       this.uid = this.route.snapshot.params['id']
       this.uid$.next(this.uid);
-      this.postsList$ = this.feedService.getProfilePage(this.uid);
+      this.pidList$ = this.feedService.getProfilePage(this.uid);
       if (this.tabletCheck) this.showProfileDisplay = true;
       if (this.uid === this.myUid) this.showProfileNavigation = true;
     } else if (currentRoute === 'post') {
       const pid = this.route.snapshot.params['id'];
-      this.postsList$ = this.feedService.getPostPage(pid);
-      this.postsList$.pipe(take(1)).subscribe(res => {
-        this.uid = res[0].uid;
+      this.pidList$ = this.feedService.getPostPage(pid);
+      this.pidList$.pipe(take(1)).subscribe(res => {
+        this.uid = res[0].creatorID;
         this.uid$.next(this.uid);
       });
       if (this.tabletCheck) this.showProfileDisplay = true;
@@ -141,7 +141,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   setUpPosts() {
-    this.postsList$.pipe(takeUntil(this.notifier$)).subscribe(response => {
+    this.pidList$.pipe(take(1)).subscribe(response => {
+      console.log(response);
       if (!response) return this.done = true;
 
       this.done = false;

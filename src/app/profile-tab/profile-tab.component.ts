@@ -35,22 +35,6 @@ export class ProfileTabComponent implements OnInit {
       this.profileStickers = response;
       this.profileStickersLoaded = true;
     });
-<<<<<<< HEAD
-    this.stickerContent$ = this.postService.getStickerContent(this.pid);
-    // post collection list
-    this.activityService.getPostCollection(this.pid).subscribe(response => {
-      this.postCollection = response;
-      this.collectionLoaded.next(true);
-    });
-  }
-
-  setUpActivity() {
-    // this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-    //   this.activity = response[0];
-    //   this.setUpEngagement();
-    // });
-=======
->>>>>>> remotes/origin/f-006
   }
 
   ngOnDestroy() {

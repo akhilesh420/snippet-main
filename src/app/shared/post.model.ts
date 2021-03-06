@@ -51,3 +51,12 @@ export class CustomMetadata {
     public uid: string
   ) {}
 }
+
+export class Feed {
+
+  constructor(
+    public pid: string,
+    public creatorID: string,
+    public dateCreated: Date
+  ) {}
+}
