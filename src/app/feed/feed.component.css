@@ -19,7 +19,7 @@
 .post-container {
   height: auto;
   width: calc(440px * var(--norm-width));
-  max-width: 440px;
+  max-width: 420px;
   min-width: 385px;
   padding-bottom: 5.444vh;
   overflow: hidden;
@@ -203,7 +203,7 @@
     height: auto;
     padding-bottom: 10%;
     min-width: unset;
-    max-width: unset;
+    max-width: 400px;
   }
 
   .feed-container {

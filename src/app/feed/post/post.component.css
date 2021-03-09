@@ -138,8 +138,7 @@ p {
 }
 
 .holderList {
-  width: 90%;
-  min-width: 346px;
+  width: 346px;
   height: 70%;
   background-color: #0b0b0b;
   margin-left: 5%;
