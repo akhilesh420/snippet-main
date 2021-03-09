@@ -19,15 +19,15 @@
 
   <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'>
 
-  </app-profile-tab>
+  </app-profile-tab> 
 
   <div class = "postContent">
 
-
+    
 
     <div class = "engagementBar">
 
-
+    
     </div>
 
     <div class="postDescription">
@@ -36,7 +36,7 @@
 
     </div>
 
-
+    
 
     <div class="postSticker">
 
@@ -89,9 +89,9 @@
         <p>Holder List</p>
 
       </div>
-
+      
       <ul class = "holderSpace">
-
+   
           <li *ngFor='let collection of postCollection | reverse;'>
             <app-holder [collection]='collection'> </app-holder>
           </li>
@@ -106,7 +106,7 @@
 
 
 
-
+  
 
 
   <!-- post content -->
@@ -148,21 +148,13 @@
         <img src = "assets/images/Post/failSafeButton.png">
       </div>
 
-      <div class = "postSticker"
-          [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
-          style="cursor: pointer;"
-          (click)='collectSticker(); stopPropagation($event);'>
-
-        <!-- Loading animation -->
-
-        <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
-                          "confirm-ball": stickerCollectionState === 1,
-                          "reject-ball": stickerCollectionState === -1}'></div>
-
-        <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
+      <div class="postTitle inline float-left pointer">
+          {{postDetails.title}}
       </div>
 
-
+      <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
+        <img src='assets/images/Post/postdetailDropdown.svg'>
+      </div>
 
       <div class = "postMetrics">
 
@@ -231,11 +223,13 @@
       </ng-template>
 
       <div class = "fade-in-top" *ngIf="showDetails === true">
-
         <div class="post-metrics float-left">
+
+
         </div>
 
         <div class = "descriptionSpace">
+
           <span class = "description">{{postDetails.description}}</span>
 
         </div> -->
@@ -270,4 +264,4 @@
 
     <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab> -->
 
-<!-- </div> -->
+</div>
