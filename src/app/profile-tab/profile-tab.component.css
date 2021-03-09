@@ -157,6 +157,38 @@
 
 }
 
+@media screen and (max-width: 550px) {
+
+
+  .displaySticker-1 {
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+  .displaySticker-2 {
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+  .displaySticker-3 {
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+  .displaySticker-4 {
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+  .displaySticker-5 {
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+}
+
+
+
 
 /* Animations */
 
