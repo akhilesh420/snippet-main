@@ -243,6 +243,11 @@ li {
     max-height: calc(100vh - 54px);
   }
 
+  .postSticker {
+    max-width: 76px;
+    max-height: 76px;
+  }
+
 }
 
 /* Animations */
