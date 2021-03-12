@@ -31,12 +31,12 @@ p {
   width: 100%;
   min-height: calc(400px * var(--norm-height));
   max-height: calc(850px * var(--norm-height));
-  background-color: #C4C4C4;
   position: relative;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  overflow: hidden;
 }
 
 .postTitle {
@@ -72,6 +72,7 @@ p {
   min-height: 70px;
   border-radius: 50%;
   background-color: #0b0b0b;
+  overflow: hidden;
 }
 
 .engagementBar {
@@ -96,8 +97,8 @@ p {
   line-height: calc(20px * var(--norm-height));
   color: rgba(255, 255, 255, 0.9);
   word-wrap: break-word;
+  position: relative;
 }
-
 
 
 .postMetrics {
@@ -164,7 +165,7 @@ p {
 }
 
 .holderSpace {
- 
+
   padding-top: 20px;
   margin:0%;
   padding: 0%;
@@ -172,7 +173,7 @@ p {
   width: 100%;
   height: 100%;
 
-  
+
 }
 
 li {
@@ -182,12 +183,49 @@ li {
   margin-left: 1%;
 }
 
+.post-content {
+  margin: 0 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 100%;
+  height: 100%;
+}
 
+.center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
 
+.fail-safe {
+  width: 30%;
+  height: auto;
+  cursor:pointer;
+}
 
+.fit-cover {
+  -o-object-fit: cover;
+  object-fit: cover;
+}
 
+.postSticker-bck {
+  background-color: #8F8F8F;
+}
 
-
+.postSticker > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  }
 
 @media only screen and (max-height: 900px) {
 
@@ -212,7 +250,7 @@ li {
   .holderlistTitle {
     font-size: 14px;
   }
- 
+
   .postDescription {
     font-size: 12px;
   }
@@ -251,6 +289,196 @@ li {
 }
 
 /* Animations */
+
+.loading-ball {
+
+  width: 100%;
+  height: 100%;
+  background-image: -o-linear-gradient(312.52deg, #E2B33D 14.56%, rgba(226, 179, 61, 0) 84.46%);
+  background-image: linear-gradient(137.48deg, #E2B33D 14.56%, rgba(226, 179, 61, 0) 84.46%);
+  border-radius: 50%;
+  -webkit-animation: loading-bounce 1s linear infinite;
+          animation: loading-bounce 1s linear infinite;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+
+
+}
+
+.confirm-ball {
+
+  -webkit-animation: confirm-bounce 2.6s ;
+
+          animation: confirm-bounce 2.6s ;
+  border-radius: 50%;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+
+}
+
+.reject-ball {
+
+
+  border-radius: 50%;
+  -webkit-animation: reject-bounce 2.6s ;
+          animation: reject-bounce 2.6s ;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+
+}
+
+
+@-webkit-keyframes loading-bounce {
+0%, 100% {
+  -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+          animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+}
+0% {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+50% {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+}
+
+
+@keyframes loading-bounce {
+0%, 100% {
+  -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+          animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+}
+0% {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+50% {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+100% {
+  -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+}
+}
+
+@-webkit-keyframes confirm-bounce {
+  0%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+  }
+  0% {
+    background-color: #19812F;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
+  }
+  100% {
+    opacity: 0;
+  }
+
+
+}
+
+@keyframes confirm-bounce {
+  0%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+  }
+  0% {
+    background-color: #19812F;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
+  }
+  100% {
+    opacity: 0;
+  }
+
+
+}
+
+@-webkit-keyframes reject-bounce {
+  0%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+  }
+  0% {
+    background-color:#CF263C;;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes reject-bounce {
+  0%, 100% {
+    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
+            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
+  }
+  0% {
+    background-color:#CF263C;;;
+    height: 0%;
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    height: 50%;
+    width: 50%;
+  }
+  70% {
+      height: 100%;
+      width: 100%;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
 /* Rotate Down for postDetails Button */
 .rotate-90-ccw {

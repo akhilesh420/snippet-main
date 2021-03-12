@@ -4,8 +4,7 @@
 
     <div class="postTitle">
 
-      <p>{{postDetails.title}}
-      </p>
+      <p *ngIf='postDetails'>{{postDetails.title}}</p>
 
     </div>
 
@@ -17,31 +16,68 @@
 
   </div>
 
-  <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'>
+  <app-profile-tab [uid]='uid'></app-profile-tab>
 
-  </app-profile-tab> 
+  <div #contentContainer
+        class = "postContent"
+       [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",
+                   "background-color": !(postContent$ | async) ? "#C4C4C4" : "transparent"}'>
 
-  <div class = "postContent">
-
-    
-
-    <div class = "engagementBar">
-
-    
+    <!-- Content -->
+    <div *ngIf="(postContent$ | async) as content; else loading">
+      <img  class="post-content fit-cover"
+            [src]='content'
+            alt="post content"
+            [ngClass]="{'opacity-out-details': !this.showDetails,
+                        'opacity-in-details': this.showDetails}"
+            *ngIf='postType.includes("image")'>
+      <video class='post-content fit-cover'
+            loop
+            playsinline
+            #videoPlayer
+            [src]='content'
+            [ngClass]="{'opacity-out-details': !this.showDetails,
+                        'opacity-in-details': this.showDetails}"
+            *ngIf='postType.includes("video")'>
+      </video>
     </div>
 
+    <!-- loading spinner  -->
+    <ng-template #loading>
+        <app-loading-spinner class="center-absolute"></app-loading-spinner>
+    </ng-template>
+
+    <!-- Fail-safe button -->
+    <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
+      <img src = "assets/images/Post/failSafeButton.png">
+    </div>
+
+    <!-- Engagement bar -->
+    <div class = "engagementBar" [ngStyle]="engagementProp"></div>
+
+    <!-- Description -->
     <div class="postDescription">
 
-      <p>This is the description of this post ooohhllalalalal oqfhiaviuavaebvarbv</p>
+      <p *ngIf='postDetails'>{{postDetails.description}}</p>
 
     </div>
 
-    
+    <!-- Sticker -->
+    <div class="postSticker"
+      [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
+      style="cursor: pointer;"
+      (click)='collectSticker()'>
 
-    <div class="postSticker">
+      <!-- Loading animation -->
 
+      <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
+                          "confirm-ball": stickerCollectionState === 1,
+                          "reject-ball": stickerCollectionState === -1}'></div>
+
+      <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
     </div>
 
+    <!-- Metrics -->
     <div class="postMetrics">
       <div class = "row metricsSymbols no-margin-no-padding">
 
@@ -71,34 +107,35 @@
       <div class = "row metricsNumbers no-margin-no-padding">
 
         <div class = "col-6 viewNumbers no-margin-no-padding">
-          <span>{{views}}</span>
+          <span>{{views | numeral}}</span>
         </div>
 
         <div class = "col-6 holderNumbers no-margin-no-padding">
-          <span>{{collected}}</span>
+          <span>{{collected | numeral}}</span>
         </div>
 
       </div>
 
     </div>
 
-    <div class="holderList">
+    <!-- Holder list -->
+    <!-- <div class="holderList">
 
       <div class = "holderlistTitle">
 
         <p>Holder List</p>
 
       </div>
-      
+
       <ul class = "holderSpace">
-   
+
           <li *ngFor='let collection of postCollection | reverse;'>
             <app-holder [collection]='collection'> </app-holder>
           </li>
 
       </ul>
 
-    </div>
+    </div> -->
 
   </div>
 
@@ -106,7 +143,7 @@
 
 
 
-  
+
 
 
   <!-- post content -->

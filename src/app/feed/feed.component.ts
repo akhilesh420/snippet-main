@@ -35,7 +35,7 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   uid$ = new BehaviorSubject<string>(null); //From URL
   myUid$ = new BehaviorSubject<string>(null); //From URL
-  displayPicture$ = new BehaviorSubject<string>(null); //From URL
+  displayPicture$: Observable<string>; //From URL
   myUid: string; //Authenticated user uid
   uid: string; //current profile uid
   isAuthenticated: boolean;
@@ -58,8 +58,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    const emptyPost = new Feed('', '', new Date());
-    this.feedList$ = new BehaviorSubject<Feed[]>([emptyPost]);
+    const emptyFeed = new Feed(undefined, undefined, undefined);
+    this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed, emptyFeed]);
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;

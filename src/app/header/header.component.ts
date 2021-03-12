@@ -1,6 +1,6 @@
 import { AuthService } from './../auth/auth.service';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   loadingBar$: Subject<boolean>;
 
   dropdown: boolean = false;
-  displayPicture$: BehaviorSubject<any>;
+  displayPicture$: Observable<any>;
 
   showDashboard: boolean = false;
 

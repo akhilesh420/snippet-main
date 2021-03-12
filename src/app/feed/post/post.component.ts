@@ -6,7 +6,7 @@ import { PostDetails, StickerDetails} from './../../shared/post.model';
 import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { first, takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
-import { Activity, Collection } from 'src/app/shared/activity.model';
+import { Collection } from 'src/app/shared/activity.model';
 import { ScrollService } from 'src/app/shared/scroll.service';
 import { WindowStateService } from 'src/app/shared/window.service';
 import { MiscellaneousService, PopUp } from 'src/app/shared/miscellaneous.service';
@@ -19,12 +19,15 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class PostComponent implements OnInit, OnDestroy {
 
-  @Input() postDetails: PostDetails;
-  postFocus: boolean;
+  @Input() pid: string;
+  @Input() uid: string;
 
-  pid: string;
+  postFocus: boolean;
+  postDetails: PostDetails;
+
   postContent$: Observable<any>;
   postType$: Subject<string>;
+  postAspectRatio: number = 1;
 
   postType: string = 'video/mp4';
   notifier$ = new Subject();
@@ -34,10 +37,10 @@ export class PostComponent implements OnInit, OnDestroy {
   holderListAnalysed: boolean = false;
   showDetails = false;
   fullscreenToggle = false;
-  collected: string = '0';
-  views: string = '0';
+  collected: number = 0;
+  views: number = 0;
+  collectedLoaded = false;
   engagementRatio: number = 0;
-  uid: string;
   myUid: string;
   isAuthenticated: boolean;
 
@@ -52,13 +55,13 @@ export class PostComponent implements OnInit, OnDestroy {
   check: boolean = false;
 
   postCollection: Collection[];
-  activity: Activity;
 
   mobileCheck: boolean;
   tabletCheck: boolean;
   windowHeight: number;
 
   frameOffset: number;
+  frameHeight: number;
   activePost: string;
 
   engagementProp = {'width': '0','background': '#E2B33D'};
@@ -66,7 +69,7 @@ export class PostComponent implements OnInit, OnDestroy {
   stickerCollectionState: number;
   collectionLoaded = new BehaviorSubject<boolean>(undefined);
   engagementLoaded = new BehaviorSubject<boolean>(undefined);
-  stickerContent$: BehaviorSubject<any>;
+  stickerContent$: Observable<any>;
   stickerDetails: StickerDetails;
 
   constructor(private postService: PostService,
@@ -79,7 +82,6 @@ export class PostComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    if (!this.postDetails) return;
 
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(() => {
       this.postInFrame();
@@ -92,16 +94,22 @@ export class PostComponent implements OnInit, OnDestroy {
       val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
       const windowHeight = window.innerHeight;
       this.frameOffset = this.mobileCheck ? 0 : 54 + 5.444*windowHeight/100;
+      this.frameHeight = this.mobileCheck ? 4*windowHeight/5 : 625*this.windowStateService.normHeight;
     });
 
     this.feedService.currentPost.pipe(takeUntil(this.notifier$))
-    .subscribe(val => {
-      this.activePost = val
-      this.videoToggle();
-      this.postViewTime();
+      .subscribe(val => {
+        this.activePost = val
+        this.videoToggle();
+        this.postViewTime();
+      });
+
+    this.auth.onAuthStateChanged((user) => {
+      this.isAuthenticated = !!user;
+      if (this.isAuthenticated)  this.myUid = user.uid;
     });
 
-    this.restartPost();
+    this.setUpPost();
   }
 
   postInFrame() {
@@ -109,27 +117,14 @@ export class PostComponent implements OnInit, OnDestroy {
     const rect = this.post.nativeElement.getBoundingClientRect();
     const height = this.post.nativeElement.offsetHeight;
     const midPoint = rect.top + height/2;
-    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - height < 0;
-    if (this.postFocus && this.feedService.currentPost.value != this.pid) this.feedService.currentPost.next(this.pid);
-  }
-
-  restartPost() {
-    this.auth.onAuthStateChanged((user) => {
-      this.isAuthenticated = !!user;
-      if (this.isAuthenticated)  this.myUid = user.uid;
-    });
-
-    if (this.postDetails.pid === null || this.postDetails.uid === null) return;
-    // user profile setup
-    this.uid = this.postDetails.uid;
-
-    // post setup
-    this.pid = this.postDetails.pid; //exists because of id field
-
-    this.setUpPost();
+    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
+    if (this.postFocus) console.log(this.pid);
+    if (this.postFocus && this.activePost != this.pid) this.feedService.currentPost.next(this.pid);
   }
 
   setUpPost() {
+    if (!this.pid) return;
+
     this.postContent$ = this.postService.getPostContent(this.pid);
     this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(() => {
       setTimeout(() => {
@@ -139,27 +134,43 @@ export class PostComponent implements OnInit, OnDestroy {
 
     this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
       this.postType = response.contentType;
+      this.postAspectRatio = response.customMetadata.height/response.customMetadata.width;
       setTimeout(() => {
         this.videoToggle();
       },300);
     });
 
-    // post collection list
-    this.activityService.getPostCollection(this.pid).pipe(takeUntil(this.notifier$))
-    .subscribe(response => {
-      this.postCollection = response;
-      this.collectionLoaded.next(true);
+    this.postService.getPostDetails(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
+      this.postDetails = response;
     });
 
-    // this.activityService.getActivity(this.pid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-    //   this.activity = response[0];
-    //   this.views = this.convertToShort(this.activity.views);
-    //   this.collected = this.convertToShort(this.activity.collected);
-    // });
+    this.postService.getStickerDetails(this.pid).pipe(takeUntil(this.notifier$))
+      .subscribe((response) => {
+        this.stickerDetails = response;
+        this.setUpEngagement();
+      });
+
+    // post collection list
+    this.activityService.getPostCollection(this.pid).pipe(takeUntil(this.notifier$))
+     .subscribe(response => {
+        this.postCollection = response;
+        this.collectionLoaded.next(true);
+      });
+
+    this.stickerContent$ = this.postService.getStickerContent(this.pid);
+
+    this.activityService.getActivityCollection(this.pid).pipe(takeUntil(this.notifier$))
+      .subscribe(response => {
+        this.collected = response.counter;
+        this.collectedLoaded = true;
+        this.setUpEngagement();
+      });
+    this.activityService.getActivityViews(this.pid).pipe(takeUntil(this.notifier$))
+      .subscribe(response => this.views = response.counter);
   }
 
   postView() {
-    if (this.viewed || this.uid === this.myUid || !this.postDetails.pid || !this.postDetails.uid) return;
+    if (this.viewed || this.uid === this.myUid || !this.pid || !this.uid) return;
     this.viewed = true;
     if (!this.isAuthenticated) {
       // this.activityService.addViews(this.pid,this.uid);
@@ -196,21 +207,6 @@ export class PostComponent implements OnInit, OnDestroy {
     }
   }
 
-  convertToShort(num: number): string {
-    let short = 0;
-    if (num/1000000 <= 1) {
-      if (num/1000 <= 1) {
-          return num.toString();
-      } else {
-        short = Math.round((num/1000) * 10) / 10;
-        return short.toString() + 'K';
-      }
-    } else {
-      short = Math.round((num/1000000) * 100) / 100;
-      return short.toString() + 'M';
-      }
-  }
-
   holderAnalytics() {
     if (this.holderListAnalysed) return;
     this.holderListAnalysed = true;
@@ -225,15 +221,14 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   setUpEngagement(){
-    if (!this.stickerDetails || !this.activity) return;
+    if (!this.stickerDetails || !this.collectedLoaded) return;
     let colour: string;
-    this.engagementRatio = this.activity.collected/this.stickerDetails.amountReleased;
+    this.engagementRatio = this.collected/this.stickerDetails.amountReleased;
     this.engagementRatio === 1 ? colour = '#13A032': colour = '#E3B33D';
     let percentage: string = (this.engagementRatio*100).toString() + '%';
     this.engagementProp.width = percentage;
     this.engagementProp.background = colour;
     this.engagementLoaded.next(true);
-
   }
 
   sleep(ms) {

@@ -15,6 +15,9 @@ export class WindowStateService {
   private mobileCheck: boolean;
   private height: number;
 
+  public normWidth: number;
+  public normHeight: number;
+
   constructor() {
     this.checkWidth();
   }
@@ -27,14 +30,15 @@ export class WindowStateService {
     width < 800 ? this.tabletCheck = true : this.tabletCheck = false;
     width < 550 ? this.mobileCheck = true : this.mobileCheck = false;
 
-
-    document.documentElement.style.setProperty('--norm-width', (width/(this.mobileCheck ? this.designMobileWidth : this.designDeskWidth)).toString());
+    this.normWidth = width/(this.mobileCheck ? this.designMobileWidth : this.designDeskWidth);
+    document.documentElement.style.setProperty('--norm-width', this.normWidth.toString());
 
     if (!this.tabletCheck) this.setHeight();
   }
 
   public setHeight() {
-    document.documentElement.style.setProperty('--norm-height', (this.height/(this.mobileCheck ? this.designMobileHeight : this.designDeskHeight)).toString());
+    this.normHeight = this.height/(this.mobileCheck ? this.designMobileHeight : this.designDeskHeight);
+    document.documentElement.style.setProperty('--norm-height', (this.normHeight).toString());
   }
 
 }

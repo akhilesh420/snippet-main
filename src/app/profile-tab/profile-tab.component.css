@@ -21,11 +21,20 @@
   width: calc(68px * var(--norm-height));
   min-width: 60px;
   min-height: 60px;
-  background-color: #c4c4c4;
+  background-color: white;
+  /* background-color: #c4c4c4; */
   margin-left: calc(10px * var(--norm-width));
   border-radius: 50%;
   display: inline-block;
 }
+
+.profilePicture > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  }
 
 .username {
   width: 80%;
@@ -188,195 +197,3 @@
 
 
 
-/* Animations */
-
-
-.loading-ball {
-
-  width: 100%;
-  height: 100%;
-  background-image: -o-linear-gradient(312.52deg, #E2B33D 14.56%, rgba(226, 179, 61, 0) 84.46%);
-  background-image: linear-gradient(137.48deg, #E2B33D 14.56%, rgba(226, 179, 61, 0) 84.46%);
-  border-radius: 50%;
-  -webkit-animation: loading-bounce 1s linear infinite;
-          animation: loading-bounce 1s linear infinite;
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  
-
-}
-
-.confirm-ball {
-
-  -webkit-animation: confirm-bounce 2.6s ;
-
-          animation: confirm-bounce 2.6s ;
-  border-radius: 50%;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-
-}
-
-.reject-ball {
-
- 
-  border-radius: 50%;
-  -webkit-animation: reject-bounce 2.6s ;
-          animation: reject-bounce 2.6s ;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-
-}
-
-
-@-webkit-keyframes loading-bounce {
-0%, 100% {
-  -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
-          animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-}
-0% {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-}
-50% {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
-}
-100% {
-  -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-}
-}
-
-
-@keyframes loading-bounce {
-0%, 100% {
-  -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
-          animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-}
-0% {
-  -webkit-transform: rotate(0deg);
-          transform: rotate(0deg);
-}
-50% {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
-}
-100% {
-  -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-}
-}
-
-@-webkit-keyframes confirm-bounce {
-  0%, 100% {
-    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
-            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-  }
-  0% {
-    background-color: #19812F;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
-  }
-  50% {
-    height: 50%;
-    width: 50%;
-  }
-  70% {
-      height: 100%;
-      width: 100%;
-  }
-  100% {
-    opacity: 0;
-  }
-
-  
-}
-
-@keyframes confirm-bounce {
-  0%, 100% {
-    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
-            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-  }
-  0% {
-    background-color: #19812F;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
-  }
-  50% {
-    height: 50%;
-    width: 50%;
-  }
-  70% {
-      height: 100%;
-      width: 100%;
-  }
-  100% {
-    opacity: 0;
-  }
-
-  
-}
-
-@-webkit-keyframes reject-bounce {
-  0%, 100% {
-    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
-            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-  }
-  0% {
-    background-color:#CF263C;;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
-  }
-  50% {
-    height: 50%;
-    width: 50%;
-  }
-  70% {
-      height: 100%;
-      width: 100%;
-  }
-  100% {
-    opacity: 0;
-  } 
-}
-
-@keyframes reject-bounce {
-  0%, 100% {
-    -webkit-animation-timing-function: cubic-bezier(0.45,0,0.9,0.55);
-            animation-timing-function: cubic-bezier(0.45,0,0.9,0.55)
-  }
-  0% {
-    background-color:#CF263C;;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
-  }
-  50% {
-    height: 50%;
-    width: 50%;
-  }
-  70% {
-      height: 100%;
-      width: 100%;
-  }
-  100% {
-    opacity: 0;
-  } 
-}

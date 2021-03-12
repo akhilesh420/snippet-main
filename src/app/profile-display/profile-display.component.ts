@@ -6,7 +6,6 @@ import { take, takeUntil, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
-import { Activity } from '../shared/activity.model';
 import { WindowStateService } from '../shared/window.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -26,7 +25,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   profileStickers$: BehaviorSubject<ProfileSticker[]>;
   displayPicture$: BehaviorSubject<any>;
   tempDisplayPicture$ = new BehaviorSubject<any>(null);
-  activity: Activity;
+  // activity: Activity;
 
   isAuthenticated: boolean = true;
   allowEdit: boolean = false;
@@ -142,27 +141,27 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.dpLoaded = false;
     this.descLoaded = false;
     this.stickerLoaded = false;
-    this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
-    this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
-      if (!details) return;
-      // this.username = details.username;
-      this.description = details.description;
-      this.link = details.link;
+    // this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
+    // this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
+    //   if (!details) return;
+    //   // this.username = details.username;
+    //   this.description = details.description;
+    //   this.link = details.link;
 
-      this.dpLoaded = true;
-    });
-    this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
-    this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
-      if (!stickers) return;
-      stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
-      this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
-      this.stickerLoaded = true;
-    });
-    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
-    this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
-      this.tempDisplayPicture$.next(dp);
-      this.dpLoaded = true;
-    });
+    //   this.dpLoaded = true;
+    // });
+    // this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
+    // this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
+    //   if (!stickers) return;
+    //   stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
+    //   this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
+    //   this.stickerLoaded = true;
+    // });
+    // this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+    // this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
+    //   this.tempDisplayPicture$.next(dp);
+    //   this.dpLoaded = true;
+    // });
   }
 
   setUpActivity() {

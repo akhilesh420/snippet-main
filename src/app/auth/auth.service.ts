@@ -77,7 +77,6 @@ export class AuthService {
 
   logout(redirect: boolean = true) {
     this.auth.signOut().then(() => {
-      this.feedService.$collectionPageList.next(undefined);
       if (redirect) this.router.navigate(['/auth']);
     }).catch((error) => {
       console.log(error);

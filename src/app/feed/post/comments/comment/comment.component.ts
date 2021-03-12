@@ -1,5 +1,4 @@
 import { PostService } from './../../../../shared/post.service';
-import { Post } from './../../../../shared/post.model';
 import { Profile } from '../../../../shared/profile.model';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -13,7 +12,7 @@ export class CommentComponent implements OnInit {
   @Input() commentDetails: Comment;
 
   profileDetails: Profile;
-  postDetails: Post;
+  // postDetails: Post;
   spacingSticker = "3px";
 
   constructor( private postService: PostService) {

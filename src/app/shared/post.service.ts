@@ -4,10 +4,10 @@ import { BehaviorSubject, forkJoin, throwError } from 'rxjs';
 import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './post.model';
 
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
 import { MiscellaneousService, PopUp } from './miscellaneous.service';
 import { Collection } from './activity.model';
 import * as firebase from 'firebase';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -63,7 +63,16 @@ export class PostService {
   // Get sticker content from firebase storage by UID
   getStickerContent(pid: string) {
     const ref = this.storage.ref('stickers/' + pid +'/small');
-    return ref.getDownloadURL();
+    return ref.getDownloadURL().pipe(
+      catchError(err => {
+        console.log('Error retrieving small sized sticker');
+        console.log('Retrieving full sized sticker');
+        const ref = this.storage.ref('stickers/' + pid +'/original');
+        return ref.getDownloadURL().pipe(
+          catchError(err => {
+            return this.handleError(err);
+          }));
+      }));
   }
 
   // Add sticker content for post from firebase storage

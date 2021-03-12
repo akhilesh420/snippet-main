@@ -8,7 +8,7 @@
       </div>
 
       <div *ngIf='showProfileDisplay' class="profile-display">
-        <app-profile-display  [uid$]='uid$' [editable] ='false'></app-profile-display>
+        <!-- <app-profile-display  [uid$]='uid$' [editable] ='false'></app-profile-display> -->
       </div>
 
       <div class = "profileNavigation"
@@ -79,8 +79,8 @@
       </div>
 
       <div *ngIf="feedList$ | async; let posts; else loader">
-        <div class="post-container" *ngFor="let postDetails of posts; let i = index;" #post>
-          <app-post [postDetails]="postDetails"></app-post>
+        <div class="post-container" *ngFor="let post of posts; let i = index;" #post>
+          <app-post [pid]="post.pid" [uid]="post.creatorID"></app-post>
         </div>
           <!-- No Posts placeholder  -->
         <div class="post-container" *ngIf='posts.length === 0'>
@@ -100,10 +100,10 @@
 
     <div class="feed dashboard" *ngIf='!tabletCheck'>
       <div class='profile-display'>
-        <app-profile-display [uid$]='uid$' [editable]='myUid === uid'></app-profile-display>
+        <!-- <app-profile-display [uid$]='uid$' [editable]='myUid === uid'></app-profile-display> -->
       </div>
       <div [ngClass]='{"collection-tab-edit": profileStickerEdit}'>
-        <app-collection-tab ></app-collection-tab>
+        <!-- <app-collection-tab ></app-collection-tab> -->
       </div>
     </div>
   </div>

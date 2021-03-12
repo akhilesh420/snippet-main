@@ -35,6 +35,7 @@ import { CollectionTabComponent } from './collection-tab/collection-tab.componen
 import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 import { CollectionComponent } from './collection-tab/collection/collection.component';
 import { ReversePipe } from './shared/reverse.pipe';
+import { NumeralPipe } from './shared/numeral.pipe';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ReversePipe } from './shared/reverse.pipe';
     CollectionTabComponent,
     ProfileTabComponent,
     CollectionComponent,
-    ReversePipe
+    ReversePipe,
+    NumeralPipe
   ],
   imports: [
     BrowserModule,

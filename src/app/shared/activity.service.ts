@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
-import { Activity, Collection, View } from './activity.model';
+import { Collection } from './activity.model';
 
 
 @Injectable({
@@ -24,25 +23,19 @@ export class ActivityService {
 
 
   // --------------------------------------- Activity ---------------------------------------
-  // // gets activity for user or post
-  // getActivity(id: string) {
-  //   return this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(id)).valueChanges();
-  // }
 
   //update activity for view or collection
-  async updateActivity(type: string, uid: string, pid: string) {
-    const batch = this.afs.firestore.batch();
+  async updateActivity(type: string, id: string) {
+    this.afs.firestore.doc('activity/'+ id + '/metrics/' + type)
+          .update({counter: firebase.default.firestore.FieldValue.increment(1)});
+  }
 
-    batch.update(this.afs.firestore.doc('activity/'+ uid + '/metrics/' + type),
-                  type === 'collected' ?
-                    {counter: firebase.default.firestore.FieldValue.increment(1), lastPid: pid}
-                    : {counter: firebase.default.firestore.FieldValue.increment(1)}
-                    );
-    batch.update(this.afs.firestore.doc('activity/'+ pid + '/metrics/' + type),{counter: firebase.default.firestore.FieldValue.increment(1)});
+  getActivityCollection(id: string) {
+    return this.afs.doc<{counter: number}>('activity/' + id +'/metrics/collected').valueChanges();
+  }
 
-    await batch.commit().catch(async (e) => {
-      console.log("error in activity update", e);
-    });
+  getActivityViews(id: string) {
+    return this.afs.doc<{counter: number}>('activity/' + id +'/metrics/views').valueChanges();
   }
 
   // --------------------------------------- Views ---------------------------------------

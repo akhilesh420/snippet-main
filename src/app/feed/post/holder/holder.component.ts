@@ -19,11 +19,11 @@ export class HolderComponent implements OnInit, OnDestroy{
 
   $profileDetails: Observable<ProfileDetails>;
   profileStickers: ProfileSticker[] = [null,null,null,null,null];
-  $displayPicture: BehaviorSubject<any>;
+  $displayPicture: Observable<any>;
 
   constructor(private usersService: UsersService,
               private router: Router) {
-   }
+  }
 
   ngOnInit(): void {
     this.uid = this.collection.collectorID;
@@ -31,7 +31,7 @@ export class HolderComponent implements OnInit, OnDestroy{
     this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
     .subscribe(response => {
       if (!response) return;
-      this.profileStickers = response;
+      this.profileStickers = response.stickers;
     });
     this.$displayPicture = this.usersService.getDisplayPicture(this.uid);
   }

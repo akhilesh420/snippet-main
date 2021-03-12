@@ -20,7 +20,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   pid: string;
   postDetails$: Observable<PostDetails>;
-  profileDetails$: BehaviorSubject<ProfileDetails>;
+  username$: Observable<{username: string}>;
   stickerContent$: Observable<any>;
 
   profileStickerEdit: boolean = false;
@@ -48,7 +48,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   }
 
   setUpUser(uid: string) {
-    return this.profileDetails$ = this.userService.getProfileDetails(uid);
+    return this.username$ = this.userService.getUsername(uid);
   }
 
   navigate() {

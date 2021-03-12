@@ -42,8 +42,8 @@ export class FeedbackComponent implements OnInit, OnDestroy {
         this.userService.getProfileDetails(response.id).pipe(takeUntil(this.notifier$)) //get username
         .subscribe(res => {
           if (res) {
-            this.email = res.email;
-            this.username = res.username;
+            // this.email = res.email;
+            // this.username = res.username;
           }
         })
 

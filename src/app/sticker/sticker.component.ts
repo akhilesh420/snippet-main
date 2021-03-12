@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { PostService } from './../shared/post.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class StickerComponent implements OnInit, OnDestroy {
 
   stickerSize = {};
 
-  stickerContent: BehaviorSubject<any>;
+  stickerContent: Observable<any>;
   notifier$ = new Subject();
 
   onBoarding: boolean = false;
