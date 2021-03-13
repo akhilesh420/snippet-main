@@ -73,7 +73,7 @@
 
 <div class="profileTab">
 
-  <div class="profilePicture">
+  <div class="profilePicture" [routerLink]='profileRoute'>
     <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp'>
   </div>
 

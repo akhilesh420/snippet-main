@@ -1,7 +1,7 @@
 import { UsersService } from './../../shared/users.service';
 import { Router } from '@angular/router';
 import { ProfileDetails, ProfileSticker } from './../../shared/profile.model';
-import { PostDetails } from './../../shared/post.model';
+import { Feed, PostDetails } from './../../shared/post.model';
 import { PostService } from './../../shared/post.service';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Collection } from 'src/app/shared/activity.model';
@@ -16,8 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CollectionComponent implements OnInit, OnDestroy {
 
-  @Input() collection: Collection;
-
+  @Input() feed: Feed;
   pid: string;
   postDetails$: Observable<PostDetails>;
   username$: Observable<{username: string}>;
@@ -35,8 +34,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    if (!this.collection) return;
-    this.pid = this.collection.pid;
+    if (!this.feed) return;
+    this.pid = this.feed.pid;
     this.postDetails$ = this.postService.getPostDetails(this.pid);
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     this.miscellaneousService.userStickerSelection.pipe(takeUntil(this.notifier$)).subscribe(value => this.userStickerSelected = value)
@@ -59,7 +58,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   usernameClick() {
     if (this.profileStickerEdit) return;
-    this.router.navigate(["/profile/" + this.collection.collecteeID]);
+    this.router.navigate(["/profile/" + this.feed.creatorID]);
   }
 
   stickerSelected() {

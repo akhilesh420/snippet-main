@@ -2,15 +2,15 @@ import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
 import { Subject,Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { PostService } from './../../shared/post.service';
-import { PostDetails, StickerDetails} from './../../shared/post.model';
+import { Holder, PostDetails, StickerDetails} from './../../shared/post.model';
 import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { first, takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
-import { Collection } from 'src/app/shared/activity.model';
 import { ScrollService } from 'src/app/shared/scroll.service';
 import { WindowStateService } from 'src/app/shared/window.service';
 import { MiscellaneousService, PopUp } from 'src/app/shared/miscellaneous.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Collection } from 'src/app/shared/activity.model';
 
 @Component({
   selector: 'app-post',
@@ -23,15 +23,15 @@ export class PostComponent implements OnInit, OnDestroy {
   @Input() uid: string;
 
   postFocus: boolean;
-  postDetails: PostDetails;
 
+  postDetails$: Observable<PostDetails>;
   postContent$: Observable<any>;
   postType$: Subject<string>;
   postAspectRatio: number = 1;
 
   postType: string = 'video/mp4';
   notifier$ = new Subject();
-  collectionList: Observable<Collection[]>;
+  collectionList: Observable<Holder[]>;
 
   viewed: boolean = false;
   holderListAnalysed: boolean = false;
@@ -54,7 +54,7 @@ export class PostComponent implements OnInit, OnDestroy {
   buffering: boolean = false;
   check: boolean = false;
 
-  postCollection: Collection[];
+  postCollection: Holder[];
 
   mobileCheck: boolean;
   tabletCheck: boolean;
@@ -140,9 +140,7 @@ export class PostComponent implements OnInit, OnDestroy {
       },300);
     });
 
-    this.postService.getPostDetails(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
-      this.postDetails = response;
-    });
+    this.postDetails$ = this.postService.getPostDetails(this.pid);;
 
     this.postService.getStickerDetails(this.pid).pipe(takeUntil(this.notifier$))
       .subscribe((response) => {
@@ -173,9 +171,9 @@ export class PostComponent implements OnInit, OnDestroy {
     if (this.viewed || this.uid === this.myUid || !this.pid || !this.uid) return;
     this.viewed = true;
     if (!this.isAuthenticated) {
-      // this.activityService.addViews(this.pid,this.uid);
+      this.activityService.addViews(this.pid,this.uid);
     } else {
-      // this.activityService.addViews(this.pid,this.uid,this.myUid);
+      this.activityService.addViews(this.pid,this.uid,this.myUid);
     }
   }
 

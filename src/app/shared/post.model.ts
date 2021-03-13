@@ -38,8 +38,9 @@ export class Comment {
 export class Holder {
 
   constructor(
-    public uid: string,
-    public dateCollected: Date
+    public cid: Date,
+    public timeStamp: string,
+    public collectorID: string
   ) {}
 }
 

@@ -4,13 +4,16 @@
 
     <div class="postTitle">
 
-      <p *ngIf='postDetails'>{{postDetails.title}}</p>
+      <p (click)='showDetails = !showDetails' *ngIf='(postDetails$ | async) as details'>{{details.title}}</p>
 
     </div>
 
     <div class="dropdownButton">
 
-      <img class = "dropdownButton" src = "assets/images/Post/postdetailDropdown.svg">
+      <img (click)='showDetails = !showDetails'
+            [ngClass]='{"rotate-90-ccw ": showDetails, "rotate-90-cw ": !showDetails}'
+            class = "dropdownButton"
+            src = "assets/images/Post/postdetailDropdown.svg">
 
     </div>
 
@@ -21,23 +24,24 @@
   <div #contentContainer
         class = "postContent"
        [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",
-                   "background-color": !(postContent$ | async) ? "#C4C4C4" : "transparent"}'>
+                   "background-color": !(postContent$ | async) ? "#C4C4C4" : "transparent"}'
+        (click)='showDetails = !showDetails'>
 
     <!-- Content -->
     <div *ngIf="(postContent$ | async) as content; else loading">
       <img  class="post-content fit-cover"
             [src]='content'
             alt="post content"
-            [ngClass]="{'opacity-out-details': !this.showDetails,
-                        'opacity-in-details': this.showDetails}"
+            [ngClass]="{'opacity-out-details': !showDetails,
+                        'opacity-in-details': showDetails}"
             *ngIf='postType.includes("image")'>
       <video class='post-content fit-cover'
             loop
             playsinline
             #videoPlayer
             [src]='content'
-            [ngClass]="{'opacity-out-details': !this.showDetails,
-                        'opacity-in-details': this.showDetails}"
+            [ngClass]="{'opacity-out-details': !showDetails,
+                        'opacity-in-details': showDetails}"
             *ngIf='postType.includes("video")'>
       </video>
     </div>
@@ -56,9 +60,9 @@
     <div class = "engagementBar" [ngStyle]="engagementProp"></div>
 
     <!-- Description -->
-    <div class="postDescription">
+    <div class="postDescription fade-in-top" *ngIf="showDetails">
 
-      <p *ngIf='postDetails'>{{postDetails.description}}</p>
+      <p *ngIf='(postDetails$ | async) as details'>{{details.description}}</p>
 
     </div>
 
@@ -66,7 +70,7 @@
     <div class="postSticker"
       [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
       style="cursor: pointer;"
-      (click)='collectSticker()'>
+      (click)='collectSticker(); stopPropagation($event);'>
 
       <!-- Loading animation -->
 
@@ -119,7 +123,9 @@
     </div>
 
     <!-- Holder list -->
-    <!-- <div class="holderList">
+    <div class="holderList fade-in-top"
+        *ngIf="showDetails"
+        (click)='holderAnalytics(); stopPropagation($event)'>
 
       <div class = "holderlistTitle">
 
@@ -130,12 +136,12 @@
       <ul class = "holderSpace">
 
           <li *ngFor='let collection of postCollection | reverse;'>
-            <app-holder [collection]='collection'> </app-holder>
+            <app-holder [uid]='collection.collectorID'> </app-holder>
           </li>
 
       </ul>
 
-    </div> -->
+    </div>
 
   </div>
 

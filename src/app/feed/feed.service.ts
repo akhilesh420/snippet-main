@@ -1,11 +1,9 @@
 import { environment } from './../../environments/environment';
 import { map, take } from 'rxjs/operators';
-import { PostDetails } from 'src/app/shared/post.model';
 import { Injectable } from '@angular/core';
-import { ActivityService } from '../shared/activity.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { PostService } from '../shared/post.service';
+import { timeStamp } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +28,18 @@ export class FeedService {
 
   // get profile page
   getProfilePage(uid: string) {
-    return this.afs.collection<{dateCreated: Date, creatorID: string}>('feed/'+uid+'/posts', ref => ref.where('uid','==',uid)
-                                                      .orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
+    return this.afs.collection<{dateCreated: Date, creatorID: string}>('feed/'+uid+'/posts', ref => ref.orderBy('dateCreated', 'desc')).valueChanges({idField: 'pid'});
   }
 
   // generate collection page by uid
   getCollectionPage(uid: string) {
-    return this.afs.collection<{dateCreated: Date, creatorID: string}>('feed/'+uid+'/collection', ref => ref.where('uid','==',uid)
-                                                      .orderBy('dateCreated', 'desc'))
+    return this.afs.collection<any>('feed/'+uid+'/collection', ref => ref.orderBy('timeStamp', 'desc'))
                       .valueChanges({idField: 'pid'})
                       .pipe(map(postsList => {
                         if (!postsList) return postsList;
+                        postsList = postsList.map(post => {
+                          return {dateCreated: new Date(post.timeStamp), creatorID: post.creatorID, pid: post.pid}
+                        })
                         postsList = postsList.filter(post => { //Filter out users own posts
                           return uid != post.creatorID;
                         })

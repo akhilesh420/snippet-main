@@ -22,10 +22,11 @@
   min-width: 60px;
   min-height: 60px;
   background-color: white;
-  /* background-color: #c4c4c4; */
   margin-left: calc(10px * var(--norm-width));
   border-radius: 50%;
   display: inline-block;
+  cursor: pointer;
+  outline: none;
 }
 
 .profilePicture > img {
@@ -34,7 +35,7 @@
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
-  }
+}
 
 .username {
   width: 80%;
@@ -59,10 +60,8 @@
   min-height: 30px;
   min-width: 30px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(34px * var(--norm-height));
   right: 10px;
-
 }
 
 .displaySticker-2 {
@@ -72,7 +71,6 @@
   min-height: 30px;
   min-width: 30px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(34px * var(--norm-height));
   right: 50px;
 }
@@ -84,7 +82,6 @@
   min-height: 30px;
   min-width: 30px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(34px * var(--norm-height));
   right: 90px;
 }
@@ -96,7 +93,6 @@
   min-height: 30px;
   min-width: 30px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(34px * var(--norm-height));
   right: 130px;
 }
@@ -108,12 +104,13 @@
   min-height: 30px;
   min-width: 30px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(34px * var(--norm-height));
   right: 170px;
 }
 
-
+.sticker-bck {
+  background-color: #FFFFFF;
+}
 
 
 

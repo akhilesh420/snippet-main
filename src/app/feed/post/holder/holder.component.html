@@ -1,27 +1,38 @@
 <div class="profileTab">
 
-  <div class="profilePicture">
-
-
+  <div class="profilePicture" [routerLink]='profileRoute'>
+    <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp'>
   </div>
 
   <div class = "username">
 
-    <p>Name of the user</p>
+    <p *ngIf='(username$ | async) as info;'
+        style="cursor: pointer;"
+        [routerLink]='profileRoute'>{{info.username}}</p>
 
   </div>
 
-  <div class="displaySticker-1"></div>
+  <div class="displaySticker-1" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[0] != null' [pid]="profileStickers.stickers[0].pid"></app-sticker>
+  </div>
 
-  <div class="displaySticker-2"></div>
+  <div class="displaySticker-2" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[1] != null' [pid]="profileStickers.stickers[1].pid"></app-sticker>
+  </div>
 
-  <div class="displaySticker-3"></div>
+  <div class="displaySticker-3" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[2] != null' [pid]="profileStickers.stickers[2].pid"></app-sticker>
+  </div>
 
-  <div class="displaySticker-4"></div>
+  <div class="displaySticker-4"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[3] != null' [pid]="profileStickers.stickers[3].pid"></app-sticker>
+  </div>
 
-  <div class="displaySticker-5"></div>
+  <div class="displaySticker-5"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[4] != null' [pid]="profileStickers.stickers[4].pid"></app-sticker>
+  </div>
 
-  
+
 
 </div>
 

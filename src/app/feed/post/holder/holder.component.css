@@ -21,10 +21,19 @@
   width: calc(48px * var(--norm-height));
   min-width: 48px;
   min-height: 48px;
-  background-color: #c4c4c4;
+  background-color: #FFFFFF;
   margin-left: calc(4px * var(--norm-width));
   border-radius: 50%;
   display: inline-block;
+  outline: none;
+}
+
+.profilePicture > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
 }
 
 .username {
@@ -41,6 +50,11 @@
   color: #FFFFFF;
   display: inline-block;
   vertical-align: top;
+  outline: none;
+}
+
+.sticker-bck {
+  background-color: #FFFFFF;
 }
 
 .displaySticker-1 {
@@ -50,7 +64,6 @@
   min-height: 25px;
   min-width: 25px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(26px * var(--norm-height));
   right: 10px;
 
@@ -63,7 +76,6 @@
   min-height: 25px;
   min-width: 25px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(26px * var(--norm-height));
   right: 50px;
 }
@@ -75,7 +87,6 @@
   min-height: 25px;
   min-width: 25px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(26px * var(--norm-height));
   right: 90px;
 }
@@ -87,7 +98,6 @@
   min-height: 25px;
   min-width: 25px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(26px * var(--norm-height));
   right: 130px;
 }
@@ -99,7 +109,6 @@
   min-height: 25px;
   min-width: 25px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   top: calc(26px * var(--norm-height));
   right: 170px;
 }

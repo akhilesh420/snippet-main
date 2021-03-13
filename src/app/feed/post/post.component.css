@@ -37,6 +37,7 @@ p {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .postTitle {
@@ -52,6 +53,10 @@ p {
   word-wrap: break-word;
 }
 
+.postTitle > p {
+  cursor: pointer;
+}
+
 .dropdownButton {
 
   position: absolute;
@@ -60,6 +65,10 @@ p {
   right: calc(5px * var(--norm-width));
   top: calc(6.8px * var(--norm-height));
 
+}
+
+.dropdownButton > img {
+  cursor: pointer;
 }
 
 .postSticker {
@@ -146,7 +155,7 @@ p {
   border-radius: 10px;
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
-
+  overflow: hidden;
 }
 
 .holderlistTitle {
@@ -540,9 +549,6 @@ li {
 .fade-in-top {
   -webkit-animation: fade-in-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
           animation: fade-in-top 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-
-  height: 100%;
-  width: 100%;
 }
 
 @-webkit-keyframes fade-in-top {

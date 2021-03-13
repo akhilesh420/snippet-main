@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { map } from 'rxjs/operators';
 import { Collection } from './activity.model';
 
 
@@ -42,11 +43,26 @@ export class ActivityService {
   // add view to realtime db
   // viewerID: UID of the person who viewed the post
   // vieweeID: UID of the person whose post was viewed
-  // addViews(pid: string, vieweeID: string, viewerID: string = 'anonymous') {
-  //   const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
-  //   this.viewsRef.push(obj);
-  //   this.updateActivity('view', vieweeID, pid);
-  // }
+  async addViews(pid: string, vieweeID: string, viewerID: string = 'anonymous') {
+    const viewsObj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
+    const activityObj = {counter: firebase.default.firestore.FieldValue.increment(1)};
+
+    const vid = this.afs.createId();
+    const batch = this.afs.firestore.batch();
+
+    const viewsRef = this.afs.firestore.doc('views/'+vid);
+    const userActivityRef = this.afs.firestore.doc('activity/' + vieweeID +'/metrics/views');
+    const postActivityRef = this.afs.firestore.doc('activity/' + pid +'/metrics/views');
+
+    batch.set(viewsRef, viewsObj);
+    batch.update(userActivityRef, activityObj);
+    batch.update(postActivityRef, activityObj);
+
+    await batch.commit().catch(async (e) => {
+      console.log("error in collection", e);
+      throw new Error('Error in sticker collection');
+    });
+  }
 
   // --------------------------------------- Collection ---------------------------------------
   // add collector to cloud firestore
@@ -91,12 +107,20 @@ export class ActivityService {
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.afs.collection<Collection>('feed/' + uid +'/collection', ref => ref.orderBy('timeStamp', 'desc')).valueChanges({idField: 'pid'});
+    return this.afs.collection<any>('feed/'+uid+'/collection', ref => ref.orderBy('timeStamp', 'desc'))
+                      .valueChanges({idField: 'pid'})
+                      .pipe(map(postsList => {
+                        if (!postsList) return postsList;
+                        postsList = postsList.map(post => {
+                          return {dateCreated: new Date(post.timeStamp), creatorID: post.creatorID, pid: post.pid}
+                        })
+                        return postsList;
+                      }));
   }
 
   // get collection by pid
   getPostCollection(pid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp', 'desc')).valueChanges();
+    return this.afs.collection<{cid: Date, timeStamp: string}>('posts/' + pid + '/holders', ref => ref.orderBy('timeStamp', 'desc')).valueChanges({idField: 'collectorID'});
   }
 
   // add analytics
