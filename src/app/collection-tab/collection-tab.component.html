@@ -33,9 +33,9 @@
 
         <ul class = "no-margin-no-padding" *ngIf='isAuthenticated'>
 
-            <li *ngFor='let collection of collectionList; trackBy: trackByFn;'
+            <li *ngFor='let feed of feedList;'
                 class = "no-margin-no-padding padding-bottom ">
-              <app-collection [feed]='collection'></app-collection>
+              <app-collection [feed]='feed'></app-collection>
             </li>
 
         </ul>

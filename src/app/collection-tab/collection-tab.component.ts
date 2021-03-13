@@ -15,7 +15,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class CollectionTabComponent implements OnInit, OnDestroy {
 
-  collectionList: Feed[] = [null, null, null, null];
+  feedList: Feed[] = [null, null, null, null];
   myUid: string;
   isAuthenticated: boolean = true;
   notifier$ = new Subject();
@@ -34,6 +34,8 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
       if (this.isAuthenticated) {
         this.myUid = user.uid;
         this.getCollection();
+      } else {
+        this.feedList = [];
       }
     });
 
@@ -43,10 +45,10 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
 
   getCollection() {
     this.activityService.getUserCollection(this.myUid).pipe(takeUntil(this.notifier$)) //get details of user collection
-    .subscribe((response:Feed[]) => {
-      this.collectionList = response;
-      console.log(response);
-    });
+      .subscribe((response:Feed[]) => {
+        this.feedList = response;
+        console.log(response);
+      });
   }
 
   confirmSelection(confirm: string) {

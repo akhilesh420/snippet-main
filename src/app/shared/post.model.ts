@@ -1,10 +1,8 @@
 export class PostDetails {
 
   constructor(
-    public uid: string,
     public title: string,
     public description : string,
-    public dateCreated: Date | any,
     public pid?: string
   ) { }
 

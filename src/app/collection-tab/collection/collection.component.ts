@@ -18,9 +18,10 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   @Input() feed: Feed;
   pid: string;
+  uid: string;
   postDetails$: Observable<PostDetails>;
   username$: Observable<{username: string}>;
-  stickerContent$: Observable<any>;
+  stickerContent$: Observable<string>;
 
   profileStickerEdit: boolean = false;
   selectedPID: string;
@@ -34,20 +35,14 @@ export class CollectionComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    if (!this.feed) return;
+    console.log(this.feed);
+    if (!this.feed || !this.feed.pid) return;
     this.pid = this.feed.pid;
     this.postDetails$ = this.postService.getPostDetails(this.pid);
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
+    this.username$ = this.userService.getUsername(this.uid);
     this.miscellaneousService.userStickerSelection.pipe(takeUntil(this.notifier$)).subscribe(value => this.userStickerSelected = value)
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value)
-  }
-
-  ngOnChanges() {
-    this.ngOnInit();
-  }
-
-  setUpUser(uid: string) {
-    return this.username$ = this.userService.getUsername(uid);
   }
 
   navigate() {

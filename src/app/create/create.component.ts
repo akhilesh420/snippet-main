@@ -293,14 +293,14 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   createPost() {
     this.isCreating = true;
-    let dateCreated = new Date();
 
-    this.postService.newPost(this.storageFile,
-                            this.contentMetadata,
-                            this.stickerContent,
-                            this.stickerMetadata,
-                            new PostDetails(this.uid,this.title, this.desc, dateCreated),
-                            new StickerDetails(this.amount, 0));
+    this.postService.newPost( this.uid,
+                              this.storageFile,
+                              this.contentMetadata,
+                              this.stickerContent,
+                              this.stickerMetadata,
+                              new PostDetails(this.title, this.desc),
+                              new StickerDetails(this.amount, 0));
 
     this.miscellaneousService.setPopUp(new PopUp("You are all set! Feel free to explore but please don't close the tab while your post is being processed",'Explore', undefined, ['default', 'reject']));
     this.router.navigate(['/explore']);

@@ -1,6 +1,6 @@
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, forkJoin, throwError } from 'rxjs';
+import { forkJoin, throwError } from 'rxjs';
 import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './post.model';
 
 import { Injectable } from '@angular/core';
@@ -88,7 +88,8 @@ export class PostService {
 
   // --------------------------------------- Create new post ---------------------------------------
 
-  async newPost(postFile: File,
+  async newPost(uid:string,
+                postFile: File,
                 postMeta: CustomMetadata,
                 stickerFile: File,
                 stickerMeta: CustomMetadata,
@@ -98,6 +99,7 @@ export class PostService {
     var success: boolean = true;
     try {
       let pid = this.afs.createId();
+      let dateCreated = new Date();
 
       let postSubs =  this.addPostContent(pid, postFile, postMeta);
       let stickerSubs = this.addStickerContent(pid, stickerFile, stickerMeta);
@@ -107,7 +109,6 @@ export class PostService {
       const subs = forkJoin([postSubs, stickerSubs]).subscribe(async results => {
         if (results[0] != 100 && results[1] != 100) return;
 
-        const uid = postDetails.uid;
         const batch = this.afs.firestore.batch();
 
         const postDetailsDoc = this.afs.firestore.doc('post details/'+pid);
@@ -135,11 +136,11 @@ export class PostService {
         batch.set(activityViewsDoc, {counter: 0});
 
         // feed
-        batch.set(profileFeedDoc, {dateCreated: postDetails.dateCreated})
-        batch.set(exploreFeedDoc, {dateCreated: postDetails.dateCreated})
+        batch.set(profileFeedDoc, {dateCreated: dateCreated})
+        batch.set(exploreFeedDoc, {dateCreated: dateCreated})
 
         //User sticker collection
-        const collection: Collection = new Collection(uid, uid, pid, postDetails.dateCreated.getTime());
+        const collection: Collection = new Collection(uid, uid, pid, dateCreated.getTime());
 
         const cid = this.afs.createId();
 
