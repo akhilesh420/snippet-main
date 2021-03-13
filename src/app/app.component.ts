@@ -18,6 +18,7 @@ import { DOCUMENT } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, OnDestroy {
+  title = 'snippet';
 
   windowSize: number;
   mobileCheck: boolean;
