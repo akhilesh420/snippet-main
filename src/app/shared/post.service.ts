@@ -19,8 +19,7 @@ export class PostService {
 
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage,
-              private miscellaneousService: MiscellaneousService) {
-   }
+              private miscellaneousService: MiscellaneousService) {}
 
   //--------------------------------------- Post details ---------------------------------------
   // Get post details from cloud firestore by PID
