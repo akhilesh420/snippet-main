@@ -1,14 +1,13 @@
 import { UsersService } from './../shared/users.service';
-import { ProfileSticker, ProfileDetails, DisplayPicture } from './../shared/profile.model';
+import { ProfileSticker, DisplayPicture } from './../shared/profile.model';
 import { Router} from '@angular/router';
-import { AuthService } from './../auth/auth.service';
-import { take, takeUntil, tap } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges, EventEmitter, Output, AfterViewInit } from '@angular/core';
+import { startWith, takeUntil} from 'rxjs/operators';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
-import { WindowStateService } from '../shared/window.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { CustomMetadata } from '../shared/post.model';
 
 @Component({
   selector: 'app-profile-display',
@@ -21,9 +20,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   @Input() editable?: boolean = true;
   uid: string;
 
-  profileDetails$: BehaviorSubject<ProfileDetails>;
-  profileStickers$: BehaviorSubject<ProfileSticker[]>;
-  displayPicture$: BehaviorSubject<any>;
+  username$: Observable<{username: string}> = new Observable(observer => observer.next({username: ''}));
+  displayPicture$: Observable<string>;
   tempDisplayPicture$ = new BehaviorSubject<any>(null);
   // activity: Activity;
 
@@ -31,8 +29,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   allowEdit: boolean = false;
   notifier$ = new Subject();
 
-  collected: string = '0';
-  views: string = '0';
+  collected: number = 0;
+  views: number = 0;
 
   myUid: string;
   stickerSize: string;
@@ -45,13 +43,12 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   editDesc: Boolean = false;
   editLink: Boolean = false;
   editStickers: Boolean = false;
-  username: string = '';
   description: string = '';
   link: string = '';
   profileStickers: ProfileSticker[] = [null,null,null,null,null];
   userStickers:  ProfileSticker[] = [null,null,null,null,null];
   error: string;
-  displayPicture: any;
+  displayPicture: File;
   changedDP: boolean = false;
   profileStickersChanged: boolean = false;
   updatedDP: any;
@@ -141,53 +138,31 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.dpLoaded = false;
     this.descLoaded = false;
     this.stickerLoaded = false;
-    // this.profileDetails$ = this.usersService.getProfileDetails(this.uid);
-    // this.profileDetails$.pipe(takeUntil(this.notifier$)).subscribe(details => {
-    //   if (!details) return;
-    //   // this.username = details.username;
-    //   this.description = details.description;
-    //   this.link = details.link;
+    this.usersService.getProfileDetails(this.uid).pipe(takeUntil(this.notifier$)).subscribe(details => {
+      this.description = details.description;
+      this.link = details.link;
 
-    //   this.dpLoaded = true;
-    // });
-    // this.profileStickers$ = this.usersService.getProfileStickers(this.uid);
-    // this.profileStickers$.pipe(takeUntil(this.notifier$)).subscribe(stickers => {
-    //   if (!stickers) return;
-    //   stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
-    //   this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
-    //   this.stickerLoaded = true;
-    // });
-    // this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
-    // this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
-    //   this.tempDisplayPicture$.next(dp);
-    //   this.dpLoaded = true;
-    // });
+      this.dpLoaded = true;
+    });
+    this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$)).subscribe(profileStickers => {
+      profileStickers.stickers.forEach((sticker, i) => this.userStickers[i] = sticker);
+      this.userStickers.forEach((sticker, i) => this.profileStickers[4-i] = sticker);
+      this.stickerLoaded = true;
+    });
+    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+    this.displayPicture$.pipe(takeUntil(this.notifier$)).subscribe(dp => {
+      this.tempDisplayPicture$.next(dp);
+      this.dpLoaded = true;
+    });
+    this.username$ = this.usersService.getUsername(this.uid).pipe(startWith({username: ''}));
   }
 
   setUpActivity() {
-    // this.activityService.getActivity(this.uid).pipe(takeUntil(this.notifier$)).subscribe(response => {
-    //   if (!response[0]) {
-    //     return;
-    //   }
-    //   this.activity = response[0];
-    //   this.views = this.convertToShort(this.activity.views);
-    //   this.collected = this.convertToShort(this.activity.collected);
-    // });
-  }
+    this.activityService.getActivityCollection(this.uid).pipe(takeUntil(this.notifier$))
+      .subscribe(response => this.collected = response.counter);
 
-  convertToShort(num: number): string {
-    let short = 0;
-    if (num/1000000 <= 1) {
-      if (num/1000 <= 1) {
-          return num.toString();
-      } else {
-        short = Math.round((num/1000) * 10) / 10;
-        return short.toString() + 'K';
-      }
-    } else {
-      short = Math.round((num/1000000) * 100) / 100;
-      return short.toString() + 'M';
-      }
+    this.activityService.getActivityViews(this.uid).pipe(takeUntil(this.notifier$))
+      .subscribe(response => this.views = response.counter);
   }
 
   navigateRoute() {
@@ -204,7 +179,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     setTimeout(() => this.linkRef.nativeElement.focus(), 100);
   }
 
-  onSave() {
+  async onSave() {
     if (this.saving) return;
     this.saving = true;
     let noChange = true;
@@ -249,12 +224,20 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       noChange = false;
       message = "Profile updating! Feel free to explore but please don't close the tab while your dp is being processed";
 
+      const dimensions = await this.miscellaneousService.getDimension(this.displayPicture, this.displayPicture.type);
+      const metadata = new CustomMetadata(this.uid, dimensions.width, dimensions.height);
+
       this.miscellaneousService.startLoading();
-      this.displayPicture$.next(this.updatedDP);
-      this.usersService.updateDisplayPicture(this.uid, this.displayPicture).pipe(takeUntil(this.notifier$))
+      this.displayPicture$ = new Observable(observer => observer.next(this.updatedDP));
+      this.usersService.updateDisplayPicture(this.uid, this.displayPicture, metadata).pipe(takeUntil(this.notifier$))
       .subscribe(response => {
         if (response === 100) {
-          this.usersService.updateDisplayPictureRef(this.uid, new DisplayPicture(new Date(), this.displayPicture.type));
+          this.usersService.updateDisplayPictureRef(this.uid,
+                                                    new DisplayPicture(this.uid,
+                                                                       metadata.width,
+                                                                       metadata.height,
+                                                                       this.displayPicture.type,
+                                                                       new Date()));
           this.miscellaneousService.endLoading();
         }
       });

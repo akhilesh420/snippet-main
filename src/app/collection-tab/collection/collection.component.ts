@@ -35,7 +35,6 @@ export class CollectionComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    console.log(this.feed);
     if (!this.feed || !this.feed.pid) return;
     this.pid = this.feed.pid;
     this.postDetails$ = this.postService.getPostDetails(this.pid);

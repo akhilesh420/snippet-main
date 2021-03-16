@@ -6,7 +6,7 @@ import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './post
 import { Injectable } from '@angular/core';
 import { MiscellaneousService, PopUp } from './miscellaneous.service';
 import { Collection } from './activity.model';
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import { catchError } from 'rxjs/operators';
 
 
@@ -54,6 +54,7 @@ export class PostService {
     const filePath = 'posts/'+pid+'/original';
     const ref = this.storage.ref(filePath);
     const metadataUp = {contentType: file.type, ...customMetadata};
+    console.log(metadataUp);
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
   }
@@ -64,8 +65,6 @@ export class PostService {
     const ref = this.storage.ref('stickers/' + pid +'/small');
     return ref.getDownloadURL().pipe(
       catchError(err => {
-        console.log('Error retrieving small sized sticker');
-        console.log('Retrieving full sized sticker');
         const ref = this.storage.ref('stickers/' + pid +'/original');
         return ref.getDownloadURL().pipe(
           catchError(err => {
@@ -81,6 +80,7 @@ export class PostService {
     const filePath = 'stickers/'+pid+'/original';
     const ref = this.storage.ref(filePath);
     const metadataUp = {contentType: file.type, ...customMetadata};
+    console.log(metadataUp);
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
   }
@@ -95,8 +95,6 @@ export class PostService {
                 postDetails: PostDetails,
                 stickerDetails: StickerDetails) {
 
-    var success: boolean = true;
-    try {
       let pid = this.afs.createId();
       let dateCreated = new Date();
 
@@ -124,19 +122,20 @@ export class PostService {
 
         // post
         batch.set(postDetailsDoc, {...postDetails});
-        batch.set(postContentDoc, {...new PostContent(pid, postFile.type)});
+        batch.set(postContentDoc, {...new PostContent(pid, postMeta.width, postMeta.height, postFile.type)});
         batch.set(stickerDetailsDoc, {...stickerDetails});
-        batch.set(stickerContentDoc, {...new PostContent(pid, stickerFile.type)});
+        batch.set(stickerContentDoc, {...new PostContent(pid, stickerMeta.width, stickerMeta.height, stickerFile.type)});
         batch.set(postDetailsDoc, {...postDetails});
 
         // activity
         batch.set(activityPrivateDoc, {id: pid, type: 'post'});
-        batch.set(activityCollectedDoc, {counter: 0});
+        batch.set(activityCollectedDoc, {counter: 1}); //1 sticker given to creator
         batch.set(activityViewsDoc, {counter: 0});
 
+        const feedObj = {creatorID: uid, dateCreated: dateCreated};
         // feed
-        batch.set(profileFeedDoc, {dateCreated: dateCreated})
-        batch.set(exploreFeedDoc, {dateCreated: dateCreated})
+        batch.set(profileFeedDoc, feedObj)
+        batch.set(exploreFeedDoc, feedObj)
 
         //User sticker collection
         const collection: Collection = new Collection(uid, uid, pid, dateCreated.getTime());
@@ -154,25 +153,21 @@ export class PostService {
 
         //Update Activity
         batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
-                      {counter: firebase.default.firestore.FieldValue.increment(1),
+                      {counter: firebase.firestore.FieldValue.increment(1),
                         cid: cid}); //user
-        batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
-                      {counter: firebase.default.firestore.FieldValue.increment(1),
-                        cid: cid}); //post
 
         await batch.commit()
                     .then(() => subs.unsubscribe())
                     .catch(async (e) => {
-                      success =  false;
-                    });
+                      console.log('Post creation failed:', e);
+                      this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",'Okay', undefined, ['default', 'reject']));
+                    })
+                    .finally(() => this.miscellaneousService.endLoading());
+      }, e => {
+        console.log('Post creation failed:', e);
+      this.miscellaneousService.endLoading();
+      this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",'Okay', undefined, ['default', 'reject']));
       });
-    } catch (e) {
-      console.log('Post creation failed:', e);
-      success =  false;
-    }
-    this.miscellaneousService.endLoading();
-    if (!success) this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",'Okey', undefined, ['default', 'reject']));
-    return success;
   }
 
   // --------------------------------------- Error handling ---------------------------------------

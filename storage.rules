@@ -11,15 +11,13 @@ service firebase.storage {
     }
 
     function writePost() {
-      return isSignedIn()
-            && request.resource.metadata.uid == request.auth.uid
+      return isUser(request.resource.metadata['uid'])
             && isValidSize(80)
             && (isValidType('image/.*') || isValidType('video/.*'));
     }
 
     function writeSticker() {
-      return isSignedIn()
-            && request.resource.metadata.uid == request.auth.uid
+      return isUser(request.resource.metadata['uid'])
             && isValidSize(15)
             && isValidType('image/.*');
     }
@@ -38,7 +36,7 @@ service firebase.storage {
 
     //Check if content size is smaller than allowed size
     function isValidSize(allowedSize) { //allowedSize in MB
-      return request.resource.size <= allowedSize * 1024 * 1024
+      return request.resource.size <= allowedSize * 1024 * 1024;
     }
 
     //check if content type matches allowed type
@@ -46,21 +44,23 @@ service firebase.storage {
       return request.resource.contentType.matches(allowedType);
     }
 
-    match /display%20pictures/{uid}/{anything} {
+    match /display%20pictures/{uid}/original {
       allow read: if true;
       allow write: if writeDP(uid);
     }
 
-    match /posts/{pid}/{anything} {
+    match /posts/{pid}/original {
       allow read: if true;
-      allow write: if writePost();
-      allow update: if false;
+      // allow create: if true;
+      allow create: if writePost();
+      allow update, delete: if false;
     }
 
-    match /stickers/{pid}/{anything} {
+    match /stickers/{pid}/original {
       allow read: if true;
-      allow write: if writeSticker();
-      allow update: if false;
+      // allow create: if true;
+      allow create: if writeSticker();
+      allow update, delete: if false;
     }
   }
 }

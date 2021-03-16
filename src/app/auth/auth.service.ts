@@ -10,7 +10,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { first } from 'rxjs/operators';
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/firestore'
 import { Collection } from '../shared/activity.model';
 
@@ -188,7 +188,7 @@ export class AuthService {
     batch.set(activityCollectedDoc, metrics);
     batch.set(activityViewsDoc, metrics);
     batch.set(exclusiveUserDoc, exclusiveObj);
-    batch.update(exclusiveIdDoc, {used: firebase.default.firestore.FieldValue.increment(1)});
+    batch.update(exclusiveIdDoc, {used: firebase.firestore.FieldValue.increment(1)});
 
     //Alpha sticker collection
     const collection: Collection = new Collection(uid,
@@ -209,10 +209,10 @@ export class AuthService {
 
     //Update Activity
     batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
-                  {counter: firebase.default.firestore.FieldValue.increment(1),
+                  {counter: firebase.firestore.FieldValue.increment(1),
                     cid: cid}); //user
     batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
-                  {counter: firebase.default.firestore.FieldValue.increment(1),
+                  {counter: firebase.firestore.FieldValue.increment(1),
                     cid: cid}); //post
 
     await batch.commit()

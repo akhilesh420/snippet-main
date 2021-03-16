@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable, forkJoin, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './../shared/post.model';
@@ -7,7 +7,6 @@ import { NgForm } from '@angular/forms';
 import { PostService } from '../shared/post.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivityService } from '../shared/activity.service';
-import { Collection } from '../shared/activity.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -210,7 +209,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       }
 
       const dimensions = await this.miscellaneousService.getDimension(this.storageFile, this.storageFile.type);
-      this.contentMetadata = new CustomMetadata(dimensions.width, dimensions.height, this.uid);
+      this.contentMetadata = new CustomMetadata(this.uid, dimensions.width, dimensions.height);
 
       this.error = undefined;
       ++this.stepCounter;
@@ -252,7 +251,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
 
       const dimensions = await this.miscellaneousService.getDimension(this.stickerContent, this.stickerContent.type);
-      this.stickerMetadata = new CustomMetadata(dimensions.width, dimensions.height, this.uid);
+      this.stickerMetadata = new CustomMetadata(this.uid, dimensions.width, dimensions.height);
 
       if (!Number.isInteger(this.amount)) {
         this.error = "Number of stickers must be whole numbers!";

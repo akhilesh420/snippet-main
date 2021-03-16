@@ -27,10 +27,6 @@ export class ProfileTabComponent implements OnInit {
 
     this.profileStickersLoaded = false;
     this.username$ = this.usersService.getUsername(this.uid);
-    this.username$.pipe(takeUntil(this.notifier$))
-      .subscribe(response => {
-       console.log(response);
-      });
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
     this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
       .subscribe(response => {

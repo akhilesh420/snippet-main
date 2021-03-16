@@ -54,7 +54,7 @@ export class PostComponent implements OnInit, OnDestroy {
   buffering: boolean = false;
   check: boolean = false;
 
-  postCollection: Holder[];
+  holderList: Holder[];
 
   mobileCheck: boolean;
   tabletCheck: boolean;
@@ -118,7 +118,6 @@ export class PostComponent implements OnInit, OnDestroy {
     const height = this.post.nativeElement.offsetHeight;
     const midPoint = rect.top + height/2;
     this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
-    if (this.postFocus) console.log(this.pid);
     if (this.postFocus && this.activePost != this.pid) this.feedService.currentPost.next(this.pid);
   }
 
@@ -149,9 +148,9 @@ export class PostComponent implements OnInit, OnDestroy {
       });
 
     // post collection list
-    this.activityService.getPostCollection(this.pid).pipe(takeUntil(this.notifier$))
+    this.activityService.getHolderList(this.pid).pipe(takeUntil(this.notifier$))
      .subscribe(response => {
-        this.postCollection = response;
+        this.holderList = response;
         this.collectionLoaded.next(true);
       });
 
@@ -261,8 +260,8 @@ export class PostComponent implements OnInit, OnDestroy {
 
         this.myUid = user.uid;
 
-        for (let key in this.postCollection) {
-          if (this.postCollection[key].collectorID === this.myUid) {
+        for (let key in this.holderList) {
+          if (this.holderList[key].collectorID === this.myUid) {
             this.stickerCollectionState = -1; //reject
             const popUpObj = new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']);
             this.miscellaneousService.setPopUp(popUpObj);

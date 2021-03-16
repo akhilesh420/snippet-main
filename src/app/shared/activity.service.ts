@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 import { map } from 'rxjs/operators';
 import { Collection } from './activity.model';
 
@@ -28,7 +28,7 @@ export class ActivityService {
   //update activity for view or collection
   async updateActivity(type: string, id: string) {
     this.afs.firestore.doc('activity/'+ id + '/metrics/' + type)
-          .update({counter: firebase.default.firestore.FieldValue.increment(1)});
+          .update({counter: firebase.firestore.FieldValue.increment(1)});
   }
 
   getActivityCollection(id: string) {
@@ -45,7 +45,7 @@ export class ActivityService {
   // vieweeID: UID of the person whose post was viewed
   async addViews(pid: string, vieweeID: string, viewerID: string = 'anonymous') {
     const viewsObj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
-    const activityObj = {counter: firebase.default.firestore.FieldValue.increment(1)};
+    const activityObj = {counter: firebase.firestore.FieldValue.increment(1)};
 
     const vid = this.afs.createId();
     const batch = this.afs.firestore.batch();
@@ -83,10 +83,10 @@ export class ActivityService {
 
     //Update Activity
     batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
-                  {counter: firebase.default.firestore.FieldValue.increment(1),
+                  {counter: firebase.firestore.FieldValue.increment(1),
                     cid: cid}); //user
     batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
-                  {counter: firebase.default.firestore.FieldValue.increment(1),
+                  {counter: firebase.firestore.FieldValue.increment(1),
                     cid: cid}); //post
 
     // Collection analytics
@@ -119,8 +119,8 @@ export class ActivityService {
   }
 
   // get collection by pid
-  getPostCollection(pid: string) {
-    return this.afs.collection<{cid: Date, timeStamp: string}>('posts/' + pid + '/holders', ref => ref.orderBy('timeStamp', 'desc')).valueChanges({idField: 'collectorID'});
+  getHolderList(pid: string) {
+    return this.afs.collection<{cid: Date, timeStamp: string}>('posts/' + pid + '/holders', ref => ref.orderBy('timeStamp')).valueChanges({idField: 'collectorID'});
   }
 
   // add analytics

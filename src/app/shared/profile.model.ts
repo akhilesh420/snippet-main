@@ -24,8 +24,11 @@ export class ProfileSticker {
 export class DisplayPicture {
 
   constructor(
+    public name: string,
+    public width: number,
+    public height: number,
+    public fileFormat: string = 'image',
     public dateCreated: Date,
-    public fileFormat: string
   ) {}
 }
 

@@ -2,8 +2,7 @@ export class PostDetails {
 
   constructor(
     public title: string,
-    public description : string,
-    public pid?: string
+    public description : string
   ) { }
 
 }
@@ -12,6 +11,8 @@ export class PostContent {
 
   constructor(
     public name: string,
+    public width: number,
+    public height: number,
     public fileFormat: string = 'image'
   ) {}
 }
@@ -45,9 +46,9 @@ export class Holder {
 export class CustomMetadata {
 
   constructor(
+    public uid: string,
     public width: number,
-    public height: number,
-    public uid: string
+    public height: number
   ) {}
 }
 

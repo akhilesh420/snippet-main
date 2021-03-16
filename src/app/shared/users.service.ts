@@ -4,6 +4,7 @@ import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoar
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { CustomMetadata } from './post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +57,8 @@ export class UsersService {
     return this.afs.doc<any>('profile stickers/' + uid).valueChanges()
               .pipe(map(response => {
                 if (!response) return {stickers: [null,null,null,null,null]};
-                response.stickers.forEach(sticker => {
-                  if (!sticker || sticker === 'empty') sticker = null;
+                response.stickers.forEach((sticker, index) => {
+                   if (!sticker || sticker === 'empty') response.stickers[index] = null;
                 });
                 const res: {stickers: ProfileSticker[]} = response;
                 return res;
@@ -88,14 +89,17 @@ export class UsersService {
     this.displayPictureCollection.doc(uid).update(dp);
   }
 
+   // get display picture from cloud firestore
+   getDisplayPictureRef(uid: string) {
+    return this.afs.doc('display picture/' + uid).valueChanges();
+  }
+
   // Get display picture from firebase storage by UID
   getDisplayPicture(uid: string) {
     const ref = this.storage.ref('display pictures/' + uid +'/small');
     return ref.getDownloadURL().pipe(
       startWith(this.placeholderDP),
       catchError(err => {
-        console.log('Error retrieving small sized dp');
-        console.log('Retrieving full sized dp');
         const ref = this.storage.ref('display pictures/' + uid +'/original');
         return ref.getDownloadURL().pipe(
           startWith(this.placeholderDP),
@@ -107,10 +111,12 @@ export class UsersService {
 
 
    // Update display picture from firebase storage
-   updateDisplayPicture(uid: string, content: any) {
+   updateDisplayPicture(uid: string, content: any, customMetadata: CustomMetadata) {
     const file = content;
-    const filePath = 'Display picture/' + uid;
-    const task = this.storage.upload(filePath, file);
+    const filePath = 'display pictures/' + uid +'/original';
+    const ref = this.storage.ref(filePath);
+    const metadataUp = {contentType: file.type, ...customMetadata};
+    const task = ref.put(file, metadataUp);
     return task.percentageChanges();
   }
 

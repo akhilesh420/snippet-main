@@ -135,8 +135,8 @@
 
       <ul class = "holderSpace">
 
-          <li *ngFor='let collection of postCollection | reverse;'>
-            <app-holder [uid]='collection.collectorID'> </app-holder>
+          <li *ngFor='let holder of holderList'>
+            <app-holder [uid]='holder.collectorID'> </app-holder>
           </li>
 
       </ul>
