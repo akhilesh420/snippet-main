@@ -11,14 +11,12 @@ service firebase.storage {
     }
 
     function writePost() {
-      return isUser(request.resource.metadata['uid'])
-            && isValidSize(80)
+      return isValidSize(80)
             && (isValidType('image/.*') || isValidType('video/.*'));
     }
 
     function writeSticker() {
-      return isUser(request.resource.metadata['uid'])
-            && isValidSize(15)
+      return isValidSize(15)
             && isValidType('image/.*');
     }
 

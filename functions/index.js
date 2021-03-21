@@ -182,7 +182,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  filePath = 'Post/' + `sm_${fileName}`;
+  filePath = 'stickers/' + fileName + '/small';
 
   if (contentType.startsWith('image/gif')) {
     outputFilePath1 =  path.join(os.tmpdir(), 'resized.gif');
@@ -266,7 +266,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  filePath = 'Display picture/' + `sm_${fileName}`;
+  filePath = 'display pictures/' + fileName + '/small';
 
   const args1 = ['-i',
                   tempFilePath,

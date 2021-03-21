@@ -79,7 +79,7 @@ export class ActivityService {
     const collectionObj = {cid: cid, timeStamp: collection.timeStamp };
 
     batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
-    batch.set(this.afs.firestore.doc('holder list/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+    batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
 
     //Update Activity
     batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),

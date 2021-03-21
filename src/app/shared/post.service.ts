@@ -108,24 +108,28 @@ export class PostService {
 
         const batch = this.afs.firestore.batch();
 
+        // Post
+        const postsDoc = this.afs.firestore.doc('posts/'+pid);
         const postDetailsDoc = this.afs.firestore.doc('post details/'+pid);
         const postContentDoc = this.afs.firestore.doc('post content/'+pid);
         const stickerDetailsDoc = this.afs.firestore.doc('sticker details/'+pid);
         const stickerContentDoc = this.afs.firestore.doc('sticker content/'+pid);
 
-        const activityPrivateDoc = this.afs.firestore.doc('activity/'+uid+'/private/details');
-        const activityCollectedDoc = this.afs.firestore.doc('activity/'+uid+'/metrics/collected');
-        const activityViewsDoc = this.afs.firestore.doc('activity/'+uid+'/metrics/views');
+        const activityPrivateDoc = this.afs.firestore.doc('activity/'+pid+'/private/details');
+        const activityCollectedDoc = this.afs.firestore.doc('activity/'+pid+'/metrics/collected');
+        const activityViewsDoc = this.afs.firestore.doc('activity/'+pid+'/metrics/views');
+        // -----
 
+        // user
         const profileFeedDoc = this.afs.firestore.doc('feed/'+uid+'/posts/'+pid);
         const exploreFeedDoc = this.afs.firestore.doc('feed/explore/global/'+pid);
+        // -----
 
         // post
         batch.set(postDetailsDoc, {...postDetails});
         batch.set(postContentDoc, {...new PostContent(pid, postMeta.width, postMeta.height, postFile.type)});
         batch.set(stickerDetailsDoc, {...stickerDetails});
         batch.set(stickerContentDoc, {...new PostContent(pid, stickerMeta.width, stickerMeta.height, stickerFile.type)});
-        batch.set(postDetailsDoc, {...postDetails});
 
         // activity
         batch.set(activityPrivateDoc, {id: pid, type: 'post'});
@@ -134,10 +138,11 @@ export class PostService {
 
         const feedObj = {creatorID: uid, dateCreated: dateCreated};
         // feed
-        batch.set(profileFeedDoc, feedObj)
-        batch.set(exploreFeedDoc, feedObj)
+        batch.set(profileFeedDoc, feedObj);
+        batch.set(exploreFeedDoc, feedObj);
+        batch.set(postsDoc, feedObj);
 
-        //User sticker collection
+        //Creator sticker collection
         const collection: Collection = new Collection(uid, uid, pid, dateCreated.getTime());
 
         const cid = this.afs.createId();
@@ -149,7 +154,7 @@ export class PostService {
         const collectionObj = {cid: cid, timeStamp: collection.timeStamp };
 
         batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
-        batch.set(this.afs.firestore.doc('holder list/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+        batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
 
         //Update Activity
         batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
@@ -160,7 +165,10 @@ export class PostService {
                     .then(() => subs.unsubscribe())
                     .catch(async (e) => {
                       console.log('Post creation failed:', e);
-                      this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",'Okay', undefined, ['default', 'reject']));
+                      this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",
+                                                                   'Okay',
+                                                                   undefined,
+                                                                   ['default', 'reject']));
                     })
                     .finally(() => this.miscellaneousService.endLoading());
       }, e => {
