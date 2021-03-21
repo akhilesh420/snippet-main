@@ -74,7 +74,7 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   const newValue = snap.data();
   const fileName = newValue.name;
   const contentType = newValue.fileFormat;
-  const dimensions = {width: newValue.width, height: newValue.height};
+  const dimensions = {width: newValue.width.toString(), height: newValue.height.toString()};
 
   functions.logger.info('File name:', fileName);
   functions.logger.info('File type:', contentType);
@@ -146,9 +146,10 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   functions.logger.info('finished processing');
   functions.logger.info('uploading to storage', filePath);
 
-  await bucket.upload(outputFilePath, { destination: filePath, metadata: { contentType: contentType, ...dimensions} })
+  const _metadata = { contentType: contentType, metadata: dimensions};
+  await bucket.upload(outputFilePath, { destination: filePath, metadata: _metadata})
           .catch((e) => functions.logger.info(e));
-  functions.logger.info('uploaded to storage');
+  functions.logger.info('uploaded to storage with metadata', _metadata);
   finishUp(unlinkPaths);
 });
 
@@ -219,9 +220,10 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
 
-  await bucket.upload(outputFilePath2, { destination: filePath, metadata: { contentType: contentType, ...dimensions} })
+  const _metadata = { contentType: contentType, metadata: dimensions};
+  await bucket.upload(outputFilePath2, { destination: filePath, metadata: _metadata})
           .catch((e) => functions.logger.info(e));
-  functions.logger.info('uploaded to storage');
+  functions.logger.info('uploaded to storage with metadata', _metadata);
   finishUp(unlinkPaths);
 });
 
@@ -293,17 +295,19 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
 
-  await bucket.upload(outputFilePath2, { destination: filePath,
-                                         metadata: { contentType: contentType, ...dimensions} })
+  const _metadata = { contentType: contentType, metadata: dimensions};
+  await bucket.upload(outputFilePath2, { destination: filePath, metadata: _metadata})
           .catch((e) => functions.logger.info(e));
-  functions.logger.info('uploaded to storage');
+  functions.logger.info('uploaded to storage with metadata', _metadata);
   finishUp(unlinkPaths);
 });
 
 function getDimensions(width, height, dimension) {
   if (width == 0 || height == 0) return;
-  if (width > height) return {width: dimension * (width/height), height: dimension};
-  return {width: dimension, height: dimension * (height/width)};
+  var _dimensions;
+  if (width > height) _dimensions  = {width: dimension * (width/height), height: dimension};
+  _dimensions = {width: dimension, height: dimension * (height/width)};
+  return {width: _dimensions.width.toString(), height: _dimensions.height.toString()};
 }
 
 function finishUp(unlinkPaths) {

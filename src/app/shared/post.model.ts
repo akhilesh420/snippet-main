@@ -47,8 +47,8 @@ export class CustomMetadata {
 
   constructor(
     public uid: string,
-    public width: number,
-    public height: number
+    public width: string,
+    public height: string
   ) {}
 }
 

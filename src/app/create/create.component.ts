@@ -209,7 +209,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       }
 
       const dimensions = await this.miscellaneousService.getDimension(this.storageFile, this.storageFile.type);
-      this.contentMetadata = new CustomMetadata(this.uid, dimensions.width, dimensions.height);
+      this.contentMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
 
       this.error = undefined;
       ++this.stepCounter;
@@ -251,7 +251,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
 
       const dimensions = await this.miscellaneousService.getDimension(this.stickerContent, this.stickerContent.type);
-      this.stickerMetadata = new CustomMetadata(this.uid, dimensions.width, dimensions.height);
+      this.stickerMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
 
       if (!Number.isInteger(this.amount)) {
         this.error = "Number of stickers must be whole numbers!";

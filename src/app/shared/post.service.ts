@@ -53,7 +53,7 @@ export class PostService {
     const file = content;
     const filePath = 'posts/'+pid+'/original';
     const ref = this.storage.ref(filePath);
-    const metadataUp = {contentType: file.type, ...customMetadata};
+    const metadataUp = {contentType: file.type, customMetadata: {...customMetadata}};
     console.log(metadataUp);
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
@@ -79,7 +79,7 @@ export class PostService {
     const file = content;
     const filePath = 'stickers/'+pid+'/original';
     const ref = this.storage.ref(filePath);
-    const metadataUp = {contentType: file.type, ...customMetadata};
+    const metadataUp = {contentType: file.type, customMetadata: {...customMetadata}};
     console.log(metadataUp);
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
@@ -127,9 +127,9 @@ export class PostService {
 
         // post
         batch.set(postDetailsDoc, {...postDetails});
-        batch.set(postContentDoc, {...new PostContent(pid, postMeta.width, postMeta.height, postFile.type)});
+        batch.set(postContentDoc, {...new PostContent(pid, +postMeta.width, +postMeta.height, postFile.type)});
         batch.set(stickerDetailsDoc, {...stickerDetails});
-        batch.set(stickerContentDoc, {...new PostContent(pid, stickerMeta.width, stickerMeta.height, stickerFile.type)});
+        batch.set(stickerContentDoc, {...new PostContent(pid, +stickerMeta.width, +stickerMeta.height, stickerFile.type)});
 
         // activity
         batch.set(activityPrivateDoc, {id: pid, type: 'post'});

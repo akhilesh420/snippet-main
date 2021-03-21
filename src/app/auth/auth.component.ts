@@ -1,10 +1,10 @@
 import { UsersService } from './../shared/users.service';
 import { ProfileDetails, PersonalDetails, DisplayPicture, Credential } from './../shared/profile.model';
-import { Subject, Subscription } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthService, ExclusiveID } from './auth.service';
+import { AuthService } from './auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 

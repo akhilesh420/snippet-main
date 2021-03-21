@@ -225,7 +225,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
       message = "Profile updating! Feel free to explore but please don't close the tab while your dp is being processed";
 
       const dimensions = await this.miscellaneousService.getDimension(this.displayPicture, this.displayPicture.type);
-      const metadata = new CustomMetadata(this.uid, dimensions.width, dimensions.height);
+      const metadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
 
       this.miscellaneousService.startLoading();
       this.displayPicture$ = new Observable(observer => observer.next(this.updatedDP));
@@ -234,8 +234,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
         if (response === 100) {
           this.usersService.updateDisplayPictureRef(this.uid,
                                                     new DisplayPicture(this.uid,
-                                                                       metadata.width,
-                                                                       metadata.height,
+                                                                       +metadata.width,
+                                                                       +metadata.height,
                                                                        this.displayPicture.type,
                                                                        new Date()));
           this.miscellaneousService.endLoading();

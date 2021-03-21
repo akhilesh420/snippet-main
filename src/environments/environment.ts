@@ -16,7 +16,7 @@ export const environment = {
   },
   onBoardingPid: 'nJSSYrYmNWOf2zugcZtj',
   onBoardingUid: '3otbaSiaIwcbSxXDcxqFLlqxIHR2',
-  websitePath: 'https://snippet-test-716cd.web.app'
+  websitePath: 'https://snippet-test2.web.app/'
 };
 
 /*

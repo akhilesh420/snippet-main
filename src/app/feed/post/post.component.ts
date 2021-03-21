@@ -132,12 +132,13 @@ export class PostComponent implements OnInit, OnDestroy {
     });
 
     this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
+      console.log(response);
       this.postType = response.contentType;
-      this.postAspectRatio = response.customMetadata.height/response.customMetadata.width;
+      this.postAspectRatio = (+response.customMetadata.height)/(+response.customMetadata.width);
       setTimeout(() => {
         this.videoToggle();
       },300);
-    });
+    }, error => console.log(error));
 
     this.postDetails$ = this.postService.getPostDetails(this.pid);;
 
@@ -163,7 +164,8 @@ export class PostComponent implements OnInit, OnDestroy {
         this.setUpEngagement();
       });
     this.activityService.getActivityViews(this.pid).pipe(takeUntil(this.notifier$))
-      .subscribe(response => this.views = response.counter);
+      .subscribe(response => this.views = response.counter,
+                 error => console.log(error));
   }
 
   postView() {
