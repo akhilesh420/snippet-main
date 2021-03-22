@@ -58,8 +58,9 @@ export class FeedComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+
     const emptyFeed = new Feed(undefined, undefined, undefined);
-    this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed, emptyFeed]);
+    this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed]);
 
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.isAuthenticated = !!response;
@@ -105,6 +106,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     if (currentRoute === this.lastRoute) return;
     this.lastRoute = currentRoute;
     currentRoute = currentRoute.split('/')[1]; //get parent route
+
     this.showProfileDisplay = false;
     this.showProfileNavigation = false;
     this.done = true;
