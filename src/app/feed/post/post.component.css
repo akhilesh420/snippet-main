@@ -99,7 +99,7 @@ p {
   font-family: 'ChampagneAndLimousines';
   font-style: normal;
   font-weight: bold;
-  font-size: calc(16px * var(--norm-height));
+  font-size: calc(18px * var(--norm-height));
   line-height: calc(20px * var(--norm-height));
   color: rgba(255, 255, 255, 0.9);
   word-wrap: break-word;
@@ -113,9 +113,10 @@ p {
 
   height: 4.8vh;
   width: 12vh;
-  bottom: calc(22px * var(--norm-height));
+  bottom: calc(24px * var(--norm-height));
   position: absolute;
   left: 1%;
+
 
 }
 
@@ -130,7 +131,7 @@ p {
 .metricLabels {
   height: 40%;
   width: 100%;
-  font-size: 1.2vh;
+  font-size: 1.6vh;
   text-align: center;
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
@@ -175,6 +176,7 @@ p {
   font-size: calc(16px * var(--norm-height));
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
+  letter-spacing: 0.05em;
   color: #E2B33D;
   padding-left: 12px;
   padding-bottom: 25px;
@@ -258,7 +260,7 @@ li {
     padding-left: 11px;
     padding-top: 10px;
     line-height: 18px;
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .dropdownButton {
@@ -277,7 +279,7 @@ li {
   }
  
   .postDescription {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
