@@ -21,7 +21,6 @@
   width: calc(68px * var(--norm-height));
   min-width: 60px;
   min-height: 60px;
-  background-color: white;
   margin-left: calc(10px * var(--norm-width));
   border-radius: 50%;
   display: inline-block;

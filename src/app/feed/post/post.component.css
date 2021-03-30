@@ -26,11 +26,11 @@ p {
 .postContent {
   width: 100%;
   min-height: calc(400px * var(--norm-height));
-  max-height: calc(850px * var(--norm-height));
+  max-height: calc(800px * var(--norm-height));
   background-color: #C4C4C4;
   position: relative;
-  /* border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px; */
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -113,7 +113,7 @@ p {
 
   height: 4.8vh;
   width: 10vh;
-  bottom: calc(6px * var(--norm-height));
+  bottom: calc(22px * var(--norm-height));
   position: absolute;
   left: 1%;
 
@@ -125,6 +125,16 @@ p {
   width: 100%;
   text-align: center;
 
+}
+
+.metricLabels {
+  height: 40%;
+  width: 100%;
+  font-size: 1.2vh;
+  text-align: center;
+  font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
+  color: #ffffff;  
 }
 
 .sizeSVG{
@@ -142,12 +152,14 @@ p {
   text-align: center;
   padding-top: 1%;
   font-family: 'ChampagneAndLimousines';
+  font-weight: bold;
   color: #ffffff;
 
 }
 
 .holderList {
-  width: calc(300px * var(--norm-width));
+  width: calc(360px * var(--norm-width));
+  max-width: 320px;
   height: 70%;
   /* set proper max-height, this value is arbitrary */
   max-height: 300px;

@@ -21,7 +21,6 @@
   width: calc(48px * var(--norm-height));
   min-width: 48px;
   min-height: 48px;
-  background-color: #FFFFFF;
   margin-left: calc(4px * var(--norm-width));
   border-radius: 50%;
   display: inline-block;
