@@ -112,7 +112,7 @@ p {
 .postMetrics {
 
   height: 4.8vh;
-  width: 10vh;
+  width: 12vh;
   bottom: calc(22px * var(--norm-height));
   position: absolute;
   left: 1%;
@@ -162,10 +162,9 @@ p {
   max-width: 320px;
   height: 70%;
   max-height: 360px;
-  background-color: #0b0b0b;
-  position: absolute;
   border-radius: 10px;
-  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
+  background: rgba(11, 11, 11, 0.90);
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
 
 }
@@ -174,7 +173,7 @@ p {
 
   height: 20px;
   font-size: calc(16px * var(--norm-height));
-  font-family: 'Comfortaa';
+  font-family: 'ChampagneAndLimousines';
   font-weight: bold;
   color: #E2B33D;
   padding-left: 12px;
@@ -288,9 +287,7 @@ li {
     min-height: 28px;
   }
 
-
   .engagementBar {
-    border-top-left-radius: 0px;
     height: 6px;
   }
 
@@ -306,6 +303,12 @@ li {
   .postSticker {
     max-width: 76px;
     max-height: 76px;
+  }
+
+  .postMetrics {
+
+    bottom: calc(18px * var(--norm-height));
+
   }
 
 }

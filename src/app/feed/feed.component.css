@@ -187,7 +187,7 @@
     height: auto;
     padding-bottom: 10%;
     min-width: unset;
-    max-width: 400px;
+    max-width: unset;
   }
 
   .feed-container {
