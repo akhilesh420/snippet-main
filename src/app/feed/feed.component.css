@@ -18,7 +18,7 @@
 .post-container {
   height: auto;
   width: calc(440px * var(--norm-width));
-  max-width: 420px;
+  max-width: 440px;
   min-width: 385px;
   padding-bottom: 5.444vh;
   overflow: hidden;
