@@ -135,7 +135,10 @@
     </div>
 
     <!-- Holder list -->
-    <div class="holderList fade-in-top"
+    <div 
+        #holderList 
+        [ngStyle]='{"margin-left": ((contentContainer.offsetWidth - holderList.offsetWidth)/2).toString() + "px"}'
+        class="holderList fade-in-top"
         *ngIf="showDetails"
         (click)='holderAnalytics(); stopPropagation($event)'>
 

@@ -161,12 +161,9 @@ p {
   width: calc(360px * var(--norm-width));
   max-width: 320px;
   height: 70%;
-  /* set proper max-height, this value is arbitrary */
-  max-height: 300px;
+  max-height: 360px;
   background-color: #0b0b0b;
   position: absolute;
-  /* left: 50%; */
-  /* transform: translate(-50%,0%); */
   border-radius: 10px;
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
