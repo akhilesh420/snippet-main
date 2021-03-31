@@ -43,6 +43,7 @@
             [src]='content'
             [ngClass]="{'opacity-out-details': !showDetails,
                         'opacity-in-details': showDetails}"
+            (load)="onLoad()"
             *ngIf='postType.includes("video")'>
       </video>
     </div>

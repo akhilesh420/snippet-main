@@ -121,8 +121,8 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   onLoad() {
-    console.log('load');
     this.miscellaneousService.showInitialLoader.next(false);
+    this.postInFrame();
   }
 
   postInFrame() {
@@ -138,11 +138,6 @@ export class PostComponent implements OnInit, OnDestroy {
     if (!this.pid) return;
 
     this.postContent$ = this.postService.getPostContent(this.pid);
-    this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(() => {
-      setTimeout(() => {
-        this.postInFrame();
-      },300);
-    });
 
     this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
       this.postType = response.contentType;
