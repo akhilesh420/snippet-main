@@ -38,6 +38,9 @@ export class AppComponent implements OnInit, OnDestroy {
   profileStickerEdit: boolean = false;
   showDashboard: boolean = false;
 
+  showInitialLoader: boolean = true;
+  initialLoadingRoutes: string[] = ['','explore','profile','collection','post'];
+
   preloadImages = ['/assets/images/Header%20Icons/createButtonActive.svg',
                    '/assets/images/Header%20Icons/createButtonInactive.svg',
                    '/assets/images/Header%20Icons/exploreActive.svg',
@@ -72,7 +75,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
+    this.miscellaneousService.showInitialLoader.pipe(take(2))
+    .subscribe(val => {
+      console.log(val);
+      this.showInitialLoader = val;
+      this.modalState.next(val);
+    })
+
     this.activityService.collectionStartTime = new Date().getTime();
     this.activityService.holderListStartTime = new Date().getTime();
     this.miscellaneousService.preloadImages(this.preloadImages);
@@ -93,6 +102,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
+      console.log(this.currentRoute.split('/')[1]);
+      if (!this.initialLoadingRoutes.includes(this.currentRoute.split('/')[1])) this.miscellaneousService.showInitialLoader.next(false);
       this.miscellaneousService.showDashboard.next(false);
       this.activityService.collectionStartTime = new Date().getTime();
       this.activityService.holderListStartTime = new Date().getTime();

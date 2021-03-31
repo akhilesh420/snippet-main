@@ -3,6 +3,48 @@
   --norm-height: 1;
 }
 
+.initial-loader {
+  height:100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000000;
+  left:0;right:0;top:0;bottom:0;
+  z-index: 99;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.init-loading-bar {
+  border-top: 2px solid #E2B33D;
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  -webkit-animation-name: initLoadingAnim;
+          animation-name: initLoadingAnim;
+  -webkit-animation-duration: 15s;
+          animation-duration: 15s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  z-index: 100;
+}
+
+@-webkit-keyframes initLoadingAnim {
+  from { width: 0; };
+  to { width: 100vw; };
+}
+
+@keyframes initLoadingAnim {
+  from { width: 0; };
+  to { width: 100vw; };
+}
+
 .master-container{
   height:100%;
   width: 100%;

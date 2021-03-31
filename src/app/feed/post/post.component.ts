@@ -120,6 +120,11 @@ export class PostComponent implements OnInit, OnDestroy {
     this.setUpPost();
   }
 
+  onLoad() {
+    console.log('load');
+    this.miscellaneousService.showInitialLoader.next(false);
+  }
+
   postInFrame() {
     if (!this.post) return;
     const rect = this.post.nativeElement.getBoundingClientRect();

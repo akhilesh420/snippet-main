@@ -34,6 +34,7 @@
             alt="post content"
             [ngClass]="{'opacity-out-details': !showDetails,
                         'opacity-in-details': showDetails}"
+            (load)="onLoad()"
             *ngIf='postType.includes("image")'>
       <video class='post-content fit-cover'
             loop

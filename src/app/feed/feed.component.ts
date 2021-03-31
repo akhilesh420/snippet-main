@@ -58,7 +58,6 @@ export class FeedComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-
     const emptyFeed = new Feed(undefined, undefined, undefined);
     this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed]);
 

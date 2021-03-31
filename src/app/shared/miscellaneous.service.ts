@@ -48,10 +48,11 @@ export class MiscellaneousService {
   showDashboard = new Subject<boolean>();
   overrideEdit = new Subject<boolean>(); //true => both profile and sticker edit, false => just profile edit
 
+  showInitialLoader = new BehaviorSubject<boolean>(true);
+
   images = [];
 
-  constructor(private userService: UsersService,
-              private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
     this.loadingStart.next(false);
