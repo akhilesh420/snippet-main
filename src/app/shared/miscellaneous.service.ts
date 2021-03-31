@@ -180,7 +180,6 @@ export class MiscellaneousService {
             var video = document.createElement("video");
             video.setAttribute("src", event.target.result);
             video.onloadedmetadata = () => {
-              console.log('metadata loaded');
               width = video.videoWidth;
               height = video.videoHeight;
               resolve({width: width, height: height});
