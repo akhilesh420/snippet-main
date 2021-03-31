@@ -30,7 +30,10 @@ const appRoutes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, {scrollPositionRestoration: 'enabled'})],
+  imports: [RouterModule.forRoot(appRoutes, {
+    // Enable the Angular 6+ router features for scrolling and anchors.
+		scrollPositionRestoration: "enabled",
+		anchorScrolling: "enabled"})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
