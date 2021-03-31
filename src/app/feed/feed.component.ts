@@ -94,10 +94,10 @@ export class FeedComponent implements OnInit, OnDestroy {
 
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
 
-    this.getPosts(this.router.url);
+    this.getPosts(this.router.url.split('/')[1].split('#')[0]);
 
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.getPosts(this.router.url);
+      this.getPosts(this.router.url.split('/')[1].split('#')[0]); //get parent route
     });
 
   }
@@ -105,8 +105,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   getPosts(currentRoute: string) {
     if (currentRoute === this.lastRoute) return;
     this.lastRoute = currentRoute;
-    currentRoute = currentRoute.split('/')[1]; //get parent route
-
+    console.log(currentRoute);
     this.showProfileDisplay = false;
     this.showProfileNavigation = false;
     this.done = true;

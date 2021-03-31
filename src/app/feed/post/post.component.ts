@@ -1,5 +1,5 @@
 import { FeedService } from 'src/app/feed/feed.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject,Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { PostService } from './../../shared/post.service';
 import { Holder, PostDetails, StickerDetails} from './../../shared/post.model';
@@ -81,7 +81,8 @@ export class PostComponent implements OnInit, OnDestroy {
               private feedService: FeedService,
               private windowStateService: WindowStateService,
               private miscellaneousService: MiscellaneousService,
-              private router: Router) { }
+              private router: Router,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -96,7 +97,7 @@ export class PostComponent implements OnInit, OnDestroy {
       val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
       const windowHeight = window.innerHeight;
       this.frameOffset = this.mobileCheck ? 0 : 54 + 5.444*windowHeight/100;
-      this.frameHeight = this.mobileCheck ? 4*windowHeight/5 : 625*this.windowStateService.normHeight;
+      this.frameHeight = this.mobileCheck ? 3*windowHeight/5 : 625*this.windowStateService.normHeight;
     });
 
     this.feedService.currentPost.pipe(takeUntil(this.notifier$))
@@ -126,7 +127,10 @@ export class PostComponent implements OnInit, OnDestroy {
     const height = this.post.nativeElement.offsetHeight;
     const midPoint = rect.top + height/2;
     this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
-    if (this.postFocus && this.activePost != this.pid) this.feedService.currentPost.next(this.pid);
+    if (this.postFocus && this.activePost != this.pid) {
+      this.feedService.currentPost.next(this.pid);
+      this.router.navigate([], { relativeTo: this.activatedRoute, fragment: this.pid });
+    }
   }
 
   setUpPost() {

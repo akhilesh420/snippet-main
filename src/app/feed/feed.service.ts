@@ -15,9 +15,7 @@ export class FeedService {
   currentPost = new BehaviorSubject<string>(undefined);
   mutePosts = new BehaviorSubject<boolean>(false);
 
-  constructor(private afs: AngularFirestore) {
-
-   }
+  constructor(private afs: AngularFirestore) {}
 
   // get explore page
   getExplorePage() {

@@ -20,6 +20,8 @@ html, body {
   -ms-user-select: none;      /* IE 10+ */
   user-select: none;          /* Likely future */
   outline: none;
+
+  scroll-behavior: smooth;
 }
 
 ::-moz-scrollbar,

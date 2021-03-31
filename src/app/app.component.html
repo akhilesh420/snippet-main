@@ -1,6 +1,7 @@
 <div class="master-container"
   (window:resize)="onResize()"
-  (window:scroll)="onWindowScroll($event)">
+  (window:scroll)="onWindowScroll($event)"
+  (window:touchend)="onTouchEnd($event)">
 
   <div class='spacing' [ngClass]='{"dashboard-bck-mobile": showDashboard && tabletCheck}'>
     <router-outlet></router-outlet>

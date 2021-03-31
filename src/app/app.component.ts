@@ -9,7 +9,7 @@ import { take, takeUntil,} from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { InfiniteScrollService } from './shared/infinite-scroll.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -65,6 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private feedService: FeedService,
               private scrollService: ScrollService,
               private auth: AngularFireAuth,
+              private viewportScroller: ViewportScroller,
               @Inject(DOCUMENT) private _document ) {
     document.addEventListener("visibilitychange", function() { //mute posts on tab change
       feedService.mutePosts.next(!!document.hidden);
@@ -87,7 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (!this.tabletCheck) this.miscellaneousService.showDashboard.next(false);
     });
 
-    this.onResize();
+    // this.viewportScroller.setOffset([0,54]); //for desktop snap scroll
 
     this.popUpVal = this.miscellaneousService.getPopUpSetUp();
 
@@ -137,6 +138,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onWindowScroll($event){
     this.scrollService.setScroll();
+  }
+
+  onTouchEnd($event) {
+    if (!this.tabletCheck) return;
+    this.viewportScroller.scrollToAnchor(this.feedService.currentPost.value);
   }
 
   toggleDashboard(event) {
