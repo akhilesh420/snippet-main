@@ -151,7 +151,7 @@ export class PostService {
         batch.set(this.afs.firestore.doc('collection/'+cid), {...collection});
 
         //Add holder and user collection
-        const collectionObj = {cid: cid, timeStamp: collection.timeStamp };
+        const collectionObj = {cid: cid, timeStamp: collection.timeStamp, crwatorID: collection.collecteeID};
 
         batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
         batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
