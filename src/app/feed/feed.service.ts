@@ -13,6 +13,7 @@ export class FeedService {
   excludePID: string[] = [environment.onBoardingPid];
 
   currentPost = new BehaviorSubject<string>(undefined);
+  mutePosts = new BehaviorSubject<boolean>(false);
 
   constructor(private afs: AngularFirestore) {
 

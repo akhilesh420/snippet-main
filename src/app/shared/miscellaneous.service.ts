@@ -107,39 +107,6 @@ export class MiscellaneousService {
     }
   }
 
-  endOnBoarding(uid: string) {
-    if (!this.onBoarding$.value) return;
-    this.onBoardingStep$.next(9);
-    this.onBoarding$.next(false);
-  }
-
-  startOnBoarding(uid: string) {
-    let notifier$ = new Subject();
-    this.userService.getOnBoarding(uid).pipe(takeUntil(notifier$)).subscribe(details => {
-      if (!details) return;
-      this.onBoardingDetails = details;
-      if (details.onBoarding) {
-        this.onBoardingStartStep = details.onBoardingStep;
-        this.startTime = new Date().getTime();
-        this.onBoarding$.next(true);
-        this.onBoardingStep$.next(details.onBoardingStep);
-      } else {
-        this.onBoarding$.next(false);
-      }
-      notifier$.next();
-      notifier$.complete();
-    })
-  }
-
-  setOnBoardingStep(uid: string) {
-    this.updateOnBoarding(uid);
-  }
-
-  updateOnBoarding(uid: string) {
-    if (!this.onBoardingDetails) return;
-    this.userService.updateOnBoarding(uid, this.onBoarding$.value, this.onBoardingStep$.value, this.onBoardingDetails.timeTaken);
-  }
-
   preloadImages(images: string[]) {
     for (var i = 0; i < images.length; i++) {
       this.images[i] = new Image();

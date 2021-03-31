@@ -36,7 +36,6 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!this.feed || !this.feed.pid) return;
-    console.log('collection', this.feed);
     this.pid = this.feed.pid;
     this.uid = this.feed.creatorID;
     this.postDetails$ = this.postService.getPostDetails(this.pid);
