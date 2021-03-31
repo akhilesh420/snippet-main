@@ -121,6 +121,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   onLoad() {
+    console.log('load');
     this.miscellaneousService.showInitialLoader.next(false);
     this.postInFrame();
   }
