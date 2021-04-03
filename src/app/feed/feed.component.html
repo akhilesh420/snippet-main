@@ -12,7 +12,8 @@
       </div>
 
       <div class = "profileNavigation"
-          *ngIf="showProfileNavigation">
+          *ngIf="showProfileNavigation"
+          [ngStyle]='{"margin-left": (((post.offsetWidth - 340)/2) ).toString() + "px"}'>
 
         <div class = "backpanel row no-margin-no-padding">
 
