@@ -233,7 +233,7 @@ li {
 }
 
 .fail-safe {
-  width: 30%;
+  width: 50px;
   height: auto;
   cursor:pointer;
 }
