@@ -21,6 +21,11 @@ p {
   overflow: hidden;
   margin-bottom: 0px;
   box-shadow: 2px 12px 8px rgba(0, 0, 0, 0.4);
+  background-color: #0b0b0b;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
 .postContent {
@@ -29,8 +34,8 @@ p {
   max-height: calc(800px * var(--norm-height));
   background-color: #C4C4C4;
   position: relative;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  /* border-top-left-radius: 3px;
+  border-top-right-radius: 3px; */
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   overflow: hidden;
@@ -87,12 +92,12 @@ p {
 .engagementBar {
   position: absolute;
   top: 0px;
-  height: 6px;
+  height: 4px;
   width: 80%;
   background-color: #E2B33D;
   overflow: hidden;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 0px;
+  /* border-top-left-radius: 3px;
+  border-top-right-radius: 0px; */
 }
 
 .postDescription {
@@ -294,13 +299,18 @@ li {
   }
 
   .engagementBar {
-    height: 6px;
+    height: 4px;
+  }
+
+  .postContainer {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   .postContent {
-    border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     min-height: calc((100vh * (3 / 5)) - 54px);
     max-height: calc(100vh - 54px);
