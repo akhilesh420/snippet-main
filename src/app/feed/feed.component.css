@@ -24,6 +24,10 @@
   overflow: hidden;
 }
 
+.no-posts {
+  height: 80vh;
+}
+
 
 .nopostsPlaceholder {
   position: relative;
