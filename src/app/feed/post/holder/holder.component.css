@@ -38,7 +38,7 @@
 .username {
   width: 80%;
   height: calc(14px * var(--norm-height));
-  padding-left: 2px;
+  padding-left: 3px;
   padding-top: 5px;
   font-family: 'Comfortaa';
   font-style: normal;

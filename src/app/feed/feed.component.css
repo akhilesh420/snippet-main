@@ -81,7 +81,7 @@
   position: relative;
   width: 340px;
   height: 55px;
-  margin-left: calc(((375 * (79vh) / 667) - 340px) / 2);
+  /* margin-left: calc(((375 * (79vh) / 667) - 340px) / 2); */
   margin-bottom: 1.22vh;
 }
 
