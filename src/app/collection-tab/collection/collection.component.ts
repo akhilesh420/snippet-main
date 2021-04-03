@@ -37,6 +37,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (!this.feed || !this.feed.pid) return;
     this.pid = this.feed.pid;
+    this.uid = this.feed.creatorID;
     this.postDetails$ = this.postService.getPostDetails(this.pid);
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
     this.username$ = this.userService.getUsername(this.uid);
@@ -52,7 +53,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   usernameClick() {
     if (this.profileStickerEdit) return;
-    this.router.navigate(["/profile/" + this.feed.creatorID]);
+    this.router.navigate(["/profile/" + this.uid]);
   }
 
   stickerSelected() {

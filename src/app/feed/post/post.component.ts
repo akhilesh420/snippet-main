@@ -72,6 +72,8 @@ export class PostComponent implements OnInit, OnDestroy {
   stickerContent$: Observable<any>;
   stickerDetails: StickerDetails;
 
+  mutePost: boolean = false;
+
   constructor(private postService: PostService,
               private auth: AngularFireAuth,
               private activityService: ActivityService,
@@ -98,11 +100,17 @@ export class PostComponent implements OnInit, OnDestroy {
     });
 
     this.feedService.currentPost.pipe(takeUntil(this.notifier$))
-      .subscribe(val => {
-        this.activePost = val
-        this.videoToggle();
-        this.postViewTime();
-      });
+    .subscribe(val => {
+      this.activePost = val
+      this.videoToggle();
+      this.postViewTime();
+    });
+
+    this.feedService.mutePosts.pipe(takeUntil(this.notifier$))
+    .subscribe(val => {
+      this.mutePost = val;
+      if (this.videoPlayer) this.videoPlayer.nativeElement.muted = val;
+    });
 
     this.auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
@@ -132,7 +140,6 @@ export class PostComponent implements OnInit, OnDestroy {
     });
 
     this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
-      console.log(response);
       this.postType = response.contentType;
       this.postAspectRatio = (+response.customMetadata.height)/(+response.customMetadata.width);
       setTimeout(() => {

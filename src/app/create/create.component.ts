@@ -1,12 +1,10 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './../shared/post.model';
+import { PostDetails, StickerDetails, CustomMetadata } from './../shared/post.model';
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PostService } from '../shared/post.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivityService } from '../shared/activity.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -57,8 +55,6 @@ export class CreateComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private authService: AuthService,
               private postService: PostService,
-              private activityService: ActivityService,
-              private afs: AngularFirestore,
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
@@ -72,6 +68,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     .subscribe(
       (params: Params) => {
         this.currentStep = params['step'];
+        console.log(this.currentStep, this.stepCounter);
         this.nextActive = false;
         this.error = undefined;
 
@@ -81,7 +78,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         if (this.stepCounter === 0  && !(this.currentStep === 'content')) {
           this.router.navigate(['/create/content']);
         }
-        if (this.stepCounter === 1 && this.currentStep === 'sticker') {
+        if (this.stepCounter != 2 && this.currentStep === 'sticker') {
           this.router.navigate(['/create/content']);
         }
 
@@ -191,108 +188,76 @@ export class CreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleError(error) {
+  async handleError(error) {
     this.miscellaneousService.setPopUp(new PopUp("An unexpected error occurred! It is what it is...",'okay', undefined, ['default', 'reject']));
-    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-      this.isCreating = false;
-
-    });
+    await this.miscellaneousService.getPopUpInteraction().pipe(take(1)).toPromise();
+    this.isCreating = false;
   }
 
   async nextClick() {
     if (this.isCreating) return;
+    this.isCreating = true;
 
     if (this.currentStep === 'content') {
-      if (!this.storageFile) {
-        this.error = "Trust me, click the BIG plus button";
-        return;
-      }
+
+      if (!this.storageFile) return this.onCreateError("Trust me, click the BIG plus button");
 
       const dimensions = await this.miscellaneousService.getDimension(this.storageFile, this.storageFile.type);
       this.contentMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
 
       this.error = undefined;
       ++this.stepCounter;
-      this.router.navigate(['/create/description']);
+      this.isCreating = false;
+      return this.router.navigate(['/create/description']);
     }
 
     if (this.currentStep === 'description') {
-      if (!this.title || this.title === "") {
-        this.error = "A title is required!";
-        return;
-      }
-      if (this.title && this.title.length > 19) {
-        this.error = "The title is too long!";
-        return;
-      }
-      if (this.desc && this.desc.length > 240) {
-        this.error = "The description is too long!";
-        return;
-      }
+      if (!this.title || this.title === "") return this.onCreateError("A title is required!");
+
+      if (this.title && this.title.length > 19) return this.onCreateError("The title is too long!");
+
+      if (this.desc && this.desc.length > 240) return this.onCreateError("The description is too long!");
+
       if (!this.desc || this.desc === "") {
         this.miscellaneousService.setPopUp(new PopUp("You didn't add a description! Are you sure you want to post?",'Yes','No',['confirm', 'reject']));
-        this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-          if (!response) return;
-          this.error = undefined;
-          ++this.stepCounter;
-          this.router.navigate(['/create/sticker']);
-        });
-      } else {
-        this.error = undefined;
-        ++this.stepCounter;
-        this.router.navigate(['/create/sticker']);
+        const res = await this.miscellaneousService.getPopUpInteraction().pipe(take(1)).toPromise();
+        if (!res) return this.isCreating = false;
       }
+
+      this.error = undefined;
+      ++this.stepCounter;
+      this.isCreating = false;
+      return this.router.navigate(['/create/sticker']);
     }
+
     if (this.currentStep == 'sticker') {
-      if (!this.stickerContent || !this.stickerContent) {
-        this.error = "A sticker is required! Click the plus sign on the bottom right of the post";
-        return;
-      }
+      if (!this.stickerContent || !this.stickerContent) return this.onCreateError("A sticker is required! Click the plus sign on the bottom right of the post");
 
 
       const dimensions = await this.miscellaneousService.getDimension(this.stickerContent, this.stickerContent.type);
       this.stickerMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
 
-      if (!Number.isInteger(this.amount)) {
-        this.error = "Number of stickers must be whole numbers!";
-        return;
-      }
-      if ((!this.amount || this.amount === null) && this.amount != 0) {
-        this.error = "Choose the number of stickers you want to release!";
-        return;
-      }
-      if (this.amount < this.minSticker) {
-        this.error = "Must release at least "+this.minSticker+" stickers!";
-        return
-      }
-      if (this.amount > this.maxSticker) {
-        this.error = "Can only release "+this.maxSticker+" stickers! For now...";
-        return;
-      }
+      if (!Number.isInteger(this.amount)) return this.onCreateError("Number of stickers must be whole numbers!");
+
+      if ((!this.amount || this.amount === null) && this.amount != 0) return this.onCreateError("Choose the number of stickers you want to release!");
+
+      if (this.amount < this.minSticker) return this.onCreateError("Must release at least "+this.minSticker+" stickers!");
+
+      if (this.amount > this.maxSticker) return this.onCreateError("Can only release "+this.maxSticker+" stickers! For now...");
+
       if (this.amount === 1) {
         this.miscellaneousService.setPopUp(new PopUp("Are you sure you want to release only 1 sticker? You will receive this 1 sticker, so no one else can collect it",'Yes','No', ['confirm', 'reject']));
-        this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-          if (!response) {
-            return;
-          } else {
-            this.confirmPost();
-          }
-        });
-      } else {
-        this.confirmPost();
+        const res = await this.miscellaneousService.getPopUpInteraction().pipe(take(1)).toPromise();
+        if (!res) return this.isCreating = false;
       }
+
+      this.error = undefined;
+      ++this.stepCounter;
+      return this.createPost();
     }
   }
 
-  confirmPost() {
-    this.error = undefined;
-    ++this.stepCounter;
-    this.createPost();
-  }
-
   createPost() {
-    this.isCreating = true;
-
     this.postService.newPost( this.uid,
                               this.storageFile,
                               this.contentMetadata,
@@ -303,7 +268,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
     this.miscellaneousService.setPopUp(new PopUp("You are all set! Feel free to explore but please don't close the tab while your post is being processed",'Explore', undefined, ['default', 'reject']));
     this.router.navigate(['/explore']);
-    this.isCreating = false;
+    return this.isCreating = false;
   }
 
   previousClick() {
@@ -317,6 +282,11 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.router.navigate(['/create/description']);
       return;
     }
+  }
+
+  onCreateError(error) {
+    this.error = error;
+    return this.isCreating = false;
   }
 
   stopPropagation(event) {

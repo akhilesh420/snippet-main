@@ -118,7 +118,7 @@ export class FeedComponent implements OnInit, OnDestroy {
       });
       this.pidList$ = this.feedService.getExplorePage();
     } else if (currentRoute === 'collection') {
-      this.uid = this.route.snapshot.params['id']
+      this.uid = this.route.snapshot.params['id'];
       this.uid$.next(this.uid);
       this.pidList$ = this.feedService.getCollectionPage(this.uid);
       if (this.tabletCheck) this.showProfileDisplay = true;
