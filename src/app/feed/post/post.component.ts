@@ -140,6 +140,7 @@ export class PostComponent implements OnInit, OnDestroy {
     });
 
     this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
+      if (!response) return;
       this.postType = response.contentType;
       this.postAspectRatio = (+response.customMetadata.height)/(+response.customMetadata.width);
       setTimeout(() => {

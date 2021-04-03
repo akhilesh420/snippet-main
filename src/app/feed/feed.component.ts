@@ -43,7 +43,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   mobileCheck: boolean;
   tabletCheck: boolean;
 
-  @ViewChild('post') post: ElementRef;
+  @ViewChild('post') postRef: ElementRef;
 
   profileStickerEdit: boolean = false;
 
