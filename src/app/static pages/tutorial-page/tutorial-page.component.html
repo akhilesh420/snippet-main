@@ -13,7 +13,7 @@
 <div class = "nextButtonFirst"
     *ngIf="router.url === '/tutorial'">
 
-    <div class = "button"
+    <div class = "button route"
         [routerLink]='"."'
         [fragment]="'howitworks'">
 
@@ -23,12 +23,17 @@
 
     <div class = "stepIndicator">
 
-        <div class="circleOne"
+        <div class="circleOne route"
+            routerLink='/tutorial'
             [ngStyle]="{'background-color': router.url  === '/tutorial' ? '#E2B33D' : null}"></div>
 
-        <div class="circleTwo"></div>
+        <div class="circleTwo route"
+            [routerLink]='"."'
+            [fragment]="'howitworks'"></div>
 
-        <div class="circleThree"></div>
+        <div class="circleThree route"
+            [routerLink]='"."'
+            [fragment]="'whysnippet'"></div>
 
     </div>
 
@@ -41,7 +46,7 @@
 <div class = "nextButton phonePage"
     *ngIf="router.url === '/tutorial#howitworks'">
 
-    <div class = "button"
+    <div class = "button route"
         [routerLink]='"."'
         [fragment]="'whysnippet'">
 
@@ -51,14 +56,19 @@
 
     <div class = "stepIndicator">
 
-        <div class="circleOne"></div>
+      <div class="circleOne route"
+          routerLink='/tutorial'></div>
 
-        <div class="circleTwo"
-            [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
+      <div class="circleTwo route"
+          [routerLink]='"."'
+          [fragment]="'howitworks'"
+          [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
 
-        <div class="circleThree"></div>
+      <div class="circleThree route"
+          [routerLink]='"."'
+          [fragment]="'whysnippet'"></div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -108,7 +118,7 @@
 
     <div class = "nextButton desktopPage">
 
-        <div class = "button"
+        <div class = "button route"
             [routerLink]='"."'
             [fragment]="'whysnippet'">
 
@@ -118,14 +128,19 @@
 
         <div class = "stepIndicator">
 
-            <div class="circleOne"></div>
+          <div class="circleOne route"
+              routerLink='/tutorial'></div>
 
-            <div class="circleTwo"
-                [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
+          <div class="circleTwo route"
+              [routerLink]='"."'
+              [fragment]="'howitworks'"
+              [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
 
-            <div class="circleThree"></div>
+          <div class="circleThree route"
+              [routerLink]='"."'
+              [fragment]="'whysnippet'"></div>
 
-        </div>
+      </div>
 
     </div>
 
@@ -145,7 +160,7 @@
 <div class = "nextButton phonePage"
     *ngIf="router.url === '/tutorial#whysnippet'">
 
-    <div class = "button" [routerLink]='"/explore"'>
+    <div class = "button route" [routerLink]='"/explore"'>
 
         <p class = "buttonText">Explore</p>
 
@@ -153,14 +168,19 @@
 
     <div class = "stepIndicator">
 
-        <div class="circleOne"></div>
+      <div class="circleOne route"
+          routerLink='/tutorial'></div>
 
-        <div class="circleTwo"></div>
+      <div class="circleTwo route"
+          [routerLink]='"."'
+          [fragment]="'howitworks'"></div>
 
-        <div class="circleThree"
-            [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
+      <div class="circleThree route"
+          [routerLink]='"."'
+          [fragment]="'whysnippet'"
+          [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -200,7 +220,7 @@
 
        <div class = "nextButton desktopPage">
 
-           <div class = "button" [routerLink]='"/explore"'>
+           <div class = "button route" [routerLink]='"/explore"'>
 
                <p class = "buttonText">Explore</p>
 
@@ -208,14 +228,19 @@
 
            <div class = "stepIndicator">
 
-               <div class="circleOne"></div>
+            <div class="circleOne route"
+                routerLink='/tutorial'></div>
 
-               <div class="circleTwo"></div>
+            <div class="circleTwo route"
+                [routerLink]='"."'
+                [fragment]="'howitworks'"></div>
 
-               <div class="circleThree"
-                   [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
+            <div class="circleThree route"
+                [routerLink]='"."'
+                [fragment]="'whysnippet'"
+                [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
 
-           </div>
+        </div>
 
         </div>
 
