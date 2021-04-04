@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { map, take } from 'rxjs/operators';
-import { Activity, Collection, View } from './activity.model';
+import firebase from 'firebase';
+import { map } from 'rxjs/operators';
+import { Collection } from './activity.model';
 
 
 @Injectable({
@@ -16,109 +16,111 @@ export class ActivityService {
   public collectionStartTime = 0;
   public holderListStartTime = 0;
 
-  //Realtime database
-  private viewsRef: any;
-  private activityRef: any;
 
   //Firestore Collection
-  private collectionCollection: any;
 
-  constructor(private db: AngularFireDatabase,
-              private afs: AngularFirestore,
-              private router: Router) {
-    this.viewsRef = db.list<View>('views');
-    this.activityRef =  db.list<Activity>('activity');
-    this.collectionCollection =  afs.collection<Collection>('collection');
-   }
+  constructor(private afs: AngularFirestore,
+              private router: Router) {}
 
 
   // --------------------------------------- Activity ---------------------------------------
-  // gets activity for user or post
-  getActivity(id: string) {
-    return this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(id)).valueChanges();
-  }
-
-  //create new activity entry for user or post
-  addActivity(id: string, type: string) {
-    this.activityRef.push({id: id, type: type, views: 0, collected: 0})
-  }
 
   //update activity for view or collection
-  updateActivity(type: string, uid: string, pid: string) {
-    const queryUser = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(uid));
-    const queryPost = this.db.list<Activity>('activity', ref => ref.orderByChild('id').equalTo(pid));
+  async updateActivity(type: string, id: string) {
+    this.afs.firestore.doc('activity/'+ id + '/metrics/' + type)
+          .update({counter: firebase.firestore.FieldValue.increment(1)});
+  }
 
-    queryUser.snapshotChanges().pipe( //update old activity for user
-        map(changes =>
-          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))),
-          take(1)
-        )
-      .subscribe((response) => {
-        if (!response[0]) {
-          return;
-        } else {
-          if (type === 'view') {
-            this.activityRef.update(response[0].key, {views: response[0].views + 1});
-          } else if (type === 'collection') {
-            this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
-          }
-        }
-    });
+  getActivityCollection(id: string) {
+    return this.afs.doc<{counter: number}>('activity/' + id +'/metrics/collected').valueChanges();
+  }
 
-    queryPost.snapshotChanges().pipe( //update old activity for post
-      map(changes =>
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-        ),take(1))
-      .subscribe((response) => {
-        if (!response[0]) {
-          console.log('post activity not found');
-        } else {
-          if (type === 'view') {
-            this.activityRef.update(response[0].key, {views: response[0].views + 1});
-          } else if(type === 'collection') {
-            this.activityRef.update(response[0].key, {collected: response[0].collected + 1});
-          }
-        }
-    });
-
+  getActivityViews(id: string) {
+    return this.afs.doc<{counter: number}>('activity/' + id +'/metrics/views').valueChanges();
   }
 
   // --------------------------------------- Views ---------------------------------------
   // add view to realtime db
   // viewerID: UID of the person who viewed the post
   // vieweeID: UID of the person whose post was viewed
-  addViews(pid: string, vieweeID: string, viewerID: string = 'anonymous') {
-    const obj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
-    this.viewsRef.push(obj);
-    this.updateActivity('view', vieweeID, pid);
+  async addViews(pid: string, vieweeID: string, viewerID: string = 'anonymous') {
+    const viewsObj = {viewerID: viewerID, vieweeID: vieweeID, pid: pid, timeStamp: new Date().getTime()};
+    const activityObj = {counter: firebase.firestore.FieldValue.increment(1)};
+
+    const vid = this.afs.createId();
+    const batch = this.afs.firestore.batch();
+
+    const viewsRef = this.afs.firestore.doc('views/'+vid);
+    const userActivityRef = this.afs.firestore.doc('activity/' + vieweeID +'/metrics/views');
+    const postActivityRef = this.afs.firestore.doc('activity/' + pid +'/metrics/views');
+
+    batch.set(viewsRef, viewsObj);
+    batch.update(userActivityRef, activityObj);
+    batch.update(postActivityRef, activityObj);
+
+    await batch.commit().catch(async (e) => {
+      console.log("error in collection", e);
+      throw new Error('Error in sticker collection');
+    });
   }
 
   // --------------------------------------- Collection ---------------------------------------
   // add collector to cloud firestore
   // collectorID: UID of the person who collected the sticker
   // collecteeID: UID of the person whose sticker was collected
-  addCollection(collection: Collection) {
-    const obj = {...collection};
-    const id = this.afs.createId();
-    this.collectionCollection.doc(id).set(obj);
-    this.updateActivity('collection', collection.collecteeID, collection.pid);
+  async addCollection(collection: Collection) {
+    const batch = this.afs.firestore.batch();
+    const cid = this.afs.createId();
 
-    // collection analytics
-    if (collection.collectorID === collection.collecteeID) return;
-    const timeSpent = new Date().getTime() - this.collectionStartTime;
-    this.collectionStartTime = new Date().getTime();
-    const analytics = {type: 'collection', route: this.router.url.split('/')[1], timeSpent: timeSpent};
-    this.addAnalytics(collection.collectorID, 'collection analytics', analytics);
+    //Add collection
+    batch.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+
+    //Add holder and user collection
+    const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+
+    batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
+    batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+
+    //Update Activity
+    batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
+                  {counter: firebase.firestore.FieldValue.increment(1),
+                    cid: cid}); //user
+    batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
+                  {counter: firebase.firestore.FieldValue.increment(1),
+                    cid: cid}); //post
+
+    // Collection analytics
+    if (collection.collectorID != collection.collecteeID) {
+      const aid = this.afs.createId();
+      const timeSpent = new Date().getTime() - this.collectionStartTime;
+      this.collectionStartTime = new Date().getTime();
+      const analytics = {type: 'collection', route: this.router.url.split('/')[1], timeSpent: timeSpent};
+      batch.set(this.afs.firestore.doc('user data/'+collection.collectorID+'/collection analytics/'+aid), analytics);
+    }
+
+    await batch.commit().catch(async (e) => {
+      console.log("error in collection", e);
+      throw new Error('Error in sticker collection');
+    });
+    return true
   }
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('collectorID','==',uid).orderBy('timeStamp', 'desc')).valueChanges();
+    return this.afs.collection<any>('feed/'+uid+'/collection', ref => ref.orderBy('timeStamp', 'desc'))
+                      .valueChanges({idField: 'pid'})
+                      .pipe(map(postsList => {
+                        if (!postsList) return postsList;
+                        postsList = postsList.map(post => {
+                          return {dateCreated: new Date(post.timeStamp), creatorID: post.creatorID, pid: post.pid}
+                        })
+                        return postsList;
+                      }));
   }
 
   // get collection by pid
-  getPostCollection(pid: string) {
-    return this.afs.collection<Collection>('collection', ref => ref.where('pid','==',pid).orderBy('timeStamp', 'desc')).valueChanges();
+  getHolderList(pid: string) {
+    return this.afs.collection<{cid: Date, timeStamp: string}>('posts/' + pid + '/holders', ref => ref.orderBy('timeStamp')).valueChanges({idField: 'collectorID'});
   }
 
   // add analytics

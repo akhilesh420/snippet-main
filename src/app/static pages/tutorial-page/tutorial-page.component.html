@@ -1,69 +1,247 @@
-<!-- Welcome slide -->
-<div class = "container-fluid" *ngIf='onBoardingStep === 0'>
-    <div class = "row title">
-        <div class = "col-lg-6 col-md-8 col-sm-10 col-12 title offset-lg-2 offset-md-1 text-wrap">
-            <p>Welcome to Snippet,</p>
-        </div>
+<!-- Page 1 -->
+
+<div class = "titleOne" *ngIf="router.url === '/tutorial'">
+
+    <img class = "titleOneSize" src = "assets/images/Tutorial/Tutorial_title_1.svg">
+
+</div>
+
+<div class = "subTitleOne" *ngIf="router.url === '/tutorial'">
+    <p class = "subTitleOneSizing">A social-media space for creatives.</p>
+</div>
+
+<div class = "nextButtonFirst"
+    *ngIf="router.url === '/tutorial'">
+
+    <div class = "button route"
+        [routerLink]='"."'
+        [fragment]="'howitworks'">
+
+        <p class = "buttonText">Next</p>
+
     </div>
 
-    <div class = "row para">
-        <div class = "col-lg-8 col-md-10 col-sm-12 col-12 para offset-lg-2 offset-md-1 text-wrap">
-            <p>We are a new social media platform that is changing how
-            Creative Content is consumed and shared online.</p>
-             <br>
-            <p>We are in our closed alpha stage, and would like to
-            invite you to be a part of our first group of creators.</p>
-        </div>
+    <div class = "stepIndicator">
 
-    </div>
+        <div class="circleOne route"
+            routerLink='/tutorial'
+            [ngStyle]="{'background-color': router.url  === '/tutorial' ? '#E2B33D' : null}"></div>
 
-    <div class = "row nextArrow justify-content-center">
-        <div class = "col-1" (click)='clickNext()'>
-          <img [ngClass]="activeNext ? 'pulsate-bck' : 'inactive'" src="assets/icons/nextArrow.svg">
-        </div>
+        <div class="circleTwo route"
+            [routerLink]='"."'
+            [fragment]="'howitworks'"></div>
+
+        <div class="circleThree route"
+            [routerLink]='"."'
+            [fragment]="'whysnippet'"></div>
+
     </div>
 
 </div>
 
-<!-- How it works slide -->
-<div class="how" *ngIf='onBoardingStep != 0'>
-  <div class = "row justify-content-center title-2">
-      <div class = "col-lg-6 col-md-8 col-sm-10 col-12 text-wrap tracking-in-expand">
-          <p>How it works</p>
-      </div>
-  </div>
+<!-- Page 2  -->
 
-  <div class = "row justify-content-center paraTop">
+<!-- Class below is for only phone, make interchangeable with desktop version of next button -->
 
-      <div class = "col-lg-8 col-md-10 col-sm-12 col-12 text-wrap focus-in-expand">
-        <p>{{messageTop1}}<br>
-          {{messageTop2}}</p>
-      </div>
+<div class = "nextButton phonePage"
+    *ngIf="router.url === '/tutorial#howitworks'">
 
-  </div>
+    <div class = "button route"
+        [routerLink]='"."'
+        [fragment]="'whysnippet'">
 
-  <div class = "row justify-content-center postPosition">
+        <p class = "buttonText">Next</p>
 
-  <div class='col-lg-4 col-md-6 col-sm-8 col-12 post'>
-    <!-- <app-post *ngIf='(onBoardingStep === 2 || onBoardingStep === 4) && !loadingPost' [postDetails]="postDetails" [postFocus]="true" [tutorial]="true"> </app-post> -->
-    <img *ngIf='(onBoardingStep === 7)' src = "assets/images/Onbaording holder list SVG.svg">
-</div>
+    </div>
 
+    <div class = "stepIndicator">
 
+      <div class="circleOne route"
+          routerLink='/tutorial'></div>
 
-  </div>
+      <div class="circleTwo route"
+          [routerLink]='"."'
+          [fragment]="'howitworks'"
+          [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
 
-  <div class = "row justify-content-center no-gutters paraBottom">
+      <div class="circleThree route"
+          [routerLink]='"."'
+          [fragment]="'whysnippet'"></div>
 
-      <div class = "col-lg-8 col-md-10 col-sm-12 col-12 no-gutters focus-in-expand">
-          <p>{{messageBottom1}}<br>
-              {{messageBottom2}}</p>
-      </div>
-
-  </div>
-
-  <div class = "nextArrow-2" (click)='clickNext()' *ngIf='onBoardingStep != 2'>
-          <img [ngClass]="activeNext ? 'pulsate-bck' : 'inactive'" src="assets/icons/nextArrow.svg">
   </div>
 
 </div>
+
+<div class="titleTwo" *ngIf="router.url === '/tutorial#howitworks'">
+
+ <img class = "titleTwoSize" src = "assets/images/Tutorial/Tutorial_title_2.svg">
+
+</div>
+
+<div class = "contentSpace contentSpaceAnimation" *ngIf="router.url === '/tutorial#howitworks'">
+
+    <div class = "subTitleOnePageTwo">
+
+        <img class = "subTitleOneSizingPageTwo" src = "assets/images/Tutorial/Tutorial_2_subTitleOne.svg">
+
+    </div>
+
+    <p class = "paraOnePageTwo">
+
+        Stickers act like links to their respective posts.
+        <br>
+        <br>
+        Each post has a sticker that represents it. People can <b>collect</b> these stickers,
+        but they’re <br><b>limited in number</b>.
+        <br>
+
+    </p>
+
+    <div class = "subTitleTwoPageTwo">
+
+        <img class = "subTitleTwoSizingPageTwo" src = "assets/images/Tutorial/Tutorial_2_subTitleTwo.svg">
+
+    </div>
+
+    <p class = "paraTwoPageTwo" #paraTwo>
+
+
+        You can exclusively use Stickers in many ways.<br>
+        For now, you can display it next to your username. <br>
+
+        <br>
+
+        Soon, you can use it in your DM’s, your comments and even trade them!
+
+    </p>
+
+
+    <div class = "nextButton desktopPage">
+
+        <div class = "button route"
+            [routerLink]='"."'
+            [fragment]="'whysnippet'">
+
+            <p class = "buttonText">Next</p>
+
+        </div>
+
+        <div class = "stepIndicator">
+
+          <div class="circleOne route"
+              routerLink='/tutorial'></div>
+
+          <div class="circleTwo route"
+              [routerLink]='"."'
+              [fragment]="'howitworks'"
+              [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
+
+          <div class="circleThree route"
+              [routerLink]='"."'
+              [fragment]="'whysnippet'"></div>
+
+      </div>
+
+    </div>
+
+
+</div>
+
+<!-- Page 3 -->
+
+<div class="titleThree" *ngIf="router.url === '/tutorial#whysnippet'">
+
+    <img class = "titleThreeSize" src = "assets/images/Tutorial/Tutorial_title_3.svg">
+
+</div>
+
+<!-- Class below is for only phone, make interchangeable with desktop version of next button -->
+
+<div class = "nextButton phonePage"
+    *ngIf="router.url === '/tutorial#whysnippet'">
+
+    <div class = "button route" [routerLink]='"/explore"'>
+
+        <p class = "buttonText">Explore</p>
+
+    </div>
+
+    <div class = "stepIndicator">
+
+      <div class="circleOne route"
+          routerLink='/tutorial'></div>
+
+      <div class="circleTwo route"
+          [routerLink]='"."'
+          [fragment]="'howitworks'"></div>
+
+      <div class="circleThree route"
+          [routerLink]='"."'
+          [fragment]="'whysnippet'"
+          [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
+
+  </div>
+
+</div>
+
+<div class = "contentSpace contentSpaceAnimation" *ngIf="router.url === '/tutorial#whysnippet'">
+
+       <div class = "subTitleOnePageThree">
+
+           <img class = "subTitleOneSizingPageThree" src = "assets/images/Tutorial/Tutorial_3_subTitleOne.svg">
+
+       </div>
+
+       <p class = "paraOnePageThree">
+
+        <b>Do more than watch.</b><br>
+        Exclusively use your collection to express yourself.
+
+       </p>
+
+       <div class = "subTitleTwoPageThree">
+
+           <img class = "subTitleTwoSizingPageThree" src = "assets/images/Tutorial/Tutorial_3_subTitleTwo.svg">
+
+       </div>
+
+       <p class = "paraTwoPageThree">
+
+
+        Your <b>viewers are incentivized</b> to share your work.<br>
+        <br>
+        <b>More organic</b> and retainable growth.<br>
+        <b>Less algorithm</b> dependency.<br>
+
+
+
+       </p>
+
+
+       <div class = "nextButton desktopPage">
+
+           <div class = "button route" [routerLink]='"/explore"'>
+
+               <p class = "buttonText">Explore</p>
+
+           </div>
+
+           <div class = "stepIndicator">
+
+            <div class="circleOne route"
+                routerLink='/tutorial'></div>
+
+            <div class="circleTwo route"
+                [routerLink]='"."'
+                [fragment]="'howitworks'"></div>
+
+            <div class="circleThree route"
+                [routerLink]='"."'
+                [fragment]="'whysnippet'"
+                [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
+
+        </div>
+
+        </div>
+
+ </div>

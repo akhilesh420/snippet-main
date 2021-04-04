@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -27,34 +28,33 @@ export class FeedbackComponent implements OnInit, OnDestroy {
   feedbackCharLim: number = 500;
 
   constructor(private feedbackService: FeedbackService,
-              private authService: AuthService,
               private userService: UsersService,
+              private auth: AngularFireAuth,
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.submitted = false;
-    this.authService.user.pipe(takeUntil(this.notifier$)) //check if authenticated
-    .subscribe(response => {
-      this.isAuthenticated = !!response;
+    this.auth.onAuthStateChanged((user) => {
+      this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
-        this.uid = response.id; //get uid
+        this.uid = user.uid; //get uid
+        this.email = user.email;
 
-        this.userService.getProfileDetails(response.id).pipe(takeUntil(this.notifier$)) //get username
-        .subscribe(res => {
-          if (res) {
-            this.email = res.email;
-            this.username = res.username;
-          }
-        })
+        this.userService.getUsername(this.uid).pipe(takeUntil(this.notifier$)) //get username
+          .subscribe(res => {
+            if (res) {
+              this.username = res.username;
+            }
+          });
 
-        this.userService.getPersonalDetails(response.id).pipe(takeUntil(this.notifier$)) //get email and full name
-        .subscribe(res => {
-          if (res) {
-            this.fullname = res.name;
-          }
-        })
+        this.userService.getPersonalDetails(this.uid).pipe(takeUntil(this.notifier$)) //get full name
+          .subscribe(res => {
+            if (res) {
+              this.fullname = res.name;
+            }
+          });
       }
-    })
+    })//check if authenticated
   }
 
   onSubmit(form: NgForm) {

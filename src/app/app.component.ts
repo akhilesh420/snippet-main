@@ -18,6 +18,7 @@ import { DOCUMENT } from '@angular/common';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, OnDestroy {
+  title = 'snippet';
 
   windowSize: number;
   mobileCheck: boolean;
@@ -65,6 +66,9 @@ export class AppComponent implements OnInit, OnDestroy {
               private scrollService: ScrollService,
               private auth: AngularFireAuth,
               @Inject(DOCUMENT) private _document ) {
+    document.addEventListener("visibilitychange", function() { //mute posts on tab change
+      feedService.mutePosts.next(!!document.hidden);
+    });
   }
 
   ngOnInit() {
@@ -74,6 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.miscellaneousService.preloadImages(this.preloadImages);
 
     this.windowStateService.checkWidth();
+    this.windowStateService.setHeight();
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (!val) return;
@@ -106,6 +111,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.showDashboard = value;
       this.modalState.next(value);
       if (!value) this.miscellaneousService.userStickerSelection.next(null);
+      this.feedService.mutePosts.next(value); //mute posts
     });
 
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);

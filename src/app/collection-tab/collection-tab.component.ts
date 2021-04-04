@@ -1,9 +1,8 @@
+import { Feed } from './../shared/post.model';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { ActivityService } from './../shared/activity.service';
-import { AuthService } from './../auth/auth.service';
-import { Component, OnInit, OnDestroy, Input, EventEmitter } from '@angular/core';
-import { Collection } from '../shared/activity.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
 import { ProfileSticker } from '../shared/profile.model';
@@ -16,7 +15,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class CollectionTabComponent implements OnInit, OnDestroy {
 
-  collectionList: Collection[] = [null, null, null, null];
+  feedList: Feed[] = [null, null, null, null];
   myUid: string;
   isAuthenticated: boolean = true;
   notifier$ = new Subject();
@@ -35,6 +34,8 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
       if (this.isAuthenticated) {
         this.myUid = user.uid;
         this.getCollection();
+      } else {
+        this.feedList = [];
       }
     });
 
@@ -44,9 +45,9 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
 
   getCollection() {
     this.activityService.getUserCollection(this.myUid).pipe(takeUntil(this.notifier$)) //get details of user collection
-    .subscribe((response:Collection[]) => {
-      this.collectionList = response;
-    });
+      .subscribe((response:Feed[]) => {
+        this.feedList = response;
+      });
   }
 
   confirmSelection(confirm: string) {

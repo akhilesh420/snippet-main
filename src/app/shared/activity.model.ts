@@ -19,12 +19,3 @@ export class Collection {
 
 }
 
-export class Activity {
-
-   constructor(
-    public id: string,
-    public type: string,
-    public views: number,
-    public collected: number
-   ) {}
-}

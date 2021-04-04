@@ -1,157 +1,162 @@
 <div class="postContainer" (click)='postView()' #post>
-  <!-- post content -->
-  <div *ngIf="(postContent$ | async) as content; else loading">
-    <img  class="post-content "
-          [src]='content'
-          alt="post content"
-          [ngClass]="{'opacity-out-details': !this.showDetails,
-                      'opacity-in-details': this.showDetails,
-                      'fit-cover': !fullscreenToggle,
-                      'fit-contain': fullscreenToggle}"
-          *ngIf='postType.includes("image")'>
-    <video class='post-content '
-           loop
-           playsinline
-           #videoPlayer
-           [src]='content'
-           [ngClass]="{'opacity-out-details': !this.showDetails,
-                      'opacity-in-details': this.showDetails,
-                      'fit-cover': !fullscreenToggle,
-                      'fit-contain': fullscreenToggle}"
-           *ngIf='postType.includes("video")'>
-    </video>
+
+  <div class="titleTop">
+
+    <div class="postTitle">
+
+      <p (click)='showDetails = !showDetails' *ngIf='(postDetails$ | async) as details'>{{details.title}}</p>
+
+    </div>
+
+    <div class="dropdownButton">
+
+      <img (click)='showDetails = !showDetails'
+            [ngClass]='{"rotate-90-ccw ": showDetails, "rotate-90-cw ": !showDetails}'
+            class = "dropdownButton"
+            src = "assets/images/Post/postdetailDropdown.svg">
+
+    </div>
+
   </div>
-  <!-- loading spinner -->
-  <ng-template #loading>
-      <app-loading-spinner class="center-absolute"></app-loading-spinner>
-  </ng-template>
 
-  <!-- post details -->
-  <div class="postDetails"
-      (click)="showComments ? showDetails = false : showDetails = !showDetails;
-              showComments = false;
-              holderToggle = false;
-              videoToggle();">
+  <app-profile-tab [uid]='uid'></app-profile-tab>
 
-      <!-- Fail-safe button -->
-      <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
-        <img src = "assets/images/Post/failSafeButton.png">
+  <div #contentContainer
+        class = "postContent"
+       [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",
+                   "background-color": !(postContent$ | async) ? "#C4C4C4" : "transparent"}'
+        (click)='showDetails = !showDetails'>
+
+    <!-- Content -->
+    <div *ngIf="(postContent$ | async) as content; else loading">
+      <img  class="post-content fit-cover"
+            [src]='content'
+            alt="post content"
+            [ngClass]="{'opacity-out-details': !showDetails,
+                        'opacity-in-details': showDetails}"
+            *ngIf='postType.includes("image")'>
+      <video class='post-content fit-cover'
+            loop
+            playsinline
+            #videoPlayer
+            [src]='content'
+            [ngClass]="{'opacity-out-details': !showDetails,
+                        'opacity-in-details': showDetails}"
+            *ngIf='postType.includes("video")'>
+      </video>
+    </div>
+
+    <!-- loading spinner  -->
+    <ng-template #loading>
+        <app-loading-spinner class="center-absolute"></app-loading-spinner>
+    </ng-template>
+
+    <!-- Fail-safe button -->
+    <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
+      <img src = "assets/images/Post/failSafeButton.png">
+    </div>
+
+    <!-- Engagement bar -->
+    <div class = "engagementBar" [ngStyle]="engagementProp"></div>
+
+    <!-- Description -->
+    <div class="postDescription fade-in-top" *ngIf="showDetails">
+
+      <p *ngIf='(postDetails$ | async) as details'>{{details.description}}</p>
+
+    </div>
+
+    <!-- Sticker -->
+    <div class="postSticker"
+      [ngClass]="{'postSticker-bck': !(stickerContent$ | async)}"
+      style="cursor: pointer;"
+      (click)='collectSticker(); stopPropagation($event);'>
+
+      <!-- Loading animation -->
+
+      <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
+                          "confirm-ball": stickerCollectionState === 1,
+                          "reject-ball": stickerCollectionState === -1}'></div>
+
+      <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
+    </div>
+
+    <!-- Metrics -->
+    <div class="postMetrics">
+      <div class = "row metricsSymbols no-margin-no-padding">
+
+        <div class = "col-6 viewsSymbol no-margin-no-padding">
+
+          <svg class = "sizeSVG" width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.27311 12.0964L1.17581 2.32065C1.17234 1.97183 1.36162 1.66204 1.69513 1.4707C2.02863 1.27936 2.42809 1.2514 2.79105 1.39398L14.9278 6.16151C15.5473 6.40486 15.6004 6.91487 15.6019 7.06539C15.6034 7.21592 15.5605 7.72689 14.946 7.98252L2.90648 12.9907C2.54643 13.1405 2.1465 13.1205 1.80925 12.9358C1.472 12.7511 1.27659 12.4452 1.27311 12.0964Z" fill="white"/>
+            <path d="M14.4574 7.07682L14.4574 7.07682L2.32056 2.30928C2.32056 2.30929 2.32056 2.30929 2.32056 2.30929L2.41787 12.085C2.41787 12.085 2.41787 12.085 2.41787 12.085C2.41787 12.085 2.41787 12.085 2.41787 12.085L14.4574 7.07682C14.4574 7.07682 14.4574 7.07682 14.4574 7.07682ZM16.7466 7.05403C16.7539 7.78529 16.3179 8.52095 15.4348 8.88829L3.39533 13.8965C1.88452 14.5249 0.143174 13.5715 0.128605 12.1078L0.0312988 2.33208C0.0167296 0.868396 1.73876 -0.119543 3.26177 0.478727L15.3986 5.24626C16.2888 5.59594 16.7393 6.32278 16.7466 7.05403Z" fill="white"/>
+          </svg>
+
+        </div>
+
+        <div class = "col-6 holderSymbol no-margin-no-padding">
+
+          <svg class = "sizeSVG" width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g>
+            <path d="M7.99969 15.6631C3.79879 15.6631 0.381104 12.2453 0.381104 8.04421C0.381104 3.84315 3.79879 0.425293 7.99969 0.425293C12.2009 0.425293 15.619 3.84315 15.619 8.04421C15.619 12.2453 12.2009 15.6631 7.99969 15.6631ZM7.99969 1.18772C4.21881 1.18772 1.14287 4.26351 1.14287 8.04421C1.14287 11.8253 4.21881 14.9014 7.99969 14.9014C11.7809 14.9014 14.8572 11.8253 14.8572 8.04421C14.8572 4.26351 11.7809 1.18772 7.99969 1.18772Z" fill="white"/>
+            <path d="M1.51796 4.82555C2.70467 2.4455 5.16445 0.80686 7.99978 0.80686C10.8354 0.80686 13.2953 2.44541 14.4822 4.82541C13.2954 2.44522 10.8353 0.806302 7.99978 0.806302C5.16449 0.806302 2.70467 2.44531 1.51796 4.82555ZM7.99978 16.0441C3.58883 16.0441 0.000244141 12.4554 0.000244141 8.04429C0.000244141 3.63313 3.58883 0.0444336 7.99978 0.0444336C12.4111 0.0444336 16 3.63313 16 8.04429C16 12.4554 12.4111 16.0441 7.99978 16.0441ZM7.99978 1.56873C4.429 1.56873 1.52391 4.47368 1.52391 8.04429C1.52391 11.6153 4.429 14.5205 7.99978 14.5205C11.571 14.5205 14.4763 11.6153 14.4763 8.04429C14.4763 4.47368 11.571 1.56873 7.99978 1.56873Z" fill="white"/>
+            <path d="M8.00018 13.7586C11.1561 13.7586 13.7145 11.2003 13.7145 8.04458C13.7145 4.88882 11.1561 2.33057 8.00018 2.33057C4.84426 2.33057 2.28589 4.88882 2.28589 8.04458C2.28589 11.2003 4.84426 13.7586 8.00018 13.7586Z" fill="white"/>
+            </g>
+          </svg>
+
+        </div>
+
       </div>
 
-      <div class="postTitle inline float-left pointer">
-          {{postDetails.title}}
-      </div>
+      <div class = "row metricsNumbers no-margin-no-padding">
 
-      <div class="showDetails pointer inline float-right" [ngClass]="showDetails ? 'rotate-90-ccw' : 'rotate-90-cw'">
-        <img src='assets/images/Post/postdetailDropdown.svg'>
-      </div>
-
-      <div class = "postMetrics">
-
-
-        <div class = "row metricsSymbols no-margin-no-padding">
-
-          <div class = "col-6 viewsSymbol no-margin-no-padding">
-
-            <svg class = "sizeSVG" width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.27311 12.0964L1.17581 2.32065C1.17234 1.97183 1.36162 1.66204 1.69513 1.4707C2.02863 1.27936 2.42809 1.2514 2.79105 1.39398L14.9278 6.16151C15.5473 6.40486 15.6004 6.91487 15.6019 7.06539C15.6034 7.21592 15.5605 7.72689 14.946 7.98252L2.90648 12.9907C2.54643 13.1405 2.1465 13.1205 1.80925 12.9358C1.472 12.7511 1.27659 12.4452 1.27311 12.0964Z" fill="white"/>
-              <path d="M14.4574 7.07682L14.4574 7.07682L2.32056 2.30928C2.32056 2.30929 2.32056 2.30929 2.32056 2.30929L2.41787 12.085C2.41787 12.085 2.41787 12.085 2.41787 12.085C2.41787 12.085 2.41787 12.085 2.41787 12.085L14.4574 7.07682C14.4574 7.07682 14.4574 7.07682 14.4574 7.07682ZM16.7466 7.05403C16.7539 7.78529 16.3179 8.52095 15.4348 8.88829L3.39533 13.8965C1.88452 14.5249 0.143174 13.5715 0.128605 12.1078L0.0312988 2.33208C0.0167296 0.868396 1.73876 -0.119543 3.26177 0.478727L15.3986 5.24626C16.2888 5.59594 16.7393 6.32278 16.7466 7.05403Z" fill="white"/>
-            </svg>
-
-          </div>
-
-          <div class = "col-6 holderSymbol no-margin-no-padding">
-
-            <svg class = "sizeSVG" width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g>
-              <path d="M7.99969 15.6631C3.79879 15.6631 0.381104 12.2453 0.381104 8.04421C0.381104 3.84315 3.79879 0.425293 7.99969 0.425293C12.2009 0.425293 15.619 3.84315 15.619 8.04421C15.619 12.2453 12.2009 15.6631 7.99969 15.6631ZM7.99969 1.18772C4.21881 1.18772 1.14287 4.26351 1.14287 8.04421C1.14287 11.8253 4.21881 14.9014 7.99969 14.9014C11.7809 14.9014 14.8572 11.8253 14.8572 8.04421C14.8572 4.26351 11.7809 1.18772 7.99969 1.18772Z" fill="white"/>
-              <path d="M1.51796 4.82555C2.70467 2.4455 5.16445 0.80686 7.99978 0.80686C10.8354 0.80686 13.2953 2.44541 14.4822 4.82541C13.2954 2.44522 10.8353 0.806302 7.99978 0.806302C5.16449 0.806302 2.70467 2.44531 1.51796 4.82555ZM7.99978 16.0441C3.58883 16.0441 0.000244141 12.4554 0.000244141 8.04429C0.000244141 3.63313 3.58883 0.0444336 7.99978 0.0444336C12.4111 0.0444336 16 3.63313 16 8.04429C16 12.4554 12.4111 16.0441 7.99978 16.0441ZM7.99978 1.56873C4.429 1.56873 1.52391 4.47368 1.52391 8.04429C1.52391 11.6153 4.429 14.5205 7.99978 14.5205C11.571 14.5205 14.4763 11.6153 14.4763 8.04429C14.4763 4.47368 11.571 1.56873 7.99978 1.56873Z" fill="white"/>
-              <path d="M8.00018 13.7586C11.1561 13.7586 13.7145 11.2003 13.7145 8.04458C13.7145 4.88882 11.1561 2.33057 8.00018 2.33057C4.84426 2.33057 2.28589 4.88882 2.28589 8.04458C2.28589 11.2003 4.84426 13.7586 8.00018 13.7586Z" fill="white"/>
-              </g>
-            </svg>
-
-          </div>
-
+        <div class = "col-6 viewNumbers no-margin-no-padding">
+          <span>{{views | numeral}}</span>
         </div>
 
-        <div class = "row metricsNumbers no-margin-no-padding">
-
-          <div class = "col-6 viewNumbers no-margin-no-padding">
-            <span>{{views}}</span>
-          </div>
-
-          <div class = "col-6 holderNumbers no-margin-no-padding">
-            <span>{{collected}}</span>
-          </div>
-
+        <div class = "col-6 holderNumbers no-margin-no-padding">
+          <span>{{collected | numeral}}</span>
         </div>
-
 
       </div>
 
-      <!-- Fullscreen buttons -->
-      <!-- Enter Fullscreen -->
-      <svg *ngIf='!fullscreenToggle; else exitFullscreen' (click)='fullscreenToggle = true; stopPropagation($event);' class = "fullscreenButton" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g>
-        <path d="M9.54546 0H0.636384C0.284634 0 0 0.284634 0 0.636384V9.54546C0 9.89721 0.284634 10.1818 0.636384 10.1818H1.90909C2.26084 10.1818 2.54548 9.89721 2.54548 9.54546V2.54548H9.54546C9.89721 2.54548 10.1818 2.26084 10.1818 1.90909V0.636384C10.1818 0.284634 9.89721 0 9.54546 0Z" fill="white"/>
-        <path d="M27.3634 0H18.4543C18.1025 0 17.8179 0.284634 17.8179 0.636384V1.90909C17.8179 2.26084 18.1025 2.54548 18.4543 2.54548H25.4542V9.54546C25.4542 9.89721 25.7388 10.1818 26.0906 10.1818H27.3633C27.715 10.1818 27.9997 9.89721 27.9997 9.54546V0.636384C27.9997 0.284634 27.7151 0 27.3634 0Z" fill="white"/>
-        <path d="M27.3634 17.8184H26.0907C25.7389 17.8184 25.4543 18.103 25.4543 18.4547V25.4547H18.4543C18.1025 25.4547 17.8179 25.7394 17.8179 26.0911V27.3638C17.8179 27.7156 18.1025 28.0002 18.4543 28.0002H27.3633C27.715 28.0002 27.9997 27.7156 27.9997 27.3638V18.4547C27.9997 18.1029 27.7151 17.8184 27.3634 17.8184Z" fill="white"/>
-        <path d="M9.54546 25.4543H2.54548V18.4543C2.54548 18.1025 2.26084 17.8179 1.90909 17.8179H0.636384C0.284634 17.8179 0 18.1025 0 18.4543V27.3633C0 27.715 0.284634 27.9997 0.636384 27.9997H9.54546C9.89721 27.9997 10.1818 27.715 10.1818 27.3633V26.0906C10.1818 25.7389 9.89721 25.4543 9.54546 25.4543Z" fill="white"/>
-        </g>
-        </svg>
+      <div class = "row metricLabels no-margin-no-padding">
 
-      <!-- Exit Fullscreen -->
-      <ng-template #exitFullscreen>
-        <svg (click)='fullscreenToggle = false; stopPropagation($event);' class = "fullscreenButton" width="375" height="470" viewBox="0 0 375 470" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g>
-          <path d="M118 0H96.667C90.771 0 86 4.771 86 10.667V128H-31.333C-37.229 128 -42 132.771 -42 138.667V160C-42 165.896 -37.229 170.667 -31.333 170.667H118C123.896 170.667 128.667 165.896 128.667 160V10.667C128.667 4.771 123.896 0 118 0Z" fill="white"/>
-          <path d="M416.667 128H299.333V10.667C299.333 4.771 294.563 0 288.667 0H267.334C261.438 0 256.667 4.771 256.667 10.667V160C256.667 165.896 261.438 170.667 267.334 170.667H416.667C422.563 170.667 427.334 165.896 427.334 160V138.667C427.333 132.771 422.563 128 416.667 128Z" fill="white"/>
-          <path d="M416.667 298.667H267.333C261.437 298.667 256.666 303.438 256.666 309.334V458.667C256.666 464.563 261.437 469.334 267.333 469.334H288.666C294.562 469.334 299.333 464.563 299.333 458.667V341.333H416.666C422.562 341.333 427.333 336.562 427.333 330.666V309.333C427.333 303.437 422.563 298.667 416.667 298.667Z" fill="white"/>
-          <path d="M118 298.667H-31.333C-37.229 298.667 -42 303.437 -42 309.333V330.666C-42 336.562 -37.229 341.333 -31.333 341.333H86V458.666C86 464.562 90.771 469.333 96.667 469.333H118C123.896 469.333 128.667 464.562 128.667 458.666V309.333C128.667 303.437 123.896 298.667 118 298.667Z" fill="white"/>
-          </g>
-        </svg>
-      </ng-template>
-
-      <div class = "fade-in-top" *ngIf="showDetails === true">
-        <div class="post-metrics float-left">
-
-
+        <div class = "col-6 metricsLabel no-margin-no-padding">
+          <span>Views</span>
         </div>
 
-        <div class = "descriptionSpace">
-
-          <span class = "description">{{postDetails.description}}</span>
-
+        <div class = "col-6 metricsLabel no-margin-no-padding">
+          <span>Holders</span>
         </div>
 
-        <!-- Holder List -->
-        <div class = "holderList" (click)='holderAnalytics(); stopPropagation($event)'>
-
-          <div class = "row holderListTitle no-margin-no-padding">
-
-            <p class = "holderTitle no-margin-no-padding">Holder List</p>
-
-          </div>
-
-          <div class = "row holderListScrollSpace no-margin-no-padding">
-
-            <ul class = "listScrollSpace">
-
-              <li *ngFor='let collection of postCollection | reverse;'>
-                <app-holder [collection]='collection'> </app-holder>
-              </li>
-
-            </ul>
-
-          <app-loading-spinner *ngIf="!postCollection" class="center-absolute"></app-loading-spinner>
-
-          </div>
-
-        </div>
       </div>
 
     </div>
 
-    <app-profile-tab [uid]='uid' [pid]='pid' (views)='views' (collected)='collected' (engagementRatio)='engagementRatio'></app-profile-tab>
+    <!-- Holder list -->
+    <div #holderListRef
+         [ngStyle]='{"margin-left": ((contentContainer.offsetWidth - holderListRef.offsetWidth)/2).toString() + "px"}'
+         class="holderList fade-in-top"
+         *ngIf="showDetails"
+         (click)='holderAnalytics(); stopPropagation($event)'>
+
+      <div class = "holderlistTitle">
+
+        <p>Holder List</p>
+
+      </div>
+
+      <ul class = "holderSpace">
+
+          <li *ngFor='let holder of holderList'>
+            <app-holder [uid]='holder.collectorID'> </app-holder>
+          </li>
+
+      </ul>
+
+    </div>
+
+  </div>
 
 </div>

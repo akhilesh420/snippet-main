@@ -1,6 +1,7 @@
 import { AuthService } from './../auth/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
@@ -25,11 +26,12 @@ export class HeaderComponent implements OnInit, OnDestroy{
   loadingBar$: Subject<boolean>;
 
   dropdown: boolean = false;
-  displayPicture$: BehaviorSubject<any>;
+  displayPicture$: Observable<string>;
 
   showDashboard: boolean = false;
 
-  constructor(private authService: AuthService,
+  constructor(private auth: AngularFireAuth,
+              private authService: AuthService,
               private router: Router,
               private usersService: UsersService,
               private miscellaneousService: MiscellaneousService){
@@ -39,13 +41,14 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     this.loadingBar$ = this.miscellaneousService.getLoading();
 
-    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(user => {
+    this.auth.onAuthStateChanged(user => {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
-        this.myUid = user.id;
+        this.myUid = user.uid;
         this.profileRoute = "/profile/" + this.myUid;
         this.createRoute = "/create/content";
         this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
+        this.updateOnDPChange();
       } else {
         this.myUid = undefined;
         this.profileRoute = '/auth';
@@ -55,6 +58,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => this.currentRoute = this.router.url);
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => this.showDashboard = value);
+
+  }
+
+  updateOnDPChange() {
+    this.usersService.getDisplayPictureRef(this.myUid).pipe(takeUntil(this.notifier$)).subscribe(res => {
+      this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
+    });
   }
 
   clickAuth() {

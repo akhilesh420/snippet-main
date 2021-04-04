@@ -1,10 +1,3 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
-
 .no-margin-no-padding {
   margin: 0%;
   padding: 0%;
@@ -23,11 +16,16 @@
 }
 
 .post-container {
-  height: 86vh;
-  width: calc(375 * (79vh) / 667);
-  max-width: 100vw;
+  height: auto;
+  width: calc(440px * var(--norm-width));
+  max-width: 440px;
+  min-width: 385px;
   padding-bottom: 5.444vh;
   overflow: hidden;
+}
+
+.no-posts {
+  height: 80vh;
 }
 
 
@@ -41,12 +39,12 @@
 }
 
 .feed-container {
-  width: calc( ( 9 * (79vh) / 16 ) + 353px + 7.43vw );
+  width: 800px;
   padding-top: 5.444vh;
 }
 
 .dashboard {
-  margin-left: calc((9 * (79vh) / 16) + 7.43vw);
+  margin-left: 440px;
   position: fixed;
 }
 
@@ -83,7 +81,7 @@
   position: relative;
   width: 340px;
   height: 55px;
-  margin-left: calc(((375 * (79vh) / 667) - 340px) / 2);
+  /* margin-left: calc(((375 * (79vh) / 667) - 340px) / 2); */
   margin-bottom: 1.22vh;
 }
 
@@ -156,6 +154,14 @@
           transform: rotate(90deg);
 }
 
+@media only screen and (min-width: 1320px) {
+
+.dashboard {
+  margin-left: 500px;
+}
+
+}
+
 @media only screen and (max-width: 800px) {
 
   .feed {
@@ -168,37 +174,24 @@
     margin-left: unset;
   }
 
-
-}
-
-@media only screen and (min-width: 550px) and (max-width: 800px) {
-
   .feed-container {
-    width: unset;
-    padding-top: 5.444vh;
+    display: grid;
+    place-items: center;
   }
 
-
-  .post-container {
-    height: 82vh;
-    width: calc(375 * (79vh) / 667);
-    max-width: 100vw;
-    padding-bottom: 5.444vh;
-    overflow: hidden;
-  }
 
 }
 
-  /* .secondary-profile-display {
-    margin-left: calc(((9 * (79vh) / 16) - 353px)/2);
-  } */
+
 
 @media screen and (max-width: 550px) {
 
   .post-container {
     width: 100vw;
-    height: calc(100vh - 54px);
-    padding-bottom: 0%;
+    height: auto;
+    padding-bottom: 10%;
+    min-width: unset;
+    max-width: unset;
   }
 
   .feed-container {
@@ -224,9 +217,5 @@
   .placeholderSizing {
     height: 70%;
   }
-
-
-
-  /* .first-post-gap */
 
 }

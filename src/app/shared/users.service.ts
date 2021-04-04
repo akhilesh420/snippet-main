@@ -1,32 +1,23 @@
-import { BehaviorSubject, throwError} from 'rxjs';
-import { catchError, first, take } from 'rxjs/operators';
-import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoarding } from './profile.model';
+import { BehaviorSubject, Observable, throwError} from 'rxjs';
+import { catchError, map,  startWith } from 'rxjs/operators';
+import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoarding, Credential } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { CustomMetadata } from './post.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  maxConnect = 100; //Maximum number of allowed connection
-  connectCount = 0; //Total number of connection
-
-  placeholderImg = 'assets/default image/blank_image@2x.png';
+  placeholderDP = 'assets/images/dpPlaceholder.svg';
 
   // Collection
   private profileDetailsCollection: AngularFirestoreCollection<ProfileDetails>;
   private profileStickersCollection: AngularFirestoreCollection;
   private displayPictureCollection: AngularFirestoreCollection<DisplayPicture>;
   private onBoardingCollection: AngularFirestoreCollection<OnBoarding>;
-
-  // Downloaded data storage
-  private profileDetailsList: {uid: string, obs: BehaviorSubject<ProfileDetails>}[] = [];
-  private profileStickersList: {uid: string, obs: BehaviorSubject<ProfileSticker[]>}[] = [];
-  private displayPictureList: {uid: string, obs: BehaviorSubject<any>}[] = [];
-
-  private dpLoadCheck = new BehaviorSubject<boolean>(false);
 
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage) {
@@ -39,26 +30,13 @@ export class UsersService {
   //--------------------------------------- Profile details ---------------------------------------
   // Get profile details from cloud firestore by UID
   getProfileDetails(uid: string) {
-    let index = this.profileDetailsList.findIndex(details => {
-      return details.uid === uid;
-    })
-
-    if (index === -1) {
-      this.profileDetailsList.push({uid: uid, obs: new BehaviorSubject<ProfileDetails>(undefined)});
-      let secIndex = this.profileDetailsList.length - 1;
-      this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges().subscribe(async (response) => {
-        this.profileDetailsList[secIndex].obs.next(response);
-      });
-      return this.profileDetailsList[secIndex].obs;
-    } else {
-     return this.profileDetailsList[index].obs;
-    }
+    return this.afs.doc<ProfileDetails>('profile details/' + uid).valueChanges();
   }
 
-  // Get profile details from cloud firestore by key
+  // Get credential with key as username
   // Used by auth service for username verification
-  getProfileDetailsByKey(key: string, value: any) {
-      return this.afs.collection<ProfileDetails>('profile details', ref => ref.where(key,'==',value)).valueChanges();
+  getCredential(username: string) {
+      return this.afs.doc<Credential>('credential/' + username).valueChanges();
   }
 
   // Update profile details from cloud firestore
@@ -76,27 +54,15 @@ export class UsersService {
   //--------------------------------------- Profile Stickers ---------------------------------------
   // Get profile stickers from cloud firestore by UID
   getProfileStickers(uid: string) {
-    let index = this.profileStickersList.findIndex(details => {
-      return details.uid === uid;
-    })
-
-    if (index === -1) {
-      this.profileStickersList.push({uid: uid, obs: new BehaviorSubject<ProfileSticker[]>(undefined)});
-      let secIndex = this.profileStickersList.length - 1;
-      this.afs.doc<{stickers: ProfileSticker[]}>('profile stickers/' + uid).valueChanges().pipe(catchError(this.handleError)).subscribe(response => {
-        if (!response) return;
-        const temp = [null,null,null,null,null];
-        response.stickers.forEach((sticker,index) => {
-          if (sticker.pid) {
-           temp[index] = sticker;
-          }
-        });
-        this.profileStickersList[secIndex].obs.next(temp);
-      });;
-      return this.profileStickersList[secIndex].obs;
-    } else {
-     return this.profileStickersList[index].obs;
-    }
+    return this.afs.doc<any>('profile stickers/' + uid).valueChanges()
+              .pipe(map(response => {
+                if (!response) return {stickers: [null,null,null,null,null]};
+                response.stickers.forEach((sticker, index) => {
+                   if (!sticker || sticker === 'empty') response.stickers[index] = null;
+                });
+                const res: {stickers: ProfileSticker[]} = response;
+                return res;
+              }));
   }
 
   // Update profile stickers from
@@ -109,6 +75,12 @@ export class UsersService {
     this.profileStickersCollection.doc(uid).update({stickers: stickerArray});
   }
 
+  //--------------------------------------- Personal Details ---------------------------------------
+  // Get personal details from cloud firestore by UID
+  getUsername(uid: string) {
+    return this.afs.doc<{username: string}>('username/' + uid).valueChanges();
+  }
+
   // --------------------------------------- Display Picture ---------------------------------------
 
   // Update display picture from cloud firestore
@@ -117,45 +89,34 @@ export class UsersService {
     this.displayPictureCollection.doc(uid).update(dp);
   }
 
+   // get display picture from cloud firestore
+   getDisplayPictureRef(uid: string) {
+    return this.afs.doc('display picture/' + uid).valueChanges();
+  }
+
   // Get display picture from firebase storage by UID
-  getDisplayPicture(uid: string, size: string='sm_') {
-    let index = this.displayPictureList.findIndex(details => {
-      return details.uid === uid;
-    })
-
-    if (index === -1) {
-      this.displayPictureList.push({uid: uid, obs: new BehaviorSubject<any>('assets/images/dpPlaceholder.svg')});
-      let secIndex = this.displayPictureList.length - 1;
-      const ref = this.storage.ref('Display picture/' + `sm_${uid}`);
-      ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
-        this.displayPictureList[secIndex].obs.next(response);
-        this.dpLoadCheck.next(true);
-      }, error => {
-        if (error.code_ === "storage/object-not-found") {
-          const ref = this.storage.ref('Display picture/' + uid + size);
-          ref.getDownloadURL().pipe(catchError(this.handleError), take(1)).subscribe(response => {
-            if (response) {
-              this.displayPictureList[secIndex].obs.next(response);
-              this.dpLoadCheck.next(true);
-            }
-          });
-        }
-      });
-      return this.displayPictureList[secIndex].obs
-    } else {
-      return this.displayPictureList[index].obs
-    }
+  getDisplayPicture(uid: string) {
+    const ref = this.storage.ref('display pictures/' + uid +'/small');
+    return ref.getDownloadURL().pipe(
+      startWith(this.placeholderDP),
+      catchError(err => {
+        const ref = this.storage.ref('display pictures/' + uid +'/original');
+        return ref.getDownloadURL().pipe(
+          startWith(this.placeholderDP),
+          catchError(err => {
+            return this.handleError(err);
+          }));
+      }));
   }
 
-  displayPictureLoaded() {
-    return this.dpLoadCheck;
-  }
 
    // Update display picture from firebase storage
-   updateDisplayPicture(uid: string, content: any) {
+   updateDisplayPicture(uid: string, content: any, customMetadata: CustomMetadata) {
     const file = content;
-    const filePath = 'Display picture/' + uid;
-    const task = this.storage.upload(filePath, file);
+    const filePath = 'display pictures/' + uid +'/original';
+    const ref = this.storage.ref(filePath);
+    const metadataUp = {contentType: file.type, ...customMetadata};
+    const task = ref.put(file, metadataUp);
     return task.percentageChanges();
   }
 

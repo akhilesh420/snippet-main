@@ -19,10 +19,10 @@
 
             <div class = "row no-margin-no-padding creatorName">
               <p class = "name"
-                *ngIf='(setUpUser(details.uid) | async) as profile'
+                *ngIf='(username$ | async) as info'
                 [ngClass]='{"selectedSticker-title": stickerSelected()}'
                 (click)='usernameClick()'>
-                    {{profile.username}}
+                    {{info.username}}
                </p>
             </div>
 
