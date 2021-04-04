@@ -1,17 +1,17 @@
 <!-- Page 1 -->
 
-<!-- <div class = "titleOne">
+<div class = "titleOne" *ngIf="router.url === '/tutorial#intro'">
 
     <img class = "titleOneSize" src = "assets/images/Tutorial/Tutorial_title_1.svg">
 
 </div>
 
-<div class = "subTitleOne">
+<div class = "subTitleOne" *ngIf="router.url === '/tutorial#intro'">
     <p class = "subTitleOneSizing">A social-media space for creatives.</p>
 </div>
 
-<div class = "nextButton">
-   
+<div class = "nextButton" *ngIf="router.url === '/tutorial#intro'">
+
     <div class = "button">
 
         <p class = "buttonText">Next</p>
@@ -28,14 +28,14 @@
 
     </div>
 
-</div> -->
+</div>
 
 <!-- Page 2  -->
 
-<!-- Class below is for only phone, make interchangeable with desktop verison of next button -->
+<!-- Class below is for only phone, make interchangeable with desktop version of next button -->
 
 <!-- <div class = "nextButtonPageTwo">
-   
+
     <div class = "button">
 
         <p class = "buttonText">Next</p>
@@ -52,7 +52,7 @@
 
     </div>
 
-</div> 
+</div>
 
 <div class="titleTwo">
 
@@ -68,15 +68,15 @@
 
     </div>
 
-    <p class = "paraOnePageTwo"> 
-        
+    <p class = "paraOnePageTwo">
+
         Stickers act like links to their respective posts.
         <br>
         <br>
         Each post has a sticker that represents it. People can <b>collect</b> these stickers,
         but they’re <br><b>limited in number</b>.
         <br>
-        
+
     </p>
 
     <div class = "subTitleTwoPageTwo">
@@ -85,37 +85,37 @@
 
     </div>
 
-    <p class = "paraTwoPageTwo" #paraTwo> 
-        
-        
+    <p class = "paraTwoPageTwo" #paraTwo>
+
+
         You can exclusively use Stickers in many ways.<br>
         For now, you can display it next to your username. <br>
 
         <br>
 
-        Soon, you can use it in your DM’s, your comments and even trade them !  
-        
+        Soon, you can use it in your DM’s, your comments and even trade them !
+
     </p> -->
 
 
     <!-- <div class = "nextButtonPageTwo">
-   
+
         <div class = "button">
-    
+
             <p class = "buttonText">Next</p>
-    
+
         </div>
-    
+
         <div class = "stepIndicator">
-    
+
             <div class="circleOne"></div>
-    
+
             <div class="circleTwo"></div>
-    
+
             <div class="circleThree"></div>
-    
+
         </div>
-    
+
     </div>  -->
 
 
@@ -123,16 +123,16 @@
 
 <!-- Page 3 -->
 
-<div class="titleThree">
+<div class="titleThree" *ngIf="router.url != '/tutorial#intro'">
 
     <img class = "titleThreeSize" src = "assets/images/Tutorial/Tutorial_title_3.svg">
-   
+
 </div>
 
-<!-- Class below is for only phone, make interchangeable with desktop verison of next button -->
+<!-- Class below is for only phone, make interchangeable with desktop version of next button -->
 
-<div class = "nextButtonPageThree">
-      
+<div class = "nextButtonPageThree" *ngIf="router.url != '/tutorial#intro'">
+
     <div class = "button">
 
         <p class = "buttonText">Explore</p>
@@ -149,60 +149,60 @@
 
     </div>
 
-</div> 
-   
-<div class = "contentSpace contentSpaceAnimation">
-   
+</div>
+
+<div class = "contentSpace contentSpaceAnimation" *ngIf="router.url != '/tutorial#intro'">
+
        <div class = "subTitleOnePageThree">
-   
+
            <img class = "subTitleOneSizingPageThree" src = "assets/images/Tutorial/Tutorial_3_subTitleOne.svg">
-   
+
        </div>
-   
-       <p class = "paraOnePageThree"> 
-           
+
+       <p class = "paraOnePageThree">
+
         <b>Do more than watch.</b><br>
-        Exclusively use your collection to express yourself. 
-           
+        Exclusively use your collection to express yourself.
+
        </p>
-   
+
        <div class = "subTitleTwoPageThree">
-   
+
            <img class = "subTitleTwoSizingPageThree" src = "assets/images/Tutorial/Tutorial_3_subTitleTwo.svg">
-   
+
        </div>
-   
-       <p class = "paraTwoPageThree"> 
-           
-           
-        Your <b>veiwers are incentivized</b> to share your work.<br>
+
+       <p class = "paraTwoPageThree">
+
+
+        Your <b>viewers are incentivized</b> to share your work.<br>
         <br>
         <b>More organic</b> and retainable growth.<br>
         <b>Less algorithm</b> dependency.<br>
-        
-         
-           
+
+
+
        </p>
-   
-   
+
+
        <!-- <div class = "nextButtonPageThree">
-      
+
            <div class = "button">
-       
+
                <p class = "buttonText">Explore</p>
-       
+
            </div>
-       
+
            <div class = "stepIndicator">
-       
+
                <div class="circleOne"></div>
-       
+
                <div class="circleTwo"></div>
-       
+
                <div class="circleThree"></div>
-       
+
            </div>
-       
+
         </div>  -->
-   
- </div> 
+
+ </div>
