@@ -1,3 +1,9 @@
+/* Shared */
+
+div {
+  outline: none;
+}
+
 /* Page 1 classes */
 
 .titleOne {
@@ -31,7 +37,7 @@
 
 .nextButton {
     width: 190px;
-    height: 80px;  
+    height: 80px;
 }
 
 .nextButtonFirst {
@@ -39,7 +45,7 @@
     height: 80px;
     position: absolute;
     left: 101px;
-    bottom: 300px;  
+    bottom: 300px;
 }
 
 .desktop {
@@ -149,7 +155,7 @@
 }
 
 .paraOnePageTwo {
-    
+
     position: relative;
     top: calc(70px * var(--norm-height));
     left: calc(88px * var(--norm-width));
@@ -273,11 +279,11 @@
 
 
 @media screen and (max-width: 550px) {
-    
+
     /* Page 1 */
-    
+
     .titleOne {
-       
+
         bottom: unset;
         transform: translate(-50%, 0%);
         top: 30%;
@@ -286,7 +292,7 @@
     }
 
     .subTitleOne {
-        
+
         transform: translate(-50%, 0%);
         bottom: unset;
         top: 40%;
@@ -299,14 +305,14 @@
     .nextButtonFirst {
         left: 50%;
         bottom: 20%;
-        transform: translate(-50%, 0%);  
+        transform: translate(-50%, 0%);
     }
 
 
     /* Page 2 */
 
     .titleTwo {
-        
+
         top: 20%;
         left: 50%;
         transform: translate(-50%, 0%);
@@ -322,37 +328,37 @@
     .subTitleOnePageTwo {
 
         left: 12px;
-    
+
     }
-    
-    
+
+
     .paraOnePageTwo {
-        
-        left: 12px;
-        
-    }
-    
-    .subTitleTwoPageTwo {
-        
+
         left: 12px;
 
     }
-    
+
+    .subTitleTwoPageTwo {
+
+        left: 12px;
+
+    }
+
     .paraTwoPageTwo {
 
         left: 12px;
-    
+
     }
-    
+
     .phonePage {
-        
+
         bottom: unset;
         left: 50%;
         transform: translate(-50%, 0%);
         top: 5%;
         display: block;
         position: absolute;
-        
+
     }
 
     .desktopPage {
@@ -366,35 +372,35 @@
         top: 20%;
         left: 50%;
         transform: translate(-50%, 0%);
-        
+
     }
 
     .subTitleOnePageThree {
-        
+
         left: 12px;
 
     }
-    
-    
+
+
     .subTitleTwoPageThree {
-        
+
         left: 12px;
 
     }
-    
-    
+
+
     .paraOnePageThree {
-        
+
         left: 12px;
-       
+
     }
-    
+
     .paraTwoPageThree {
-    
+
         left: 12px;
-        
+
     }
-    
+
 
     .titleThreeSize {
         height: calc(38px * var(--norm-height));
