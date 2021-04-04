@@ -1,18 +1,21 @@
 <!-- Page 1 -->
 
-<div class = "titleOne" *ngIf="router.url === '/tutorial#intro'">
+<div class = "titleOne" *ngIf="router.url === '/tutorial'">
 
     <img class = "titleOneSize" src = "assets/images/Tutorial/Tutorial_title_1.svg">
 
 </div>
 
-<div class = "subTitleOne" *ngIf="router.url === '/tutorial#intro'">
+<div class = "subTitleOne" *ngIf="router.url === '/tutorial'">
     <p class = "subTitleOneSizing">A social-media space for creatives.</p>
 </div>
 
-<div class = "nextButtonFirst">
+<div class = "nextButtonFirst"
+    *ngIf="router.url === '/tutorial'">
 
-    <div class = "button">
+    <div class = "button"
+        [routerLink]='"."'
+        [fragment]="'howitworks'">
 
         <p class = "buttonText">Next</p>
 
@@ -20,7 +23,8 @@
 
     <div class = "stepIndicator">
 
-        <div class="circleOne"></div>
+        <div class="circleOne"
+            [ngStyle]="{'background-color': router.url  === '/tutorial' ? '#E2B33D' : null}"></div>
 
         <div class="circleTwo"></div>
 
@@ -34,9 +38,12 @@
 
 <!-- Class below is for only phone, make interchangeable with desktop version of next button -->
 
-<div class = "nextButton phonePage">
+<div class = "nextButton phonePage"
+    *ngIf="router.url === '/tutorial#howitworks'">
 
-    <div class = "button">
+    <div class = "button"
+        [routerLink]='"."'
+        [fragment]="'whysnippet'">
 
         <p class = "buttonText">Next</p>
 
@@ -46,7 +53,8 @@
 
         <div class="circleOne"></div>
 
-        <div class="circleTwo"></div>
+        <div class="circleTwo"
+            [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
 
         <div class="circleThree"></div>
 
@@ -54,13 +62,13 @@
 
 </div>
 
-<div class="titleTwo">
+<div class="titleTwo" *ngIf="router.url === '/tutorial#howitworks'">
 
  <img class = "titleTwoSize" src = "assets/images/Tutorial/Tutorial_title_2.svg">
 
 </div>
 
-<div class = "contentSpace">
+<div class = "contentSpace" *ngIf="router.url === '/tutorial#howitworks'">
 
     <div class = "subTitleOnePageTwo">
 
@@ -93,14 +101,16 @@
 
         <br>
 
-        Soon, you can use it in your DM’s, your comments and even trade them !
+        Soon, you can use it in your DM’s, your comments and even trade them!
 
     </p>
 
 
     <div class = "nextButton desktopPage">
 
-        <div class = "button">
+        <div class = "button"
+            [routerLink]='"."'
+            [fragment]="'whysnippet'">
 
             <p class = "buttonText">Next</p>
 
@@ -110,7 +120,8 @@
 
             <div class="circleOne"></div>
 
-            <div class="circleTwo"></div>
+            <div class="circleTwo"
+                [ngStyle]="{'background-color': router.url  === '/tutorial#howitworks' ? '#E2B33D' : null}"></div>
 
             <div class="circleThree"></div>
 
@@ -123,19 +134,18 @@
 
 <!-- Page 3 -->
 
-<!-- <div class="titleThree">
+<div class="titleThree" *ngIf="router.url === '/tutorial#whysnippet'">
 
     <img class = "titleThreeSize" src = "assets/images/Tutorial/Tutorial_title_3.svg">
 
-</div> -->
+</div>
 
 <!-- Class below is for only phone, make interchangeable with desktop version of next button -->
 
-<!-- <div class = "nextButtonPageThree" *ngIf="router.url != '/tutorial#intro'"> -->
+<div class = "nextButton phonePage"
+    *ngIf="router.url === '/tutorial#whysnippet'">
 
-<!-- <div class = "nextButton phonePage">
-
-    <div class = "button">
+    <div class = "button" [routerLink]='"/explore"'>
 
         <p class = "buttonText">Explore</p>
 
@@ -147,13 +157,14 @@
 
         <div class="circleTwo"></div>
 
-        <div class="circleThree"></div>
+        <div class="circleThree"
+            [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
 
     </div>
 
 </div>
 
-<div class = "contentSpace contentSpaceAnimation" *ngIf="router.url != '/tutorial#intro'">
+<div class = "contentSpace contentSpaceAnimation" *ngIf="router.url === '/tutorial#whysnippet'">
 
        <div class = "subTitleOnePageThree">
 
@@ -189,7 +200,7 @@
 
        <div class = "nextButton desktopPage">
 
-           <div class = "button">
+           <div class = "button" [routerLink]='"/explore"'>
 
                <p class = "buttonText">Explore</p>
 
@@ -201,10 +212,11 @@
 
                <div class="circleTwo"></div>
 
-               <div class="circleThree"></div>
+               <div class="circleThree"
+                   [ngStyle]="{'background-color': router.url  === '/tutorial#whysnippet' ? '#E2B33D' : null}"></div>
 
            </div>
 
         </div>
 
- </div>  -->
+ </div>
