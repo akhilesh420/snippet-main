@@ -291,6 +291,10 @@ div {
 
     }
 
+    .titleOneSize {
+        height: 30px;
+    }
+
     .subTitleOne {
 
         transform: translate(-50%, 0%);
@@ -403,7 +407,11 @@ div {
 
 
     .titleThreeSize {
-        height: calc(38px * var(--norm-height));
+        height: calc(34px * var(--norm-height));
+    }
+
+    .titleTwoSizing {
+        height: calc(34px * var(--norm-height));
     }
 
 
