@@ -2,8 +2,8 @@
 
 .titleOne {
     position: absolute;
-    bottom: calc(586px * var(--norm-height));
-    left: 94px;
+    bottom: 586px;
+    left: 101px;
 }
 
 .titleOneSize {
@@ -180,6 +180,8 @@
     height: 80px;
 }
 
+/* Page 3  */
+
 .titleThree {
     position: absolute;
     left: calc(95px * var(--norm-width));
@@ -258,6 +260,145 @@
     -webkit-animation: slide-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s both;
 	        animation: slide-top 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s both;
 }
+
+
+@media screen and (max-width: 550px) {
+    
+    /* Page 1 */
+    
+    .titleOne {
+       
+        bottom: unset;
+        transform: translate(-50%, 0%);
+        top: 30%;
+        left: 50%;
+
+    }
+
+    .subTitleOne {
+        
+        transform: translate(-50%, 0%);
+        bottom: unset;
+        top: 40%;
+        left: 50%;
+        width: 80vw;
+        text-align: center;
+
+    }
+
+    .nextButton {
+        
+        transform: translate(-50%, 0%);
+        left: 50%;
+        bottom: 20%;
+
+    }
+
+    /* Page 2 */
+
+    .titleTwo {
+        
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+
+    }
+
+    .contentSpace {
+
+        bottom: unset;
+        top: 30%;
+    }
+
+    .subTitleOnePageTwo {
+
+        left: 12px;
+    
+    }
+    
+    
+    .paraOnePageTwo {
+        
+        left: 12px;
+        
+    }
+    
+    .subTitleTwoPageTwo {
+        
+        left: 12px;
+
+    }
+    
+    .paraTwoPageTwo {
+
+        left: 12px;
+    
+    }
+    
+    .nextButtonPageTwo {
+        
+        bottom: unset;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        top: 5%;
+        
+    }
+
+    /* Page 3 */
+
+    .titleThree {
+
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        
+    }
+
+    .subTitleOnePageThree {
+        
+        left: 12px;
+
+    }
+    
+    
+    .subTitleTwoPageThree {
+        
+        left: 12px;
+
+    }
+    
+    
+    .paraOnePageThree {
+        
+        left: 12px;
+       
+    }
+    
+    .paraTwoPageThree {
+    
+        left: 12px;
+        
+    }
+    
+    .nextButtonPageThree {
+
+        bottom: unset;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        top: 5%;
+
+    }
+
+    .titleThreeSize {
+        height: calc(38px * var(--norm-height));
+    }
+
+
+
+
+
+}
+
 
 /* Animations */
 
