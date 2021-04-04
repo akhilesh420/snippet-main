@@ -126,7 +126,7 @@ div {
     top: calc(124px * var(--norm-height));
 }
 
-.titleTwoSizing {
+.titleTwoSize {
     height: calc(45px * var(--norm-height));
     width: auto;
 }
@@ -137,6 +137,7 @@ div {
     height: calc(688px * var(--norm-height));
     width: 100%;
     background: linear-gradient(104deg, #0B0B0B 0.57%, rgba(11, 11, 11, 0.0537661) 65.17%, rgba(11, 11, 11, 0) 99.36%);
+    padding-right: 5px;
 }
 
 .subTitleOnePageTwo {
@@ -291,6 +292,10 @@ div {
 
     }
 
+    .titleOneSize {
+        height: 30px;
+    }
+
     .subTitleOne {
 
         transform: translate(-50%, 0%);
@@ -403,7 +408,11 @@ div {
 
 
     .titleThreeSize {
-        height: calc(38px * var(--norm-height));
+        height: 30px;
+    }
+
+    .titleTwoSize {
+        height: 30px;
     }
 
 
