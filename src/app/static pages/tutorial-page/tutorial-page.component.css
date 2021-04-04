@@ -2,7 +2,7 @@
 
 .titleOne {
     position: absolute;
-    bottom: 586px;
+    bottom: 480px;
     left: 101px;
 }
 
@@ -13,7 +13,7 @@
 
 .subTitleOne {
     position: absolute;
-    bottom: 500px;
+    bottom: 400px;
     left: 101px;
 }
 
@@ -31,10 +31,25 @@
 
 .nextButton {
     width: 190px;
+    height: 80px;  
+}
+
+.nextButtonFirst {
+    width: 190px;
     height: 80px;
+    position: absolute;
+    left: 101px;
+    bottom: 300px;  
+}
+
+.desktop {
     position: absolute;
     bottom: 312px;
     left: 94px;
+}
+
+.phone {
+    display: none;
 }
 
 .button {
@@ -172,12 +187,14 @@
     color: #FFFFFF;
 }
 
-.nextButtonPageTwo {
+.desktopPage {
     position: absolute;
     bottom: calc(54px * var(--norm-height));
     left: calc(88px * var(--norm-width));
-    width: 190px;
-    height: 80px;
+}
+
+.phonePage {
+    display: none;
 }
 
 /* Page 3  */
@@ -243,13 +260,6 @@
     color: #FFFFFF;
 }
 
-.nextButtonPageThree {
-    position: absolute;
-    bottom: calc(54px * var(--norm-height));
-    left: calc(88px * var(--norm-width));
-    width: 190px;
-    height: 80px;
-}
 
 .titleAnimation {
     -webkit-animation: slide-right 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -286,13 +296,12 @@
 
     }
 
-    .nextButton {
-        
-        transform: translate(-50%, 0%);
+    .nextButtonFirst {
         left: 50%;
         bottom: 20%;
-
+        transform: translate(-50%, 0%);  
     }
+
 
     /* Page 2 */
 
@@ -335,13 +344,19 @@
     
     }
     
-    .nextButtonPageTwo {
+    .phonePage {
         
         bottom: unset;
         left: 50%;
         transform: translate(-50%, 0%);
         top: 5%;
+        display: block;
+        position: absolute;
         
+    }
+
+    .desktopPage {
+        display: none;
     }
 
     /* Page 3 */
@@ -380,21 +395,10 @@
         
     }
     
-    .nextButtonPageThree {
-
-        bottom: unset;
-        left: 50%;
-        transform: translate(-50%, 0%);
-        top: 5%;
-
-    }
 
     .titleThreeSize {
         height: calc(38px * var(--norm-height));
     }
-
-
-
 
 
 }
