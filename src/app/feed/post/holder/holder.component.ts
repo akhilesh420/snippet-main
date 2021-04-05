@@ -13,27 +13,28 @@ import { Collection } from 'src/app/shared/activity.model';
 })
 export class HolderComponent implements OnInit, OnDestroy{
 
-  @Input() collection: Collection;
-  uid: string;
+  @Input() uid: string;
   notifier$ = new Subject();
 
-  $profileDetails: Observable<ProfileDetails>;
-  profileStickers: ProfileSticker[] = [null,null,null,null,null];
-  $displayPicture: BehaviorSubject<any>;
+  username$: Observable<{username: string}>;
+  profileStickers:{stickers: ProfileSticker[]} = {stickers: [null,null,null,null,null]};
+  profileStickersLoaded: boolean = false;
+  displayPicture$: Observable<any>;
+  profileRoute: string;
 
   constructor(private usersService: UsersService,
               private router: Router) {
-   }
+  }
 
   ngOnInit(): void {
-    this.uid = this.collection.collectorID;
-    this.$profileDetails = this.usersService.getProfileDetails(this.uid);
+    this.profileRoute = "/profile/" + this.uid;
+    this.username$ = this.usersService.getUsername(this.uid);
     this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
-    .subscribe(response => {
-      if (!response) return;
-      this.profileStickers = response;
-    });
-    this.$displayPicture = this.usersService.getDisplayPicture(this.uid);
+      .subscribe(response => {
+        this.profileStickers = response;
+        this.profileStickersLoaded = true;
+      });
+    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
   }
 
 

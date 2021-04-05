@@ -1,7 +1,7 @@
 {
   "projects": {
     "production": "snippet-web-9818a",
-    "testing": "snippet-test-716cd",
+    "testing": "snippet-test2",
     "default": "snippet-web-9818a"
   }
 }

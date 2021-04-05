@@ -1,8 +1,64 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if request.auth!=null;
+
+    //Write functions
+
+    function writeDP(uid) {
+      return isUser(uid)
+            && isValidSize(15)
+            && isValidType('image/.*');
+    }
+
+    function writePost() {
+      return isValidSize(80)
+            && (isValidType('image/.*') || isValidType('video/.*'));
+    }
+
+    function writeSticker() {
+      return isValidSize(15)
+            && isValidType('image/.*');
+    }
+
+    // Helper functions
+
+    // Check if user has the specified uid
+    function isUser(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Check if user is signed in
+    function isSignedIn() {
+      return request.auth.uid != null;
+    }
+
+    //Check if content size is smaller than allowed size
+    function isValidSize(allowedSize) { //allowedSize in MB
+      return request.resource.size <= allowedSize * 1024 * 1024;
+    }
+
+    //check if content type matches allowed type
+    function isValidType(allowedType) { //allowedType is string -> format: 'image/.*', 'video/.*'
+      return request.resource.contentType.matches(allowedType);
+    }
+
+    match /display%20pictures/{uid}/original {
+      allow read: if true;
+      allow write: if writeDP(uid);
+    }
+
+    match /posts/{pid}/original {
+      allow read: if true;
+      // allow create: if true;
+      allow create: if writePost();
+      allow update, delete: if false;
+    }
+
+    match /stickers/{pid}/original {
+      allow read: if true;
+      // allow create: if true;
+      allow create: if writeSticker();
+      allow update, delete: if false;
     }
   }
 }

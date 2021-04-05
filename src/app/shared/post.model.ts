@@ -1,11 +1,8 @@
 export class PostDetails {
 
   constructor(
-    public uid: string,
     public title: string,
-    public description : string,
-    public dateCreated: Date | any,
-    public pid?: string
+    public description : string
   ) { }
 
 }
@@ -14,6 +11,8 @@ export class PostContent {
 
   constructor(
     public name: string,
+    public width: number,
+    public height: number,
     public fileFormat: string = 'image'
   ) {}
 }
@@ -38,28 +37,26 @@ export class Comment {
 export class Holder {
 
   constructor(
-    public uid: string,
-    public dateCollected: Date
+    public cid: Date,
+    public timeStamp: string,
+    public collectorID: string
   ) {}
 }
 
-export class Post {
+export class CustomMetadata {
 
   constructor(
-    public postDetails?: PostDetails,
-    public postContent?: PostContent,
-    public stickerContent? : PostContent,
-    public stickerDetails? : StickerDetails,
-    public holderList?: Holder[],
-    public commentList?: Comment[]
+    public uid: string,
+    public width: string,
+    public height: string
   ) {}
 }
 
-
-export class Posts {
+export class Feed {
 
   constructor(
     public pid: string,
-    public post: Post
+    public creatorID: string,
+    public dateCreated: Date
   ) {}
 }

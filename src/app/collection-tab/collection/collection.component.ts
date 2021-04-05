@@ -1,7 +1,7 @@
 import { UsersService } from './../../shared/users.service';
 import { Router } from '@angular/router';
 import { ProfileDetails, ProfileSticker } from './../../shared/profile.model';
-import { PostDetails } from './../../shared/post.model';
+import { Feed, PostDetails } from './../../shared/post.model';
 import { PostService } from './../../shared/post.service';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Collection } from 'src/app/shared/activity.model';
@@ -16,12 +16,12 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class CollectionComponent implements OnInit, OnDestroy {
 
-  @Input() collection: Collection;
-
+  @Input() feed: Feed;
   pid: string;
+  uid: string;
   postDetails$: Observable<PostDetails>;
-  profileDetails$: BehaviorSubject<ProfileDetails>;
-  stickerContent$: BehaviorSubject<any>;
+  username$: Observable<{username: string}>;
+  stickerContent$: Observable<string>;
 
   profileStickerEdit: boolean = false;
   selectedPID: string;
@@ -35,20 +35,14 @@ export class CollectionComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    if (!this.collection) return;
-    this.pid = this.collection.pid;
+    if (!this.feed || !this.feed.pid) return;
+    this.pid = this.feed.pid;
+    this.uid = this.feed.creatorID;
     this.postDetails$ = this.postService.getPostDetails(this.pid);
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
+    this.username$ = this.userService.getUsername(this.uid);
     this.miscellaneousService.userStickerSelection.pipe(takeUntil(this.notifier$)).subscribe(value => this.userStickerSelected = value)
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value)
-  }
-
-  ngOnChanges() {
-    this.ngOnInit();
-  }
-
-  setUpUser(uid: string) {
-    return this.profileDetails$ = this.userService.getProfileDetails(uid);
   }
 
   navigate() {
@@ -59,7 +53,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   usernameClick() {
     if (this.profileStickerEdit) return;
-    this.router.navigate(["/profile/" + this.collection.collecteeID]);
+    this.router.navigate(["/profile/" + this.uid]);
   }
 
   stickerSelected() {

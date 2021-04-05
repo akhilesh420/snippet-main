@@ -1,18 +1,12 @@
-import { BehaviorSubject, Observable, forkJoin, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PostContent, PostDetails, StickerDetails } from './../shared/post.model';
+import { PostDetails, StickerDetails, CustomMetadata } from './../shared/post.model';
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PostService } from '../shared/post.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivityService } from '../shared/activity.service';
-import { Collection } from '../shared/activity.model';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { take, takeUntil } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
-// import { faststart } from 'moov-faststart';
-// import * as fs from 'fs';
 
 @Component({
   selector: 'app-create',
@@ -25,9 +19,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   @ViewChild('contentInput') contentInput: ElementRef<HTMLElement>;
   @ViewChild('stickerInput') stickerInput: ElementRef<HTMLElement>;
 
+
   postDetails: PostDetails;
   stickerDetails: StickerDetails;
-  stickerContent: any;
 
   postContent$ = new BehaviorSubject<any>(null);
   postType$ = new BehaviorSubject<any>(null);
@@ -52,17 +46,16 @@ export class CreateComponent implements OnInit, OnDestroy {
   nextActive: boolean = false;
 
   storageFile: File;
+  stickerContent: File;
 
-  onBoarding: boolean = false;
-  onBoardingStep: number;
+  contentMetadata: CustomMetadata;
+  stickerMetadata: CustomMetadata;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private authService: AuthService,
               private postService: PostService,
-              private activityService: ActivityService,
-              private afs: AngularFirestore,
-              private miscellaneousService: MiscellaneousService,
-              public sanitizer: DomSanitizer) { }
+              private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
@@ -71,22 +64,11 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.handleError(errorMessage);
     });
 
-    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.onBoarding = val;
-      if (val) {
-        this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-          this.onBoardingStep = step;
-          if (step != 8) {
-            this.router.navigate(['/tutorial']);
-          }
-        });
-      }
-    })
-
     this.route.params
     .subscribe(
       (params: Params) => {
         this.currentStep = params['step'];
+        console.log(this.currentStep, this.stepCounter);
         this.nextActive = false;
         this.error = undefined;
 
@@ -96,14 +78,11 @@ export class CreateComponent implements OnInit, OnDestroy {
         if (this.stepCounter === 0  && !(this.currentStep === 'content')) {
           this.router.navigate(['/create/content']);
         }
-        if (this.stepCounter === 1 && this.currentStep === 'sticker') {
+        if (this.stepCounter != 2 && this.currentStep === 'sticker') {
           this.router.navigate(['/create/content']);
         }
 
         if (this.currentStep === 'content') {
-          if (this.onBoarding) {
-            this.miscellaneousService.setPopUp(new PopUp("It's time to make your first post !",'Okay',undefined, ['default', 'reject']));
-          }
           this.nextActive = !!this.postContent$.value;
           this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(value => {
             this.nextActive = !!value;
@@ -209,130 +188,87 @@ export class CreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleError(error) {
+  async handleError(error) {
     this.miscellaneousService.setPopUp(new PopUp("An unexpected error occurred! It is what it is...",'okay', undefined, ['default', 'reject']));
-    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-      this.isCreating = false;
-
-    });
+    await this.miscellaneousService.getPopUpInteraction().pipe(take(1)).toPromise();
+    this.isCreating = false;
   }
 
-  nextClick() {
+  async nextClick() {
     if (this.isCreating) return;
+    this.isCreating = true;
 
     if (this.currentStep === 'content') {
-      if (!this.storageFile) {
-        this.error = "Trust me, click the BIG plus button";
-        return;
-      }
+
+      if (!this.storageFile) return this.onCreateError("Trust me, click the BIG plus button");
+
+      const dimensions = await this.miscellaneousService.getDimension(this.storageFile, this.storageFile.type);
+      this.contentMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
+
       this.error = undefined;
       ++this.stepCounter;
-      this.router.navigate(['/create/description']);
+      this.isCreating = false;
+      return this.router.navigate(['/create/description']);
     }
 
     if (this.currentStep === 'description') {
-      if (!this.title || this.title === "") {
-        this.error = "A title is required!";
-        return;
-      }
-      if (this.title && this.title.length > 19) {
-        this.error = "The title is too long!";
-        return;
-      }
-      if (this.desc && this.desc.length > 240) {
-        this.error = "The description is too long!";
-        return;
-      }
+      if (!this.title || this.title === "") return this.onCreateError("A title is required!");
+
+      if (this.title && this.title.length > 19) return this.onCreateError("The title is too long!");
+
+      if (this.desc && this.desc.length > 240) return this.onCreateError("The description is too long!");
+
       if (!this.desc || this.desc === "") {
         this.miscellaneousService.setPopUp(new PopUp("You didn't add a description! Are you sure you want to post?",'Yes','No',['confirm', 'reject']));
-        this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-          if (!response) return;
-          this.error = undefined;
-          ++this.stepCounter;
-          this.router.navigate(['/create/sticker']);
-        });
-      } else {
-        this.error = undefined;
-        ++this.stepCounter;
-        this.router.navigate(['/create/sticker']);
+        const res = await this.miscellaneousService.getPopUpInteraction().pipe(take(1)).toPromise();
+        if (!res) return this.isCreating = false;
       }
+
+      this.error = undefined;
+      ++this.stepCounter;
+      this.isCreating = false;
+      return this.router.navigate(['/create/sticker']);
     }
+
     if (this.currentStep == 'sticker') {
-      if (!this.stickerContent || !this.stickerContent) {
-        this.error = "A sticker is required! Click the plus sign on the bottom right of the post";
-        return;
-      }
-      if (!Number.isInteger(this.amount)) {
-        this.error = "Number of stickers must be whole numbers!";
-        return;
-      }
-      if ((!this.amount || this.amount === null) && this.amount != 0) {
-        this.error = "Choose the number of stickers you want to release!";
-        return;
-      }
-      if (this.amount < this.minSticker) {
-        this.error = "Must release at least "+this.minSticker+" stickers!";
-        return
-      }
-      if (this.amount > this.maxSticker) {
-        this.error = "Can only release "+this.maxSticker+" stickers! For now...";
-        return;
-      }
+      if (!this.stickerContent || !this.stickerContent) return this.onCreateError("A sticker is required! Click the plus sign on the bottom right of the post");
+
+
+      const dimensions = await this.miscellaneousService.getDimension(this.stickerContent, this.stickerContent.type);
+      this.stickerMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
+
+      if (!Number.isInteger(this.amount)) return this.onCreateError("Number of stickers must be whole numbers!");
+
+      if ((!this.amount || this.amount === null) && this.amount != 0) return this.onCreateError("Choose the number of stickers you want to release!");
+
+      if (this.amount < this.minSticker) return this.onCreateError("Must release at least "+this.minSticker+" stickers!");
+
+      if (this.amount > this.maxSticker) return this.onCreateError("Can only release "+this.maxSticker+" stickers! For now...");
+
       if (this.amount === 1) {
         this.miscellaneousService.setPopUp(new PopUp("Are you sure you want to release only 1 sticker? You will receive this 1 sticker, so no one else can collect it",'Yes','No', ['confirm', 'reject']));
-        this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-          if (!response) {
-            return;
-          } else {
-            this.confirmPost();
-          }
-        });
-      } else {
-        this.confirmPost();
+        const res = await this.miscellaneousService.getPopUpInteraction().pipe(take(1)).toPromise();
+        if (!res) return this.isCreating = false;
       }
-    }
-  }
 
-  confirmPost() {
-    this.error = undefined;
-    ++this.stepCounter;
-    this.createPost();
+      this.error = undefined;
+      ++this.stepCounter;
+      return this.createPost();
+    }
   }
 
   createPost() {
-    this.isCreating = true;
-    let pid = this.afs.createId();
-    let pcid = this.afs.createId();
-    let scid = this.afs.createId();
-    let dateCreated = new Date();
-
-    let postSubs =  this.postService.addContent(pcid,this.storageFile);
-    let stickerSubs = this.postService.addContent(scid,this.stickerContent);
-
-    this.miscellaneousService.endOnBoarding(this.uid); //end on boarding for local machine
-    this.miscellaneousService.startLoading();
-    forkJoin([postSubs, stickerSubs]).subscribe(results => {
-      if (results[0] === 100 && results[1] === 100) {
-        this.miscellaneousService.endLoading();
-        this.miscellaneousService.updateOnBoarding(this.uid); //end on boarding on server
-
-        this.postService.addPostDetails(pid,new PostDetails(this.uid,this.title, this.desc, dateCreated, pid));
-        this.postService.addPostContentRef(pid, new PostContent(pcid, this.storageFile.type));
-        this.postService.addStickerContentRef(pid, new PostContent(scid, this.stickerContent.type));
-        this.postService.addStickerDetails(pid, new StickerDetails(this.amount, 0));
-
-        this.activityService.addActivity(pid, 'post');
-        this.activityService.addCollection(new Collection(this.uid,this.uid,pid,dateCreated.getTime())); //add your own collection
-      }
-    }, error => {
-      this.miscellaneousService.endLoading();
-    });
+    this.postService.newPost( this.uid,
+                              this.storageFile,
+                              this.contentMetadata,
+                              this.stickerContent,
+                              this.stickerMetadata,
+                              new PostDetails(this.title, this.desc),
+                              new StickerDetails(this.amount, 0));
 
     this.miscellaneousService.setPopUp(new PopUp("You are all set! Feel free to explore but please don't close the tab while your post is being processed",'Explore', undefined, ['default', 'reject']));
-    this.miscellaneousService.getPopUpInteraction().pipe(take(1)).subscribe(response => {
-      this.router.navigate(['/explore']);
-      this.isCreating = false;
-    });
+    this.router.navigate(['/explore']);
+    return this.isCreating = false;
   }
 
   previousClick() {
@@ -346,6 +282,11 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.router.navigate(['/create/description']);
       return;
     }
+  }
+
+  onCreateError(error) {
+    this.error = error;
+    return this.isCreating = false;
   }
 
   stopPropagation(event) {

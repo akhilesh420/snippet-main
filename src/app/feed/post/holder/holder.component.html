@@ -1,119 +1,42 @@
-<!-- <div class="row master">
-  <div class="col" style="padding: 0" #usernameCol>
-    <span class="float-left username"
-          #usernameRef
-          [ngStyle]="{'opacity' : usernameFetch ? 1 : 0}"
-          (click)="navigate()">
-      {{username}}
-    </span>
+<div class="profileTab">
+
+  <div class="profilePicture" [routerLink]='profileRoute'>
+    <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp'>
   </div>
-   profile stickers
-   <div class="col" style="padding: 0px">
-      <div class="row" style="width: 100%" *ngIf="profileStickers$ | async as stickers">
-        <div class="col"
-          *ngFor="let i of getEmptySlots(stickers)"
-          style="padding: 0px;"
-          [ngStyle]="{'width': stickerSize, 'height': stickerSize}">
-        </div>
-        <div class="col"
-          *ngFor="let sticker of stickers"
-          style="padding: 0px;"
-          [ngStyle]="{'width': stickerSize, 'height': stickerSize}">
-          <app-sticker [pid]="sticker.pid"></app-sticker>
-        </div>
-    </div>
+
+  <div class = "username">
+
+    <p *ngIf='(username$ | async) as info;'
+        style="cursor: pointer;"
+        [routerLink]='profileRoute'>{{info.username}}</p>
+
   </div>
-</div> -->
 
-<div class = "backpanel row no-margin-no-padding">
+  <div class="displaySticker-1" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[0] != null' [pid]="profileStickers.stickers[0].pid"></app-sticker>
+  </div>
 
-    <div class = "col-2 no-margin-no-padding">
+  <div class="displaySticker-2" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[1] != null' [pid]="profileStickers.stickers[1].pid"></app-sticker>
+  </div>
 
-      <div class = "dpHolder">
-        <div class = "dpContainer" [ngClass]="{'dp-no-bck': $displayPicture.value}">
-          <img *ngIf="$displayPicture | async as content;"
-                class='dp'
-                [src]="content"
-                alt="display picture"
-                [routerLink]='["/profile/"+uid]'
-                style='cursor: pointer;'>
-        </div>
-      </div>
+  <div class="displaySticker-3" [ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[2] != null' [pid]="profileStickers.stickers[2].pid"></app-sticker>
+  </div>
 
-    </div>
+  <div class="displaySticker-4"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[3] != null' [pid]="profileStickers.stickers[3].pid"></app-sticker>
+  </div>
 
-
-    <div class = "col-10 holderDetails no-margin-no-padding">
-
-      <div class = "row detailsTop no-margin-no-padding">
-
-        <div class = "col-9 usernameSpace no-margin-no-padding">
-
-          <a [routerLink]='["/profile/"+uid]'>
-            <span class = "username no-margin-no-padding" *ngIf='$profileDetails | async as details;'>{{details.username}}</span>
-          </a>
-        </div>
-
-        <div class = "col-3 collectionDate no-margin-no-padding">
-
-          <span class = "dateCollected no-margin-no-padding">{{collection.timeStamp | date:'shortDate'}}</span>
-
-        </div>
-
-      </div>
-
-      <div class = "row detailsBottom no-margin-no-padding">
-
-        <div class = "stickerHolder no-margin-no-padding">
-
-          <ng-template #sticker0>
-            <div class = "sticker no-margin-no-padding"></div>
-           </ng-template>
-          <app-sticker *ngIf='profileStickers[0] != null; else sticker0' [pid]="profileStickers[0].pid"></app-sticker>
-        </div>
-
-        <div class = "stickerHolder-1 no-margin-no-padding">
-
-          <ng-template #sticker1>
-           <div class = "sticker no-margin-no-padding"></div>
-          </ng-template>
-          <app-sticker *ngIf='profileStickers[1] != null; else sticker1' [pid]="profileStickers[1].pid"></app-sticker>
-        </div>
-
-        <div class = "stickerHolder-2 no-margin-no-padding">
-
-          <ng-template #sticker2>
-            <div class = "sticker no-margin-no-padding"></div>
-           </ng-template>
-          <app-sticker *ngIf='profileStickers[2] != null; else sticker2' [pid]="profileStickers[2].pid"></app-sticker>
-
-        </div>
-
-        <div class = "stickerHolder-3 no-margin-no-padding">
-
-          <ng-template #sticker3>
-            <div class = "sticker no-margin-no-padding"></div>
-           </ng-template>
-          <app-sticker *ngIf='profileStickers[3] != null; else sticker3' [pid]="profileStickers[3].pid"></app-sticker>
-
-        </div>
-
-        <div  class = "stickerHolder-4 no-margin-no-padding">
-
-          <ng-template #sticker4>
-            <div class = "sticker no-margin-no-padding"></div>
-           </ng-template>
-          <app-sticker *ngIf='profileStickers[4] != null; else sticker4' [pid]="profileStickers[4].pid"></app-sticker>
-
-        </div>
+  <div class="displaySticker-5"[ngClass]="{'sticker-bck': !profileStickersLoaded}">
+    <app-sticker *ngIf='profileStickers.stickers[4] != null' [pid]="profileStickers.stickers[4].pid"></app-sticker>
+  </div>
 
 
-
-      </div>
-
-    </div>
 
 </div>
+
+
 
 
 

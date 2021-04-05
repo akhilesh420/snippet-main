@@ -1,10 +1,284 @@
-
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
-      
+
+    //Write functions
+
+    function getExclusivePrivate(collectionWspace, eid) {
+      return get(/databases/$(database)/documents/$(collectionWspace)/$(eid)/private/details);
     }
+
+    function allowCollection(data, collectionWspace){
+      return isUser(data.collectorID)
+            && (getAfter( /databases/$(database)/documents/activity/$(data.pid)/metrics/collected).data.counter
+                  <= get(/databases/$(database)/documents/$(collectionWspace)/$(data.pid)).data.amountReleased )  //sticker remaining (<= because getAfter)
+            && !(isHolder(data.pid, data.collectorID)) //collection doesn't exist on post
+    }
+
+    function getCollectionData(cid) {
+      return (getAfter(/databases/$(database)/documents/collection/$(cid))).data;
+    }
+
+    function isValid(value, regex) {
+      return value.matches(regex);
+    }
+
+    function isValidName(name){
+       return name.matches('[A-Za-z ]+');
+    }
+
+    function isHolder(pid, uid) {
+      return exists(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
+    }
+
+    function willBeHolder(pid, uid) {
+      return existsAfter(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
+    }
+
+    function allowProfileSticker(sticker) {
+      return isHolder(sticker, request.auth.uid)
+              || sticker == 'empty';
+    }
+
+    function isEmpty(text){
+      return text.matches('^\\s+$') || text.size()==0;
+    }
+
+    // Helper functions
+
+    // Check if user has the specified uid
+    function isUser(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // Check if user is signed in
+    function isSignedIn() {
+      return request.auth.uid != null;
+    }
+
+    // Check if user is admin
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+
+    // Get data being read
+    function currentData() {
+      return resource.data;
+    }
+
+    // Get data being read
+    function incomingData() {
+      return request.resource.data;
+    }
+
+    // Users
+    match /username/{uid} {
+      allow read: if true;
+      allow create: if isUser(uid)
+                      && getAfter(/databases/$(database)/documents/credential/$(incomingData().username)).data.uid == uid;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /credential/{username} {
+      allow read: if true;
+      allow create: if isUser(incomingData().uid)
+                      && isValid(username, '^[a-zA-Z0-9._?!$%&*+-]{2,27}$')
+                      && !(exists(/databases/$(database)/documents/credential/$(username)))
+                      && (incomingData().email == request.auth.token.email);
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /profile%20details/{uid} {
+      allow read: if true;
+      allow create: if isUser(uid) && (incomingData().description.size() <= 300) && (incomingData().link.size() <= 45);
+      allow update: if isUser(uid) && (incomingData().description.size() <= 300) && (incomingData().link.size() <= 45);
+      allow delete: if false;
+    }
+
+    match /profile%20stickers/{uid} {
+      allow read: if true;
+      allow create: if isUser(uid)
+                        && incomingData().stickers.size() == 5
+                        && allowProfileSticker(incomingData().stickers[0])
+                        && allowProfileSticker(incomingData().stickers[1])
+                        && allowProfileSticker(incomingData().stickers[2])
+                        && allowProfileSticker(incomingData().stickers[3])
+                        && allowProfileSticker(incomingData().stickers[4]);
+      allow update: if isUser(uid)
+                       && incomingData().stickers.size() == 5
+                       && allowProfileSticker(incomingData().stickers[0])
+                       && allowProfileSticker(incomingData().stickers[1])
+                       && allowProfileSticker(incomingData().stickers[2])
+                       && allowProfileSticker(incomingData().stickers[3])
+                       && allowProfileSticker(incomingData().stickers[4]);
+      allow delete: if false;
+    }
+
+    match /display%20picture/{uid} {
+      allow read: if true;
+      allow write: if isUser(uid);
+    }
+
+    match /personal%20details/{uid} {
+      allow read: if isUser(uid);
+      allow create: if isUser(uid) && isValidName(incomingData().name);
+      allow update: if false;
+    }
+
+    match /user%20data/{uid} {
+      allow read: if false;
+      allow create: if isUser(uid);
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /activity/{id} {
+
+      match /metrics/collected {
+        allow read: if true;
+        allow update: if isSignedIn()
+                          && (getCollectionData(incomingData().cid).pid == id
+                            || getCollectionData(incomingData().cid).collecteeID == id);
+        allow delete: if false;
+        allow create: if true;
+      }
+
+      match /metrics/views {
+        allow read: if true;
+        allow update: if incomingData().counter == currentData().counter + 1;
+        allow create: if true;
+        allow delete: if false;
+      }
+
+      match /private/details {
+        allow read: if false;
+        allow create: if true;
+        allow update: if false;
+        allow delete: if false;
+      }
+    }
+
+    match /collection/{cid} {
+      allow read: if false;
+      allow create: if allowCollection(incomingData(), "sticker details");
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /views/{vid} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /feed {
+
+      allow read: if true;
+
+      match /{uid} {
+        allow read: if true;
+        allow create: if isUser(uid);
+        allow delete: if false;
+
+        match /collection/{pid} {
+          allow read: if isUser(uid);
+          allow update: if false;
+          allow create: if isUser(uid)
+                          && getCollectionData(incomingData().cid).pid == request.resource.id
+                          && getCollectionData(incomingData().cid).collectorID == uid;
+          allow delete: if false;
+        }
+      }
+      match /explore/global/{pid} {
+       allow read: if true;
+       allow create: if isUser(getAfter(/databases/$(database)/documents/$('post details')/$(pid)).data.uid);
+       allow update: if false;
+       allow delete: if false;
+      }
+    }
+
+    match /exclusive%20ID/{eid} {
+      allow read: if false;
+      allow create: if isAdmin();
+      allow delete: if false;
+      allow update: if incomingData().used <= getExclusivePrivate('exclusive ID', eid).data.allowUse
+                    && incomingData().used == currentData().used + 1;
+
+      match /private/details {
+        allow read: if false;
+        allow write: if isAdmin();
+      }
+
+      match /users/{uid} {
+        allow read: if isAdmin();
+        allow create: if isUser(uid);
+        allow update: if false;
+        allow delete: if false;
+      }
+    }
+
+    match /feedback {
+      allow read: if false;
+      allow write: if true;
+    }
+
+    // Posts
+    match /post%20details/{pid} {
+      allow read: if true;
+       allow create: if isUser(incomingData().uid)
+                      && (incomingData().description.size() <= 300)
+                      && (incomingData().title.size() <= 30)
+                      && !(isEmpty(incomingData().title));
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /post%20content/{pid} {
+      allow read: if true;
+      allow create: if isSignedIn()
+                      && !!(incomingData().fileFormat);
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /sticker%20content/{pid} {
+      allow read: if true;
+      allow create: if isSignedIn() && !!(incomingData().fileFormat);
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /sticker%20details/{pid} {
+      allow read: if true;
+      allow create: if isSignedIn() && (incomingData().amountReleased <= 30); //only allow maximum of 30 stickers
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /holder%20list/{pid} {
+      allow read: if true;
+      allow create: if isUser(getCollectionData(incomingData().cid).uid);
+      allow update: if false;
+      allow delete: if false;
+
+      match /holders/{uid} {
+        allow read: if true;
+        allow write: if isSignedIn()
+                        && getCollectionData(incomingData().cid).collectorID == request.resource.id
+                        && getCollectionData(incomingData().cid).pid == pid;
+      }
+    }
+
   }
 }
+
+
+
+
+
+
+
+

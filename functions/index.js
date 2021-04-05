@@ -17,31 +17,52 @@ const runtimeOpts_content = {
 }
 
 
-const bucket_name = 'snippet-web-9818a.appspot.com'; //snippet production
-// const bucket_name = 'snippet-test-716cd.appspot.com'; //snippet testing
+// const bucket_name = 'snippet-web-9818a.appspot.com'; //snippet production
+const bucket_name = 'snippet-test2.appspot.com'; //snippet testing
 
 
 exports.deleteUser = functions.https.onCall(async (data, context) => {
 
   try {
     const uid = data.uid;
-    functions.logger.info(uid);
+    functions.logger.info('Deleting user with uid:', uid);
+
+    await admin
+    .auth()
+    .deleteUser(uid)
+    .then(() => {
+      functions.logger.info('Successfully deleted user');
+      return 'Successfully deleted user';
+    })
+    .catch((error) => {
+      functions.logger.info('Error deleting user:', error);
+      return 'Error deleting user:'+ error;
+    });
   } catch(e) {
     functions.logger.info(e);
   }
+});
 
+exports.createAdmin = functions.https.onCall(async (data, context) => {
 
-  await admin
-        .auth()
-        .deleteUser(uid)
-        .then(() => {
-          functions.logger.info('Successfully deleted user');
-          return 'Successfully deleted user';
-        })
-        .catch((error) => {
-          functions.logger.info('Error deleting user:', error);
-          return 'Error deleting user:'+ error;
-        });
+  try {
+    const uid = data.uid;
+    functions.logger.info('Creating admin with uid:', uid);
+
+    await admin
+    .auth()
+    .setCustomUserClaims(uid, {admin: true})
+    .then(() => {
+      functions.logger.info('Successfully created admin');
+      return { message: 'success'};
+    })
+    .catch((error) => {
+      functions.logger.info('Error creating admin:', error);
+      return  { message: 'Error creating admin:' + error};
+    });
+  } catch(e) {
+    functions.logger.info(e);
+  }
 });
 
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
@@ -53,11 +74,12 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   const newValue = snap.data();
   const fileName = newValue.name;
   const contentType = newValue.fileFormat;
+  const dimensions = {width: newValue.width.toString(), height: newValue.height.toString()};
 
   functions.logger.info('File name:', fileName);
   functions.logger.info('File type:', contentType);
 
-  const filePath = 'Post/' + fileName;
+  const filePath = 'posts/' + fileName + '/original';
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
 
@@ -123,9 +145,11 @@ exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
   await spawn(command, args).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath, { destination: filePath, metadata: { contentType: contentType} })
+
+  const _metadata = { contentType: contentType, metadata: dimensions};
+  await bucket.upload(outputFilePath, { destination: filePath, metadata: _metadata})
           .catch((e) => functions.logger.info(e));
-  functions.logger.info('uploaded to storage');
+  functions.logger.info('uploaded to storage with metadata', _metadata);
   finishUp(unlinkPaths);
 });
 
@@ -138,11 +162,17 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   const newValue = snap.data();
   const fileName = newValue.name;
   const contentType = newValue.fileFormat;
+  const width = newValue.width;
+  const height = newValue.height;
+
+  const dimension = '150'; //Required size for small image
+
+  const dimensions = getDimensions(width, height, dimension);
 
   functions.logger.info('File name:', fileName);
   functions.logger.info('File type:', contentType);
 
-  let filePath = 'Post/' + fileName;
+  let filePath = 'stickers/' + fileName + '/original';
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
   let outputFilePath1 = '';
@@ -153,8 +183,7 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  const dimension = '150';
-  filePath = 'Post/' + `sm_${fileName}`;
+  filePath = 'stickers/' + fileName + '/small';
 
   if (contentType.startsWith('image/gif')) {
     outputFilePath1 =  path.join(os.tmpdir(), 'resized.gif');
@@ -190,9 +219,11 @@ exports.stickerCreate = functions.runWith(runtimeOpts).firestore
   await spawn('convert', args2).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath2, { destination: filePath, metadata: { contentType: contentType} })
+
+  const _metadata = { contentType: contentType, metadata: dimensions};
+  await bucket.upload(outputFilePath2, { destination: filePath, metadata: _metadata})
           .catch((e) => functions.logger.info(e));
-  functions.logger.info('uploaded to storage');
+  functions.logger.info('uploaded to storage with metadata', _metadata);
   finishUp(unlinkPaths);
 });
 
@@ -205,6 +236,12 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   const newValue = change.after.data();
   const fileName = newValue.name;
   const contentType = newValue.fileFormat;
+  const width = newValue.width;
+  const height = newValue.height;
+
+  const dimension = '200'; //Required size for small image
+
+  const dimensions = getDimensions(width, height, dimension);
 
   functions.logger.info('File name:', fileName);
   functions.logger.info('File type:', contentType);
@@ -222,7 +259,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
     return functions.logger.info('Unsupported file type');
   }
 
-  let filePath = 'Display picture/' + fileName;
+  let filePath = 'display pictures/' + fileName + '/original';
   const bucket = admin.storage().bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
 
@@ -231,8 +268,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
 
   functions.logger.info('File downloaded locally to', tempFilePath);
 
-  const dimension = '200';
-  filePath = 'Display picture/' + `sm_${fileName}`;
+  filePath = 'display pictures/' + fileName + '/small';
 
   const args1 = ['-i',
                   tempFilePath,
@@ -258,11 +294,21 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   await spawn('convert', args2).catch((e) => functions.logger.info(e));
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
-  await bucket.upload(outputFilePath2, { destination: filePath, metadata: { contentType: contentType} })
+
+  const _metadata = { contentType: contentType, metadata: dimensions};
+  await bucket.upload(outputFilePath2, { destination: filePath, metadata: _metadata})
           .catch((e) => functions.logger.info(e));
-  functions.logger.info('uploaded to storage');
+  functions.logger.info('uploaded to storage with metadata', _metadata);
   finishUp(unlinkPaths);
 });
+
+function getDimensions(width, height, dimension) {
+  if (width == 0 || height == 0) return;
+  var _dimensions;
+  if (width > height) _dimensions  = {width: dimension * (width/height), height: dimension};
+  _dimensions = {width: dimension, height: dimension * (height/width)};
+  return {width: _dimensions.width.toString(), height: _dimensions.height.toString()};
+}
 
 function finishUp(unlinkPaths) {
   unlinkPaths.forEach((filePath) => fs.unlinkSync(filePath));
