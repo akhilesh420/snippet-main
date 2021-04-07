@@ -20,8 +20,6 @@ p {
   position: relative;
   overflow: hidden;
   margin-bottom: 0px;
-  box-shadow: 2px 12px 8px rgba(0, 0, 0, 0.4);
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
   background-color: #0b0b0b;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -35,10 +33,6 @@ p {
   max-height: calc(800px * var(--norm-height));
   background-color: #C4C4C4;
   position: relative;
-  /* border-top-left-radius: 3px;
-  border-top-right-radius: 3px; */
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -249,6 +243,84 @@ li {
   -o-object-fit: cover;
   object-fit: cover;
 }
+
+.detailsContainer {
+  height: 100px;
+  width: 100%;
+  background: #0B0B0B;
+  border-radius: 0px 0px 4px 4px;
+  display: flex;
+}
+
+.postDetailsExp {
+  width: 77.5%;
+  height: 100%;
+  display: inline-block;
+}
+
+.postViewsExp {
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+}
+
+.spacer {
+  color: #FFFFFF;
+  width: 3px;
+  height: 3px;
+}
+
+.postHoldersExp {
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  align-items: center;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+}
+
+.postDescriptionExp {
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFFFFF;
+  padding-left: 5px;
+  padding-top: 2px;
+}
+
+
+.postStickerExp {
+  width: 22.5%;
+  height: 100%;
+  display: inline-block;
+}
+
+.postMetricsExp {
+  padding-top: 3px;
+  padding-left: 5px;
+}
+
+.postStickerHolderExp {
+  height: 80%;
+  /* placeholderwidth, fix later */
+  width: 80%;
+  margin-top: 10%;
+  /* placeholerpaddingright, fix later */
+  margin-left: 5%;
+  background-color: #FFFFFF;
+
+}
+
+
 
 /* changes end */
 
