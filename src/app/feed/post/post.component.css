@@ -245,7 +245,8 @@ li {
 }
 
 .detailsContainer {
-  height: 100px;
+  height: auto;
+  min-height: 100px;
   width: 100%;
   background: #0B0B0B;
   border-radius: 0px 0px 4px 4px;
