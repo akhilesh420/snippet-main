@@ -60,11 +60,11 @@
     <div class = "engagementBar" [ngStyle]="engagementProp"></div>
 
     <!-- Description -->
-    <div class="postDescription fade-in-top" *ngIf="showDetails">
+    <!-- <div class="postDescription fade-in-top" *ngIf="showDetails">
 
       <p *ngIf='(postDetails$ | async) as details'>{{details.description}}</p>
 
-    </div>
+    </div> -->
 
     <!-- Sticker -->
     <!-- <div class="postSticker"
@@ -72,7 +72,7 @@
       style="cursor: pointer;"
       (click)='collectSticker(); stopPropagation($event);'>
 
-      <!-- Loading animation -->
+       Loading animation -->
 
       <!-- <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
                           "confirm-ball": stickerCollectionState === 1,
