@@ -246,7 +246,7 @@ li {
 
 .detailsContainer {
   height: auto;
-  min-height: 100px;
+  min-height: 102px;
   width: 100%;
   background: #0B0B0B;
   border-radius: 0px 0px 4px 4px;
@@ -272,8 +272,7 @@ li {
 
 .spacer {
   color: #FFFFFF;
-  width: 3px;
-  height: 3px;
+  font-size: 12px;
 }
 
 .postHoldersExp {
@@ -312,14 +311,40 @@ li {
 
 .postStickerHolderExp {
   
-  height: 80px;
-  width: 80px;
-  margin-top: 10px;
-  margin-left: 50%;
+  height: 66px;
+  width: 66px;
   background-color: #FFFFFF;
-  transform: translate(-50%,0%);
+  margin-top: 3px;
+  margin-left: 3px;
   border-radius: 50%;
+  display: inline-block;
 
+}
+
+.postStickerHolderOutline {
+  margin-top: 10px;
+  height: 72px;
+  width: 72px;
+  background-color: #E2B33D;
+  display: flex;
+  border-radius: 50%;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.collectPrompt {
+  display: inline-block;
+  margin-top: 3px;
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 14px;
+  align-items: center;
+  letter-spacing: 0.1em;
+  color: #FFFFFF;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 
