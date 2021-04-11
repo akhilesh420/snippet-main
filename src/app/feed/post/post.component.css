@@ -87,7 +87,7 @@ p {
 .engagementBar {
   position: absolute;
   top: 0px;
-  height: 4px;
+  height: 3px;
   width: 80%;
   background-color: #E2B33D;
   overflow: hidden;
@@ -380,9 +380,7 @@ li {
     right: 5px;
   }
 
-  .engagementBar {
-    height: 4px;
-  }
+ 
 
   .holderlistTitle {
     font-size: 14px;
@@ -399,9 +397,6 @@ li {
     min-height: 28px;
   }
 
-  .engagementBar {
-    height: 4px;
-  }
 
   .postContainer {
     border-bottom-left-radius: 0px;
