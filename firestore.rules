@@ -191,6 +191,13 @@ service cloud.firestore {
                           && getCollectionData(incomingData().cid).collectorID == uid;
           allow delete: if false;
         }
+
+        match /posts/{pid} {
+          allow read: if isUser(uid);
+          allow update: if false;
+          allow create: if isUser(uid);
+          allow delete: if false;
+        }
       }
       match /explore/global/{pid} {
        allow read: if true;
