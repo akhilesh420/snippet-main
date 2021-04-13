@@ -1,9 +1,10 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Collection } from './activity.model';
 
 
@@ -20,6 +21,7 @@ export class ActivityService {
   //Firestore Collection
 
   constructor(private afs: AngularFirestore,
+              private auth: AngularFireAuth,
               private router: Router) {}
 
 
@@ -124,7 +126,8 @@ export class ActivityService {
   }
 
   // add analytics
-  addAnalytics(uid, type, obj) {
+  async addAnalytics(uid, type, obj) {
+    if (uid != (await this.auth.user.pipe(take(1)).toPromise()).uid) return;
     const analyticsCollection = this.afs.collection('user data/'+uid+'/'+type);
     const id = this.afs.createId();
     analyticsCollection.doc(id).set(obj);

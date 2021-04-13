@@ -126,8 +126,22 @@ service cloud.firestore {
     match /user%20data/{uid} {
       allow read: if false;
       allow create: if isUser(uid);
-      allow update: if false;
+      allow update: if isUser(uid);
       allow delete: if false;
+
+      match /holder%20list%20analytics/{id} {
+        allow read: if false;
+        allow create: if isUser(uid);
+        allow update: if false;
+        allow delete: if false;
+      }
+
+      match /collection%20analytics/{id} {
+        allow read: if false;
+        allow create: if isUser(uid);
+        allow update: if false;
+        allow delete: if false;
+      }
     }
 
     match /activity/{id} {
@@ -164,7 +178,7 @@ service cloud.firestore {
     }
 
     match /views/{vid} {
-      allow read: if true;
+      allow read: if false;
       allow create: if true;
       allow update: if false;
       allow delete: if false;
@@ -189,7 +203,7 @@ service cloud.firestore {
         }
 
         match /posts/{pid} {
-          allow read: if isUser(uid);
+          allow read: if true;
           allow update: if false;
           allow create: if isUser(uid);
           allow delete: if false;
@@ -261,9 +275,9 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    match /holder%20list/{pid} {
+    match /posts/{pid} {
       allow read: if true;
-      allow create: if isUser(getCollectionData(incomingData().cid).uid);
+      allow create: if isUser(incomingData().creatorID);
       allow update: if false;
       allow delete: if false;
 
