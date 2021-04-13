@@ -31,10 +31,6 @@ service cloud.firestore {
       return exists(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
     }
 
-    function willBeHolder(pid, uid) {
-      return existsAfter(/databases/$(database)/documents/$('holder list')/$(pid)/holders/$(uid));
-    }
-
     function allowProfileSticker(sticker) {
       return isHolder(sticker, request.auth.uid)
               || sticker == 'empty';
