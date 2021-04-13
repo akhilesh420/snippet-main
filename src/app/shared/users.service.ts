@@ -72,6 +72,7 @@ export class UsersService {
       if (sticker) {stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})}
       else {stickerArray.push("empty")}
     });
+    console.log({stickers: stickerArray});
     this.profileStickersCollection.doc(uid).update({stickers: stickerArray});
   }
 
