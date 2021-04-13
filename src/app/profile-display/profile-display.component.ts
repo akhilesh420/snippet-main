@@ -160,10 +160,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
   setUpActivity() {
     this.activityService.getActivityCollection(this.uid).pipe(takeUntil(this.notifier$))
-      .subscribe(response => this.collected = response.counter);
+      .subscribe(response => this.collected = response ? response.counter : 0);
 
     this.activityService.getActivityViews(this.uid).pipe(takeUntil(this.notifier$))
-      .subscribe(response => this.views = response.counter);
+      .subscribe(response => this.views = response ? response.counter : 0);
   }
 
   navigateRoute() {
