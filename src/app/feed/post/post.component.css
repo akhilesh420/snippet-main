@@ -177,12 +177,8 @@ p {
   background: rgba(11, 11, 11, 0.90);
   box-shadow: 0p  x 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
-<<<<<<< HEAD
-  overflow: hidden;
-=======
   min-width: 300px;
 
->>>>>>> ca163790c85aa83d28651b343f6e618484873a5c
 }
 
 .holderlistTitle {
