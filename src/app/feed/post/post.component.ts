@@ -101,7 +101,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
     this.feedService.currentPost.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
-      if (val === this.pid) console.log(this.pid);
       this.activePost = val
       this.videoToggle();
       this.postViewTime();
