@@ -177,6 +177,7 @@ p {
   background: rgba(11, 11, 11, 0.90);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
+  min-width: 300px;
 
 }
 
