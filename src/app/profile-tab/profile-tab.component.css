@@ -38,7 +38,7 @@
 
 .username {
   width: 80%;
-  height: calc(17px * var(--norm-height));
+  height: 17px;
   padding-left: 4px;
   padding-top: 8px;
   font-family: 'Comfortaa';
@@ -123,8 +123,8 @@
   .username {
     font-size: 14px;
     line-height: 16px;
-    width: 296px;
     height: 17px;
+    padding-left: 6px;
   }
 
   .profilePicture {
