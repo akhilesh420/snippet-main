@@ -123,8 +123,8 @@
   .username {
     font-size: 14px;
     line-height: 16px;
-    width: 296px;
     height: 17px;
+    padding-left: 6px;
   }
 
   .profilePicture {
