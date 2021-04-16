@@ -38,7 +38,6 @@
       <video class='post-content fit-cover'
             loop
             playsinline
-            autoplay
             #videoPlayer
             [src]='content'
             [ngClass]="{'opacity-out-details': !showDetails,
@@ -53,8 +52,8 @@
     </ng-template>
 
     <!-- Fail-safe button -->
-    <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
-      <img src = "assets/images/Post/failSafeButton.png">
+    <div class = "center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
+      <img class = "fail-safe" src = "assets/images/Post/failSafeButton.png">
     </div>
 
     <!-- Engagement bar -->
