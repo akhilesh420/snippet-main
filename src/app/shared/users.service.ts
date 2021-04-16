@@ -101,6 +101,7 @@ export class UsersService {
     return ref.getDownloadURL().pipe(
       startWith(this.placeholderDP),
       catchError(err => {
+        this.handleError(err);
         const ref = this.storage.ref('display pictures/' + uid +'/original');
         return ref.getDownloadURL().pipe(
           startWith(this.placeholderDP),

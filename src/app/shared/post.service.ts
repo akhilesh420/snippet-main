@@ -65,6 +65,7 @@ export class PostService {
     const ref = this.storage.ref('stickers/' + pid +'/small');
     return ref.getDownloadURL().pipe(
       catchError(err => {
+        this.handleError(err);
         const ref = this.storage.ref('stickers/' + pid +'/original');
         return ref.getDownloadURL().pipe(
           catchError(err => {
