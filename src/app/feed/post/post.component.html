@@ -52,8 +52,8 @@
     </ng-template>
 
     <!-- Fail-safe button -->
-    <div class = "fail-safe center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
-      <img src = "assets/images/Post/failSafeButton.png">
+    <div class = "center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
+      <img class = "fail-safe" src = "assets/images/Post/failSafeButton.png">
     </div>
 
     <!-- Engagement bar -->
