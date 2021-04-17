@@ -20,8 +20,8 @@ p {
   position: relative;
   overflow: hidden;
   margin-bottom: 0px;
-  box-shadow: 2px 12px 8px rgba(0, 0, 0, 0.4);
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
+  /* box-shadow: 2px 12px 8px rgba(0, 0, 0, 0.4); */
+  filter: drop-shadow(2px 6px 8px rgba(0, 0, 0, 0.35));
   background-color: #0b0b0b;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -145,7 +145,7 @@ p {
   text-align: center;
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
-  color: #ffffff;  
+  color: #ffffff;
 }
 
 .sizeSVG{
@@ -175,8 +175,9 @@ p {
   max-height: 360px;
   border-radius: 10px;
   background: rgba(11, 11, 11, 0.90);
-  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0p  x 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
+  min-width: 300px;
 
 }
 
@@ -189,7 +190,7 @@ p {
   letter-spacing: 0.05em;
   color: #E2B33D;
   padding-left: 12px;
-  padding-bottom: 25px;
+  padding-bottom: 30px;
   padding-top: 5px;
   line-height: calc(24px * var(--norm-height));
 
@@ -197,7 +198,7 @@ p {
 }
 
 .holderSpace {
- 
+
   padding-top: 20px;
   margin:0%;
   padding: 0%;
@@ -205,7 +206,7 @@ p {
   width: 100%;
   height: 89%;
 
-  
+
 }
 
 li {
@@ -288,7 +289,7 @@ li {
   .holderlistTitle {
     font-size: 14px;
   }
- 
+
   .postDescription {
     font-size: 15px;
   }

@@ -38,13 +38,13 @@
 
 .username {
   width: 80%;
-  height: calc(17px * var(--norm-height));
+  height: 17px;
   padding-left: 4px;
   padding-top: 8px;
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: bold;
-  font-size: calc(14px * var(--norm-height));
+  font-size: calc(16px * var(--norm-height));
   line-height: calc(16px * var(--norm-width));
   letter-spacing: 0.05em;
   color: #FFFFFF;
@@ -121,10 +121,10 @@
   }
 
   .username {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
-    width: 296px;
     height: 17px;
+    padding-left: 6px;
   }
 
   .profilePicture {
