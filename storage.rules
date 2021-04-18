@@ -42,23 +42,35 @@ service firebase.storage {
       return request.resource.contentType.matches(allowedType);
     }
 
-    match /display%20pictures/{uid}/original {
-      allow read: if true;
-      allow write: if writeDP(uid);
+    match /display%20pictures/{uid}{
+      match /original {
+        allow read: if true;
+        allow write: if writeDP(uid);
+      }
+
+      match /small {
+        allow read: if true;
+        allow write: if false;
+      }
     }
 
     match /posts/{pid}/original {
       allow read: if true;
-      // allow create: if true;
       allow create: if writePost();
       allow update, delete: if false;
     }
 
-    match /stickers/{pid}/original {
-      allow read: if true;
-      // allow create: if true;
-      allow create: if writeSticker();
-      allow update, delete: if false;
+    match /stickers/{pid} {
+      match /original {
+        allow read: if true;
+        allow create: if writeSticker();
+        allow update, delete: if false;
+      }
+
+      match /small {
+        allow read: if true;
+        allow write: if false;
+      }
     }
   }
 }
