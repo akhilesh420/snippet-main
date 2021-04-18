@@ -35,7 +35,7 @@
   border-radius: 50%;
 }
 
-/* .username {
+.username {
   width: 80%;
   height: calc(14px * var(--norm-height));
   padding-left: 3px;
@@ -50,7 +50,7 @@
   display: inline-block;
   vertical-align: top;
   outline: none;
-} */
+}
 
 .sticker-bck {
   background-color: #FFFFFF;
