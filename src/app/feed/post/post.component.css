@@ -190,7 +190,7 @@ p {
   letter-spacing: 0.05em;
   color: #E2B33D;
   padding-left: 12px;
-  padding-bottom: 30px;
+  /*padding-bottom: 30px;*/
   padding-top: 5px;
   line-height: calc(24px * var(--norm-height));
 
