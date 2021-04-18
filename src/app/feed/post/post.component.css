@@ -183,7 +183,7 @@ p {
 
 .holderlistTitle {
 
-  height: 20px;
+  height: 10%;
   font-size: calc(16px * var(--norm-height));
   font-family: 'ChampagneAndLimousines';
   font-weight: bold;
@@ -204,7 +204,7 @@ p {
   padding: 0%;
   overflow-y: scroll;
   width: 100%;
-  height: 90%;
+  height: 89%;
 
 
 }
