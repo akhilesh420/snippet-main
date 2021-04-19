@@ -192,19 +192,22 @@
         <div class="postStickerHolderExp"
             [ngClass]="{'postStickerHolderExp-bck': !(stickerContent$ | async)}"
             style="cursor: pointer;"
-            (click)='collectSticker(); stopPropagation($event);'>
+            (click)='collectSticker();'>
 
           <!-- Loading animation -->
-          <!-- <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
+          <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
                               "confirm-ball": stickerCollectionState === 1,
-                              "reject-ball": stickerCollectionState === -1}'></div> -->
+                              "reject-ball": stickerCollectionState === -1}'></div>
 
           <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
         </div>
       </div>
 
       <div class = "collectPrompt">
-        <span>Collect</span>
+        <span style="cursor: pointer;"
+              (click)='collectSticker();'>
+          Collect
+        </span>
       </div>
 
     </div>
