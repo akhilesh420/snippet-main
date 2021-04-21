@@ -208,6 +208,10 @@
     padding-bottom: 54px;
   }
 
+  .no-posts {
+    height: 80vh;
+  }
+
   .first-post-gap-phone {
     display: inline-block;
     width: 100vw;
