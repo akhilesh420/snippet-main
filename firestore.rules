@@ -222,8 +222,9 @@ service cloud.firestore {
       allow read: if isAdmin();
       allow create: if isAdmin();
       allow delete: if false;
-      allow update: if incomingData().used < getExclusivePrivate('exclusive ID', eid).data.allowUse
-                    && incomingData().used == currentData().used + 1;
+      allow update: if isAdmin()
+                    || (incomingData().used < getExclusivePrivate('exclusive ID', eid).data.allowUse
+                    && incomingData().used == currentData().used + 1);
 
       match /private/details {
         allow read: if isAdmin();
@@ -233,7 +234,7 @@ service cloud.firestore {
       match /users/{uid} {
         allow read: if isAdmin();
         allow create: if isUser(uid);
-        allow update: if false;
+        allow update: if  isAdmin();
         allow delete: if false;
       }
     }
