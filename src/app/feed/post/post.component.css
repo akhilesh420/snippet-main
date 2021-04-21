@@ -310,16 +310,29 @@ li {
 }
 
 .postStickerHolderExp {
-  
+
   height: 66px;
   width: 66px;
-  background-color: #FFFFFF;
   margin-top: 3px;
   margin-left: 3px;
   border-radius: 50%;
   display: inline-block;
+  overflow: hidden;
+}
+
+.postStickerHolderExp-bck {
+
+  background-color: #FFFFFF;
 
 }
+
+.postStickerHolderExp > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  }
 
 .postStickerHolderOutline {
   margin-top: 10px;
@@ -380,7 +393,7 @@ li {
     right: 5px;
   }
 
- 
+
 
   .holderlistTitle {
     font-size: 14px;

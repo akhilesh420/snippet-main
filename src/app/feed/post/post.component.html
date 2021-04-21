@@ -79,7 +79,7 @@
                           "reject-ball": stickerCollectionState === -1}'></div>
 
       <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
-    </div> --> 
+    </div> -->
 
     <!-- Metrics -->
     <!-- <div class="postMetrics">
@@ -166,7 +166,7 @@
       <div class="postMetricsExp">
 
         <span class = "postViewsExp">
-          123 K Views
+          {{views | numeral}} Views
         </span>
 
         <span class = "spacer">
@@ -174,7 +174,7 @@
         </span>
 
         <span class = "postHoldersExp">
-          16 Holders <br>
+          {{collected | numeral}} Holders <br>
         </span>
 
       </div>
@@ -189,12 +189,25 @@
 
       <div class = "postStickerHolderOutline">
 
-        <div class="postStickerHolderExp"></div>
+        <div class="postStickerHolderExp"
+            [ngClass]="{'postStickerHolderExp-bck': !(stickerContent$ | async)}"
+            style="cursor: pointer;"
+            (click)='collectSticker();'>
 
+          <!-- Loading animation -->
+          <div [ngClass] = '{"loading-ball": stickerCollectionState === 0,
+                              "confirm-ball": stickerCollectionState === 1,
+                              "reject-ball": stickerCollectionState === -1}'></div>
+
+          <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
+        </div>
       </div>
-      
+
       <div class = "collectPrompt">
-        <span>Collect</span>
+        <span style="cursor: pointer;"
+              (click)='collectSticker();'>
+          Collect
+        </span>
       </div>
 
     </div>
