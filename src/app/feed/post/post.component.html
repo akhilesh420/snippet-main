@@ -7,11 +7,11 @@
     </div>
 
     <div class="creatorName">
-      <span *ngIf='(username$ | async) as info'>{{info.username}}</span>
+      <span *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
     </div>
 
     <div class="timeCreated">
-      <span>5 hours ago</span>
+      <span *ngIf='(post$ | async) as postInfo'>{{postInfo.dateCreated | timeSince}}</span>
     </div>
 
     <div class="displaySticker stickerOne">
