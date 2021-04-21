@@ -2,14 +2,14 @@
 
   <div class="creatorDetails">
 
-    <div class="creatorDP">
+    <div class="creatorDP"  [routerLink]='profileRoute'>
+      <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp'>
+    </div>
 
-    </div>
- 
     <div class="creatorName">
-      <span>Name of the User</span>
+      <span *ngIf='(username$ | async) as info'>{{info.username}}</span>
     </div>
-  
+
     <div class="timeCreated">
       <span>5 hours ago</span>
     </div>
@@ -33,7 +33,7 @@
     <div class="displaySticker stickerFive">
 
     </div>
- 
+
   </div>
 
   <div class="titleTop">
@@ -55,7 +55,7 @@
 
   </div>
 
-  
+
   <div #contentContainer
         class = "postContent"
        [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",

@@ -33,6 +33,7 @@ import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 import { CollectionComponent } from './collection-tab/collection/collection.component';
 import { ReversePipe } from './shared/reverse.pipe';
 import { NumeralPipe } from './shared/numeral.pipe';
+import { TimeSincePipe } from './shared/time-since.pipe';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { NumeralPipe } from './shared/numeral.pipe';
     ProfileTabComponent,
     CollectionComponent,
     ReversePipe,
-    NumeralPipe
+    NumeralPipe,
+    TimeSincePipe
   ],
   imports: [
     BrowserModule,

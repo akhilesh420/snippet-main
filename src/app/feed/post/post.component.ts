@@ -1,8 +1,9 @@
+import { UsersService } from 'src/app/shared/users.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
 import { Subject,Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { PostService } from './../../shared/post.service';
-import { Holder, PostDetails, StickerDetails} from './../../shared/post.model';
+import { Feed, Holder, PostDetails, StickerDetails} from './../../shared/post.model';
 import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { first, takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
@@ -11,6 +12,7 @@ import { WindowStateService } from 'src/app/shared/window.service';
 import { MiscellaneousService, PopUp } from 'src/app/shared/miscellaneous.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Collection } from 'src/app/shared/activity.model';
+import { ProfileSticker } from 'src/app/shared/profile.model';
 
 @Component({
   selector: 'app-post',
@@ -24,6 +26,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   postFocus: boolean;
 
+  post$: Observable<Feed>;
   postDetails$: Observable<PostDetails>;
   postContent$: Observable<any>;
   postType$: Subject<string>;
@@ -74,9 +77,17 @@ export class PostComponent implements OnInit, OnDestroy {
 
   mutePost: boolean = false;
 
+  // User stuff
+  username$: Observable<{username: string}>;
+  displayPicture$: Observable<string>;
+  profileStickers:{stickers: ProfileSticker[]} = {stickers: [null,null,null,null,null]};
+  profileRoute: string;
+  profileStickersLoaded: boolean = false;
+
   constructor(private postService: PostService,
               private auth: AngularFireAuth,
               private activityService: ActivityService,
+              private usersService: UsersService,
               private scrollService: ScrollService,
               private feedService: FeedService,
               private windowStateService: WindowStateService,
@@ -118,6 +129,7 @@ export class PostComponent implements OnInit, OnDestroy {
     });
 
     this.setUpPost();
+    this.setUpUser();
   }
 
   postInFrame() {
@@ -131,6 +143,8 @@ export class PostComponent implements OnInit, OnDestroy {
 
   setUpPost() {
     if (!this.pid) return;
+
+    this.post$ = this.postService.getPostInfo(this.pid);
 
     this.postContent$ = this.postService.getPostContent(this.pid);
     this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(() => {
@@ -148,7 +162,7 @@ export class PostComponent implements OnInit, OnDestroy {
       },300);
     }, error => console.log(error));
 
-    this.postDetails$ = this.postService.getPostDetails(this.pid);;
+    this.postDetails$ = this.postService.getPostDetails(this.pid);
 
     this.postService.getStickerDetails(this.pid).pipe(takeUntil(this.notifier$))
       .subscribe((response) => {
@@ -174,6 +188,30 @@ export class PostComponent implements OnInit, OnDestroy {
     this.activityService.getActivityViews(this.pid).pipe(takeUntil(this.notifier$))
       .subscribe(response => this.views = response.counter,
                  error => console.log(error));
+  }
+
+  setUpUser() {
+    this.profileRoute = "/profile/" + this.uid;
+
+    this.profileStickersLoaded = false;
+    this.username$ = this.usersService.getUsername(this.uid);
+    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
+    this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
+      .subscribe(response => {
+        this.profileStickers = response;
+        this.profileStickersLoaded = true;
+      });
+  }
+
+  setUpEngagement(){
+    if (!this.stickerDetails || !this.collectedLoaded) return;
+    let colour: string;
+    this.engagementRatio = this.collected/this.stickerDetails.amountReleased;
+    this.engagementRatio === 1 ? colour = '#13A032': colour = '#E3B33D';
+    let percentage: string = (this.engagementRatio*100).toString() + '%';
+    this.engagementProp.width = percentage;
+    this.engagementProp.background = colour;
+    this.engagementLoaded.next(true);
   }
 
   postView() {
@@ -225,17 +263,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
   stopPropagation(event) {
     event.stopPropagation();
-  }
-
-  setUpEngagement(){
-    if (!this.stickerDetails || !this.collectedLoaded) return;
-    let colour: string;
-    this.engagementRatio = this.collected/this.stickerDetails.amountReleased;
-    this.engagementRatio === 1 ? colour = '#13A032': colour = '#E3B33D';
-    let percentage: string = (this.engagementRatio*100).toString() + '%';
-    this.engagementProp.width = percentage;
-    this.engagementProp.background = colour;
-    this.engagementLoaded.next(true);
   }
 
   sleep(ms) {

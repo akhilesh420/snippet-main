@@ -18,8 +18,16 @@ p {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #FFFFFF;
   display: inline-block;
+  overflow: hidden;
+}
+
+.creatorDP > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
 }
 
 /* .detailsText {
@@ -55,7 +63,7 @@ p {
   position: absolute;
   top: 31px;
   left: 58px;
-  
+
 }
 
 .displaySticker {
