@@ -9,8 +9,8 @@ export class TimeSincePipe implements PipeTransform {
   transform(dateFrom: any): string {
     const dateTo = new Date();
 
-    var diffMs = (dateTo.getTime() - (dateFrom.seconds)*1000); // milliseconds between now & Christmas
-    console.log(dateTo.getTime(), dateFrom, diffMs);
+    var diffMs = (dateTo.getTime() - (dateFrom.seconds)*1000); // milliseconds between now & given date
+
     var diffSecs = Math.round(diffMs / 1000); // seconds
     if (diffSecs < 60) {
       if (diffSecs === 1) return diffSecs.toString() + ' sec ago'

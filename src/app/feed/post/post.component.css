@@ -70,6 +70,9 @@ p {
   height: 26px;
   width: 26px;
   border-radius: 50%;
+}
+
+.displaySticker-bck {
   background-color: #FFFFFF;
 }
 

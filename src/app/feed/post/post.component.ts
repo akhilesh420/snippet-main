@@ -5,7 +5,7 @@ import { Subject,Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { PostService } from './../../shared/post.service';
 import { Feed, Holder, PostDetails, StickerDetails} from './../../shared/post.model';
 import { Component, OnInit, Input, OnDestroy, ElementRef, ViewChild } from '@angular/core';
-import { first, takeUntil} from 'rxjs/operators';
+import { first, startWith, takeUntil} from 'rxjs/operators';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { ScrollService } from 'src/app/shared/scroll.service';
 import { WindowStateService } from 'src/app/shared/window.service';
@@ -80,9 +80,9 @@ export class PostComponent implements OnInit, OnDestroy {
   // User stuff
   username$: Observable<{username: string}>;
   displayPicture$: Observable<string>;
-  profileStickers:{stickers: ProfileSticker[]} = {stickers: [null,null,null,null,null]};
+  profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}>;
   profileRoute: string;
-  profileStickersLoaded: boolean = false;
+  profileStickerClasses = ['stickerOne', 'stickerTwo', 'stickerThree', 'stickerFour', 'stickerFive']
 
   constructor(private postService: PostService,
               private auth: AngularFireAuth,
@@ -193,14 +193,10 @@ export class PostComponent implements OnInit, OnDestroy {
   setUpUser() {
     this.profileRoute = "/profile/" + this.uid;
 
-    this.profileStickersLoaded = false;
     this.username$ = this.usersService.getUsername(this.uid);
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
-    this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
-      .subscribe(response => {
-        this.profileStickers = response;
-        this.profileStickersLoaded = true;
-      });
+    this.profileStickers$ = this.usersService.getProfileStickers(this.uid)
+                              .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   }
 
   setUpEngagement(){

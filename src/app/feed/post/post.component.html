@@ -14,24 +14,11 @@
       <span *ngIf='(post$ | async) as postInfo'>{{postInfo.dateCreated | timeSince}}</span>
     </div>
 
-    <div class="displaySticker stickerOne">
-
-    </div>
-
-    <div class="displaySticker stickerTwo">
-
-    </div>
-
-    <div class="displaySticker stickerThree">
-
-    </div>
-
-    <div class="displaySticker stickerFour">
-
-    </div>
-
-    <div class="displaySticker stickerFive">
-
+    <!-- Profile stickers -->
+    <div *ngFor='let sticker of (profileStickers$ | async).stickers; let i = index;'
+         class="displaySticker {{profileStickerClasses[i]}}"
+        [ngClass]="{'displaySticker-bck': sticker === 'loading'}">
+      <app-sticker *ngIf='sticker != null && sticker != "loading"' [pid]="sticker.pid"></app-sticker>
     </div>
 
   </div>
