@@ -22,13 +22,13 @@ p {
   display: inline-block;
 }
 
-.detailsText {
-  display: inline-flex;
+/* .detailsText {
+  position: absolute;
   margin-left: 8px;
   width: calc(100% - 236px);
   height: 24px;
   margin-bottom: 8px;
-}
+} */
 
 .creatorName {
   width: 100%;
@@ -40,8 +40,22 @@ p {
   letter-spacing: 0.05em;
   color: #FFFFFF;
   text-overflow: ellipsis;
-  position: relative;
-  top: 0px;
+  position: absolute;
+  top: 18px;
+  left: 58px;
+}
+
+.timeCreated {
+  font-family: 'ChampagneAndLimousines';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  position: absolute;
+  top: 31px;
+  left: 58px;
+  
 }
 
 .titleTop {
