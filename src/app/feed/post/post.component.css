@@ -58,6 +58,43 @@ p {
   
 }
 
+.displaySticker {
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+}
+
+.stickerOne {
+  position: absolute;
+  top: 16px;
+  right: 8px;
+}
+
+.stickerTwo {
+  position: absolute;
+  top: 16px;
+  right: 44px;
+}
+
+.stickerThree {
+  position: absolute;
+  top: 16px;
+  right: 80px;
+}
+
+.stickerFour {
+  position: absolute;
+  top: 16px;
+  right: 116px;
+}
+
+.stickerFive {
+  position: absolute;
+  top: 16px;
+  right: 152px;
+}
+
 .titleTop {
   height: auto;
   width: 100%;
