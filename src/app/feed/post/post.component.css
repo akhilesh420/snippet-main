@@ -7,10 +7,46 @@ p {
   padding: 0%;
 }
 
+.creatorDetails {
+  height: 50px;
+  width: 100%;
+}
+
+.creatorDP {
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  display: inline-block;
+}
+
+.detailsText {
+  display: inline-flex;
+  margin-left: 8px;
+  width: calc(100% - 236px);
+  height: 24px;
+  margin-bottom: 8px;
+}
+
+.creatorName {
+  width: 100%;
+  height: auto;
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  text-overflow: ellipsis;
+  position: relative;
+  top: 0px;
+}
+
 .titleTop {
   height: auto;
   width: 100%;
-  min-height: 38px;
 }
 
 .postContainer {
@@ -39,15 +75,17 @@ p {
 
 .postTitle {
   width: 90%;
-  padding-left: calc(11px * var(--norm-width));
-  padding-top: calc(10px * var(--norm-height));
+  padding-left: 10px;
+  padding-top: 7px;
+  padding-bottom: 7px;
   font-family: 'ChampagneAndLimousines';
   font-style: normal;
   font-weight: bold;
-  font-size: calc(20px * var(--norm-height));
-  line-height: calc(23px * var(--norm-height));
+  font-size: 16px;
+  line-height: 18px;
   color: rgba(255, 255, 255, 0.9);
   word-wrap: break-word;
+  display: inline-block;
 }
 
 /* below are changes */
@@ -57,17 +95,19 @@ p {
 
 .dropdownButton {
 
-  position: absolute;
-  width: calc(20.95px * var(--norm-width));
-  height: calc(21.99px * var(--norm-height));
-  right: calc(5px * var(--norm-width));
-  top: calc(6.8px * var(--norm-height));
+  display: inline-block;
+  width: 10%;
+  height: auto;
 
 }
 
 /* below are changes */
 .dropdownButton > img {
   cursor: pointer;
+  width: 16px;
+  height: auto;
+  margin-left: calc(100% - 28px);
+  margin-bottom: 2px;
 }
 
 .postSticker {
@@ -335,7 +375,7 @@ li {
   }
 
 .postStickerHolderOutline {
-  margin-top: 10px;
+  margin-top: 6px;
   height: 72px;
   width: 72px;
   background-color: #E2B33D;
@@ -347,7 +387,7 @@ li {
 
 .collectPrompt {
   display: inline-block;
-  margin-top: 3px;
+  margin-top: 6px;
   font-family: 'ChampagneAndLimousines';
   font-style: normal;
   font-weight: bold;
@@ -378,22 +418,6 @@ li {
   }
 
 @media only screen and (max-height: 900px) {
-
-  .postTitle {
-    padding-left: 11px;
-    padding-top: 10px;
-    line-height: 18px;
-    font-size: 18px;
-  }
-
-  .dropdownButton {
-    width: 17px;
-    height: 18px;
-    top: 6px;
-    right: 5px;
-  }
-
-
 
   .holderlistTitle {
     font-size: 14px;

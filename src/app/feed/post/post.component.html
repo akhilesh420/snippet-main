@@ -1,10 +1,31 @@
 <div class="postContainer" (click)='postView()' #post>
 
+  <div class="creatorDetails">
+
+    <div class="creatorDP">
+
+    </div>
+
+    <div class="detailsText">
+
+      <div class="creatorName">
+        <span>Name of the User</span>
+      </div>
+  
+      <div class="timeCreated">
+  
+      </div>
+
+    </div>
+
+    
+  </div>
+
   <div class="titleTop">
 
     <div class="postTitle">
 
-      <p (click)='showDetails = !showDetails' *ngIf='(postDetails$ | async) as details'>{{details.title}}</p>
+      <span (click)='showDetails = !showDetails' *ngIf='(postDetails$ | async) as details'>{{details.title}}</span>
 
     </div>
 
@@ -19,8 +40,7 @@
 
   </div>
 
-  <app-profile-tab [uid]='uid'></app-profile-tab>
-
+  
   <div #contentContainer
         class = "postContent"
        [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",
