@@ -1,3 +1,4 @@
+import { MixpanelService } from './shared/mixpanel.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
@@ -65,6 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private feedService: FeedService,
               private scrollService: ScrollService,
               private auth: AngularFireAuth,
+              private mixpanelService: MixpanelService,
               @Inject(DOCUMENT) private _document ) {
     document.addEventListener("visibilitychange", function() { //mute posts on tab change
       feedService.mutePosts.next(!!document.hidden);
@@ -72,6 +74,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('Sending test tracking to mixpanel');
+    this.mixpanelService.init('testing');
+    this.mixpanelService.track('Test data', {trackDate: new Date(), testing: true});
+    console.log('Done sending test tracking to mixpanel');
     this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
     this.activityService.collectionStartTime = new Date().getTime();
     this.activityService.holderListStartTime = new Date().getTime();
