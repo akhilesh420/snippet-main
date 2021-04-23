@@ -1,12 +1,8 @@
 import { MixpanelService } from './../shared/mixpanel.service';
 import { environment } from './../../environments/environment';
 import { ProfileDetails, PersonalDetails, DisplayPicture, Credential } from './../shared/profile.model';
-import { FeedService } from './../feed/feed.service';
-import { Feedback } from './../feedback/feedback.service';
-import { User } from './user.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireFunctions } from '@angular/fire/functions';
