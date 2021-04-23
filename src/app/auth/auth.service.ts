@@ -15,19 +15,6 @@ import firebase from 'firebase/app';
 import 'firebase/firestore'
 import { Collection } from '../shared/activity.model';
 
-export interface AuthResponseData {
-  localId: string;
-}
-
-export interface ExclusiveID {
-  used: number; //number of times the link has been used
-  marketingRound: string;
-  batch: string;
-  user1?: Feedback;
-  user2?: Feedback;
-  user3?: Feedback;
-}
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
