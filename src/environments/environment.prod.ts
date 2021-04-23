@@ -12,5 +12,6 @@ export const environment = {
   },
   onBoardingPid: 'Ieu3tkV4SUrPJEsg4s71',
   onBoardingUid: 'fH5fipY7jDb770BTJxp9gLoLDXm1',
-  websitePath: 'https://www.snippet.live'
+  websitePath: 'https://www.snippet.live',
+  mixpanelProjectID: "420d3abdd33a6b9c38a9432c7ac170aa"
 };

@@ -1,3 +1,4 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { UsersService } from './../shared/users.service';
 import { ProfileDetails, PersonalDetails, DisplayPicture, Credential } from './../shared/profile.model';
 import { Subject } from 'rxjs';
@@ -37,6 +38,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   errorField: number = -1; //sign up which field number has an error
 
   constructor(private authService: AuthService,
+              private auth: AngularFireAuth,
               private userService: UsersService,
               private router: Router,
               private route: ActivatedRoute,
@@ -119,7 +121,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isLoginMode && !this.isForgetMode) {
-      const uid = this.authService.user.value.id;
+      const uid = (await this.auth.currentUser).uid;
 
       const credential = new Credential(uid, this.credential);
       const profileDetails  = new ProfileDetails('','');
