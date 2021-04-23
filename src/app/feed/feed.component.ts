@@ -1,3 +1,4 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { UsersService } from 'src/app/shared/users.service';
 import { WindowStateService } from './../shared/window.service';
 import { AuthService } from './../auth/auth.service';
@@ -51,7 +52,7 @@ export class FeedComponent implements OnInit, OnDestroy {
               private feedService: FeedService,
               private router: Router,
               private route: ActivatedRoute,
-              private authService: AuthService,
+              private auth: AngularFireAuth,
               private windowStateService: WindowStateService,
               private usersService: UsersService) {
    }
@@ -62,14 +63,15 @@ export class FeedComponent implements OnInit, OnDestroy {
     const emptyFeed = new Feed(undefined, undefined, undefined);
     this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed]);
 
-    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(response => {
-      this.isAuthenticated = !!response;
-      if (this.isAuthenticated) {
-        this.myUid = response.id;
-        this.myUid$.next(response.id);
-        this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
-        if ((this.router.url.split('/')[1] === 'profile' || this.router.url.split('/')[1] === 'collection') && this.uid === this.myUid) this.showProfileNavigation = true;
-      }
+    this.auth.onAuthStateChanged((user) => {
+      this.isAuthenticated = !!user;
+      if (!this.isAuthenticated) return;
+      this.myUid = user.uid;
+      this.myUid$.next(this.myUid);
+      this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
+      if ((this.router.url.split('/')[1] === 'profile'
+           || this.router.url.split('/')[1] === 'collection')
+          && this.uid === this.myUid) this.showProfileNavigation = true;
     });
 
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))

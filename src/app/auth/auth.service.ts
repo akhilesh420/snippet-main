@@ -1,3 +1,4 @@
+import { MixpanelService } from './../shared/mixpanel.service';
 import { environment } from './../../environments/environment';
 import { ProfileDetails, PersonalDetails, DisplayPicture, Credential } from './../shared/profile.model';
 import { FeedService } from './../feed/feed.service';
@@ -29,31 +30,17 @@ export interface ExclusiveID {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
 
   constructor(private router: Router,
               private afs: AngularFirestore,
               private auth: AngularFireAuth,
-              private feedService: FeedService,
-              private fns: AngularFireFunctions) {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.user.next(new User(user.email, user.uid));
-      } else {
-        this.user.next(null);
-      }
-    });
-  }
+              private fns: AngularFireFunctions,
+              private mixpanelService: MixpanelService) {}
 
   async signUp(email: string, password: string) {
     let message = 'success';
     await this.auth.setPersistence('local');
     await this.auth.createUserWithEmailAndPassword(email, password)
-    // .then(async () => {
-    //   console.log("signed up", user);
-      // (await this.auth.currentUser).sendEmailVerification()
-      // .then(() => console.log('verification email sent'));
-    // })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -216,6 +203,13 @@ export class AuthService {
                     cid: cid}); //post
 
     await batch.commit()
+          .then(async () => {
+            const currentUser = await this.auth.currentUser;
+            console.log("signed up successful", currentUser);
+            this.mixpanelService.alias(currentUser.uid); //Sync current user data with uid
+            // currentUser.sendEmailVerification() //send verification email
+            // console.log('verification email sent'));
+          })
           .catch(async (e) => {
             console.log(e);
             console.log('deleting user');

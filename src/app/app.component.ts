@@ -74,10 +74,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('Sending test tracking to mixpanel');
-    this.mixpanelService.init('testing');
-    this.mixpanelService.track('Test data', {trackDate: new Date(), testing: true});
-    console.log('Done sending test tracking to mixpanel');
+    this.mixpanelService.init(); //Initialize tracking
+
     this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
     this.activityService.collectionStartTime = new Date().getTime();
     this.activityService.holderListStartTime = new Date().getTime();
@@ -107,10 +105,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
-      if (this.isAuthenticated) {
-        this.myUid = user.uid;
-        this.myUid$.next(this.myUid);
-      }
+      if (!this.isAuthenticated) return this.mixpanelService.reset(); //reset on logout
+      this.myUid = user.uid;
+      this.myUid$.next(this.myUid);
+      this.mixpanelService.identify(this.myUid); //Identify user with uid
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
