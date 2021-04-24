@@ -79,8 +79,9 @@
   position: relative;
   width: 340px;
   height: 55px;
-  /* margin-left: calc(((375 * (79vh) / 667) - 340px) / 2); */
   margin-bottom: 1.22vh;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .backpanel {
@@ -152,13 +153,7 @@
           transform: rotate(90deg);
 }
 
-/* @media only screen and (min-width: 1320px) {
 
-.dashboard {
-  margin-left: 500px;
-}
-
-} */
 
 @media only screen and (max-width: 950px) {
 
@@ -174,6 +169,7 @@
 
   .profileNavigation {
     margin-left: unset;
+    transform: unset;
   }
 
   .feed-container {
@@ -226,6 +222,11 @@
 
   .placeholderSizing {
     height: 70%;
+  }
+
+  .profileNavigation {
+    margin-left: unset;
+    transform: unset;
   }
 
 }
