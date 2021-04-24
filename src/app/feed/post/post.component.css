@@ -39,7 +39,7 @@ p {
 } */
 
 .creatorName {
-  width: 100%;
+  width: calc(100% - 235px);
   height: auto;
   font-family: 'Comfortaa';
   font-style: normal;
@@ -47,13 +47,16 @@ p {
   font-size: 12px;
   letter-spacing: 0.05em;
   color: #FFFFFF;
-  text-overflow: ellipsis;
   position: absolute;
-  top: 18px;
+  top: 16px;
   left: 58px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .timeCreated {
+  width: calc(100% - 235px);
+  height: 15px;
   font-family: 'ChampagneAndLimousines';
   font-style: normal;
   font-weight: bold;
@@ -63,6 +66,8 @@ p {
   position: absolute;
   top: 31px;
   left: 58px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
 }
 
@@ -275,6 +280,7 @@ p {
   box-shadow: 0p  x 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   min-width: 300px;
+  margin-top: 15%;
 
 }
 
@@ -397,6 +403,7 @@ li {
   color: #FFFFFF;
   padding-left: 5px;
   padding-top: 2px;
+  word-break: break-all;
 }
 
 
@@ -413,10 +420,10 @@ li {
 
 .postStickerHolderExp {
 
-  height: 66px;
-  width: 66px;
-  margin-top: 3px;
-  margin-left: 3px;
+  height: 70px;
+  width: 70px;
+  margin-top: 1px;
+  margin-left: 1px;
   border-radius: 50%;
   display: inline-block;
   overflow: hidden;
@@ -485,9 +492,6 @@ li {
     font-size: 14px;
   }
 
-  .postDescription {
-    font-size: 15px;
-  }
 }
 
 @media only screen and (max-width:550px) {
@@ -496,6 +500,7 @@ li {
     min-height: 28px;
   }
 
+  
 
   .postContainer {
     border-bottom-left-radius: 0px;
@@ -511,18 +516,21 @@ li {
     max-height: calc(100vh - 54px);
   }
 
-  .postSticker {
-    max-width: 85px;
-    max-height: 85px;
+}
+
+@media only screen and (max-width:360px) {
+
+  .postStickerExp {
+    width: 28%;
   }
 
-  .postMetrics {
-
-    bottom: calc(22px * var(--norm-height));
-
+  .postDetailsExp {
+    width: 72%;
   }
+
 
 }
+
 
 /* Animations */
 

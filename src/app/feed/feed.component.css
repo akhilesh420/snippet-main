@@ -17,9 +17,7 @@
 
 .post-container {
   height: auto;
-  width: calc(440px * var(--norm-width));
-  max-width: 440px;
-  min-width: 385px;
+  width: 480px;
   padding-bottom: 5.444vh;
   overflow: hidden;
 }
@@ -44,7 +42,7 @@
 }
 
 .dashboard {
-  margin-left: 440px;
+  margin-left: 600px;
   position: fixed;
 }
 
@@ -154,13 +152,13 @@
           transform: rotate(90deg);
 }
 
-@media only screen and (min-width: 1320px) {
+/* @media only screen and (min-width: 1320px) {
 
 .dashboard {
   margin-left: 500px;
 }
 
-}
+} */
 
 @media only screen and (max-width: 800px) {
 
