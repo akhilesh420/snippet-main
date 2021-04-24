@@ -136,6 +136,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onWindowScroll($event){
+    console.log('scroll')
     this.scrollService.setScroll();
   }
 
