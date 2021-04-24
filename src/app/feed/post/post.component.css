@@ -28,15 +28,8 @@ p {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
+  box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.25);
 }
-
-/* .detailsText {
-  position: absolute;
-  margin-left: 8px;
-  width: calc(100% - 236px);
-  height: 24px;
-  margin-bottom: 8px;
-} */
 
 .creatorName {
   width: calc(100% - 235px);
@@ -177,20 +170,6 @@ p {
   margin-bottom: 2px;
 }
 
-.postSticker {
-  position: absolute;
-  bottom: calc(10px * var(--norm-height));
-  right: calc(10px * var(--norm-height));
-  height: calc(75px * var(--norm-width));
-  width: calc(75px * var(--norm-width));
-  min-width: 80px;
-  min-height: 80px;
-  border-radius: 50%;
-  background-color: #0b0b0b;
-  /* below are changes */
-  overflow: hidden;
-}
-
 .engagementBar {
   position: absolute;
   top: 0px;
@@ -202,73 +181,6 @@ p {
   border-top-right-radius: 0px; */
 }
 
-.postDescription {
-  height: 25%;
-  width: 95%;
-  padding-left: 2.5%;
-  padding-top: calc(14px * var(--norm-height));
-  font-family: 'ChampagneAndLimousines';
-  font-style: normal;
-  font-weight: bold;
-  font-size: calc(20px * var(--norm-height));
-  line-height: calc(20px * var(--norm-height));
-  color: rgba(255, 255, 255, 0.9);
-  word-wrap: break-word;
-  /* below are changes */
-  position: relative;
-}
-
-
-
-.postMetrics {
-
-  height: 4.8vh;
-  width: 12vh;
-  bottom: calc(24px * var(--norm-height));
-  position: absolute;
-  left: 1%;
-
-
-}
-
-.metricsSymbols {
-
-  height: 60%;
-  width: 100%;
-  text-align: center;
-
-}
-
-.metricLabels {
-  height: 40%;
-  width: 100%;
-  font-size: 1.6vh;
-  text-align: center;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  color: #ffffff;
-}
-
-.sizeSVG{
-
-  height: 2.0vh;
-  width: auto;
-
-}
-
-.metricsNumbers {
-
-  height: 40%;
-  width: 100%;
-  font-size: 1.4vh;
-  text-align: center;
-  padding-top: 1%;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
-  color: #ffffff;
-
-}
-
 .holderList {
   width: calc(360px * var(--norm-width));
   max-width: 320px;
@@ -277,7 +189,7 @@ p {
   max-height: 360px;
   border-radius: 10px;
   background: rgba(11, 11, 11, 0.90);
-  box-shadow: 0p  x 3px 4px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   min-width: 300px;
   margin-top: 15%;
@@ -293,10 +205,8 @@ p {
   letter-spacing: 0.05em;
   color: #E2B33D;
   padding-left: 12px;
-  /*padding-bottom: 30px;*/
   padding-top: 5px;
   line-height: calc(24px * var(--norm-height));
-
 
 }
 
@@ -484,6 +394,7 @@ li {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
+  box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
 @media only screen and (max-height: 900px) {
@@ -499,8 +410,6 @@ li {
   .titleTop {
     min-height: 28px;
   }
-
-  
 
   .postContainer {
     border-bottom-left-radius: 0px;
