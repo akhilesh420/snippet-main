@@ -46,4 +46,7 @@ testem.log
 Thumbs.db
 
 #firebase cache
-/.firebase
+.firebase
+
+#firebase debug log
+firestore-debug.log
