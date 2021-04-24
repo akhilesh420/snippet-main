@@ -331,10 +331,10 @@ li {
 
 .postStickerHolderExp {
 
-  height: 71.5px;
-  width: 71.5px;
-  margin-top: 0.5px;
-  margin-left: 0.5px;
+  height: 70px;
+  width: 70px;
+  margin-top: 1px;
+  margin-left: 1px;
   border-radius: 50%;
   display: inline-block;
   overflow: hidden;
