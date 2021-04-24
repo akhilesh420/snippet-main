@@ -74,7 +74,7 @@
 <div class="profileTab">
 
   <div class="profilePicture" [routerLink]='profileRoute'>
-    <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp'>
+    <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
   </div>
 
   <div class = "username">
