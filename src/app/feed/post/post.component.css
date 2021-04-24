@@ -338,6 +338,7 @@ li {
   border-radius: 50%;
   display: inline-block;
   overflow: hidden;
+  position: relative;
 }
 
 .postStickerHolderExp-bck {
