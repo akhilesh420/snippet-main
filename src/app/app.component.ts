@@ -109,6 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.myUid = user.uid;
       this.myUid$.next(this.myUid);
       this.mixpanelService.identify(this.myUid); //Identify user with uid
+      this.mixpanelService.track('testing', {action: 'logged in'});
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
