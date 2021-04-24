@@ -31,7 +31,7 @@ export class TimeSincePipe implements PipeTransform {
 
     var diffDays = Math.round(diffMs / 86400000); // days
     if (diffDays < 30) {
-      if (diffDays === 1) return diffDays.toString() + ' days ago'
+      if (diffDays === 1) return diffDays.toString() + ' day ago'
       return diffDays.toString() + ' days ago'
     }
 
