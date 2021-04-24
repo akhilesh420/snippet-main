@@ -312,8 +312,8 @@ li {
   font-size: 14px;
   line-height: 16px;
   color: #FFFFFF;
-  padding-left: 5px;
-  padding-top: 2px;
+  padding-left: 10px;
+  padding-top: 3px;
   word-break: break-all;
 }
 
@@ -325,8 +325,8 @@ li {
 }
 
 .postMetricsExp {
-  padding-top: 3px;
-  padding-left: 5px;
+  padding-top: 6px;
+  padding-left: 10px;
 }
 
 .postStickerHolderExp {
