@@ -37,7 +37,7 @@
 }
 
 .feed-container {
-  width: 800px;
+  width: 953px;
   padding-top: 5.444vh;
 }
 
@@ -160,12 +160,16 @@
 
 } */
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 950px) {
 
   .feed {
     display: -ms-grid;
     display: grid;
     place-items: center;
+  }
+
+  .feed-container {
+    width: 480px;
   }
 
   .profileNavigation {
