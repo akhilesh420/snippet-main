@@ -65,6 +65,7 @@
       <video class='post-content fit-cover'
             loop
             playsinline
+            (canplay)='onCanPlay()'
             #videoPlayer
             [src]='content'
             [ngClass]="{'opacity-out-details': !showDetails,

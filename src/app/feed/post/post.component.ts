@@ -65,7 +65,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   frameOffset: number;
   frameHeight: number;
-  activePost: string;
+  currentPost: string;
 
   engagementProp = {'width': '0','background': '#E2B33D'};
 
@@ -112,7 +112,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
     this.feedService.currentPost.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
-      this.activePost = val
+      this.currentPost = val
       this.videoToggle();
       this.postViewTime();
     });
@@ -138,7 +138,7 @@ export class PostComponent implements OnInit, OnDestroy {
     const height = this.post.nativeElement.offsetHeight;
     const midPoint = rect.top + height/2;
     this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
-    if (this.postFocus && this.activePost != this.pid) this.feedService.currentPost.next(this.pid);
+    if (this.postFocus && this.currentPost != this.pid) this.feedService.currentPost.next(this.pid);
   }
 
   setUpPost() {
@@ -147,19 +147,11 @@ export class PostComponent implements OnInit, OnDestroy {
     this.post$ = this.postService.getPostInfo(this.pid);
 
     this.postContent$ = this.postService.getPostContent(this.pid);
-    this.postContent$.pipe(takeUntil(this.notifier$)).subscribe(() => {
-      setTimeout(() => {
-        this.postInFrame();
-      },300);
-    });
 
     this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
       if (!response) return;
       this.postType = response.contentType;
       this.postAspectRatio = (+response.customMetadata.height)/(+response.customMetadata.width);
-      setTimeout(() => {
-        this.videoToggle();
-      },300);
     }, error => console.log(error));
 
     this.postDetails$ = this.postService.getPostDetails(this.pid);
@@ -222,7 +214,7 @@ export class PostComponent implements OnInit, OnDestroy {
 
   postViewTime() {
     if (this.viewed) return;
-    if (this.activePost === this.pid) {
+    if (this.currentPost === this.pid) {
       this.viewTimer = setTimeout(() => this.postView(), this.viewTime);
     } else {
       if (!this.viewTimer) return;
@@ -233,7 +225,7 @@ export class PostComponent implements OnInit, OnDestroy {
   videoToggle() {
     try {
       if (!this.postType.includes('video')) return;
-      if (this.activePost === this.pid) {
+      if (this.currentPost === this.pid) {
         this.videoPlayer.nativeElement.play()
           .then(() => this.playFailSafe = false)
           .catch((e) => {
@@ -246,6 +238,10 @@ export class PostComponent implements OnInit, OnDestroy {
     } catch (error) {
       return;
     }
+  }
+
+  onCanPlay() {
+    if (this.currentPost === this.pid) this.videoToggle();
   }
 
   holderAnalytics() {
