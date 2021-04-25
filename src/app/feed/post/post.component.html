@@ -5,7 +5,7 @@
   <div class="creatorDetails">
 
     <div class="creatorDP"  [routerLink]='profileRoute'>
-      <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp'>
+      <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
     </div>
 
     <div class="creatorName">
@@ -60,7 +60,8 @@
             alt="post content"
             [ngClass]="{'opacity-out-details': !showDetails,
                         'opacity-in-details': showDetails}"
-            *ngIf='postType.includes("image")'>
+            *ngIf='postType.includes("image")'
+            appLazyImg>
       <video class='post-content fit-cover'
             loop
             playsinline
@@ -79,7 +80,7 @@
 
     <!-- Fail-safe button -->
     <div class = "center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
-      <img class = "fail-safe" src = "assets/images/Post/failSafeButton.png">
+      <img class = "fail-safe" src = "assets/images/Post/failSafeButton.png" appLazyImg>
     </div>
 
     <!-- Engagement bar -->
@@ -153,7 +154,7 @@
                               "confirm-ball": stickerCollectionState === 1,
                               "reject-ball": stickerCollectionState === -1}'></div>
 
-          <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker'>
+          <img *ngIf='stickerContent$ | async as content' [src]='content' alt='post sticker' appLazyImg>
         </div>
       </div>
 

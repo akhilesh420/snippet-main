@@ -34,6 +34,7 @@ import { CollectionComponent } from './collection-tab/collection/collection.comp
 import { ReversePipe } from './shared/reverse.pipe';
 import { NumeralPipe } from './shared/numeral.pipe';
 import { TimeSincePipe } from './shared/time-since.pipe';
+import { LazyImgDirective } from './shared/directives/lazy-img.directive';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { TimeSincePipe } from './shared/time-since.pipe';
     CollectionComponent,
     ReversePipe,
     NumeralPipe,
-    TimeSincePipe
+    TimeSincePipe,
+    LazyImgDirective
   ],
   imports: [
     BrowserModule,
