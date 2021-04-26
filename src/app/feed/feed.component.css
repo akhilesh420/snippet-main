@@ -187,9 +187,7 @@
   .post-container {
     width: 100vw;
     height: auto;
-    padding-bottom: 10%;
-    min-width: unset;
-    max-width: unset;
+    margin-bottom: 5%;
   }
 
   .no-posts {
