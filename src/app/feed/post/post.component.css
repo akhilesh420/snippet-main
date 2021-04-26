@@ -786,7 +786,6 @@ li {
 /* Buffering Animation */
 
 .buffering-ring {
-  position: relative;
   width: 80px;
   height: 80px;
 }
