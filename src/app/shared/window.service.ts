@@ -25,7 +25,6 @@ export class WindowStateService {
   public checkWidth() {
     var width = window.innerWidth;
     this.height = window.innerHeight;
-    this.screenWidthValue.next(width);
 
     width < 950 ? this.tabletCheck = true : this.tabletCheck = false;
     width < 550 ? this.mobileCheck = true : this.mobileCheck = false;
@@ -34,6 +33,8 @@ export class WindowStateService {
     document.documentElement.style.setProperty('--norm-width', this.normWidth.toString());
 
     if (!this.tabletCheck) this.setHeight();
+
+    this.screenWidthValue.next(width); //needs to be the last line
   }
 
   public setHeight() {
