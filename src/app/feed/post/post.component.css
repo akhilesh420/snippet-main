@@ -797,10 +797,10 @@ li {
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #E2B33D;
+  border: 8px solid #FFFFFF;
   border-radius: 50%;
   animation: buffering-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #E2B33D transparent transparent transparent;
+  border-color: #FFFFFF transparent transparent transparent;
 }
 .buffering-ring div:nth-child(1) {
   animation-delay: -0.45s;
