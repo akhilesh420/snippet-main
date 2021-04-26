@@ -14,15 +14,11 @@ export class StickerComponent implements OnInit, OnDestroy {
 
   @Input() pid: string;
   @Input() overrideNavigate: boolean = false;
-  // @Input() size: String = "24px";
 
   stickerSize = {};
 
   stickerContent: Observable<any>;
   notifier$ = new Subject();
-
-  onBoarding: boolean = false;
-  onBoardingStep: number;
 
   constructor(private postService: PostService,
               private miscellaneousService: MiscellaneousService,
@@ -30,19 +26,10 @@ export class StickerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.stickerContent = this.postService.getStickerContent(this.pid);
-
-    this.miscellaneousService.onBoarding$.pipe(takeUntil(this.notifier$)).subscribe(val => {
-      this.onBoarding = val;
-      if (val) {
-        this.miscellaneousService.onBoardingStep$.pipe(takeUntil(this.notifier$)).subscribe(step => {
-          this.onBoardingStep = step;
-        });
-      }
-    });
    }
 
   onClick() {
-    if (this.onBoarding || this.overrideNavigate) return;
+    if (this.overrideNavigate) return;
     this.router.navigate(['/post/', this.pid]);
   }
 
