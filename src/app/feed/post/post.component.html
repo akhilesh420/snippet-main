@@ -79,6 +79,9 @@
         <app-loading-spinner class="center-absolute"></app-loading-spinner>
     </ng-template>
 
+    <!-- buffering spinner -->
+    <div class="lds-ring center-absolute"><div></div><div></div><div></div><div></div></div>
+
     <!-- Fail-safe button -->
     <div class = "center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
       <img class = "fail-safe" src = "assets/images/Post/failSafeButton.png" appLazyImg>
