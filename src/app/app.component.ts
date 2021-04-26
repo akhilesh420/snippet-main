@@ -38,25 +38,6 @@ export class AppComponent implements OnInit, OnDestroy {
   profileStickerEdit: boolean = false;
   showDashboard: boolean = false;
 
-  preloadImages = ['/assets/images/Header%20Icons/createButtonActive.svg',
-                   '/assets/images/Header%20Icons/createButtonInactive.svg',
-                   '/assets/images/Header%20Icons/exploreActive.svg',
-                   '/assets/images/Header%20Icons/exploreInactive.svg',
-                   '/assets/images/Header%20Icons/optionsButtonActive.svg',
-                   '/assets/images/Header%20Icons/optionsButtonInactive.svg',
-                   '/assets/images/Header%20Icons/profileButtonActive.svg',
-                   '/assets/images/Header%20Icons/profileButtonInactive.svg',
-                   '/assets/images/Post/failSafeButton.png',
-                   '/assets/images/Post/postdetailDropdown.svg',
-                   '/assets/images/Profile%20Display/editModeBackground.svg',
-                   '/assets/images/Profile%20Display/profileDescription.svg',
-                   '/assets/images/Profile%20Display/profileDisplayBorder.svg',
-                   '/assets/images/Profile%20Display/profileLinkEdit.svg',
-                   '/assets/images/Profile%20Display/saveButton.svg',
-                   '/assets/images/Create_page/createPlus.svg',
-                   '/assets/images/nextArrow.svg',
-                   '/assets/images/dpPlaceholder.svg'];
-
   constructor(private windowStateService: WindowStateService,
               private router: Router,
               private infiniteScrollService: InfiniteScrollService,
@@ -75,15 +56,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
     this.activityService.collectionStartTime = new Date().getTime();
     this.activityService.holderListStartTime = new Date().getTime();
-    this.miscellaneousService.preloadImages(this.preloadImages);
 
     this.windowStateService.checkWidth();
     this.windowStateService.setHeight();
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (!val) return;
-      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
-      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
+      this.tabletCheck = this.windowStateService.tabletCheck;
+      this.mobileCheck = this.windowStateService.mobileCheck;
       if (!this.tabletCheck) this.miscellaneousService.showDashboard.next(false);
     });
 
