@@ -66,6 +66,8 @@
             loop
             playsinline
             (canplay)='onCanPlay()'
+            (waiting)='buffering=true;'
+            (playing)='buffering=false;'
             #videoPlayer
             [src]='content'
             [ngClass]="{'opacity-out-details': !showDetails,
@@ -80,7 +82,7 @@
     </ng-template>
 
     <!-- buffering spinner -->
-    <div class="buffering-ring center-absolute"><div></div><div></div><div></div><div></div></div>
+    <div class="buffering-ring center-absolute" *ngIf='buffering && !playFailSafe'><div></div><div></div><div></div><div></div></div>
 
     <!-- Fail-safe button -->
     <div class = "center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
