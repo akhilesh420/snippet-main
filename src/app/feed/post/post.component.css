@@ -206,7 +206,7 @@ p {
   letter-spacing: 0.05em;
   color: #E2B33D;
   padding-left: 12px;
-  padding-top: 5px;
+  padding-top: 2%;
   line-height: calc(24px * var(--norm-height));
 
 }
@@ -367,7 +367,6 @@ li {
 }
 
 .collectPrompt {
-  display: inline-block;
   margin-top: 6px;
   font-family: 'ChampagneAndLimousines';
   font-style: normal;
@@ -543,19 +542,21 @@ li {
   }
   0% {
     background-color: #19812F;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
+    height: 0px;
+    width: 0px;
   }
   50% {
-    height: 50%;
-    width: 50%;
+    height: 45px;
+    width: 45px;
   }
   70% {
-      height: 100%;
-      width: 100%;
+      height: 60px;
+      width: 60px;
+      opacity: 1;
   }
   100% {
+    width: 72px;
+    height: 72px;
     opacity: 0;
   }
 
@@ -569,19 +570,21 @@ li {
   }
   0% {
     background-color: #19812F;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
+    height: 0px;
+    width: 0px;
   }
   50% {
-    height: 50%;
-    width: 50%;
+    height: 45px;
+    width: 45px;
   }
   70% {
-      height: 100%;
-      width: 100%;
+      height: 60px;
+      width: 60px;
+      opacity: 1;
   }
   100% {
+    width: 72px;
+    height: 72px;
     opacity: 0;
   }
 
@@ -595,19 +598,21 @@ li {
   }
   0% {
     background-color:#CF263C;;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
+    height: 0px;
+    width: 0px;
   }
   50% {
-    height: 50%;
-    width: 50%;
+    height: 45px;
+    width: 45px;
   }
   70% {
-      height: 100%;
-      width: 100%;
+      height: 60px;
+      width: 60px;
+      opacity: 1;
   }
   100% {
+    width: 72px;
+    height: 72px;
     opacity: 0;
   }
 }
@@ -619,19 +624,21 @@ li {
   }
   0% {
     background-color:#CF263C;;;
-    height: 0%;
-    width: 0%;
-    opacity: 1;
+    height: 0px;
+    width: 0px;
   }
   50% {
-    height: 50%;
-    width: 50%;
+    height: 45px;
+    width: 45px;
   }
   70% {
-      height: 100%;
-      width: 100%;
+      height: 60px;
+      width: 60px;
+      opacity: 1;
   }
   100% {
+    width: 72px;
+    height: 72px;
     opacity: 0;
   }
 }
