@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^9.1.13",
     "@angular/platform-browser-dynamic": "~9.1.7",
     "@angular/router": "~9.1.7",
+    "@angular/service-worker": "~9.1.7",
     "bootstrap": "^4.5.2",
     "child-process-promise": "^2.2.1",
     "firebase": "^8.2.4",

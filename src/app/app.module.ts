@@ -33,6 +33,7 @@ import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 import { CollectionComponent } from './collection-tab/collection/collection.component';
 import { ReversePipe } from './shared/reverse.pipe';
 import { NumeralPipe } from './shared/numeral.pipe';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,9 @@ import { NumeralPipe } from './shared/numeral.pipe';
     AngularFireStorageModule, // storage
     AngularFirePerformanceModule, // performance
     AngularFireAnalyticsModule, // analytics
-    ClickOutsideModule
+    ClickOutsideModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     TitleCasePipe,
