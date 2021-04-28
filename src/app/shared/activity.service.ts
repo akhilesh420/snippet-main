@@ -1,3 +1,4 @@
+import { MixpanelService } from './mixpanel.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 
@@ -22,7 +23,8 @@ export class ActivityService {
 
   constructor(private afs: AngularFirestore,
               private auth: AngularFireAuth,
-              private router: Router) {}
+              private router: Router,
+              private mixpanelService: MixpanelService) {}
 
 
   // --------------------------------------- Activity ---------------------------------------
@@ -100,10 +102,12 @@ export class ActivityService {
       batch.set(this.afs.firestore.doc('user data/'+collection.collectorID+'/collection analytics/'+aid), analytics);
     }
 
-    await batch.commit().catch(async (e) => {
-      console.log("error in collection", e);
-      throw new Error('Error in sticker collection');
-    });
+    await batch.commit()
+      // .then(() => this.mixpanelService.track('sticker collect', {status: 'success'}))
+      .catch(async (e) => {
+        console.log("error in collection", e);
+        throw new Error('Error in sticker collection');
+      });
     return true
   }
 

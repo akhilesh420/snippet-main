@@ -7,6 +7,8 @@ import * as mixpanel from 'mixpanel-browser';
 })
 export class MixpanelService {
 
+  private visitProfileVia: string;
+
   constructor() { }
 
   /**
@@ -68,5 +70,17 @@ export class MixpanelService {
    */
    reset(): void {
     mixpanel.reset();
+  }
+
+  stickerCollectionTrack(action: any = {}) {
+    mixpanel.track('sticker collect', action);
+  };
+
+  setVisitProfileVia(via: string) {
+    this.visitProfileVia = via;
+  }
+
+  visitProfileTrack(action: any = {}) {
+    mixpanel.track('visit profile', {via: this.visitProfileVia, ...action});
   }
 }

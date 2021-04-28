@@ -1,3 +1,4 @@
+import { MixpanelService } from './../../shared/mixpanel.service';
 import { UsersService } from './../../shared/users.service';
 import { Router } from '@angular/router';
 import { ProfileDetails, ProfileSticker } from './../../shared/profile.model';
@@ -32,7 +33,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
   constructor(private postService: PostService,
               private miscellaneousService: MiscellaneousService,
               private userService: UsersService,
-              private router: Router) { }
+              private router: Router,
+              private mixpanelService: MixpanelService) { }
 
   ngOnInit(): void {
     if (!this.feed || !this.feed.pid) return;
@@ -54,6 +56,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
   usernameClick() {
     if (this.profileStickerEdit) return;
     this.router.navigate(["/profile/" + this.uid]);
+
+    this.mixpanelService.setVisitProfileVia('collection tab');
   }
 
   stickerSelected() {

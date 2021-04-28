@@ -101,6 +101,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.activityService.collectionStartTime = new Date().getTime();
       this.activityService.holderListStartTime = new Date().getTime();
       if (!this.currentRoute.includes('/auth')) this.miscellaneousService.lastRoute = this.currentRoute;
+
+      if (this.currentRoute.split('/')[1] === 'profile' && this.miscellaneousService.lastRoute != this.currentRoute) this.mixpanelService.visitProfileTrack({profile: this.currentRoute.split('/')[2]});
     });
 
     this.auth.onAuthStateChanged((user) => {
