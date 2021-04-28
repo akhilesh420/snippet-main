@@ -1,5 +1,5 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { AuthService } from './../auth/auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostDetails, StickerDetails, CustomMetadata } from './../shared/post.model';
 import { Component, ElementRef, OnInit, ViewChild, OnDestroy } from '@angular/core';
@@ -53,16 +53,16 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private authService: AuthService,
+              private auth: AngularFireAuth,
               private postService: PostService,
               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
-    this.authService.user.pipe(takeUntil(this.notifier$)).subscribe(authRes => {
-      this.uid = authRes.id;
-    }, errorMessage => {
-      this.handleError(errorMessage);
-    });
+
+    this.auth.onAuthStateChanged((user) => {
+      if (user) return this.uid = user.uid;
+      else return this.uid = undefined;
+    })
 
     this.route.params
     .subscribe(
@@ -258,6 +258,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   createPost() {
+    if (!this.uid) return this.router.navigate(['/auth']);
     this.postService.newPost( this.uid,
                               this.storageFile,
                               this.contentMetadata,
