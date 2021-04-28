@@ -18,9 +18,6 @@ export class TutorialPageComponent implements OnInit, OnDestroy {
 
   notifier$ = new Subject();
 
-  onBoardingStep: number;
-  onBoardingStep$ = new Subject<number>();
-
   constructor(public router: Router) { }
 
   ngOnInit(): void {
