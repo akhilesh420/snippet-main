@@ -1,9 +1,9 @@
 <div (click)="onClick()"
       class="sticker"
       style="cursor: pointer;"
-     [ngClass]="onBoarding && onBoardingStep === 4 ? 'pulsate-bck' : null"
      *ngIf="stickerContent | async; let content;">
     <img [src]='content'
          alt="sticker"
-         (click)="onClick()">
+         (click)="onClick()"
+         appLazyImg>
 </div>

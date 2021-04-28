@@ -1,7 +1,7 @@
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { forkJoin, throwError } from 'rxjs';
-import { PostContent, PostDetails, StickerDetails, CustomMetadata } from './post.model';
+import { PostContent, PostDetails, StickerDetails, CustomMetadata, Feed } from './post.model';
 
 import { Injectable } from '@angular/core';
 import { MiscellaneousService, PopUp } from './miscellaneous.service';
@@ -20,6 +20,12 @@ export class PostService {
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage,
               private miscellaneousService: MiscellaneousService) {}
+
+  //--------------------------------------- Post infoormation ---------------------------------------
+  // Get post info from cloud firestore by PID
+  getPostInfo(pid: string) {
+    return this.afs.doc<Feed>('posts/' + pid).valueChanges();
+  }
 
   //--------------------------------------- Post details ---------------------------------------
   // Get post details from cloud firestore by PID
@@ -65,6 +71,7 @@ export class PostService {
     const ref = this.storage.ref('stickers/' + pid +'/small');
     return ref.getDownloadURL().pipe(
       catchError(err => {
+        this.handleError(err);
         const ref = this.storage.ref('stickers/' + pid +'/original');
         return ref.getDownloadURL().pipe(
           catchError(err => {

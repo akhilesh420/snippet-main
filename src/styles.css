@@ -10,6 +10,7 @@ html, body {
   font-style: normal;
   font-weight: normal;
   background-color: #030301;
+  line-height: unset;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: none;

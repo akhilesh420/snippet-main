@@ -30,6 +30,17 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   showDashboard: boolean = false;
 
+  preloadImages = ['/assets/images/Header%20Icons/createButtonActive.svg',
+                   '/assets/images/Header%20Icons/createButtonInactive.svg',
+                   '/assets/images/Header%20Icons/exploreActive.svg',
+                   '/assets/images/Header%20Icons/exploreInactive.svg',
+                   '/assets/images/Header%20Icons/optionsButtonActive.svg',
+                   '/assets/images/Header%20Icons/optionsButtonInactive.svg',
+                   '/assets/images/Header%20Icons/profileButtonActive.svg',
+                   '/assets/images/Header%20Icons/profileButtonInactive.svg',
+                   '/assets/images/Header%20Icons/displaybuttonInactive.svg',
+                   '/assets/images/Header%20Icons/displaybuttonActive.svg'];
+
   constructor(private auth: AngularFireAuth,
               private authService: AuthService,
               private router: Router,
@@ -39,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
 
+    this.miscellaneousService.preloadImages(this.preloadImages); //preload icons
     this.loadingBar$ = this.miscellaneousService.getLoading();
 
     this.auth.onAuthStateChanged(user => {

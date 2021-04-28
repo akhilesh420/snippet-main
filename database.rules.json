@@ -1,0 +1,22 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "activity": {
+      ".indexOn": [
+        "id"
+      ],
+      ".write": "auth!=null"
+    },
+    "collection": {
+      ".indexOn": [
+        "collectorID",
+        "pid"
+      ],
+      ".write": "auth!=null"
+    },
+    "views": {
+      ".write": true
+    }
+  }
+}

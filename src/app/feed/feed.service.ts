@@ -10,21 +10,15 @@ import { timeStamp } from 'console';
 })
 export class FeedService {
 
-  excludePID: string[] = [environment.onBoardingPid];
-
   currentPost = new BehaviorSubject<string>(undefined);
   mutePosts = new BehaviorSubject<boolean>(false);
 
-  constructor(private afs: AngularFirestore) {
-
-   }
+  constructor(private afs: AngularFirestore) {}
 
   // get explore page
   getExplorePage() {
     return this.afs.collection<{dateCreated: Date, creatorID: string}>('feed/explore/global', ref => ref.orderBy('dateCreated', 'desc'))
-            .valueChanges({idField: 'pid'}).pipe(take(1), map(postsList => {
-              return postsList.filter(post => !this.excludePID.includes(post.pid));
-            }));
+            .valueChanges({idField: 'pid'}).pipe(take(1));
   }
 
   // get profile page

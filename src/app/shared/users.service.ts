@@ -1,6 +1,6 @@
-import { BehaviorSubject, Observable, throwError} from 'rxjs';
+import { throwError} from 'rxjs';
 import { catchError, map,  startWith } from 'rxjs/operators';
-import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, OnBoarding, Credential } from './profile.model';
+import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, Credential } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -17,14 +17,12 @@ export class UsersService {
   private profileDetailsCollection: AngularFirestoreCollection<ProfileDetails>;
   private profileStickersCollection: AngularFirestoreCollection;
   private displayPictureCollection: AngularFirestoreCollection<DisplayPicture>;
-  private onBoardingCollection: AngularFirestoreCollection<OnBoarding>;
 
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage) {
     this.profileDetailsCollection = afs.collection<ProfileDetails>('profile details');
     this.profileStickersCollection = afs.collection<ProfileSticker[]>('profile stickers');
     this.displayPictureCollection = afs.collection<DisplayPicture>('display picture');
-    this.onBoardingCollection = afs.collection<OnBoarding>('on boarding');
   }
 
   //--------------------------------------- Profile details ---------------------------------------
@@ -72,6 +70,7 @@ export class UsersService {
       if (sticker) {stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})}
       else {stickerArray.push("empty")}
     });
+    console.log({stickers: stickerArray});
     this.profileStickersCollection.doc(uid).update({stickers: stickerArray});
   }
 
@@ -100,6 +99,7 @@ export class UsersService {
     return ref.getDownloadURL().pipe(
       startWith(this.placeholderDP),
       catchError(err => {
+        this.handleError(err);
         const ref = this.storage.ref('display pictures/' + uid +'/original');
         return ref.getDownloadURL().pipe(
           startWith(this.placeholderDP),
@@ -120,21 +120,6 @@ export class UsersService {
     return task.percentageChanges();
   }
 
-  // --------------------------------------- On boarding ---------------------------------------
-  getOnBoarding(uid: string) {
-    const data = this.afs.doc<OnBoarding>('on boarding/'+uid);
-    return data.valueChanges();
-  }
-
-  addOnBoarding(uid: string, data: OnBoarding) {
-    const obj = {...data};
-    this.onBoardingCollection.doc(uid).set(obj);
-  }
-
-  updateOnBoarding(uid: string, onBoarding: boolean, onBoardingStep: number, timeTaken: number[]) {
-    const obj = {onBoarding: onBoarding, onBoardingStep: onBoardingStep, timeTaken: timeTaken}
-    this.onBoardingCollection.doc(uid).update(obj);
-  }
 
   // --------------------------------------- Error handling ---------------------------------------
   handleError(error) {

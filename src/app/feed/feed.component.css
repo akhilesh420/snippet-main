@@ -17,10 +17,8 @@
 
 .post-container {
   height: auto;
-  width: calc(440px * var(--norm-width));
-  max-width: 440px;
-  min-width: 385px;
-  padding-bottom: 5.444vh;
+  width: 480px;
+  margin-bottom: 5.444vh;
   overflow: hidden;
 }
 
@@ -39,12 +37,12 @@
 }
 
 .feed-container {
-  width: 800px;
+  width: 953px;
   padding-top: 5.444vh;
 }
 
 .dashboard {
-  margin-left: 440px;
+  margin-left: 600px;
   position: fixed;
 }
 
@@ -81,8 +79,9 @@
   position: relative;
   width: 340px;
   height: 55px;
-  /* margin-left: calc(((375 * (79vh) / 667) - 340px) / 2); */
   margin-bottom: 1.22vh;
+  margin-left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .backpanel {
@@ -154,15 +153,9 @@
           transform: rotate(90deg);
 }
 
-@media only screen and (min-width: 1320px) {
 
-.dashboard {
-  margin-left: 500px;
-}
 
-}
-
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 950px) {
 
   .feed {
     display: -ms-grid;
@@ -170,8 +163,13 @@
     place-items: center;
   }
 
+  .feed-container {
+    width: 480px;
+  }
+
   .profileNavigation {
     margin-left: unset;
+    transform: unset;
   }
 
   .feed-container {
@@ -189,9 +187,11 @@
   .post-container {
     width: 100vw;
     height: auto;
-    padding-bottom: 10%;
-    min-width: unset;
-    max-width: unset;
+    margin-bottom: 5%;
+  }
+
+  .no-posts {
+    height: 100vh;
   }
 
   .feed-container {
@@ -202,6 +202,10 @@
 
   .feed {
     padding-bottom: 54px;
+  }
+
+  .no-posts {
+    height: 80vh;
   }
 
   .first-post-gap-phone {
@@ -216,6 +220,11 @@
 
   .placeholderSizing {
     height: 70%;
+  }
+
+  .profileNavigation {
+    margin-left: unset;
+    transform: unset;
   }
 
 }

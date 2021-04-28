@@ -1,11 +1,8 @@
+import { MixpanelService } from './../shared/mixpanel.service';
 import { environment } from './../../environments/environment';
 import { ProfileDetails, PersonalDetails, DisplayPicture, Credential } from './../shared/profile.model';
-import { FeedService } from './../feed/feed.service';
-import { Feedback } from './../feedback/feedback.service';
-import { User } from './user.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireFunctions } from '@angular/fire/functions';
@@ -14,46 +11,19 @@ import firebase from 'firebase/app';
 import 'firebase/firestore'
 import { Collection } from '../shared/activity.model';
 
-export interface AuthResponseData {
-  localId: string;
-}
-
-export interface ExclusiveID {
-  used: number; //number of times the link has been used
-  marketingRound: string;
-  batch: string;
-  user1?: Feedback;
-  user2?: Feedback;
-  user3?: Feedback;
-}
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
 
   constructor(private router: Router,
               private afs: AngularFirestore,
               private auth: AngularFireAuth,
-              private feedService: FeedService,
-              private fns: AngularFireFunctions) {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.user.next(new User(user.email, user.uid));
-      } else {
-        this.user.next(null);
-      }
-    });
-  }
+              private fns: AngularFireFunctions,
+              private mixpanelService: MixpanelService) {}
 
   async signUp(email: string, password: string) {
     let message = 'success';
     await this.auth.setPersistence('local');
     await this.auth.createUserWithEmailAndPassword(email, password)
-    // .then(async () => {
-    //   console.log("signed up", user);
-      // (await this.auth.currentUser).sendEmailVerification()
-      // .then(() => console.log('verification email sent'));
-    // })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -205,7 +175,7 @@ export class AuthService {
     const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
 
     batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
-    batch.set(this.afs.firestore.doc('holder list/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+    batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
 
     //Update Activity
     batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
@@ -216,6 +186,13 @@ export class AuthService {
                     cid: cid}); //post
 
     await batch.commit()
+          .then(async () => {
+            const currentUser = await this.auth.currentUser;
+            console.log("signed up successful", currentUser);
+            this.mixpanelService.alias(currentUser.uid); //Sync current user data with uid
+            // currentUser.sendEmailVerification() //send verification email
+            // console.log('verification email sent'));
+          })
           .catch(async (e) => {
             console.log(e);
             console.log('deleting user');
