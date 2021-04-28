@@ -64,6 +64,12 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   descriptionLimit: number = 105;
   linkLimit: number = 21;
 
+  preloadImages = [ '/assets/images/Profile%20Display/editModeBackground.svg',
+                    '/assets/images/Profile%20Display/profileDescription.svg',
+                    '/assets/images/Profile%20Display/profileDisplayBorder.svg',
+                    '/assets/images/Profile%20Display/profileLinkEdit.svg',
+                    '/assets/images/Profile%20Display/saveButton.svg'];
+
   constructor( private auth: AngularFireAuth,
                private usersService: UsersService,
                private activityService: ActivityService,
@@ -71,6 +77,9 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
                private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
+
+    this.miscellaneousService.preloadImages(this.preloadImages);
+
     this.miscellaneousService.overrideEdit.pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (!this.editable) return;
       //ready editable state

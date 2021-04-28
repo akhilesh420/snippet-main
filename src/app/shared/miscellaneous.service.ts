@@ -1,9 +1,8 @@
 import { environment } from './../../environments/environment';
-import { OnBoarding,  ProfileSticker } from './profile.model';
+import { ProfileSticker } from './profile.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 export class PopUp {
@@ -28,13 +27,6 @@ export class MiscellaneousService {
   private popUpSetup = new Subject<PopUp>();
 
   public navbarHeight: number = 47;
-
-  public onBoardingDetails: OnBoarding;
-  private onBoardingStartStep: number;
-  public onBoardingStep$ = new BehaviorSubject<number>(0);
-  public onBoarding$ = new BehaviorSubject<boolean>(false); //must be false to begin with for log in
-  public exclusiveId: string;
-  public onBoardingStickerCollection$ = new BehaviorSubject<boolean>(false);
 
   private startTime: number;
   private endTime: number;
@@ -89,22 +81,6 @@ export class MiscellaneousService {
 
   closePopUp() {
     this.popUpSetup.next(undefined);
-  }
-
-  setTimeTaken(step: number, unload: boolean = false) {
-    if (unload || step === this.onBoardingStartStep) {
-      this.endTime = new Date().getTime();
-      const timetaken = this.endTime - this.startTime;
-
-      this.onBoardingDetails.timeTaken[step] += timetaken;
-      this.startTime = new Date().getTime();
-    } else {
-      this.endTime = new Date().getTime();
-      const timetaken = this.endTime - this.startTime;
-
-      this.onBoardingDetails.timeTaken[step-1] += timetaken;
-      this.startTime = new Date().getTime();
-    }
   }
 
   preloadImages(images: string[]) {

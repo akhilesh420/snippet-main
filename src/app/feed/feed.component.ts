@@ -77,8 +77,8 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (!val) return;
-      val < 800 ? this.tabletCheck = true : this.tabletCheck = false;
-      val < 550 ? this.mobileCheck = true : this.mobileCheck = false;
+      this.tabletCheck = this.windowStateService.tabletCheck;
+      this.mobileCheck = this.windowStateService.mobileCheck;
     });
 
     this.route.params
