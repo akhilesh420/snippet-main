@@ -1,3 +1,4 @@
+import { MixpanelService } from './../shared/mixpanel.service';
 import { UsersService } from 'src/app/shared/users.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
@@ -20,7 +21,8 @@ export class ProfileTabComponent implements OnInit {
   profileRoute: string;
   profileStickersLoaded: boolean = false;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService,
+              private mixpanelService: MixpanelService) { }
 
   ngOnInit(): void {
     this.profileRoute = "/profile/" + this.uid;
@@ -33,6 +35,10 @@ export class ProfileTabComponent implements OnInit {
         this.profileStickers = response;
         this.profileStickersLoaded = true;
       });
+  }
+
+  usernameClick() {
+    this.mixpanelService.setVisitProfileVia('profile tab');
   }
 
   ngOnDestroy() {

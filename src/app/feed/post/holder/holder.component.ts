@@ -1,3 +1,4 @@
+import { MixpanelService } from './../../../shared/mixpanel.service';
 import { ProfileDetails, ProfileSticker } from '../../../shared/profile.model';
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { UsersService } from 'src/app/shared/users.service';
@@ -23,6 +24,7 @@ export class HolderComponent implements OnInit, OnDestroy{
   profileRoute: string;
 
   constructor(private usersService: UsersService,
+              private mixpanelService: MixpanelService,
               private router: Router) {
   }
 
@@ -37,9 +39,8 @@ export class HolderComponent implements OnInit, OnDestroy{
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
   }
 
-
-  navigate() {
-    this.router.navigate(['/profile/' + this.uid]);
+  usernameClick() {
+    this.mixpanelService.setVisitProfileVia('holder list');
   }
 
   ngOnDestroy() {

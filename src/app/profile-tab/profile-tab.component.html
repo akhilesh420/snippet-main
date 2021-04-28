@@ -8,6 +8,7 @@
 
     <p *ngIf='(username$ | async) as info'
         style="cursor: pointer;"
+        (click)='usernameClick()'
         [routerLink]='profileRoute'>{{info.username}}<p>
 
   </div>

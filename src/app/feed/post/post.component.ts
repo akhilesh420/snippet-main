@@ -1,3 +1,4 @@
+import { MixpanelService } from './../../shared/mixpanel.service';
 import { UsersService } from 'src/app/shared/users.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { Router } from '@angular/router';
@@ -92,6 +93,7 @@ export class PostComponent implements OnInit, OnDestroy {
               private feedService: FeedService,
               private windowStateService: WindowStateService,
               private miscellaneousService: MiscellaneousService,
+              private mixpanelService: MixpanelService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -313,6 +315,10 @@ export class PostComponent implements OnInit, OnDestroy {
         this.router.navigate(['/auth']);
       }
     });
+  }
+
+  usernameClick() {
+    this.mixpanelService.setVisitProfileVia('profile tab');
   }
 
   ngOnDestroy() {

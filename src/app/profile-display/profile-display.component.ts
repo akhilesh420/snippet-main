@@ -1,3 +1,4 @@
+import { MixpanelService } from './../shared/mixpanel.service';
 import { UsersService } from './../shared/users.service';
 import { ProfileSticker, DisplayPicture } from './../shared/profile.model';
 import { Router} from '@angular/router';
@@ -74,7 +75,8 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
                private usersService: UsersService,
                private activityService: ActivityService,
                private router: Router,
-               private miscellaneousService: MiscellaneousService) { }
+               private miscellaneousService: MiscellaneousService,
+               private mixpanelService: MixpanelService) { }
 
   ngOnInit(): void {
 
@@ -370,6 +372,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
     '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
   return !!pattern.test(str);
+  }
+
+  usernameClick() {
+    this.mixpanelService.setVisitProfileVia('profile display');
   }
 
   ngOnDestroy() {

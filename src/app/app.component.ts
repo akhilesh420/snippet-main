@@ -80,9 +80,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.miscellaneousService.showDashboard.next(false);
       this.activityService.collectionStartTime = new Date().getTime();
       this.activityService.holderListStartTime = new Date().getTime();
+
+      //Mixapanel tracking
+      if (this.currentRoute.split('/')[1] === 'profile' && this.miscellaneousService.lastRoute != this.currentRoute) this.mixpanelService.visitProfileTrack({profile: this.currentRoute.split('/')[2]});
+
       if (!this.currentRoute.includes('/auth')) this.miscellaneousService.lastRoute = this.currentRoute;
 
-      if (this.currentRoute.split('/')[1] === 'profile' && this.miscellaneousService.lastRoute != this.currentRoute) this.mixpanelService.visitProfileTrack({profile: this.currentRoute.split('/')[2]});
     });
 
     this.auth.onAuthStateChanged((user) => {
@@ -91,7 +94,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.myUid = user.uid;
       this.myUid$.next(this.myUid);
       this.mixpanelService.identify(this.myUid); //Identify user with uid
-      this.mixpanelService.track('testing', {action: 'logged in'});
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {

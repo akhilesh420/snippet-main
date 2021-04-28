@@ -204,7 +204,7 @@
             </div>
 
             <div class = "col-8 usernameSpace no-margin-no-padding">
-              <a [routerLink]='["/profile/" + uid]'>
+              <a [routerLink]='["/profile/" + uid]' (click)="usernameClick()">
                 <p #usernameRef class = "username">{{(username$ | async).username}}</p>
               </a>
             </div>

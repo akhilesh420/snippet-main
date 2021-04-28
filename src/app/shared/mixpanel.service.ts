@@ -1,13 +1,14 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MixpanelService {
 
-  private visitProfileVia: string;
+  private visitProfileVia: string = 'Direct';
 
   constructor() { }
 
@@ -50,6 +51,7 @@ export class MixpanelService {
    * @memberof MixpanelService
    */
   track(id: string, action: any = {}): void {
+    console.log('Mixpanel track:', id, action);
     mixpanel.track(id, action);
   }
 
@@ -81,6 +83,7 @@ export class MixpanelService {
   }
 
   visitProfileTrack(action: any = {}) {
+    console.log('visit profile', {via: this.visitProfileVia, ...action});
     mixpanel.track('visit profile', {via: this.visitProfileVia, ...action});
   }
 }
