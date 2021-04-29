@@ -140,14 +140,14 @@ export class FeedComponent implements OnInit, OnDestroy {
       });
       if (this.tabletCheck) this.showProfileDisplay = true;
     }
-
+    console.log('feed response sent: ', new Date().getTime());
     this.setUpPosts();
   }
 
   setUpPosts() {
     this.pidList$.pipe(take(1)).subscribe(response => {
       if (!response) return this.done = true;
-
+      console.log('feed response received: ', new Date().getTime());
       this.done = false;
       this.postsList = response;
       if (this.postsList.length != 0) {

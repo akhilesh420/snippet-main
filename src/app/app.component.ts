@@ -54,7 +54,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    console.log(new Date().getTime());
+    const testFeed = await this.feedService.getExplorePage().toPromise();
+    return console.log(testFeed);
     this.mixpanelService.init(); //Initialize tracking
 
     this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});

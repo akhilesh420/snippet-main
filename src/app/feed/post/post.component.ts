@@ -95,6 +95,7 @@ export class PostComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
+    console.log('init',this.pid, new Date().getTime());
 
     this.scrollService.getScroll().pipe(takeUntil(this.notifier$)).subscribe(() => {
       this.postInFrame();
@@ -147,6 +148,7 @@ export class PostComponent implements OnInit, OnDestroy {
     this.post$ = this.postService.getPostInfo(this.pid);
 
     this.postContent$ = this.postService.getPostContent(this.pid);
+    console.log('post content request sent: ',this.pid, new Date().getTime());
 
     this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
       if (!response) return;
