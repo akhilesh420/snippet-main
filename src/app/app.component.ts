@@ -4,7 +4,7 @@ import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { WindowStateService } from './shared/window.service';
-import { Component,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component,  HostListener,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
 import { take, takeUntil,} from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -81,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.activityService.collectionStartTime = new Date().getTime();
       this.activityService.holderListStartTime = new Date().getTime();
 
-      //Mixapanel tracking
+      //Mixpanel tracking
       if (this.currentRoute.split('/')[1] === 'profile' && this.miscellaneousService.lastRoute != this.currentRoute) this.mixpanelService.visitProfileTrack({profile: this.currentRoute.split('/')[2]});
 
       if (!this.currentRoute.includes('/auth')) this.miscellaneousService.lastRoute = this.currentRoute;
@@ -135,6 +135,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   stopPropagation(event) {
     event.stopPropagation();
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    this.mixpanelService.setVisitProfileVia('inbuilt navigation');
   }
 
   ngOnDestroy() {

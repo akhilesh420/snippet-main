@@ -1,14 +1,13 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
-import { CompileShallowModuleMetadata } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MixpanelService {
 
-  private visitProfileVia: string = 'Direct';
+  private visitProfileVia: string = 'direct';
 
   constructor() { }
 

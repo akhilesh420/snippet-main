@@ -318,7 +318,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   usernameClick() {
-    this.mixpanelService.setVisitProfileVia('profile tab');
+    this.mixpanelService.setVisitProfileVia('post');
   }
 
   ngOnDestroy() {
