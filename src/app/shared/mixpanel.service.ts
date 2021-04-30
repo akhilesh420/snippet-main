@@ -110,6 +110,10 @@ export class MixpanelService {
     mixpanel.track('visit collection', {via: this.routingVia, ...action});
   }
 
+  visitPostTrack(action: any = {}) {
+    mixpanel.track('visit post', {via: this.routingVia, ...action});
+  }
+
   leaveFeedbackTrack(action: any = {}){
     mixpanel.track('leave feedback',  action);
   }

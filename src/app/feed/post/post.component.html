@@ -20,7 +20,7 @@
     <div *ngFor='let sticker of (profileStickers$ | async).stickers; let i = index;'
          class="displaySticker {{profileStickerClasses[i]}}"
         [ngClass]="{'displaySticker-bck': sticker === 'loading'}">
-      <app-sticker *ngIf='sticker != null && sticker != "loading"' [pid]="sticker.pid"></app-sticker>
+      <app-sticker *ngIf='sticker != null && sticker != "loading"' [pid]="sticker.pid" [location]='post'></app-sticker>
     </div>
 
   </div>
