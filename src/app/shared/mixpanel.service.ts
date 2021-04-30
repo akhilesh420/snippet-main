@@ -1,3 +1,4 @@
+import { NavigationEnd, Router, Event as NavigationEvent } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
@@ -8,8 +9,13 @@ import * as mixpanel from 'mixpanel-browser';
 export class MixpanelService {
 
   private visitProfileVia: string = 'direct';
+  private currentRoute: string;
 
-  constructor() { }
+  constructor(private router: Router) {
+    router.events.subscribe((event: NavigationEvent) => {
+      if (event instanceof NavigationEnd) console.log(event);
+    });
+   }
 
   /**
  * Initialize mixpanel.
