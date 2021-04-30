@@ -27,7 +27,7 @@ export class FeedbackService {
     const id = this.afs.createId();
     const obj = {...feedback};
     this.feedbackCollection.doc(id).set(obj)
-      .then(() => this.mixpanelService.leaveFeedbackTrack({}))
+      .then(() => this.mixpanelService.leaveFeedbackTrack({FID: id}))
       .catch((e) => this.mixpanelService.leaveFeedbackTrack({error: 'Something went wrong!'}));
   }
 
