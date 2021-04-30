@@ -91,4 +91,9 @@ export class MixpanelService {
     console.log('visit profile', {via: this.visitProfileVia, ...action});
     mixpanel.track('visit profile', {via: this.visitProfileVia, ...action});
   }
+
+  leaveFeedbackTrack(action: any = {}){
+    console.log('leave feedback', action);
+    mixpanel.track('leave feedback',  action);
+  }
 }
