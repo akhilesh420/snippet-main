@@ -2,7 +2,6 @@
   (window:resize)="onResize()"
   (scroll)="onWindowScroll($event)">
 
-  <button (click)='test();'>testing</button>
   <div class='spacing' [ngClass]='{"dashboard-bck-mobile": showDashboard && tabletCheck}'>
     <router-outlet></router-outlet>
   </div>
