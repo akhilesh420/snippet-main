@@ -57,7 +57,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
     if (this.profileStickerEdit) return;
     this.router.navigate(["/profile/" + this.uid]);
 
-    this.mixpanelService.setVisitProfileVia('collection tab');
+    this.mixpanelService.setRoutingVia('collection tab');
   }
 
   stickerSelected() {

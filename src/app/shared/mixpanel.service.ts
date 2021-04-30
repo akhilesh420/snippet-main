@@ -1,19 +1,30 @@
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { NavigationEnd, Router, Event as NavigationEvent } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MixpanelService {
 
-  private visitProfileVia: string = 'direct';
+  private routingVia: string = 'direct';
   private currentRoute: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private afs: AngularFirestore,
+              private auth: AngularFireAuth) {
     router.events.subscribe((event: NavigationEvent) => {
-      if (event instanceof NavigationEnd) console.log(event);
+      if (!(event instanceof NavigationEnd)) return;
+
+      this.currentRoute = event.urlAfterRedirects;
+
+      if (this.currentRoute.split('/')[1] === 'profile' ) this.visitProfileTrack({profileVisited: this.currentRoute.split('/')[2]});
+      if (this.currentRoute.split('/')[1] === 'collection' ) this.visitCollectionTrack();
+
     });
    }
 
@@ -79,21 +90,44 @@ export class MixpanelService {
     mixpanel.reset();
   }
 
-  stickerCollectionTrack(action: any = {}) {
-    mixpanel.track('sticker collect', action);
-  };
-
-  setVisitProfileVia(via: string) {
-    this.visitProfileVia = via;
+  setRoutingVia(via: string) {
+    this.routingVia = via;
   }
 
+  async stickerCollectionTrack(action: any = {}) {
+    const currentUser = (await this.auth.currentUser);
+    const firstCollectionFromCollectee = !(await this.afs.collection('feed/'+currentUser.uid+'/collection', ref => ref.where('creatorID', '==', action.collecteeID).limit(1))
+                                                        .valueChanges({idField: 'pid'}).pipe(take(1)).toPromise());
+    mixpanel.track('sticker collect', {firstCollectionFromCollectee: firstCollectionFromCollectee, ...action});
+    this.timeEvent('sticker collect');
+  };
+
   visitProfileTrack(action: any = {}) {
-    console.log('visit profile', {via: this.visitProfileVia, ...action});
-    mixpanel.track('visit profile', {via: this.visitProfileVia, ...action});
+    mixpanel.track('visit profile', {via: this.routingVia, ...action});
+  }
+
+  visitCollectionTrack(action: any = {}) {
+    mixpanel.track('visit collection', {via: this.routingVia, ...action});
   }
 
   leaveFeedbackTrack(action: any = {}){
-    console.log('leave feedback', action);
     mixpanel.track('leave feedback',  action);
+  }
+
+  openHolderListTrack(action: any = {}) {
+    mixpanel.track('open holder list', action);
+    this.timeEvent('open holder list');
+  };
+
+  openCollection(action: any = {}) {
+    mixpanel.track('visit collection', action);
+  };
+
+  sessionStartTrack(action: any = {}) {
+    mixpanel.track('session start', action);
+  }
+
+  sessionEndTrack(action: any = {}) {
+    mixpanel.track('session end', action);
   }
 }

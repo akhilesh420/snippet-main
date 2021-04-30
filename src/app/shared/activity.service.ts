@@ -14,17 +14,10 @@ import { Collection } from './activity.model';
 })
 export class ActivityService {
 
-  //Variables
-  public collectionStartTime = 0;
-  public holderListStartTime = 0;
-
-
   //Firestore Collection
 
   constructor(private afs: AngularFirestore,
-              private auth: AngularFireAuth,
-              private router: Router,
-              private mixpanelService: MixpanelService) {}
+              private auth: AngularFireAuth) {}
 
 
   // --------------------------------------- Activity ---------------------------------------
@@ -73,6 +66,7 @@ export class ActivityService {
   // collectorID: UID of the person who collected the sticker
   // collecteeID: UID of the person whose sticker was collected
   async addCollection(collection: Collection) {
+    let success: boolean;
     const batch = this.afs.firestore.batch();
     const cid = this.afs.createId();
 
@@ -93,22 +87,14 @@ export class ActivityService {
                   {counter: firebase.firestore.FieldValue.increment(1),
                     cid: cid}); //post
 
-    // Collection analytics
-    if (collection.collectorID != collection.collecteeID) {
-      const aid = this.afs.createId();
-      const timeSpent = new Date().getTime() - this.collectionStartTime;
-      this.collectionStartTime = new Date().getTime();
-      const analytics = {type: 'collection', route: this.router.url.split('/')[1], timeSpent: timeSpent};
-      batch.set(this.afs.firestore.doc('user data/'+collection.collectorID+'/collection analytics/'+aid), analytics);
-    }
-
     await batch.commit()
-      // .then(() => this.mixpanelService.track('sticker collect', {status: 'success'}))
+      .then(() => success = true)
       .catch(async (e) => {
+        success = false;
         console.log("error in collection", e);
         throw new Error('Error in sticker collection');
       });
-    return true
+    return success
   }
 
   // get collection by uid
@@ -127,13 +113,5 @@ export class ActivityService {
   // get collection by pid
   getHolderList(pid: string) {
     return this.afs.collection<{cid: Date, timeStamp: string}>('posts/' + pid + '/holders', ref => ref.orderBy('timeStamp')).valueChanges({idField: 'collectorID'});
-  }
-
-  // add analytics
-  async addAnalytics(uid, type, obj) {
-    if (uid != (await this.auth.user.pipe(take(1)).toPromise()).uid) return;
-    const analyticsCollection = this.afs.collection('user data/'+uid+'/'+type);
-    const id = this.afs.createId();
-    analyticsCollection.doc(id).set(obj);
   }
 }

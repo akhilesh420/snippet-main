@@ -38,7 +38,6 @@ export class PostComponent implements OnInit, OnDestroy {
   collectionList: Observable<Holder[]>;
 
   viewed: boolean = false;
-  holderListAnalysed: boolean = false;
   showDetails = false;
   fullscreenToggle = false;
   collected: number = 0;
@@ -246,13 +245,10 @@ export class PostComponent implements OnInit, OnDestroy {
     if (this.currentPost === this.pid) this.videoToggle();
   }
 
-  holderAnalytics() {
-    if (this.holderListAnalysed) return;
-    this.holderListAnalysed = true;
-    const timeSpent = new Date().getTime() -  this.activityService.holderListStartTime;
-    this.activityService.holderListStartTime = new Date().getTime();
-    const analytics = {type: 'holder list', route: this.router.url.split('/')[1], timeSpent: timeSpent};
-    this.activityService.addAnalytics(this.myUid, 'holder list analytics', analytics);
+  toggleHolderList() {
+    this.showDetails = !this.showDetails;
+
+    if (this.showDetails) this.mixpanelService.openHolderListTrack({ pid: this.pid, creatorID: this.uid, postType: this.postType });
   }
 
   stopPropagation(event) {
@@ -277,7 +273,7 @@ export class PostComponent implements OnInit, OnDestroy {
     })
   }
 
-  collectSticker() {
+  async collectSticker() {
     this.auth.onAuthStateChanged(async (user) => {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated)  {
@@ -296,19 +292,40 @@ export class PostComponent implements OnInit, OnDestroy {
             this.stickerCollectionState = -1; //reject
             const popUpObj = new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']);
             this.miscellaneousService.setPopUp(popUpObj);
-            return; //end
+            return this.mixpanelService.stickerCollectionTrack({collected: false,
+                                                                status: 'Already collected',
+                                                                engagementRatioBefore: this.engagementRatio,
+                                                                premium: false,
+                                                                price: 0,
+                                                                pid: this.pid,
+                                                                collecteeID: this.uid,
+                                                                postType: this.postType}); //end
           }
         }
 
         if (this.engagementRatio < 1) {
-          this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
+          const success = await this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
           this.stickerCollectionState = 1; //confirm
-          return; //end
+          return this.mixpanelService.stickerCollectionTrack({collected: success,
+                                                              status: 'Collected',
+                                                              engagementRatioBefore: this.engagementRatio,
+                                                              premium: false,
+                                                              price: 0,
+                                                              pid: this.pid,
+                                                              collecteeID: this.uid,
+                                                              postType: this.postType});
         } else {
           this.stickerCollectionState = -1; //reject
           const popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
           this.miscellaneousService.setPopUp(popUpObj);
-          return; //end
+          return this.mixpanelService.stickerCollectionTrack({collected: false,
+                                                              status: 'Reached full engagement',
+                                                              engagementRatioBefore: this.engagementRatio,
+                                                              premium: false,
+                                                              price: 0,
+                                                              pid: this.pid,
+                                                              collecteeID: this.uid,
+                                                              postType: this.postType}); //end
         }
       } else {
         this.miscellaneousService.lastRoute='/post/' + this.pid;
@@ -318,7 +335,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   usernameClick() {
-    this.mixpanelService.setVisitProfileVia('post');
+    this.mixpanelService.setRoutingVia('post');
   }
 
   ngOnDestroy() {

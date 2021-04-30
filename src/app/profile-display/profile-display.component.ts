@@ -375,7 +375,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   }
 
   usernameClick() {
-    this.mixpanelService.setVisitProfileVia('profile display');
+    this.mixpanelService.setRoutingVia('profile display');
   }
 
   ngOnDestroy() {

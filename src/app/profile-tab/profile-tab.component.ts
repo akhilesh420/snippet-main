@@ -38,7 +38,7 @@ export class ProfileTabComponent implements OnInit {
   }
 
   usernameClick() {
-    this.mixpanelService.setVisitProfileVia('profile tab');
+    this.mixpanelService.setRoutingVia('profile tab');
   }
 
   ngOnDestroy() {

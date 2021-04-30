@@ -91,7 +91,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   }
 
   dpClick() {
-    this.mixpanelService.setVisitProfileVia('header/navbar');
+    this.mixpanelService.setRoutingVia('header/navbar');
   }
 
   ngOnDestroy() {

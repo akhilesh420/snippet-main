@@ -40,7 +40,7 @@ export class HolderComponent implements OnInit, OnDestroy{
   }
 
   usernameClick() {
-    this.mixpanelService.setVisitProfileVia('holder list');
+    this.mixpanelService.setRoutingVia('holder list');
   }
 
   ngOnDestroy() {
