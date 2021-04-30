@@ -62,7 +62,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.mixpanelService.timeEvent('sticker collect');
     this.mixpanelService.timeEvent('open holder list');
 
-    this.mixpanelService.sessionStartTrack();;
+    this.mixpanelService.sessionStartTrack();
+    this.mixpanelService.triggerRouteTracks(this.router.url);
 
     this.windowStateService.checkWidth();
     this.windowStateService.setHeight();
@@ -144,6 +145,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.beforeUnloadTriggered) return;
     this.beforeUnloadTriggered= true;
     this.mixpanelService.sessionEndTrack();
+    this.mixpanelService.routeChangeTrack({parentRoute: this.currentRoute.split('/')[1]});
   }
 
   ngOnDestroy() {

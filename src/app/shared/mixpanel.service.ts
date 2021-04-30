@@ -1,10 +1,10 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NavigationEnd, Router, Event as NavigationEvent } from '@angular/router';
+import { NavigationEnd, Router, Event as NavigationEvent, NavigationStart } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
-import { take } from 'rxjs/operators';
+import { filter, pairwise, startWith, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,20 +12,22 @@ import { take } from 'rxjs/operators';
 export class MixpanelService {
 
   private routingVia: string = 'direct';
-  private currentRoute: string;
 
   constructor(private router: Router,
               private afs: AngularFirestore,
               private auth: AngularFireAuth) {
-    router.events.subscribe((event: NavigationEvent) => {
-      if (!(event instanceof NavigationEnd)) return;
+    router.events.pipe(filter((event: NavigationEvent) => event instanceof NavigationEnd), pairwise())
+      .subscribe((event: [NavigationEnd, NavigationEnd]) => {
 
-      this.currentRoute = event.urlAfterRedirects;
+        const lastRoute = event[0].urlAfterRedirects;
+        const currentRoute = event[1].urlAfterRedirects;
 
-      if (this.currentRoute.split('/')[1] === 'profile' ) this.visitProfileTrack({profileVisited: this.currentRoute.split('/')[2]});
-      if (this.currentRoute.split('/')[1] === 'collection' ) this.visitCollectionTrack();
+        this.routeChangeTrack({parentRoute: lastRoute.split('/')[1]});
+        this.timeEvent('route change');
 
-    });
+        this.triggerRouteTracks(currentRoute);
+
+      });
    }
 
   /**
@@ -94,6 +96,13 @@ export class MixpanelService {
     this.routingVia = via;
   }
 
+  triggerRouteTracks(route: string) {
+    console.log(this.routingVia);
+    if (route.split('/')[1] === 'profile' ) this.visitProfileTrack({profileVisited: route.split('/')[2]});
+    if (route.split('/')[1] === 'collection' ) this.visitCollectionTrack();
+    if (route.split('/')[1] === 'post' ) this.visitPostTrack({postVisited: route.split('/')[2]});
+  }
+
   async stickerCollectionTrack(action: any = {}) {
     const currentUser = (await this.auth.currentUser);
     const firstCollectionFromCollectee = !(await this.afs.collection('feed/'+currentUser.uid+'/collection', ref => ref.where('creatorID', '==', action.collecteeID).limit(1))
@@ -133,5 +142,9 @@ export class MixpanelService {
 
   sessionEndTrack(action: any = {}) {
     mixpanel.track('session end', action);
+  }
+
+  routeChangeTrack(action: any = {}) {
+    mixpanel.track('route change', action);
   }
 }
