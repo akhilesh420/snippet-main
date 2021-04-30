@@ -2,7 +2,8 @@
   (window:resize)="onResize()"
   (scroll)="onWindowScroll($event)">
 
-  <!-- <div class='spacing' [ngClass]='{"dashboard-bck-mobile": showDashboard && tabletCheck}'>
+  <button (click)='test();'>testing</button>
+  <div class='spacing' [ngClass]='{"dashboard-bck-mobile": showDashboard && tabletCheck}'>
     <router-outlet></router-outlet>
   </div>
 
@@ -36,7 +37,7 @@
 
   <div>
     <app-header ></app-header>
-  </div> -->
+  </div>
 
 </div>
 

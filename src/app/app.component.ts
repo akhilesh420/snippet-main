@@ -55,9 +55,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    console.log(new Date().getTime());
-    const testFeed = await this.feedService.getExplorePage().toPromise();
-    return console.log(testFeed);
     this.mixpanelService.init(); //Initialize tracking
 
     this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
@@ -133,6 +130,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   stopPropagation(event) {
     event.stopPropagation();
+  }
+
+  async test() {
+    const start = new Date().getTime();
+    const testFeed = await this.feedService.getExplorePage().toPromise();
+    const end = new Date().getTime();
+    return console.log('Time to get feed', end - start, 'ms for', testFeed.length, 'posts');
   }
 
   ngOnDestroy() {
