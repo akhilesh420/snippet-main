@@ -22,9 +22,10 @@ export class MixpanelService {
         const lastRoute = event[0].urlAfterRedirects;
         const currentRoute = event[1].urlAfterRedirects;
 
-        const parentRoute = lastRoute.split('/')[1];
-        if (parentRoute === 'create') {this.routeChangeTrack({parentRoute: parentRoute, step: lastRoute.split('/')[2]});}
-        else {this.routeChangeTrack({parentRoute: parentRoute});}
+        const fromParentRoute = lastRoute.split('/')[1];
+        const toParentRoute = currentRoute.split('/')[1];
+        if (fromParentRoute === 'create') {this.routeChangeTrack({from: fromParentRoute, to: toParentRoute, step: lastRoute.split('/')[2]});}
+        else {this.routeChangeTrack({from: fromParentRoute, to: toParentRoute});}
         this.timeEvent('route change');
 
         this.triggerRouteTracks(currentRoute);
@@ -99,10 +100,24 @@ export class MixpanelService {
   }
 
   triggerRouteTracks(route: string) {
-    console.log(this.routingVia);
     if (route.split('/')[1] === 'profile' ) this.visitProfileTrack({profileVisited: route.split('/')[2]});
     if (route.split('/')[1] === 'collection' ) this.visitCollectionTrack();
     if (route.split('/')[1] === 'post' ) this.visitPostTrack({postVisited: route.split('/')[2]});
+  }
+
+  signIn(uid: string) {
+    this.identify(uid);
+    mixpanel.track('sign in');
+  }
+
+  signUp(uid: string, action: any = {}) {
+    this.alias(uid); //Sync current user data with uid
+    mixpanel.track('sign up', action);
+  }
+
+  logout() {
+    this.reset();
+    mixpanel.track('log out');
   }
 
   async stickerCollectionTrack(action: any = {}) {
@@ -142,6 +157,22 @@ export class MixpanelService {
     mixpanel.track('create post', action);
   };
 
+  profileDescriptionTrack(action: any = {}) {
+    mixpanel.track('update profile description', action);
+  };
+
+  profileLinkTrack(action: any = {}) {
+    mixpanel.track('update profile link', action);
+  };
+
+  profileStickersTrack(action: any = {}) {
+    mixpanel.track('update profile stickers', action);
+  };
+
+  dpUpdateTrack(action: any = {}) {
+    mixpanel.track('update dp', action);
+  };
+
   sessionStartTrack(action: any = {}) {
     mixpanel.track('session start', action);
   }
@@ -152,5 +183,9 @@ export class MixpanelService {
 
   routeChangeTrack(action: any = {}) {
     mixpanel.track('route change', action);
+  }
+
+  avatarImage(url: string) {
+    mixpanel.people.set({$avatar: url});
   }
 }

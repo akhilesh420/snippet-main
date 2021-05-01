@@ -238,21 +238,15 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
 
       const dimensions = await this.miscellaneousService.getDimension(this.displayPicture, this.displayPicture.type);
       const metadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
+      const displayPictureData =  new DisplayPicture(this.uid,
+                                                +metadata.width,
+                                                +metadata.height,
+                                                this.displayPicture.type,
+                                                new Date());
 
-      this.miscellaneousService.startLoading();
       this.displayPicture$ = new Observable(observer => observer.next(this.updatedDP));
-      this.usersService.updateDisplayPicture(this.uid, this.displayPicture, metadata).pipe(takeUntil(this.notifier$))
-      .subscribe(response => {
-        if (response === 100) {
-          this.usersService.updateDisplayPictureRef(this.uid,
-                                                    new DisplayPicture(this.uid,
-                                                                       +metadata.width,
-                                                                       +metadata.height,
-                                                                       this.displayPicture.type,
-                                                                       new Date()));
-          this.miscellaneousService.endLoading();
-        }
-      });
+
+      this.usersService.uploadDisplayPicture(this.uid, this.displayPicture, metadata, displayPictureData);
     }
 
     this.saving = false;
