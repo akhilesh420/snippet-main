@@ -103,6 +103,7 @@ export class PostService {
                 stickerMeta: CustomMetadata,
                 postDetails: PostDetails,
                 stickerDetails: StickerDetails) {
+      this.mixpanelService.timeEvent('create post');
       let success: boolean;
 
       let pid = this.afs.createId();

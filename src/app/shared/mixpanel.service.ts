@@ -22,7 +22,9 @@ export class MixpanelService {
         const lastRoute = event[0].urlAfterRedirects;
         const currentRoute = event[1].urlAfterRedirects;
 
-        this.routeChangeTrack({parentRoute: lastRoute.split('/')[1]});
+        const parentRoute = lastRoute.split('/')[1];
+        if (parentRoute === 'create') {this.routeChangeTrack({parentRoute: parentRoute, step: lastRoute.split('/')[2]});}
+        else {this.routeChangeTrack({parentRoute: parentRoute});}
         this.timeEvent('route change');
 
         this.triggerRouteTracks(currentRoute);
@@ -137,7 +139,7 @@ export class MixpanelService {
   };
 
   createPostTrack(action: any = {}) {
-    mixpanel.track('visit collection', action);
+    mixpanel.track('create post', action);
   };
 
   sessionStartTrack(action: any = {}) {
