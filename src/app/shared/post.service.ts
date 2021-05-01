@@ -1,3 +1,4 @@
+import { MixpanelService } from './mixpanel.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { forkJoin, throwError } from 'rxjs';
@@ -19,7 +20,8 @@ export class PostService {
 
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage,
-              private miscellaneousService: MiscellaneousService) {}
+              private miscellaneousService: MiscellaneousService,
+              private mixpanelService: MixpanelService) {}
 
   //--------------------------------------- Post infoormation ---------------------------------------
   // Get post info from cloud firestore by PID
@@ -101,6 +103,7 @@ export class PostService {
                 stickerMeta: CustomMetadata,
                 postDetails: PostDetails,
                 stickerDetails: StickerDetails) {
+      let success: boolean;
 
       let pid = this.afs.createId();
       let dateCreated = new Date();
@@ -169,19 +172,49 @@ export class PostService {
                         cid: cid}); //user
 
         await batch.commit()
-                    .then(() => subs.unsubscribe())
+                    .then(() => {
+                        subs.unsubscribe();
+                        success = true;
+                      })
                     .catch(async (e) => {
                       console.log('Post creation failed:', e);
                       this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",
                                                                    'Okay',
                                                                    undefined,
                                                                    ['default', 'reject']));
+                      success = false;
                     })
-                    .finally(() => this.miscellaneousService.endLoading());
+                    .finally(() => {
+                      this.miscellaneousService.endLoading();
+                      this.mixpanelService.createPostTrack({
+                        postType: postFile.type,
+                        stickerType: stickerFile.type,
+                        postFileSize: postFile.size,
+                        stickerFileSize: stickerFile.size,
+                        postDimensions: {width: +postMeta.width, height: +postMeta.height},
+                        stickerDimensions: {width: +stickerMeta.width, height: +stickerMeta.height},
+                        stickerReleased: stickerDetails.amountReleased,
+                        premium: false,
+                        price: 0,
+                        success: success
+                      });
+                    });
       }, e => {
         console.log('Post creation failed:', e);
-      this.miscellaneousService.endLoading();
-      this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",'Okay', undefined, ['default', 'reject']));
+        this.miscellaneousService.endLoading();
+        this.miscellaneousService.setPopUp(new PopUp("There was a problem while creating your post! Try again later",'Okay', undefined, ['default', 'reject']));
+        this.mixpanelService.createPostTrack({
+          postType: postFile.type,
+          stickerType: stickerFile.type,
+          postFileSize: postFile.size,
+          stickerFileSize: stickerFile.size,
+          postDimensions: {width: +postMeta.width, height: +postMeta.height},
+          stickerDimensions: {width: +stickerMeta.width, height: +stickerMeta.height},
+          stickerReleased: stickerDetails.amountReleased,
+          premium: false,
+          price: 0,
+          success: false
+        });
       });
   }
 

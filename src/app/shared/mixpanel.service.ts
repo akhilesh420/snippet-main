@@ -132,7 +132,11 @@ export class MixpanelService {
     this.timeEvent('open holder list');
   };
 
-  openCollection(action: any = {}) {
+  openCollectionTrack(action: any = {}) {
+    mixpanel.track('visit collection', action);
+  };
+
+  createPostTrack(action: any = {}) {
     mixpanel.track('visit collection', action);
   };
 
