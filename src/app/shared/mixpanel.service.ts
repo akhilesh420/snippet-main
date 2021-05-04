@@ -1,10 +1,14 @@
+import { Holder } from './post.model';
+import { Collection } from 'src/app/shared/activity.model';
+import { PersonalDetails } from './profile.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { NavigationEnd, Router, Event as NavigationEvent, NavigationStart } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
 import { filter, pairwise, startWith, take } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +55,7 @@ export class MixpanelService {
  * @memberof MixpanelService
  */
   identify(userToken: string): void {
+    console.log('user identified');
     mixpanel.identify(userToken);
   }
 
@@ -94,6 +99,8 @@ export class MixpanelService {
    reset(): void {
     mixpanel.reset();
   }
+
+  // Events
 
   setRoutingVia(via: string) {
     this.routingVia = via;
@@ -185,7 +192,34 @@ export class MixpanelService {
     mixpanel.track('route change', action);
   }
 
-  avatarImage(url: string) {
-    mixpanel.people.set({$avatar: url});
+  //Users
+
+  getProperty(uid:string, name: string) {
+    return this.afs.doc('mixpanel/'+uid+'/'+name+'/set').valueChanges().pipe(take(1)).toPromise();
+  }
+
+  setProperty(uid, name: string, property: any) {
+    mixpanel.people.set(name, property);
+    this.afs.doc('mixpanel/'+uid+'/'+name+'/set').set({value: property, dateUpdated: new Date()}).catch((e) => console.log(e));
+  }
+
+  async setUserProperties(uid: string) {
+    if (!(await this.getProperty(uid, '$email'))) this.setProperty(uid, '$email', (await this.auth.currentUser).email);
+    if (!(await this.getProperty(uid, '$name'))) this.setProperty(uid, '$name', (await this.afs.doc<{username: string}>('username/'+uid).valueChanges().pipe(take(1)).toPromise()).username);
+    if (!(await this.getProperty(uid, 'fullname'))) this.setProperty(uid, 'fullname', (await this.afs.doc<PersonalDetails>('personal details/'+uid).valueChanges().pipe(take(1)).toPromise()).name);
+    if (!(await this.getProperty(uid, 'collection'))) this.setProperty(uid, 'collection', ((await this.afs.doc<{counter: number}>('activity/'+uid+'/metrics/collected').valueChanges().pipe(take(1)).toPromise()).counter).toString());
+    if (!(await this.getProperty(uid, 'posts'))) this.setProperty(uid, 'posts', ((await this.afs.collection('feed/'+uid+'/posts').valueChanges().pipe(take(1)).toPromise()).length).toString());
+    if (!(await this.getProperty(uid, 'unique collectors'))) this.setProperty(uid, 'unique collectors', (await this.getUniqueCollectors(uid)).length);
+  }
+
+  async getUniqueCollectors(uid: string) {
+    const userPosts = this.afs.collection<Collection>('feed/'+uid+'/posts').valueChanges({idField: 'pid'}).pipe(take(1)).toPromise();
+    let holdersObs: Promise<(Holder & {uid: string;})[]>[] = [];
+    (await userPosts).forEach(async post => {
+      holdersObs.push(this.afs.collection<Holder>('posts/'+post.pid+'/holders').valueChanges({idField: 'uid'}).pipe(take(1)).toPromise());
+    })
+    const userCollectors =  (await Promise.all(holdersObs)).reduce((a, b) => a.concat(b)); //Flatten array
+    const uniqueCollectors = [... new Set((userCollectors).map(x => x.uid))];
+    return uniqueCollectors;
   }
 }

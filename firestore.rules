@@ -291,6 +291,14 @@ service cloud.firestore {
       }
     }
 
+    // Mixpanel analytics
+    match /mixpanel/{uid} {
+      match /{property}/set {
+        allow read: if true;
+        allow write: if true;
+      }
+    }
+
   }
 }
 
