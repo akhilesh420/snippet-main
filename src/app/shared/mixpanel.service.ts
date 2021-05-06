@@ -209,12 +209,13 @@ export class MixpanelService {
     if (!(await this.getProperty(uid, 'full name'))) this.setProperty(uid, 'full name', (await this.afs.doc<PersonalDetails>('personal details/'+uid).valueChanges().pipe(take(1)).toPromise()).name);
     if (!(await this.getProperty(uid, 'collection'))) this.setProperty(uid, 'collection', ((await this.afs.doc<{counter: number}>('activity/'+uid+'/metrics/collected').valueChanges().pipe(take(1)).toPromise()).counter).toString());
     if (!(await this.getProperty(uid, 'posts'))) this.setProperty(uid, 'posts', ((await this.afs.collection('feed/'+uid+'/posts').valueChanges().pipe(take(1)).toPromise()).length).toString());
+    if (!(await this.getProperty(uid, 'stickers collected'))) this.setProperty(uid, 'stickers collected', (await this.getStickersCollected(uid)).length);
     if (!(await this.getProperty(uid, 'unique collectors'))) this.setProperty(uid, 'unique collectors', (await this.getUniqueCollectors(uid)).length);
     if (!(await this.getProperty(uid, 'stickers released'))) this.setProperty(uid, 'stickers released', await this.getStickerReleased(uid));
     if (!(await this.getProperty(uid, 'profile stickers'))) this.setProperty(uid, 'profile stickers', await this.getProfileStickers(uid));
-    if (!(await this.getProperty(uid, 'dp'))) this.setProperty(uid, 'dp',(await this.afs.doc<DisplayPicture>('display picture/'+uid).valueChanges().pipe(take(1)).toPromise()).fileFormat === 'null');
+    if (!(await this.getProperty(uid, 'dp'))) this.setProperty(uid, 'dp',(await this.afs.doc<DisplayPicture>('display picture/'+uid).valueChanges().pipe(take(1)).toPromise()).fileFormat != 'null');
     if (!(await this.getProperty(uid, 'description'))) this.setProperty(uid, 'description',(await this.afs.doc<ProfileDetails>('profile details/'+uid).valueChanges().pipe(take(1)).toPromise()).description.length != 0);
-    if (!(await this.getProperty(uid, 'link'))) this.setProperty(uid, 'link',(await this.afs.doc<ProfileDetails>('profile details/'+uid).valueChanges().pipe(take(1)).toPromise()).description.length != 0);
+    if (!(await this.getProperty(uid, 'link'))) this.setProperty(uid, 'link',(await this.afs.doc<ProfileDetails>('profile details/'+uid).valueChanges().pipe(take(1)).toPromise()).link.length != 0);
   }
 
   async getUniqueCollectors(uid: string) {
@@ -226,6 +227,16 @@ export class MixpanelService {
     const userCollectors =  (await Promise.all(holdersObs)).reduce((a, b) => a.concat(b)); //Flatten array
     const uniqueCollectors = [... new Set((userCollectors).map(x => x.uid))];
     return uniqueCollectors;
+  }
+
+  async getStickersCollected(uid: string) {
+    const userPosts = this.afs.collection<Collection>('feed/'+uid+'/posts').valueChanges({idField: 'pid'}).pipe(take(1)).toPromise();
+    let holdersObs: Promise<(Holder & {uid: string;})[]>[] = [];
+    (await userPosts).forEach(async post => {
+      holdersObs.push(this.afs.collection<Holder>('posts/'+post.pid+'/holders').valueChanges({idField: 'uid'}).pipe(take(1)).toPromise());
+    })
+    const userCollectors =  (await Promise.all(holdersObs)).reduce((a, b) => a.concat(b)); //Flatten array
+    return userCollectors;
   }
 
   async getStickerReleased(uid: string) {
