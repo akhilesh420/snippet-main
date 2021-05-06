@@ -1,14 +1,14 @@
-import { Holder } from './post.model';
+import { DisplayPicture, ProfileSticker } from 'src/app/shared/profile.model';
+import { Holder, StickerDetails } from './post.model';
 import { Collection } from 'src/app/shared/activity.model';
-import { PersonalDetails } from './profile.model';
+import { PersonalDetails, ProfileDetails } from './profile.model';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { NavigationEnd, Router, Event as NavigationEvent, NavigationStart } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { NavigationEnd, Router, Event as NavigationEvent } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
-import { filter, pairwise, startWith, take } from 'rxjs/operators';
-import { Observable, forkJoin } from 'rxjs';
+import { filter, pairwise, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -195,21 +195,26 @@ export class MixpanelService {
   //Users
 
   getProperty(uid:string, name: string) {
-    return this.afs.doc('mixpanel/'+uid+'/'+name+'/set').valueChanges().pipe(take(1)).toPromise();
+    return this.afs.doc('mixpanel/'+uid+'/'+name+'/information').valueChanges().pipe(take(1)).toPromise();
   }
 
   setProperty(uid, name: string, property: any) {
     mixpanel.people.set(name, property);
-    this.afs.doc('mixpanel/'+uid+'/'+name+'/set').set({value: property, dateUpdated: new Date()}).catch((e) => console.log(e));
+    this.afs.doc('mixpanel/'+uid+'/'+name+'/information').set({set: true, dateUpdated: new Date()}).catch((e) => console.log(e));
   }
 
   async setUserProperties(uid: string) {
     if (!(await this.getProperty(uid, '$email'))) this.setProperty(uid, '$email', (await this.auth.currentUser).email);
     if (!(await this.getProperty(uid, '$name'))) this.setProperty(uid, '$name', (await this.afs.doc<{username: string}>('username/'+uid).valueChanges().pipe(take(1)).toPromise()).username);
-    if (!(await this.getProperty(uid, 'fullname'))) this.setProperty(uid, 'fullname', (await this.afs.doc<PersonalDetails>('personal details/'+uid).valueChanges().pipe(take(1)).toPromise()).name);
+    if (!(await this.getProperty(uid, 'full name'))) this.setProperty(uid, 'full name', (await this.afs.doc<PersonalDetails>('personal details/'+uid).valueChanges().pipe(take(1)).toPromise()).name);
     if (!(await this.getProperty(uid, 'collection'))) this.setProperty(uid, 'collection', ((await this.afs.doc<{counter: number}>('activity/'+uid+'/metrics/collected').valueChanges().pipe(take(1)).toPromise()).counter).toString());
     if (!(await this.getProperty(uid, 'posts'))) this.setProperty(uid, 'posts', ((await this.afs.collection('feed/'+uid+'/posts').valueChanges().pipe(take(1)).toPromise()).length).toString());
     if (!(await this.getProperty(uid, 'unique collectors'))) this.setProperty(uid, 'unique collectors', (await this.getUniqueCollectors(uid)).length);
+    if (!(await this.getProperty(uid, 'stickers released'))) this.setProperty(uid, 'stickers released', await this.getStickerReleased(uid));
+    if (!(await this.getProperty(uid, 'profile stickers'))) this.setProperty(uid, 'profile stickers', await this.getProfileStickers(uid));
+    if (!(await this.getProperty(uid, 'dp'))) this.setProperty(uid, 'dp',(await this.afs.doc<DisplayPicture>('display picture/'+uid).valueChanges().pipe(take(1)).toPromise()).fileFormat === 'null');
+    if (!(await this.getProperty(uid, 'description'))) this.setProperty(uid, 'description',(await this.afs.doc<ProfileDetails>('profile details/'+uid).valueChanges().pipe(take(1)).toPromise()).description.length != 0);
+    if (!(await this.getProperty(uid, 'link'))) this.setProperty(uid, 'link',(await this.afs.doc<ProfileDetails>('profile details/'+uid).valueChanges().pipe(take(1)).toPromise()).description.length != 0);
   }
 
   async getUniqueCollectors(uid: string) {
@@ -221,5 +226,23 @@ export class MixpanelService {
     const userCollectors =  (await Promise.all(holdersObs)).reduce((a, b) => a.concat(b)); //Flatten array
     const uniqueCollectors = [... new Set((userCollectors).map(x => x.uid))];
     return uniqueCollectors;
+  }
+
+  async getStickerReleased(uid: string) {
+    const userPosts = this.afs.collection<Collection>('feed/'+uid+'/posts').valueChanges({idField: 'pid'}).pipe(take(1)).toPromise();
+    let stickerDetailsObs: Promise<StickerDetails>[] = [];
+    (await userPosts).forEach(async post => {
+      stickerDetailsObs.push(this.afs.doc<StickerDetails>('sticker details/'+post.pid).valueChanges().pipe(take(1)).toPromise());
+    })
+    let stickersReleased: number = 0;
+    (await Promise.all(stickerDetailsObs)).forEach(val => stickersReleased += val.amountReleased); //Reduce not working
+    return stickersReleased;
+  }
+
+  async getProfileStickers(uid: string) {
+    const userProfileStickers = this.afs.doc<{stickers: (ProfileSticker | string)[]}>('profile stickers/'+uid).valueChanges().pipe(take(1)).toPromise();
+    let profileStickers: number = 5;
+    (await userProfileStickers).stickers.forEach(sticker => profileStickers = sticker === 'empty' ? --profileStickers : profileStickers)
+    return profileStickers
   }
 }
