@@ -283,28 +283,30 @@ li {
 
 .postViewsExp {
   font-family: 'Assistant';
-  font-weight: 300;
   letter-spacing: 0.1em;
   font-size: 12px;
   line-height: 14px;
   align-items: center;
+  font-weight: bold;
   color: #FFFFFF;
 }
 
 .spacer {
+  font-family: 'Assistant';
+  font-weight: 300;
   color: #FFFFFF;
   font-size: 12px;
 }
 
 .postHoldersExp {
   font-family: 'Assistant';
-  font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.1em;
   line-height: 14px;
   align-items: center;
   color: #FFFFFF;
   padding-left: 2px;
+  font-weight: bold;
 }
 
 .postDescriptionExp {
@@ -361,7 +363,7 @@ li {
   }
 
 .postStickerHolderOutline {
-  margin-top: 6px;
+  margin-top: 10px;
   height: 72px;
   width: 72px;
   background-color: #000000;
@@ -384,6 +386,7 @@ li {
   float: right;
   margin-right: 44px;
   transform: translate(50%, 0%);
+  padding-bottom: 6px;
 }
 
 
