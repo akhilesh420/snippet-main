@@ -207,9 +207,9 @@ export class MixpanelService {
     if (!(await this.getProperty(uid, '$email'))) this.setProperty(uid, '$email', (await this.auth.currentUser).email);
     if (!(await this.getProperty(uid, '$name'))) this.setProperty(uid, '$name', (await this.afs.doc<{username: string}>('username/'+uid).valueChanges().pipe(take(1)).toPromise()).username);
     if (!(await this.getProperty(uid, 'full name'))) this.setProperty(uid, 'full name', (await this.afs.doc<PersonalDetails>('personal details/'+uid).valueChanges().pipe(take(1)).toPromise()).name);
-    if (!(await this.getProperty(uid, 'collection'))) this.setProperty(uid, 'collection', ((await this.afs.doc<{counter: number}>('activity/'+uid+'/metrics/collected').valueChanges().pipe(take(1)).toPromise()).counter).toString());
+    if (!(await this.getProperty(uid, 'stickers collected'))) this.setProperty(uid, 'stickers collected', ((await this.afs.doc<{counter: number}>('activity/'+uid+'/metrics/collected').valueChanges().pipe(take(1)).toPromise()).counter).toString());
     if (!(await this.getProperty(uid, 'posts'))) this.setProperty(uid, 'posts', ((await this.afs.collection('feed/'+uid+'/posts').valueChanges().pipe(take(1)).toPromise()).length).toString());
-    if (!(await this.getProperty(uid, 'stickers collected'))) this.setProperty(uid, 'stickers collected', (await this.getStickersCollected(uid)).length);
+    if (!(await this.getProperty(uid, 'collectors'))) this.setProperty(uid, 'collectors', (await this.getStickersCollected(uid)).length);
     if (!(await this.getProperty(uid, 'unique collectors'))) this.setProperty(uid, 'unique collectors', (await this.getUniqueCollectors(uid)).length);
     if (!(await this.getProperty(uid, 'stickers released'))) this.setProperty(uid, 'stickers released', await this.getStickerReleased(uid));
     if (!(await this.getProperty(uid, 'profile stickers'))) this.setProperty(uid, 'profile stickers', await this.getProfileStickers(uid));
