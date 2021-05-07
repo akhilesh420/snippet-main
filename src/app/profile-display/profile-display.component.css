@@ -9,7 +9,7 @@
   height: 234px;
   width: 353px;
   position: relative;
-  background: rgba(196, 196, 196, 0.05);
+  background: #030303;
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
   border-radius: 13px;
@@ -33,7 +33,7 @@ background-image: url("src/assets/images/Profile Display/profileDisplayBorder.sv
 }
 
 .profileDB-edit {
-background-color: #131313;
+background-color: #030303;
 -webkit-box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
         box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.3);
 }
