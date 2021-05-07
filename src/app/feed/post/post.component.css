@@ -51,9 +51,9 @@ p {
 .timeCreated {
   width: calc(100% - 235px);
   height: 15px;
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-style: normal;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 12px;
   letter-spacing: 0.05em;
   color: #FFFFFF;
@@ -117,12 +117,12 @@ p {
   position: relative;
   overflow: hidden;
   margin-bottom: 0px;
-  background-color: #0b0b0b;
+  background-color: #030303;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.6));
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  border: 0.5px solid #000000;
 }
 
 .postContent {
@@ -140,12 +140,13 @@ p {
   padding-left: 12px;
   padding-top: 9px;
   padding-bottom: 9px;
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-style: normal;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 16px;
+  letter-spacing: 0.02em;
   line-height: 18px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255);
   word-wrap: break-word;
   display: inline-block;
 }
@@ -202,7 +203,7 @@ p {
 
   height: 10%;
   font-size: calc(16px * var(--norm-height));
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-weight: bold;
   letter-spacing: 0.05em;
   color: #E2B33D;
@@ -269,7 +270,7 @@ li {
   height: auto;
   min-height: 102px;
   width: 100%;
-  background: #0B0B0B;
+  background: #030303;
   border-radius: 0px 0px 4px 4px;
   display: flex;
 }
@@ -281,10 +282,10 @@ li {
 }
 
 .postViewsExp {
-  font-family: 'ChampagneAndLimousines';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 13px;
+  font-family: 'Assistant';
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  font-size: 12px;
   line-height: 14px;
   align-items: center;
   color: #FFFFFF;
@@ -296,24 +297,27 @@ li {
 }
 
 .postHoldersExp {
-  font-family: 'ChampagneAndLimousines';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 13px;
+  font-family: 'Assistant';
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.1em;
   line-height: 14px;
   align-items: center;
   color: #FFFFFF;
+  padding-left: 2px;
 }
 
 .postDescriptionExp {
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-style: normal;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   padding-left: 10px;
   padding-top: 3px;
+  padding-bottom: 8px;
   word-break: break-all;
 }
 
@@ -368,8 +372,8 @@ li {
 }
 
 .collectPrompt {
-  margin-top: 6px;
-  font-family: 'ChampagneAndLimousines';
+  margin-top: 4px;
+  font-family: 'Assistant';
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
