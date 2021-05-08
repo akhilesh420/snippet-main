@@ -35,14 +35,14 @@ p {
 .creatorName {
   width: calc(100% - 235px);
   height: auto;
-  font-family: 'Comfortaa';
+  font-family: 'Assistant';
   font-style: normal;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.05em;
   color: #FFFFFF;
   position: absolute;
-  top: 16px;
+  top: 14px;
   left: 58px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -287,7 +287,6 @@ li {
   font-size: 12px;
   line-height: 14px;
   align-items: center;
-  font-weight: bold;
   color: #FFFFFF;
 }
 
@@ -306,7 +305,6 @@ li {
   align-items: center;
   color: #FFFFFF;
   padding-left: 2px;
-  font-weight: bold;
 }
 
 .postDescriptionExp {
@@ -377,10 +375,9 @@ li {
   margin-top: 4px;
   font-family: 'Assistant';
   font-style: normal;
-  font-size: 14px;
-  line-height: 14px;
+  font-size: 16px;
   align-items: center;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   color: #FFFFFF;
   float: right;
   margin-right: 43px;
