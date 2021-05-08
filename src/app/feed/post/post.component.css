@@ -377,14 +377,13 @@ li {
   margin-top: 4px;
   font-family: 'Assistant';
   font-style: normal;
-  font-weight: bold;
   font-size: 14px;
   line-height: 14px;
   align-items: center;
   letter-spacing: 0.1em;
   color: #FFFFFF;
   float: right;
-  margin-right: 44px;
+  margin-right: 43px;
   transform: translate(50%, 0%);
   padding-bottom: 6px;
 }

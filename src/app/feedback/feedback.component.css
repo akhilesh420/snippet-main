@@ -54,9 +54,9 @@
   border: none;
   outline: none;
   resize: none;
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-style: normal;
-  font-weight: bold;
+  letter-spacing: 0.02em;
   font-size: 16px;
   line-height: 18px;
   color: #ffffff;
@@ -84,13 +84,12 @@
 }
 
 .btn {
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-style: normal;
-  font-weight: bold;
+  letter-spacing: 0.02em;
   font-size: 24px;
   line-height: 28px;
   text-align: center;
-  letter-spacing: 0.1em;
   color: #000000;
 
   background: #E2B33D;
@@ -140,11 +139,10 @@
 .subTitle {
 
   font-size: 2vh;
-  font-family: "ChampagneAndLimousines";
+  font-family: "Assistant";
   font-style: normal;
-  font-weight: bold;
+  letter-spacing: 0.02em;
   line-height: 21px;
-  letter-spacing: 0.1em;
   color: #EBDDBB;
 
 }
