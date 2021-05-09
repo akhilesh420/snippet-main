@@ -1,11 +1,10 @@
 import { UsersService } from './../../shared/users.service';
 import { Router } from '@angular/router';
-import { ProfileDetails, ProfileSticker } from './../../shared/profile.model';
+import { ProfileSticker } from './../../shared/profile.model';
 import { Feed, PostDetails } from './../../shared/post.model';
 import { PostService } from './../../shared/post.service';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Collection } from 'src/app/shared/activity.model';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { takeUntil } from 'rxjs/operators';
 

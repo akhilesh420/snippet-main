@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { map, take } from 'rxjs/operators';
 import { Collection } from './activity.model';
+import { Feed } from './post.model';
 
 
 @Injectable({

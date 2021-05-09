@@ -1,9 +1,9 @@
 import { Feed } from './../shared/post.model';
 import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { ActivityService } from './../shared/activity.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
 import { ProfileSticker } from '../shared/profile.model';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -15,7 +15,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class CollectionTabComponent implements OnInit, OnDestroy {
 
-  feedList: Feed[] = [null, null, null, null];
+  feedList = new Observable((observer) => observer.next([null, null, null, null]));
   myUid: string;
   isAuthenticated: boolean = true;
   notifier$ = new Subject();
@@ -33,9 +33,10 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
         this.myUid = user.uid;
-        this.getCollection();
+        this.feedList = this.activityService.getUserCollection(this.myUid); //get details of user collection
+
       } else {
-        this.feedList = [];
+        this.feedList = new Observable((observer) => observer.next([])) ;
       }
     });
 
@@ -43,19 +44,12 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.editMode = value);
   }
 
-  getCollection() {
-    this.activityService.getUserCollection(this.myUid).pipe(takeUntil(this.notifier$)) //get details of user collection
-      .subscribe((response:Feed[]) => {
-        this.feedList = response;
-      });
-  }
-
   confirmSelection(confirm: string) {
     this.miscellaneousService.stickerSelectConfirm.next(confirm);
   }
 
   trackByFn(index, item) {
-    return index; // or item.id
+    return !!item ? item.pid : index; // or item.id
   }
 
   goToCollection() {

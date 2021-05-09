@@ -1,3 +1,4 @@
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MixpanelService } from './shared/mixpanel.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { FeedService } from 'src/app/feed/feed.service';
@@ -8,7 +9,6 @@ import { Component,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angul
 import { Router } from '@angular/router';
 import { take, takeUntil,} from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { InfiniteScrollService } from './shared/infinite-scroll.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DOCUMENT } from '@angular/common';
 
@@ -41,12 +41,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private windowStateService: WindowStateService,
               private router: Router,
-              private infiniteScrollService: InfiniteScrollService,
               private miscellaneousService: MiscellaneousService,
               private activityService: ActivityService,
               private feedService: FeedService,
               private scrollService: ScrollService,
               private auth: AngularFireAuth,
+              private afs: AngularFirestore,
               private mixpanelService: MixpanelService,
               @Inject(DOCUMENT) private _document ) {
     document.addEventListener("visibilitychange", function() { //mute posts on tab change
@@ -54,10 +54,11 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.setFirestorePersistance();
+
     this.mixpanelService.init(); //Initialize tracking
 
-    this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
     this.activityService.collectionStartTime = new Date().getTime();
     this.activityService.holderListStartTime = new Date().getTime();
 
@@ -115,6 +116,22 @@ export class AppComponent implements OnInit, OnDestroy {
     this.popUpVal.pipe(takeUntil(this.notifier$)).subscribe(value => this.modalState.next(!!value));
   }
 
+  async setFirestorePersistance() {
+    return this.afs.firestore.enablePersistence()
+            .then(() => console.log('persistance set '))
+            .catch((err) => {
+              if (err.code == 'failed-precondition') {
+                  // Multiple tabs open, persistence can only be enabled
+                  // in one tab at a a time.
+                  // ...
+              } else if (err.code == 'unimplemented') {
+                  // The current browser does not support all of the
+                  // features required to enable persistence
+                  // ...
+              }
+            });
+  }
+
   onResize(){
     this.windowStateService.checkWidth();
   }
@@ -135,6 +152,5 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
-    this.infiniteScrollService.getScroll$.complete();
   }
 }
