@@ -35,11 +35,11 @@ p {
 .creatorName {
   width: calc(100% - 235px);
   height: auto;
-  font-family: 'Assistant';
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 14px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   position: absolute;
   top: 14px;
@@ -51,11 +51,11 @@ p {
 .timeCreated {
   width: calc(100% - 235px);
   height: 15px;
-  font-family: 'Assistant';
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 12px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   position: absolute;
   top: 31px;
@@ -138,12 +138,12 @@ p {
 .postTitle {
   width: 90%;
   padding-left: 12px;
-  padding-top: 9px;
-  padding-bottom: 9px;
-  font-family: 'Assistant';
+  padding-top: 12px;
+  padding-bottom: 14px;
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 20px;
   letter-spacing: 0.02em;
   line-height: 18px;
   color: rgba(255, 255, 255);
@@ -203,7 +203,7 @@ p {
 
   height: 10%;
   font-size: calc(16px * var(--norm-height));
-  font-family: 'Assistant';
+  font-family: 'Assistant', sans-serif;
   font-weight: bold;
   letter-spacing: 0.05em;
   color: #E2B33D;
@@ -282,35 +282,37 @@ li {
 }
 
 .postViewsExp {
-  font-family: 'Assistant';
-  letter-spacing: 0.06em;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   font-size: 14px;
   line-height: 14px;
   align-items: center;
-  color: rgba(255,255,255,0.8);
+  color: #FFFFFF;
 }
 
 .spacer {
-  font-family: 'Assistant';
-  font-weight: 300;
-  color: rgba(255,255,255,0.8);
+  font-family: 'Assistant', sans-serif;
+  font-weight: 400;
+  color: #FFFFFF;
   font-size: 14px;
 }
 
 .postHoldersExp {
-  font-family: 'Assistant';
+  font-family: 'Assistant', sans-serif;
   font-size: 14px;
-  letter-spacing: 0.06em;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   line-height: 14px;
   align-items: center;
-  color: rgba(255,255,255,0.8);
+  color: #FFFFFF;
   padding-left: 2px;
 }
 
 .postDescriptionExp {
-  font-family: 'Assistant';
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: normal;
+  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.02em;
@@ -373,11 +375,11 @@ li {
 
 .collectPrompt {
   margin-top: 4px;
-  font-family: 'Assistant';
-  font-style: normal;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 600;
   font-size: 16px;
   align-items: center;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   float: right;
   margin-right: 43px;
