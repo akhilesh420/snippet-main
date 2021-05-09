@@ -1,9 +1,7 @@
 import { MixpanelService } from './mixpanel.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { map, take } from 'rxjs/operators';
 import { Collection } from './activity.model';
@@ -17,7 +15,7 @@ export class ActivityService {
   //Firestore Collection
 
   constructor(private afs: AngularFirestore,
-              private auth: AngularFireAuth) {}
+              private mixpanelService: MixpanelService) {}
 
 
   // --------------------------------------- Activity ---------------------------------------
@@ -88,7 +86,14 @@ export class ActivityService {
                     cid: cid}); //post
 
     await batch.commit()
-      .then(() => success = true)
+      .then(async () => {
+        success = true;
+
+        //MIXPANEL
+        this.mixpanelService.increment('stickers collected');
+        const userCollection = await this.afs.collection('feed/'+ collection.collectorID + '/collection', ref => ref.where('creatorID', '==', collection.collecteeID).limit(2)).valueChanges().pipe(take(1)).toPromise();
+        if (userCollection.length === 1)  this.mixpanelService.increment('unique collection');
+      })
       .catch(async (e) => {
         success = false;
         console.log("error in collection", e);

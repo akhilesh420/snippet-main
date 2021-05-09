@@ -175,6 +175,10 @@ export class PostService {
                       .then(() => {
                           subs.unsubscribe();
                           success = true;
+
+                          //MIXPANEL
+                          this.mixpanelService.increment('posts');
+                          this.mixpanelService.increment('stickers released', stickerDetails.amountReleased);
                         })
                       .catch(async (e) => {
                         console.log('Post creation failed:', e);
