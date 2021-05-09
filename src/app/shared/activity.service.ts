@@ -1,13 +1,14 @@
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import firebase from 'firebase';
+
+
 import { map, take } from 'rxjs/operators';
 import { Collection } from './activity.model';
-import { Feed } from './post.model';
 
+import firebase from 'firebase';
+import 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'

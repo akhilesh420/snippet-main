@@ -6,9 +6,11 @@ import { PostContent, PostDetails, StickerDetails, CustomMetadata, Feed } from '
 import { Injectable } from '@angular/core';
 import { MiscellaneousService, PopUp } from './miscellaneous.service';
 import { Collection } from './activity.model';
-import firebase from 'firebase';
+
 import { catchError } from 'rxjs/operators';
 
+import firebase from 'firebase';
+import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'

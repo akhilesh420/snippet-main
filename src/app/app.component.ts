@@ -1,4 +1,5 @@
 import firebase from 'firebase/app';
+import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MixpanelService } from './shared/mixpanel.service';
 import { ActivityService } from 'src/app/shared/activity.service';
