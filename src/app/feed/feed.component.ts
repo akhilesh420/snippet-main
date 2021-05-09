@@ -187,6 +187,10 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.batchNumber++;
   }
 
+  trackByFn(index, item) {
+    return !!item ? item.pid : index;
+  }
+
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();

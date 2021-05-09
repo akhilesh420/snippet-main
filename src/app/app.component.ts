@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MixpanelService } from './shared/mixpanel.service';
 import { ActivityService } from 'src/app/shared/activity.service';
@@ -7,7 +8,7 @@ import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { WindowStateService } from './shared/window.service';
 import { Component,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
-import { take, takeUntil,} from 'rxjs/operators';
+import { takeUntil,} from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DOCUMENT } from '@angular/common';
@@ -117,8 +118,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async setFirestorePersistance() {
+    this.afs.firestore.settings({cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED});
     return this.afs.firestore.enablePersistence()
-            .then(() => console.log('persistance set '))
+            .then(() => console.log('persistance set'))
             .catch((err) => {
               if (err.code == 'failed-precondition') {
                   // Multiple tabs open, persistence can only be enabled

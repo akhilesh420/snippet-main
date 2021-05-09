@@ -315,6 +315,14 @@ export class PostComponent implements OnInit, OnDestroy {
     });
   }
 
+  stickerTrackByFn(index, item: ProfileSticker) {
+    return !!item ? item.pid : index;
+  }
+
+  holderTrackByFn(index, item: Holder) {
+    return !!item ? item.collectorID : index;
+  }
+
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();

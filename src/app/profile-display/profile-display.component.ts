@@ -372,6 +372,10 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   return !!pattern.test(str);
   }
 
+  trackByFn(index, item: ProfileSticker) {
+    return !!item ? item.pid : index;
+  }
+
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
