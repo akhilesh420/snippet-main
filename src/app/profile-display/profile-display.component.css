@@ -135,7 +135,7 @@ position: relative;
 word-wrap: break-word;
 font-family: "Assistant";
 font-style: normal;
-font-weight: bold;
+font-weight: 400;
 font-size: 12px;
 letter-spacing: 0.1em;
 color: #FFFFFF
@@ -208,7 +208,7 @@ margin-left: 2.7%;
 position: relative;
 font-family: "Assistant";
 font-style: normal;
-font-weight: bold;
+font-weight: 400;
 font-size: 12px;
 letter-spacing: 0.1em;
 color: rgba(235, 221, 187, 0.9);
@@ -249,7 +249,7 @@ height: 100%;
 .views , .holders {
 font-family: 'Assistant';
 font-style: normal;
-font-weight: bold;
+font-weight: 400;
 letter-spacing: 0.1em;
 font-size: 10px;
 color: #FFFFFF;
@@ -264,7 +264,7 @@ text-align: center;
 .viewCounter , .holderCounter {
 font-family: 'Assistant';
 font-style: normal;
-font-weight: bold;
+font-weight: 400;
 letter-spacing: 0.1em;
 font-size: 11px;
 color: #FFFFFF;
