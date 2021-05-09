@@ -110,13 +110,6 @@ export class ActivityService {
 
   // get collection by uid
   getUserCollection(uid: string) {
-    this.afs.firestore.collection('feed/'+uid+'/collection').orderBy('timeStamp', 'desc')
-      .onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-            var source = snapshot.metadata.fromCache ? "local cache" : "server";
-            console.log("Data came from " + source);
-        });
-      })  ;
     return this.afs.collection<any>('feed/'+uid+'/collection', ref => ref.orderBy('timeStamp', 'desc'))
                       .valueChanges({idField: 'pid'})
                       .pipe(map(postsList => {
