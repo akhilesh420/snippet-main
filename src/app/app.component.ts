@@ -1,5 +1,4 @@
 import { MixpanelService } from './shared/mixpanel.service';
-import { ActivityService } from 'src/app/shared/activity.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
@@ -61,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.mixpanelService.timeEvent('session end');
     this.mixpanelService.timeEvent('sticker collect');
     this.mixpanelService.timeEvent('open holder list');
+    this.mixpanelService.timeEvent('route change');
 
     this.mixpanelService.sessionStartTrack();
     this.mixpanelService.triggerRouteTracks(this.router.url);
