@@ -44,8 +44,14 @@
 
     </div>
 
+     <!-- Engagement bar -->
+     <div class = "engagementBar" [ngStyle]="engagementProp">
+       
+     </div>
+
   </div>
 
+  
 
   <div #contentContainer
         class = "postContent"
@@ -88,10 +94,6 @@
     <div class = "center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
       <img class = "fail-safe" src = "assets/images/Post/failSafeButton.svg" appLazyImg>
     </div>
-
-    <!-- Engagement bar -->
-    <div class = "engagementBar" [ngStyle]="engagementProp"></div>
-
 
     <!-- Holder list -->
     <div #holderListRef
