@@ -29,7 +29,6 @@ import { TutorialPageComponent } from './static pages/tutorial-page/tutorial-pag
 import { ClickOutsideModule } from 'ng-click-outside';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { CollectionTabComponent } from './collection-tab/collection-tab.component';
-import { ProfileTabComponent } from './profile-tab/profile-tab.component';
 import { CollectionComponent } from './collection-tab/collection/collection.component';
 import { ReversePipe } from './shared/reverse.pipe';
 import { NumeralPipe } from './shared/numeral.pipe';
@@ -53,7 +52,6 @@ import { LazyImgDirective } from './shared/directives/lazy-img.directive';
     TutorialPageComponent,
     PopUpComponent,
     CollectionTabComponent,
-    ProfileTabComponent,
     CollectionComponent,
     ReversePipe,
     NumeralPipe,

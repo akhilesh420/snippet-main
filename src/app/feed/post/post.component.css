@@ -10,6 +10,7 @@ p {
 .creatorDetails {
   height: 50px;
   width: 100%;
+  cursor: pointer;
 }
 
 .creatorDP {
@@ -20,6 +21,7 @@ p {
   border-radius: 50%;
   display: inline-block;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .creatorDP > img {

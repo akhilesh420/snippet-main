@@ -4,12 +4,12 @@
 
   <div class="creatorDetails">
 
-    <div class="creatorDP"  [routerLink]='profileRoute'>
+    <div class="creatorDP" (click)='usernameClick()'  [routerLink]='profileRoute'>
       <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
     </div>
 
     <div class="creatorName">
-      <span *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
+      <span (click)='usernameClick()' [routerLink]='profileRoute' *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
     </div>
 
     <div class="timeCreated">
@@ -20,7 +20,7 @@
     <div *ngFor='let sticker of (profileStickers$ | async).stickers; let i = index; trackBy: stickerTrackByFn'
          class="displaySticker {{profileStickerClasses[i]}}"
         [ngClass]="{'displaySticker-bck': sticker === 'loading'}">
-      <app-sticker *ngIf='sticker != null && sticker != "loading"' [pid]="sticker.pid"></app-sticker>
+      <app-sticker *ngIf='sticker != null && sticker != "loading"' [pid]="sticker.pid" location='post'></app-sticker>
     </div>
 
   </div>
@@ -31,13 +31,13 @@
 
     <div class="postTitle">
 
-      <span (click)='showDetails = !showDetails' *ngIf='(postDetails$ | async) as details'>{{details.title}}</span>
+      <span (click)='toggleHolderList()' *ngIf='(postDetails$ | async) as details'>{{details.title}}</span>
 
     </div>
 
     <div class="dropdownButton">
 
-      <img (click)='showDetails = !showDetails'
+      <img (click)='toggleHolderList()'
             [ngClass]='{"rotate-90-ccw ": showDetails, "rotate-90-cw ": !showDetails}'
             class = "dropdownButton"
             src = "assets/images/Post/postdetailDropdown.svg">
@@ -51,7 +51,7 @@
         class = "postContent"
        [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",
                    "background-color": !(postContent$ | async) ? "#C4C4C4" : "transparent"}'
-        (click)='showDetails = !showDetails'>
+        (click)='toggleHolderList()'>
 
     <!-- Content -->
     <div *ngIf="(postContent$ | async) as content; else loading">
@@ -98,7 +98,7 @@
          [ngStyle]='{"margin-left": ((contentContainer.offsetWidth - holderListRef.offsetWidth)/2).toString() + "px"}'
          class="holderList fade-in-top"
          *ngIf="showDetails"
-         (click)='holderAnalytics(); stopPropagation($event)'>
+         (click)='stopPropagation($event)'>
 
       <div class = "holderlistTitle">
 

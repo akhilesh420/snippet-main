@@ -1,9 +1,8 @@
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { MixpanelService } from './../shared/mixpanel.service';
+import { Observable, Subject } from 'rxjs';
 import { PostService } from './../shared/post.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MiscellaneousService } from '../shared/miscellaneous.service';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sticker',
@@ -14,6 +13,7 @@ export class StickerComponent implements OnInit, OnDestroy {
 
   @Input() pid: string;
   @Input() overrideNavigate: boolean = false;
+  @Input() location: string;
 
   stickerSize = {};
 
@@ -21,7 +21,7 @@ export class StickerComponent implements OnInit, OnDestroy {
   notifier$ = new Subject();
 
   constructor(private postService: PostService,
-              private miscellaneousService: MiscellaneousService,
+              private mixpanelService: MixpanelService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -31,6 +31,7 @@ export class StickerComponent implements OnInit, OnDestroy {
   onClick() {
     if (this.overrideNavigate) return;
     this.router.navigate(['/post/', this.pid]);
+    this.mixpanelService.setRoutingVia(this.location);
   }
 
   ngOnDestroy() {

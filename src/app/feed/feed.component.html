@@ -17,7 +17,7 @@
 
         <div class = "backpanel row no-margin-no-padding">
 
-          <div [routerLink]="['/collection/'+myUid]" class = "col-7 no-margin-no-padding">
+          <div (click)='onClickRouteChange("my collection button")' [routerLink]="['/collection/'+myUid]" class = "col-7 no-margin-no-padding">
 
             <!-- Inactive -->
 
@@ -41,7 +41,7 @@
 
           </div>
 
-          <div [routerLink]="['/profile/'+myUid]" class = "col-5 no-margin-no-padding">
+          <div (click)='onClickRouteChange("my profile button")' [routerLink]="['/profile/'+myUid]" class = "col-5 no-margin-no-padding">
 
             <div class = "row postsbuttonPanel no-margin-no-padding">
 

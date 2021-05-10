@@ -1,3 +1,4 @@
+import { MixpanelService } from './../../shared/mixpanel.service';
 import { UsersService } from './../../shared/users.service';
 import { Router } from '@angular/router';
 import { ProfileSticker } from './../../shared/profile.model';
@@ -31,7 +32,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
   constructor(private postService: PostService,
               private miscellaneousService: MiscellaneousService,
               private userService: UsersService,
-              private router: Router) { }
+              private router: Router,
+              private mixpanelService: MixpanelService) { }
 
   ngOnInit(): void {
     if (!this.feed || !this.feed.pid) return;
@@ -46,13 +48,17 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   navigate() {
     if (!this.postDetails$) return;
-    if (!this.profileStickerEdit) this.router.navigate(['/post/' + this.pid]);
-    if (this.profileStickerEdit) this.miscellaneousService.stickerEmitted.next(this.pid);
+    if (this.profileStickerEdit) return this.miscellaneousService.stickerEmitted.next(this.pid);
+
+     this.router.navigate(['/post/' + this.pid]);
+     this. mixpanelService.setRoutingVia('collection tab');
   }
 
   usernameClick() {
     if (this.profileStickerEdit) return;
     this.router.navigate(["/profile/" + this.uid]);
+
+    this.mixpanelService.setRoutingVia('collection tab');
   }
 
   stickerSelected() {

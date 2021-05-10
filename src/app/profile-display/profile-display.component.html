@@ -20,7 +20,7 @@
                   [ngClass]="{'stickerContainer-bck': sticker === null && uid === myUid, 'stickerContainer-edit': index === i}"
                   (click)='clickProfileSticker(sticker,i)'>
 
-                <app-sticker *ngIf='sticker != null' [pid]="sticker.pid" [overrideNavigate]='inEditing'></app-sticker>
+                <app-sticker *ngIf='sticker != null' [pid]="sticker.pid" [overrideNavigate]='inEditing' location='profile display'></app-sticker>
 
                 <div class="sticker-opacity-edit" [ngClass]='(inEditing && sticker != null) && index != i ? "opacity-in-sticker" : "opacity-out-sticker"'></div>
                 <!-- Edit Mode -->
@@ -204,7 +204,7 @@
             </div>
 
             <div class = "col-8 usernameSpace no-margin-no-padding">
-              <a [routerLink]='["/profile/" + uid]'>
+              <a [routerLink]='["/profile/" + uid]' (click)="usernameClick()">
                 <p #usernameRef class = "username">{{(username$ | async).username}}</p>
               </a>
             </div>

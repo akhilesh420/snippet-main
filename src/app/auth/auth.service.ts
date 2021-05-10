@@ -190,7 +190,7 @@ export class AuthService {
           .then(async () => {
             const currentUser = await this.auth.currentUser;
             console.log("signed up successful", currentUser);
-            this.mixpanelService.alias(currentUser.uid); //Sync current user data with uid
+            this.mixpanelService.signUp(uid, {exclusiveId: exclusiveId});
             // currentUser.sendEmailVerification() //send verification email
             // console.log('verification email sent'));
           })
