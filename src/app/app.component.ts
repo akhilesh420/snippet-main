@@ -61,10 +61,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.mixpanelService.init(); //Initialize tracking
 
-<<<<<<< HEAD
-    this.activityService.collectionStartTime = new Date().getTime();
-    this.activityService.holderListStartTime = new Date().getTime();
-=======
     this.mixpanelService.timeEvent('session end');
     this.mixpanelService.timeEvent('sticker collect');
     this.mixpanelService.timeEvent('open holder list');
@@ -72,7 +68,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.mixpanelService.sessionStartTrack();
     this.mixpanelService.triggerRouteTracks(this.router.url);
->>>>>>> f-010
 
     this.windowStateService.checkWidth();
     this.windowStateService.setHeight();

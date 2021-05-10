@@ -189,13 +189,12 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.batchNumber++;
   }
 
-<<<<<<< HEAD
   trackByFn(index, item) {
     return !!item ? item.pid : index;
-=======
+  }
+
   onClickRouteChange(via) {
     this.mixpanelService.setRoutingVia(via);
->>>>>>> f-010
   }
 
   ngOnDestroy() {

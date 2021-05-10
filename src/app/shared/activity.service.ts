@@ -1,15 +1,9 @@
-<<<<<<< HEAD
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 
-=======
 import { MixpanelService } from './mixpanel.service';
-import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from '@angular/fire/firestore';
-import firebase from 'firebase';
->>>>>>> f-010
 import { map, take } from 'rxjs/operators';
 import { Collection } from './activity.model';
 
@@ -75,11 +69,6 @@ export class ActivityService {
   // collectorID: UID of the person who collected the sticker
   // collecteeID: UID of the person whose sticker was collected
   async addCollection(collection: Collection) {
-<<<<<<< HEAD
-=======
-    let success: boolean;
-    const batch = this.afs.firestore.batch();
->>>>>>> f-010
     const cid = this.afs.createId();
 
     const transaction = this.afs.firestore.runTransaction((transaction) => {
@@ -92,7 +81,6 @@ export class ActivityService {
       transaction.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
       transaction.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
 
-<<<<<<< HEAD
       //Update Activity
       transaction.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
                     {counter: firebase.firestore.FieldValue.increment(1),
@@ -108,23 +96,6 @@ export class ActivityService {
       throw new Error('Error in sticker collection');
     });
     return true
-=======
-    await batch.commit()
-      .then(async () => {
-        success = true;
-
-        //MIXPANEL
-        this.mixpanelService.increment('stickers collected');
-        const userCollection = await this.afs.collection('feed/'+ collection.collectorID + '/collection', ref => ref.where('creatorID', '==', collection.collecteeID).limit(2)).valueChanges().pipe(take(1)).toPromise();
-        if (userCollection.length === 1)  this.mixpanelService.increment('unique collection');
-      })
-      .catch(async (e) => {
-        success = false;
-        console.log("error in collection", e);
-        throw new Error('Error in sticker collection');
-      });
-    return success
->>>>>>> f-010
   }
   // sync addCollection(collection: Collection) {
   //   const batch = this.afs.firestore.batch();

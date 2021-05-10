@@ -334,17 +334,16 @@ export class PostComponent implements OnInit, OnDestroy {
     });
   }
 
-<<<<<<< HEAD
   stickerTrackByFn(index, item: ProfileSticker) {
     return !!item ? item.pid : index;
   }
 
   holderTrackByFn(index, item: Holder) {
     return !!item ? item.collectorID : index;
-=======
+  }
+
   usernameClick() {
     this.mixpanelService.setRoutingVia('post');
->>>>>>> f-010
   }
 
   ngOnDestroy() {

@@ -368,13 +368,12 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
   return !!pattern.test(str);
   }
 
-<<<<<<< HEAD
   trackByFn(index, item: ProfileSticker) {
     return !!item ? item.pid : index;
-=======
+  }
+
   usernameClick() {
     this.mixpanelService.setRoutingVia('profile display');
->>>>>>> f-010
   }
 
   ngOnDestroy() {

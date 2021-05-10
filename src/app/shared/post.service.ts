@@ -7,13 +7,8 @@ import { PostContent, PostDetails, StickerDetails, CustomMetadata, Feed } from '
 import { Injectable } from '@angular/core';
 import { MiscellaneousService, PopUp } from './miscellaneous.service';
 import { Collection } from './activity.model';
-<<<<<<< HEAD
 
-import { catchError } from 'rxjs/operators';
-=======
-import firebase from 'firebase';
 import { catchError, first } from 'rxjs/operators';
->>>>>>> f-010
 
 import firebase from 'firebase';
 import 'firebase/firestore';
