@@ -57,7 +57,7 @@ export class PostComponent implements OnInit, OnDestroy {
   buffering: boolean = false;
   check: boolean = false;
 
-  holderList: Holder[];
+  holderList: Observable<Holder[]>;
 
   mobileCheck: boolean;
   tabletCheck: boolean;
@@ -70,8 +70,8 @@ export class PostComponent implements OnInit, OnDestroy {
   engagementProp = {'width': '0','background': '#E2B33D'};
 
   stickerCollectionState: number;
-  collectionLoaded = new BehaviorSubject<boolean>(undefined);
-  engagementLoaded = new BehaviorSubject<boolean>(undefined);
+  // collectionLoaded = new BehaviorSubject<boolean>(undefined);
+  // engagementLoaded = new BehaviorSubject<boolean>(undefined);
   stickerContent$: Observable<any>;
   stickerDetails: StickerDetails;
 
@@ -164,11 +164,7 @@ export class PostComponent implements OnInit, OnDestroy {
       });
 
     // post collection list
-    this.activityService.getHolderList(this.pid).pipe(takeUntil(this.notifier$))
-     .subscribe(response => {
-        this.holderList = response;
-        this.collectionLoaded.next(true);
-      });
+    this.holderList = this.activityService.getHolderList(this.pid);
 
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
 
@@ -200,7 +196,6 @@ export class PostComponent implements OnInit, OnDestroy {
     let percentage: string = (this.engagementRatio*100).toString() + '%';
     this.engagementProp.width = percentage;
     this.engagementProp.background = colour;
-    this.engagementLoaded.next(true);
   }
 
   postView() {
@@ -255,82 +250,46 @@ export class PostComponent implements OnInit, OnDestroy {
     event.stopPropagation();
   }
 
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  allowProcessing() {
-    return new Promise<boolean>((resolve) => {
-      combineLatest([this.collectionLoaded,this.engagementLoaded]).subscribe(results => {
-        if (results[0] === true && results[1] === true) resolve(true);
-      }, async (error) => {
-        this.stickerCollectionState = -1; //reject
-        const popUpObj = new PopUp("An unknown error occurred! Try again later.",'Okay', undefined, ['default', 'default']);
-        this.miscellaneousService.setPopUp(popUpObj);
-        await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
-        return; //end
-      });
-    })
-  }
-
   async collectSticker() {
     this.auth.onAuthStateChanged(async (user) => {
       this.isAuthenticated = !!user;
-      if (this.isAuthenticated)  {
-
-        if (this.stickerCollectionState === 0) return;
-        this.stickerCollectionState = undefined; //intermediate state
-        await this.sleep(50);
-        this.stickerCollectionState = 0; //loading
-
-        const val = await this.allowProcessing();
-
-        this.myUid = user.uid;
-
-        for (let key in this.holderList) {
-          if (this.holderList[key].collectorID === this.myUid) {
-            this.stickerCollectionState = -1; //reject
-            const popUpObj = new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']);
-            this.miscellaneousService.setPopUp(popUpObj);
-            return this.mixpanelService.stickerCollectionTrack({collected: false,
-                                                                status: 'Already collected',
-                                                                engagementRatioBefore: this.engagementRatio,
-                                                                premium: false,
-                                                                price: 0,
-                                                                pid: this.pid,
-                                                                collecteeID: this.uid,
-                                                                postType: this.postType}); //end
-          }
-        }
-
-        if (this.engagementRatio < 1) {
-          const success = await this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-          this.stickerCollectionState = 1; //confirm
-          return this.mixpanelService.stickerCollectionTrack({collected: success,
-                                                              status: 'Collected',
-                                                              engagementRatioBefore: this.engagementRatio,
-                                                              premium: false,
-                                                              price: 0,
-                                                              pid: this.pid,
-                                                              collecteeID: this.uid,
-                                                              postType: this.postType});
-        } else {
-          this.stickerCollectionState = -1; //reject
-          const popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
-          this.miscellaneousService.setPopUp(popUpObj);
-          return this.mixpanelService.stickerCollectionTrack({collected: false,
-                                                              status: 'Reached full engagement',
-                                                              engagementRatioBefore: this.engagementRatio,
-                                                              premium: false,
-                                                              price: 0,
-                                                              pid: this.pid,
-                                                              collecteeID: this.uid,
-                                                              postType: this.postType}); //end
-        }
-      } else {
+      if (!this.isAuthenticated) {
         this.miscellaneousService.lastRoute='/post/' + this.pid;
-        this.router.navigate(['/auth']);
+        return this.router.navigate(['/auth']);
       }
+
+      if (this.stickerCollectionState === 0) return;
+      this.stickerCollectionState = 0; //loading
+
+      let mixpanelObj = {};
+
+      this.myUid = user.uid;
+      this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()))
+        .then(() => {
+          this.stickerCollectionState = 1; //confirm
+          mixpanelObj = { collected: true,
+                                status: 'Collected',
+                                engagementRatioBefore: this.engagementRatio,
+                                premium: false,
+                                price: 0,
+                                pid: this.pid,
+                                collecteeID: this.uid,
+                          postType: this.postType};
+        }).catch((e) => {
+          this.stickerCollectionState = -1; //reject
+          const popUpObj = new PopUp(e,'Okay', undefined, ['default', 'default']);
+          this.miscellaneousService.setPopUp(popUpObj);
+          mixpanelObj = { collected: false,
+                          status: e,
+                          engagementRatioBefore: this.engagementRatio,
+                          premium: false,
+                          price: 0,
+                          pid: this.pid,
+                          collecteeID: this.uid,
+                          postType: this.postType}
+        }).finally(() => {
+          this.mixpanelService.stickerCollectionTrack(mixpanelObj);
+        });
     });
   }
 

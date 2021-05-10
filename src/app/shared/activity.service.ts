@@ -1,3 +1,4 @@
+import { StickerDetails } from './post.model';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -71,31 +72,42 @@ export class ActivityService {
   async addCollection(collection: Collection) {
     const cid = this.afs.createId();
 
-    const transaction = this.afs.firestore.runTransaction((transaction) => {
-      //Add collection
-      transaction.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+    const pid = collection.pid;
+    const uid = collection.collectorID;
 
-      //Add holder and user collection
-      const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+    const hlDocRef = this.afs.firestore.collection('posts/' + pid + '/holders').doc(uid);
+    const sdDocRef = this.afs.firestore.collection('sticker details').doc(pid);
+    const aDocRef = this.afs.firestore.collection('activity/'+pid+'/metrics').doc('collected');
 
-      transaction.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
-      transaction.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+    const transaction = this.afs.firestore.runTransaction(async (t) => {
 
-      //Update Activity
-      transaction.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
-                    {counter: firebase.firestore.FieldValue.increment(1),
-                      cid: cid}); //user
-      transaction.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
-                    {counter: firebase.firestore.FieldValue.increment(1),
-                      cid: cid}); //post
-      return Promise.resolve();
+      return Promise.all([t.get(hlDocRef), t.get(sdDocRef), t.get(aDocRef)]).then((response) => {
+
+        if (response[0].exists) return Promise.reject("You already collected this sticker!");
+        if (!response[1].exists || !response[2].exists) return Promise.reject("An error occurred while processing your request. Please try again later!");
+        if (response[1].data().amountReleased <= response[2].data().counter) return Promise.reject("There are no more stickers left!");
+
+        //Add collection
+        t.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+
+        //Add holder and user collection
+        const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+
+        t.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
+        t.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+
+        //Update Activity
+        t.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
+                      {counter: firebase.firestore.FieldValue.increment(1),
+                        cid: cid}); //user
+        t.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
+                      {counter: firebase.firestore.FieldValue.increment(1),
+                        cid: cid}); //post
+        return Promise.resolve();
+      })
     })
 
-    await transaction.catch(async (e) => {
-      console.log("error in collection", e);
-      throw new Error('Error in sticker collection');
-    });
-    return true
+    return transaction;
   }
   // sync addCollection(collection: Collection) {
   //   const batch = this.afs.firestore.batch();
