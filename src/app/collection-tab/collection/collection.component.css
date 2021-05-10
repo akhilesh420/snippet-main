@@ -7,7 +7,7 @@
 
 /* Classes for Multiple Components */
 
-.no-margin-no-padding {
+/* .no-margin-no-padding {
 
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@
 
 /* Classes for single components */
 
-.collection {
+/* .collection {
 
     height: 100%;
     width: 100%;
@@ -51,6 +51,7 @@
     height: 45%;
     width: 100%;
     overflow: hidden;
+    margin-top: 0.8%;
 
 }
 
@@ -80,6 +81,7 @@
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
+  overflow: hidden;
 }
 
 .title {
@@ -87,11 +89,10 @@
     padding-top: 2%;
     padding-left: 3%;
     text-align: left;
-    font-family: "ChampagneAndLimousines";
+    font-family: "Assistant";
     font-style: normal;
-    font-weight: bold;
     font-size: 14px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
     color: #FFFFFF;
 
 }
@@ -103,16 +104,94 @@
     text-align: left;
     font-family: 'Comfortaa';
     font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.8);
+
+} */ 
+
+.collection {
+    display: flex;
+    flex-direction: row;
+}
+
+.postSticker {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    margin-left: 10px;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.detailsSpace {
+    height: 38px;
+    width: calc(100% - 58px);
+    margin-left: 10px;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.postTitle {
+    display: flex;
+    flex-direction: row;
+    height: 16px;
+    width: 98%;
+    border-radius: 3px;
+    /* background-color: #c4c4c4; */
+    margin-top: 3px;
+    font-family: 'Assistant';
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 0px;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.creatorName {
+
+    display: flex;
+    flex-direction: row;
+    height: 12px;
+    width: 85%;
+    border-radius: 3px;
+    /* background-color: #c4c4c4; */
+    margin-top: 4px;
+    font-family: 'Comfortaa';
     font-weight: normal;
     font-size: 10px;
-    color: #FFFFFF;
+    line-height: 0px;
+    align-items: center;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 }
 
+.sticker-bck {
+  background-color: #c4c4c4;
+}
+
+.postSticker > img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset 2px 4px 4px rgb(0 0 0 / 25%);
+}
+
+
 .selectedSticker-title {
-  color: rgba(226, 179, 61);
+  color: #E2B33D;
 }
 
 .selectedSticker-name {
-  color: rgba(226, 179, 61, 0.7);
+  color: #E2B33D;
 }

@@ -44,8 +44,14 @@
 
     </div>
 
+     <!-- Engagement bar -->
+     <div class = "engagementBar" [ngStyle]="engagementProp">
+       
+     </div>
+
   </div>
 
+  
 
   <div #contentContainer
         class = "postContent"
@@ -89,10 +95,6 @@
       <img class = "fail-safe" src = "assets/images/Post/failSafeButton.svg" appLazyImg>
     </div>
 
-    <!-- Engagement bar -->
-    <div class = "engagementBar" [ngStyle]="engagementProp"></div>
-
-
     <!-- Holder list -->
     <div #holderListRef
          [ngStyle]='{"margin-left": ((contentContainer.offsetWidth - holderListRef.offsetWidth)/2).toString() + "px"}'
@@ -102,7 +104,7 @@
 
       <div class = "holderlistTitle">
 
-        <p>Holder List</p>
+        <p>Collectors</p>
 
       </div>
 
@@ -135,7 +137,7 @@
         </span>
 
         <span class = "postHoldersExp">
-          {{collected | numeral}} Holders <br>
+          {{collected | numeral}}  Collectors <br>
         </span>
 
       </div>

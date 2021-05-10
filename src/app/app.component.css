@@ -9,6 +9,7 @@
   position: relative;
   overflow-x: hidden;
   overflow-y: scroll;
+  background: linear-gradient(116.16deg, #0B0B0B 77.73%, #000000 100%);
 }
 
 .dashboard-mobile  {
