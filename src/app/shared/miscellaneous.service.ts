@@ -28,9 +28,6 @@ export class MiscellaneousService {
 
   public navbarHeight: number = 47;
 
-  private startTime: number;
-  private endTime: number;
-
   profileStickerEdit = new Subject<boolean>();
   stickerEmitted = new Subject<string>();
   stickerSelectConfirm = new Subject<string>();
@@ -42,8 +39,7 @@ export class MiscellaneousService {
 
   images = [];
 
-  constructor(private userService: UsersService,
-              private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
     this.loadingStart.next(false);

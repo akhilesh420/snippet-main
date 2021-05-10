@@ -1,3 +1,4 @@
+import { MixpanelService } from './../shared/mixpanel.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UsersService } from 'src/app/shared/users.service';
 import { WindowStateService } from './../shared/window.service';
@@ -54,7 +55,8 @@ export class FeedComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private auth: AngularFireAuth,
               private windowStateService: WindowStateService,
-              private usersService: UsersService) {
+              private usersService: UsersService,
+              private mixpanelService: MixpanelService) {
    }
 
 
@@ -185,6 +187,10 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.feedList$.next(this.postsList.slice(0,this.batchSize*this.batchNumber));
     }
     this.batchNumber++;
+  }
+
+  onClickRouteChange(via) {
+    this.mixpanelService.setRoutingVia(via);
   }
 
   ngOnDestroy() {

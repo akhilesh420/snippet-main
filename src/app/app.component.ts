@@ -4,7 +4,7 @@ import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { WindowStateService } from './shared/window.service';
-import { Component,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component,  HostListener,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
 import { take, takeUntil,} from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -39,11 +39,12 @@ export class AppComponent implements OnInit, OnDestroy {
   profileStickerEdit: boolean = false;
   showDashboard: boolean = false;
 
+  beforeUnloadTriggered: boolean = false;
+
   constructor(private windowStateService: WindowStateService,
               private router: Router,
               private infiniteScrollService: InfiniteScrollService,
               private miscellaneousService: MiscellaneousService,
-              private activityService: ActivityService,
               private feedService: FeedService,
               private scrollService: ScrollService,
               private auth: AngularFireAuth,
@@ -57,9 +58,12 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.mixpanelService.init(); //Initialize tracking
 
-    this.feedService.getExplorePage().pipe(take(1)).subscribe(() => {return});
-    this.activityService.collectionStartTime = new Date().getTime();
-    this.activityService.holderListStartTime = new Date().getTime();
+    this.mixpanelService.timeEvent('session end');
+    this.mixpanelService.timeEvent('sticker collect');
+    this.mixpanelService.timeEvent('open holder list');
+
+    this.mixpanelService.sessionStartTrack();
+    this.mixpanelService.triggerRouteTracks(this.router.url);
 
     this.windowStateService.checkWidth();
     this.windowStateService.setHeight();
@@ -78,17 +82,16 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => {
       this.currentRoute = this.router.url;
       this.miscellaneousService.showDashboard.next(false);
-      this.activityService.collectionStartTime = new Date().getTime();
-      this.activityService.holderListStartTime = new Date().getTime();
+
       if (!this.currentRoute.includes('/auth')) this.miscellaneousService.lastRoute = this.currentRoute;
     });
 
     this.auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
-      if (!this.isAuthenticated) return this.mixpanelService.reset(); //reset on logout
+      if (!this.isAuthenticated) return this.mixpanelService.logout(); //reset on logout
       this.myUid = user.uid;
       this.myUid$.next(this.myUid);
-      this.mixpanelService.identify(this.myUid); //Identify user with uid
+      this.mixpanelService.signIn(this.myUid); //Identify user with uid
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
@@ -130,6 +133,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   stopPropagation(event) {
     event.stopPropagation();
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    this.mixpanelService.setRoutingVia('inbuilt navigation');
+  }
+
+  @HostListener('window:beforeunload')
+  onBeforeUnload() {
+    if (this.beforeUnloadTriggered) return;
+    this.beforeUnloadTriggered= true;
+    this.mixpanelService.sessionEndTrack();
+    this.mixpanelService.routeChangeTrack({parentRoute: this.currentRoute.split('/')[1]});
   }
 
   ngOnDestroy() {

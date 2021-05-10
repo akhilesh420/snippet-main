@@ -30,7 +30,7 @@
           transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  background: #060606;
+  background: #030303;
   -webkit-box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
           box-shadow: -2px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
@@ -57,47 +57,46 @@
 }
 
 ::-webkit-input-placeholder {
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
+  font-family: 'Assistant';
   font-size: 16px;
   line-height: 18px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #000000;
 }
 
 ::-moz-placeholder {
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-weight: bold;
   font-size: 16px;
   line-height: 18px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #000000;
 }
 
 :-ms-input-placeholder {
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-weight: bold;
   font-size: 16px;
   line-height: 18px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #000000;
 }
 
 ::-ms-input-placeholder {
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-weight: bold;
   font-size: 16px;
   line-height: 18px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #000000;
 }
 
 ::placeholder {
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant';
   font-weight: bold;
   font-size: 16px;
   line-height: 18px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #000000;
 }
 
@@ -125,11 +124,10 @@
   outline: none;
   border: none;
   font-style: normal;
-  font-weight: bold;
   font-size: 24px;
   line-height: 28px;
-  font-family: 'ChampagneAndLimousines';
-  letter-spacing: 0.1em;
+  font-family: 'Assistant';
+  letter-spacing: 0.02em;
   color: #000000;
 }
 
@@ -143,8 +141,8 @@
 }
 
 .danger-alert-sign-up {
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
+  font-family: 'Assistant';
+  letter-spacing: 0.02em;
   color:#891E13;
   width: 100%;
   margin-top: -53px;
@@ -167,6 +165,7 @@
     top: 0%;
     left: 0%;
     position: absolute;
+    background: #030303;
 
 }
 
@@ -199,12 +198,11 @@
 
 .entryfieldOneTitle {
 
-  font-family: "ChampagneAndLimousines";
+  font-family: "Assistant";
   font-style: normal;
-  font-weight: bold;
   font-size: 3.111vh;
   line-height: 28px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: #FFFFFF;
   padding-left: 18px;
 
@@ -231,12 +229,11 @@
 
 .entryfieldTwoTitle {
 
-  font-family: "ChampagneAndLimousines";
+  font-family: "Assistant";
   font-style: normal;
-  font-weight: bold;
   font-size: 3.111vh;
   line-height: 28px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   padding-left: 18px;
   margin-top: 5vh;
@@ -271,11 +268,10 @@
 .subTitle {
 
   font-size: 2vh;
-  font-family: "ChampagneAndLimousines";
+  font-family: "Assistant";
   font-style: normal;
-  font-weight: bold;
   line-height: 21px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #EBDDBB;
 
 }
@@ -331,9 +327,9 @@
 
 .forgotPassword {
 
-  font-family: "ChampagneAndLimousines";
+  font-family: "Assistant";
+  letter-spacing: 0.02em;
   font-style: normal;
-  font-weight: bold;
   color: rgba(235, 221, 187, 0.9);
   opacity: 0.7;
   font-size: 1.8vh;
@@ -355,8 +351,7 @@ input {
   outline: none;
   padding-left: 10px;
   text-align: left;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
+  font-family: 'Assistant';
   background:#9A9696;
 }
 
@@ -365,8 +360,7 @@ textarea:focus {
   color: #000000;
   outline: none;
   background: #C4C4C4;
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
+  font-family: 'Assistant';
 }
 
 
@@ -412,10 +406,10 @@ textarea:focus {
 
 .btn {
 
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
+  font-family: 'Assistant';
+  letter-spacing: 0.02em;
   font-size: 3.0vh;
-  color: #EAB430;
+  color: #E2B33D;
   background: #131114;
   border-radius: 20px;
   padding-left: 12px;
@@ -423,7 +417,7 @@ textarea:focus {
 }
 
 .btn:enabled:hover{
-  background: #EAB430;
+  background: #E2B33D;
   color: #080708;
 }
 
@@ -440,8 +434,8 @@ textarea:focus {
 }
 
 .danger-alert {
-  font-family: 'ChampagneAndLimousines';
-  font-weight: bold;
+  font-family: 'Assistant';
+  letter-spacing: 0.02em;
   font-size: 2.0vh;
   color:#891E13;
   width: 100%;

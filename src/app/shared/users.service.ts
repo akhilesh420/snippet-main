@@ -1,5 +1,7 @@
+import { MiscellaneousService, PopUp } from './miscellaneous.service';
+import { MixpanelService } from './mixpanel.service';
 import { throwError} from 'rxjs';
-import { catchError, map,  startWith } from 'rxjs/operators';
+import { catchError, finalize, map, startWith, take, first } from 'rxjs/operators';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, Credential } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -19,7 +21,9 @@ export class UsersService {
   private displayPictureCollection: AngularFirestoreCollection<DisplayPicture>;
 
   constructor(private afs: AngularFirestore,
-              private storage: AngularFireStorage) {
+              private storage: AngularFireStorage,
+              private mixpanelService: MixpanelService,
+              private miscellaneousService: MiscellaneousService) {
     this.profileDetailsCollection = afs.collection<ProfileDetails>('profile details');
     this.profileStickersCollection = afs.collection<ProfileSticker[]>('profile stickers');
     this.displayPictureCollection = afs.collection<DisplayPicture>('display picture');
@@ -40,7 +44,11 @@ export class UsersService {
   // Update profile details from cloud firestore
   updateProfileDetails(uid: string, details: any) {
     let obj = {...details};
-    this.profileDetailsCollection.doc(uid).update(obj);
+    this.profileDetailsCollection.doc(uid).update(obj)
+      .then(() => {
+        if (!!details.description) this.mixpanelService.profileDescriptionTrack();
+        if (!!details.link) this.mixpanelService.profileLinkTrack();
+      });
   }
 
   //--------------------------------------- Personal Details ---------------------------------------
@@ -70,8 +78,14 @@ export class UsersService {
       if (sticker) {stickerArray.push({pid: sticker.pid, dateCreated: sticker.dateCreated})}
       else {stickerArray.push("empty")}
     });
-    console.log({stickers: stickerArray});
-    this.profileStickersCollection.doc(uid).update({stickers: stickerArray});
+    const count = profileSticker.filter((sticker) => !!sticker).length;
+    this.profileStickersCollection.doc(uid).update({stickers: stickerArray})
+      .then(() => this.mixpanelService.profileStickersTrack({numberOfStickers: count,
+                                                             sticker1: !!profileSticker[0], //counted from the right side
+                                                             sticker2: !!profileSticker[1],
+                                                             sticker3: !!profileSticker[2],
+                                                             sticker4: !!profileSticker[3],
+                                                             sticker5: !!profileSticker[4]}));
   }
 
   //--------------------------------------- Personal Details ---------------------------------------
@@ -85,7 +99,7 @@ export class UsersService {
   // Update display picture from cloud firestore
   updateDisplayPictureRef(uid: string, displayPicture: DisplayPicture) {
     const dp = {...displayPicture}
-    this.displayPictureCollection.doc(uid).update(dp);
+    return this.displayPictureCollection.doc(uid).update(dp);
   }
 
    // get display picture from cloud firestore
@@ -111,13 +125,51 @@ export class UsersService {
 
 
    // Update display picture from firebase storage
-   updateDisplayPicture(uid: string, content: any, customMetadata: CustomMetadata) {
+  updateDisplayPicture(uid: string, content: any, customMetadata: CustomMetadata) {
     const file = content;
     const filePath = 'display pictures/' + uid +'/original';
     const ref = this.storage.ref(filePath);
-    const metadataUp = {contentType: file.type, ...customMetadata};
+    const metadataUp = {contentType: file.type, customMetadata: {...customMetadata}};
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
+  }
+
+  uploadDisplayPicture( uid: string,
+                        content: File,
+                        customMetadata: CustomMetadata,
+                        displayPicture: DisplayPicture) {
+
+    let success: Boolean = false;
+    this.miscellaneousService.startLoading();
+
+    this.updateDisplayPicture(uid, content, customMetadata).pipe(first(progress => progress === 100)).subscribe(response => {
+      this.updateDisplayPictureRef(uid, displayPicture)
+        .then(() => success = true)
+        .catch(() => {
+          success = false;
+          this.miscellaneousService.setPopUp(new PopUp("There was a problem while uploading your display picture! Try again later",
+                                                       'Okay',
+                                                       undefined,
+                                                       ['default', 'reject']));
+        })
+        .finally(() => {
+          this.mixpanelService.dpUpdateTrack({
+            fileType: content.type,
+            fileSize: content.size,
+            fileDimensions: {width: +customMetadata.width, height: +customMetadata.height},
+            success: success
+          });
+          this.miscellaneousService.endLoading();
+        });
+    }, error => {
+      this.mixpanelService.dpUpdateTrack({
+        fileType: content.type,
+        fileSize: content.size,
+        fileDimensions: {width: +customMetadata.width, height: +customMetadata.height},
+        success: success
+      });
+      this.miscellaneousService.endLoading();
+    });
   }
 
 

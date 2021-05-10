@@ -1,3 +1,4 @@
+import { MixpanelService } from './../shared/mixpanel.service';
 import { AuthService } from './../auth/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;
@@ -45,7 +46,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
               private authService: AuthService,
               private router: Router,
               private usersService: UsersService,
-              private miscellaneousService: MiscellaneousService){
+              private miscellaneousService: MiscellaneousService,
+              private mixpanelService: MixpanelService){
   }
 
   ngOnInit(): void {
@@ -86,6 +88,10 @@ export class HeaderComponent implements OnInit, OnDestroy{
   dashboardToggle() {
     this.showDashboard = !this.showDashboard;
     this.miscellaneousService.showDashboard.next(this.showDashboard);
+  }
+
+  dpClick() {
+    this.mixpanelService.setRoutingVia('header/navbar');
   }
 
   ngOnDestroy() {
