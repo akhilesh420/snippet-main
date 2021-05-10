@@ -17,7 +17,7 @@ export class FeedService {
 
   // get explore page
   getExplorePage() {
-    return this.afs.collection<{dateCreated: Date, creatorID: string}>('feed/explore/global', ref => ref.orderBy('dateCreated', 'desc'))
+    return this.afs.collection<{dateCreated: Date, creatorID: string}>('feed/explore/global', ref => ref.where('dateCreated','!=', false).orderBy('dateCreated', 'desc'))
             .valueChanges({idField: 'pid'}).pipe(take(1));
   }
 
