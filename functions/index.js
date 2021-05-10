@@ -295,7 +295,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
   functions.logger.info('finished processing convert');
   functions.logger.info('uploading to storage', filePath);
 
-  const _metadata = { contentType: contentType, metadata: dimensions};
+  const _metadata = { contentType: contentType,cacheControl: 'public, max-age=31536000', metadata: dimensions};
   await bucket.upload(outputFilePath2, { destination: filePath, metadata: _metadata})
           .catch((e) => functions.logger.info(e));
   functions.logger.info('uploaded to storage with metadata', _metadata);

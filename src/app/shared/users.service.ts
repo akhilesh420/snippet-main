@@ -115,7 +115,7 @@ export class UsersService {
     const file = content;
     const filePath = 'display pictures/' + uid +'/original';
     const ref = this.storage.ref(filePath);
-    const metadataUp = {contentType: file.type, ...customMetadata};
+    const metadataUp = {contentType: file.type, cacheControl: 'public, max-age=31536000', ...customMetadata};
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
   }
