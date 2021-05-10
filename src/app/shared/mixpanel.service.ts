@@ -137,10 +137,7 @@ export class MixpanelService {
   }
 
   async stickerCollectionTrack(action: any = {}) {
-    const currentUser = (await this.auth.currentUser);
-    const firstCollectionFromCollectee = !(await this.afs.collection('feed/'+currentUser.uid+'/collection', ref => ref.where('creatorID', '==', action.collecteeID).limit(1))
-                                                        .valueChanges({idField: 'pid'}).pipe(take(1)).toPromise());
-    mixpanel.track('sticker collect', {firstCollectionFromCollectee: firstCollectionFromCollectee, ...action});
+    mixpanel.track('sticker collect', action);
     this.timeEvent('sticker collect');
   };
 
