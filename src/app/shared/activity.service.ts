@@ -73,41 +73,70 @@ export class ActivityService {
   // collectorID: UID of the person who collected the sticker
   // collecteeID: UID of the person whose sticker was collected
   async addCollection(collection: Collection) {
-    const batch = this.afs.firestore.batch();
     const cid = this.afs.createId();
 
-    //Add collection
-    batch.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+    const transaction = this.afs.firestore.runTransaction((transaction) => {
+      //Add collection
+      transaction.set(this.afs.firestore.doc('collection/'+cid), {...collection});
 
-    //Add holder and user collection
-    const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+      //Add holder and user collection
+      const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
 
-    batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
-    batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+      transaction.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
+      transaction.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
 
-    //Update Activity
-    batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
-                  {counter: firebase.firestore.FieldValue.increment(1),
-                    cid: cid}); //user
-    batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
-                  {counter: firebase.firestore.FieldValue.increment(1),
-                    cid: cid}); //post
+      //Update Activity
+      transaction.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
+                    {counter: firebase.firestore.FieldValue.increment(1),
+                      cid: cid}); //user
+      transaction.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
+                    {counter: firebase.firestore.FieldValue.increment(1),
+                      cid: cid}); //post
+      return Promise.resolve();
+    })
 
-    // Collection analytics
-    if (collection.collectorID != collection.collecteeID) {
-      const aid = this.afs.createId();
-      const timeSpent = new Date().getTime() - this.collectionStartTime;
-      this.collectionStartTime = new Date().getTime();
-      const analytics = {type: 'collection', route: this.router.url.split('/')[1], timeSpent: timeSpent};
-      batch.set(this.afs.firestore.doc('user data/'+collection.collectorID+'/collection analytics/'+aid), analytics);
-    }
-
-    await batch.commit().catch(async (e) => {
+    await transaction.catch(async (e) => {
       console.log("error in collection", e);
       throw new Error('Error in sticker collection');
     });
     return true
   }
+  // sync addCollection(collection: Collection) {
+  //   const batch = this.afs.firestore.batch();
+  //   const cid = this.afs.createId();
+
+  //   //Add collection
+  //   batch.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+
+  //   //Add holder and user collection
+  //   const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+
+  //   batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
+  //   batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+
+  //   //Update Activity
+  //   batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
+  //                 {counter: firebase.firestore.FieldValue.increment(1),
+  //                   cid: cid}); //user
+  //   batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
+  //                 {counter: firebase.firestore.FieldValue.increment(1),
+  //                   cid: cid}); //post
+
+  //   // Collection analytics
+  //   if (collection.collectorID != collection.collecteeID) {
+  //     const aid = this.afs.createId();
+  //     const timeSpent = new Date().getTime() - this.collectionStartTime;
+  //     this.collectionStartTime = new Date().getTime();
+  //     const analytics = {type: 'collection', route: this.router.url.split('/')[1], timeSpent: timeSpent};
+  //     batch.set(this.afs.firestore.doc('user data/'+collection.collectorID+'/collection analytics/'+aid), analytics);
+  //   }
+
+  //   await batch.commit().catch(async (e) => {
+  //     console.log("error in collection", e);
+  //     throw new Error('Error in sticker collection');
+  //   });
+  //   return true
+  // }
 
   // get collection by uid
   getUserCollection(uid: string) {
