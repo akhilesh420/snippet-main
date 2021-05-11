@@ -63,7 +63,7 @@ export class PostService {
     const file = content;
     const filePath = 'posts/'+pid+'/original';
     const ref = this.storage.ref(filePath);
-    const metadataUp = {contentType: file.type, customMetadata: {...customMetadata}};
+    const metadataUp = {contentType: file.type, cacheControl: 'public, max-age=31536000', customMetadata: {...customMetadata}};
     console.log(metadataUp);
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
@@ -90,7 +90,7 @@ export class PostService {
     const file = content;
     const filePath = 'stickers/'+pid+'/original';
     const ref = this.storage.ref(filePath);
-    const metadataUp = {contentType: file.type, customMetadata: {...customMetadata}};
+    const metadataUp = {contentType: file.type, cacheControl: 'public, max-age=31536000', customMetadata: {...customMetadata}};
     console.log(metadataUp);
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
@@ -109,7 +109,6 @@ export class PostService {
       let success: boolean;
 
       let pid = this.afs.createId();
-      let dateCreated = new Date();
 
       let postSubs =  this.addPostContent(pid, postFile, postMeta);
       let stickerSubs = this.addStickerContent(pid, stickerFile, stickerMeta);
@@ -119,6 +118,7 @@ export class PostService {
       const subs = forkJoin([postSubs, stickerSubs]).pipe(first(progress => progress[0] === 100 && progress[1] === 100))
         .subscribe(async results => {
           const batch = this.afs.firestore.batch();
+          const dateCreated = new Date();
 
           // Post
           const postsDoc = this.afs.firestore.doc('posts/'+pid);

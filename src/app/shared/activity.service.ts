@@ -1,17 +1,12 @@
-import { StickerDetails } from './post.model';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 
-import { MixpanelService } from './mixpanel.service';
-
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Collection } from './activity.model';
 
 import firebase from 'firebase';
 import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'

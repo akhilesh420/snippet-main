@@ -108,7 +108,7 @@
 
       <ul class = "holderSpace">
 
-          <li *ngFor='let holder of holderList; trackBy: holderTrackByFn'>
+          <li *ngFor='let holder of (holderList | async); trackBy: holderTrackByFn'>
             <app-holder [uid]='holder.collectorID'> </app-holder>
           </li>
 

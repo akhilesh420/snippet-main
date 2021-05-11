@@ -201,7 +201,11 @@ export class MixpanelService {
   //Users
 
   getProperty(uid:string, name: string) {
-    return this.afs.doc('mixpanel/'+uid+'/'+name+'/information').valueChanges().pipe(take(1)).toPromise();
+    return this.afs.doc('mixpanel/'+uid+'/'+name+'/information').valueChanges().pipe(take(1)).toPromise()
+      .catch((e) => {
+        console.log(e);
+        return false;
+      });
   }
 
   setProperty(uid: string, name: string, property: any) {
