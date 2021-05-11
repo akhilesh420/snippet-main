@@ -150,7 +150,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  contentFileDetails(file, event, og_file) {
+  contentFileDetails(file: File, event, og_file) {
     if (file.size < 80*1024*1024) {
       this.error = undefined;
       this.storageFile = og_file;

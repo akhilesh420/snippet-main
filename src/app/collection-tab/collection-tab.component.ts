@@ -1,3 +1,4 @@
+import { MixpanelService } from './../shared/mixpanel.service';
 import { Feed } from './../shared/post.model';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -25,6 +26,7 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
   constructor(private auth: AngularFireAuth,
               private activityService: ActivityService,
               private miscellaneousService: MiscellaneousService,
+              private mixpanelService: MixpanelService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -59,7 +61,9 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
   }
 
   goToCollection() {
+    if (this.editMode) return;
     this.router.navigate(["/collection/"+this.myUid]);
+    this.mixpanelService.setRoutingVia('collection tab');
   }
 
   ngOnDestroy() {

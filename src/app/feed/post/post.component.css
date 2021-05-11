@@ -10,6 +10,7 @@ p {
 .creatorDetails {
   height: 50px;
   width: 100%;
+  cursor: pointer;
 }
 
 .creatorDP {
@@ -20,6 +21,7 @@ p {
   border-radius: 50%;
   display: inline-block;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .creatorDP > img {
@@ -35,14 +37,14 @@ p {
 .creatorName {
   width: calc(100% - 235px);
   height: auto;
-  font-family: 'Comfortaa';
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: bold;
-  font-size: 12px;
-  letter-spacing: 0.05em;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   position: absolute;
-  top: 16px;
+  top: 14px;
   left: 58px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -51,11 +53,11 @@ p {
 .timeCreated {
   width: calc(100% - 235px);
   height: 15px;
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 400;
   font-size: 12px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   position: absolute;
   top: 31px;
@@ -77,31 +79,31 @@ p {
 
 .stickerOne {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 8px;
 }
 
 .stickerTwo {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 44px;
 }
 
 .stickerThree {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 80px;
 }
 
 .stickerFour {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 116px;
 }
 
 .stickerFive {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 152px;
 }
 
@@ -117,12 +119,11 @@ p {
   position: relative;
   overflow: hidden;
   margin-bottom: 0px;
-  background-color: #0b0b0b;
+  background-color: #030303;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  border: 0.5px solid #000000;
 }
 
 .postContent {
@@ -138,14 +139,15 @@ p {
 .postTitle {
   width: 90%;
   padding-left: 12px;
-  padding-top: 9px;
-  padding-bottom: 9px;
-  font-family: 'ChampagneAndLimousines';
+  padding-top: 12px;
+  padding-bottom: 14px;
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.02em;
   line-height: 18px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255);
   word-wrap: break-word;
   display: inline-block;
 }
@@ -173,8 +175,8 @@ p {
 }
 
 .engagementBar {
-  position: absolute;
-  top: 0px;
+  position: relative;
+  bottom: 0px;
   height: 3px;
   width: 80%;
   background-color: hsl(43, 74%, 56%);
@@ -202,7 +204,7 @@ p {
 
   height: 10%;
   font-size: calc(16px * var(--norm-height));
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant', sans-serif;
   font-weight: bold;
   letter-spacing: 0.05em;
   color: #E2B33D;
@@ -269,7 +271,7 @@ li {
   height: auto;
   min-height: 102px;
   width: 100%;
-  background: #0B0B0B;
+  background: #030303;
   border-radius: 0px 0px 4px 4px;
   display: flex;
 }
@@ -281,40 +283,46 @@ li {
 }
 
 .postViewsExp {
-  font-family: 'ChampagneAndLimousines';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 13px;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-size: 14px;
   line-height: 14px;
   align-items: center;
   color: #FFFFFF;
 }
 
 .spacer {
+  font-family: 'Assistant', sans-serif;
+  font-weight: 400;
   color: #FFFFFF;
-  font-size: 12px;
+  font-size: 14px;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
 .postHoldersExp {
-  font-family: 'ChampagneAndLimousines';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 13px;
+  font-family: 'Assistant', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   line-height: 14px;
   align-items: center;
   color: #FFFFFF;
 }
 
 .postDescriptionExp {
-  font-family: 'ChampagneAndLimousines';
+  font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   padding-left: 10px;
-  padding-top: 3px;
-  word-break: break-all;
+  padding-top: 2px;
+  padding-bottom: 8px;
+  word-wrap: break-word;
 }
 
 
@@ -357,7 +365,7 @@ li {
   }
 
 .postStickerHolderOutline {
-  margin-top: 6px;
+  margin-top: 10px;
   height: 72px;
   width: 72px;
   background-color: #000000;
@@ -368,18 +376,17 @@ li {
 }
 
 .collectPrompt {
-  margin-top: 6px;
-  font-family: 'ChampagneAndLimousines';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 14px;
+  margin-top: 2px;
+  font-family: 'Assistant', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
   align-items: center;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: #FFFFFF;
   float: right;
-  margin-right: 44px;
+  margin-right: 43px;
   transform: translate(50%, 0%);
+  padding-bottom: 4px;
 }
 
 

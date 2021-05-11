@@ -17,9 +17,12 @@
 
 .post-container {
   height: auto;
-  width: 480px;
+  width: 520px;
   margin-bottom: 5.444vh;
   overflow: hidden;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+          box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
 }
 
 .no-posts {
