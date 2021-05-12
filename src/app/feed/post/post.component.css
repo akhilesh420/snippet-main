@@ -178,7 +178,7 @@ p {
 .engagementBar {
   position: relative;
   top: 0px;
-  left: 9px;
+  left: 10px;
   height: 3px;
   width: calc(100% - 10px);
 }
