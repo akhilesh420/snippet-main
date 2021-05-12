@@ -1,3 +1,4 @@
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { FeedComponent } from './feed/feed.component';
 import { AuthComponent } from './auth/auth.component';
 import { CreateComponent } from './create/create.component';
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'auth', component: AuthComponent},
   { path: 'auth/:id', component: AuthComponent},
   { path: 'tutorial', component: TutorialPageComponent},
+  { path: 'p', component: ProfilePageComponent},
   {path: '404', redirectTo: '/explore'},
   {path: '**', redirectTo: '/explore'}
 ];
