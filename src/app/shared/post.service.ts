@@ -45,13 +45,18 @@ export class PostService {
 
   // --------------------------------------- Post content ---------------------------------------
 
-  // Get post content from firebase storage by UID
+  // Get post content from cloud firestore by PID
+  getPostContentRef(pid: string) {
+    return this.afs.doc<PostContent>('post content/' + pid).valueChanges();
+  }
+
+  // Get post content from firebase storage by PID
   getPostContent(pid: string) {
     const ref = this.storage.ref('posts/' + pid +'/original');
     return ref.getDownloadURL();
   }
 
-  // Get post metadata from firebase storage by UID
+  // Get post metadata from firebase storage by PID
   getPostMetadata(pid: string) {
     const ref = this.storage.ref('posts/' + pid +'/original');
     return ref.getMetadata();
