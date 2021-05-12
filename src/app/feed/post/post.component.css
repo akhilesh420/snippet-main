@@ -387,14 +387,14 @@ li {
 
 .collectPrompt {
   
-  width: 60px;
+  width: 70px;
   height: 20px;
   border-radius: 5px;
   background: #E2B33D;
   margin-top: 6px;
   margin-bottom: 8px;
   float: right;
-  margin-right: 13px;
+  margin-right: 8px;
   display: grid;
   place-items: center;  
   transition: background-color 250ms ease;
