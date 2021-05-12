@@ -177,10 +177,12 @@ p {
 
 .engagementBar {
   position: relative;
-  bottom: 0px;
+  top: 0px;
+  left: 10px;
   height: 3px;
-  width: 80%;
-  background-color: hsl(43, 74%, 56%);
+  border-radius: 3px;
+  width: calc(100% - 10px);
+  background-color: #E2B33D;
   overflow: hidden;
   /* border-top-left-radius: 3px;
   border-top-right-radius: 0px; */
@@ -279,7 +281,7 @@ li {
 
 .postDetailsExp {
   width: 77.5%;
-  height: 100%;
+  margin-top: 10px;
   display: inline-block;
 }
 
@@ -371,7 +373,7 @@ li {
   }
 
 .postStickerHolderOutline {
-  margin-top: 10px;
+  margin-top: 8px;
   height: 72px;
   width: 72px;
   background-color: #000000;
