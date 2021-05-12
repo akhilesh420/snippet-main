@@ -52,7 +52,7 @@ p {
 
 .timeCreated {
   width: calc(100% - 235px);
-  height: 15px;
+  height: auto;
   font-family: 'Assistant', sans-serif;
   font-style: normal;
   font-weight: 400;
