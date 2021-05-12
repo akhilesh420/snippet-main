@@ -78,7 +78,8 @@ export class PostComponent implements OnInit, OnDestroy {
   // User stuff
   username$: Observable<{username: string}>;
   displayPicture$: Observable<string>;
-  profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}>;
+  profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}> = new Observable<{stickers: ProfileSticker[] | string[]}>()
+    .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   profileRoute: string;
   profileStickerClasses = ['stickerOne', 'stickerTwo', 'stickerThree', 'stickerFour', 'stickerFive']
 
@@ -131,15 +132,6 @@ export class PostComponent implements OnInit, OnDestroy {
     this.setUpUser();
   }
 
-  postInFrame() {
-    if (!this.post) return;
-    const rect = this.post.nativeElement.getBoundingClientRect();
-    const height = this.post.nativeElement.offsetHeight;
-    const midPoint = rect.top + height/2;
-    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
-    if (this.postFocus && this.currentPost != this.pid) this.feedService.currentPost.next(this.pid);
-  }
-
   setUpPost() {
     if (!this.pid) return;
 
@@ -150,12 +142,6 @@ export class PostComponent implements OnInit, OnDestroy {
     this.postService.getPostContentRef(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
       this.postType = response.fileFormat;
       this.postAspectRatio = response.height/response.width;
-    }, error => console.log(error));
-
-    this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
-      if (!response) return;
-      this.postType = response.contentType;
-      this.postAspectRatio = (+response.customMetadata.height)/(+response.customMetadata.width);
     }, error => console.log(error));
 
     this.postDetails$ = this.postService.getPostDetails(this.pid);
@@ -184,6 +170,8 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   setUpUser() {
+    if (!this.uid) return;
+
     this.profileRoute = "/profile/" + this.uid;
 
     this.username$ = this.usersService.getUsername(this.uid);
@@ -200,6 +188,15 @@ export class PostComponent implements OnInit, OnDestroy {
     let percentage: string = (this.engagementRatio*100).toString() + '%';
     this.engagementProp.width = percentage;
     this.engagementProp.background = colour;
+  }
+
+  postInFrame() {
+    if (!this.post) return;
+    const rect = this.post.nativeElement.getBoundingClientRect();
+    const height = this.post.nativeElement.offsetHeight;
+    const midPoint = rect.top + height/2;
+    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
+    if (this.postFocus && this.currentPost != this.pid) this.feedService.currentPost.next(this.pid);
   }
 
   async collectSticker() {
