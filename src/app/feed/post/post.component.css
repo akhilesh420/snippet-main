@@ -336,7 +336,7 @@ li {
 }
 
 .postMetricsExp {
-  margin-top: 6px;
+  margin-top: 4px;
   padding-left: 1px;
 }
 
@@ -457,6 +457,7 @@ li {
 
   .postMetricsExp {
     padding-left: 0px;
+    margin-top: 2px;
   }
 
 
