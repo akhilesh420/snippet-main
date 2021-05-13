@@ -38,7 +38,7 @@ p {
   width: calc(100% - 235px);
   height: auto;
   font-family: 'Assistant', sans-serif;
-  font-style: normal;
+  font-style: 16px;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
@@ -52,7 +52,7 @@ p {
 
 .timeCreated {
   width: calc(100% - 235px);
-  height: auto;
+  height: 16px;
   font-family: 'Assistant', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -178,7 +178,6 @@ p {
 .engagementBar {
   position: relative;
   top: 0px;
-  left: 10px;
   height: 3px;
   width: calc(100% - 10px);
 }
@@ -197,7 +196,7 @@ p {
   height: 70%;
   max-height: 360px;
   border-radius: 10px;
-  background: rgba(11, 11, 11, 0.90);
+  background: rgba(3, 3, 3, 0.90);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   min-width: 300px;
@@ -283,7 +282,7 @@ li {
 
 .postDetailsExp {
   width: calc(100% - 92px);
-  margin-top: 10px;
+  margin-top: 12px;
   display: inline-block;
 }
 
@@ -292,9 +291,9 @@ li {
   font-weight: 600;
   letter-spacing: 0.02em;
   font-size: 14px;
-  line-height: 14px;
   align-items: center;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.86);;
+  
 }
 
 .viewText {
@@ -315,9 +314,8 @@ li {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  line-height: 14px;
   align-items: center;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.86);;
 }
 
 .postDescriptionExp {
@@ -325,24 +323,28 @@ li {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 20px;
   letter-spacing: 0.02em;
   color: #FFFFFF;
-  padding-left: 10px;
-  padding-bottom: 8px;
+  min-height: 66px;
+  margin-top: 4px; 
+  padding-left: 1px;
   word-wrap: break-word;
 }
 
 
 .postStickerExp {
-  width: 92px;
+  width: 90px;
   height: 100%;
   display: inline-block;
 }
 
 .postMetricsExp {
-  padding-top: 6px;
-  padding-left: 10px;
+  height: 18px;
+  padding-right: 10px;
+  margin-bottom: 8px;
+  padding-top: 4px;
+  float: right;
+  line-height: 18px;
 }
 
 .postStickerHolderExp {
@@ -381,27 +383,23 @@ li {
   display: flex;
   border-radius: 50%;
   float: right;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 .collectPrompt {
   
-  width: 70px;
-  height: 20px;
+  width: 65px;
+  height: 22px;
   border-radius: 5px;
   background: #E2B33D;
-  margin-top: 6px;
+  margin-top: 7px;
   margin-bottom: 8px;
   float: right;
-  margin-right: 8px;
+  margin-right: 13px;
   display: grid;
   place-items: center;  
   transition: background-color 250ms ease;
 
-}
-
-.collectprompt:active {
-  background: #0b0b0b;
 }
 
 .promptText {
@@ -411,12 +409,7 @@ li {
   font-size: 14px;
   color: #FFFFFF;
   letter-spacing: 0.02em;
-  transition: background-color 250ms ease;
-
-}
-
-.promptText:active {
-  color: #E2B33D;
+  
 }
 
 .postSticker-bck {
@@ -463,6 +456,8 @@ li {
   .realEngagementBar {
     height: 3px;
   }
+
+
 
 }
 
@@ -846,24 +841,6 @@ li {
 
 
 @media (hover: hover) and (pointer: fine) {
-
-.collectPrompt:hover {
-
-  background: #0b0b0b;
-
-}
-
-.promptText:hover {
-
-  color: #E2B33D;
-}
-
-.postStickerHolderExp:hover {
-
-  transform: translateY(-5px);
-
-}
-
 
 
 
