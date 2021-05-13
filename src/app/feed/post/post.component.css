@@ -328,6 +328,7 @@ li {
   min-height: 66px;
   margin-top: 2px; 
   padding-left: 1px;
+  padding-right: 5px;
   word-wrap: break-word;
   margin-bottom: 10px;
 }
