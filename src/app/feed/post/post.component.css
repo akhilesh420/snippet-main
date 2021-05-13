@@ -326,9 +326,10 @@ li {
   letter-spacing: 0.02em;
   color: #FFFFFF;
   min-height: 66px;
-  margin-top: 4px; 
+  margin-top: 2px; 
   padding-left: 1px;
   word-wrap: break-word;
+  margin-bottom: 10px;
 }
 
 
@@ -339,12 +340,8 @@ li {
 }
 
 .postMetricsExp {
-  height: 18px;
-  padding-right: 10px;
-  margin-bottom: 8px;
-  padding-top: 4px;
-  float: right;
-  line-height: 18px;
+  margin-top: 6px;
+  padding-left: 1px;
 }
 
 .postStickerHolderExp {
@@ -357,7 +354,6 @@ li {
   display: inline-block;
   overflow: hidden;
   position: relative;
-  transition: transform 250ms;
 }
 
 .postStickerHolderExp-bck {
@@ -384,6 +380,7 @@ li {
   border-radius: 50%;
   float: right;
   margin-right: 10px;
+  transition: transform 250ms;
 }
 
 .collectPrompt {
@@ -399,7 +396,7 @@ li {
   display: grid;
   place-items: center;  
   transition: background-color 250ms ease;
-
+  
 }
 
 .promptText {
@@ -409,6 +406,7 @@ li {
   font-size: 14px;
   color: #FFFFFF;
   letter-spacing: 0.02em;
+  transition: color 250ms ease;
   
 }
 
@@ -458,6 +456,10 @@ li {
   }
 
   .postDescriptionExp {
+    padding-left: 0px;
+  }
+
+  .postMetricsExp {
     padding-left: 0px;
   }
 
@@ -845,6 +847,22 @@ li {
 
 @media (hover: hover) and (pointer: fine) {
 
+  .postStickerExp:hover .postStickerHolderOutline {
+
+    transform: translateY(-5px);
+  
+  }
+
+  .postStickerExp:hover .collectPrompt {
+
+    background: #0b0b0b;
+    border: 1px solid #E2B33D
+
+  }
+
+  .postStickerExp:hover .promptText {
+    color: #E2B33D;
+  }
 
 
 }

@@ -155,12 +155,6 @@
 
       </div>
 
-      
-
-      <div class="postDescriptionExp" *ngIf='(postDetails$ | async) as details'>
-        {{details.description}}
-      </div>
-
       <div class="postMetricsExp">
 
         <span class = "postViewsExp">
@@ -176,6 +170,12 @@
         </span>
 
       </div>
+
+      <div class="postDescriptionExp" *ngIf='(postDetails$ | async) as details'>
+        {{details.description}}
+      </div>
+
+      
 
     </div>
 
