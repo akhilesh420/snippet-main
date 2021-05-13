@@ -336,8 +336,9 @@ li {
 }
 
 .postMetricsExp {
-  margin-top: 4px;
+  margin-top: 6px;
   padding-left: 1px;
+  margin-bottom: 2px;
 }
 
 .postStickerHolderExp {
@@ -458,6 +459,7 @@ li {
   .postMetricsExp {
     padding-left: 0px;
     margin-top: 2px;
+    margin-bottom: 0px;
   }
 
 
