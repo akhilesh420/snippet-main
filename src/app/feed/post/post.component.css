@@ -457,6 +457,9 @@ li {
     height: 3px;
   }
 
+  .postDescriptionExp {
+    padding-left: 0px;
+  }
 
 
 }
