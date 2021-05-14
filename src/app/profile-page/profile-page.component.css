@@ -1,0 +1,29 @@
+.topPanel {
+    height: 154px;
+    width: 100%;
+}
+
+.dpContainer {
+
+    display: inline-block;
+    margin-top: 18px;
+    margin-left: 56px;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #c4c4c4;
+
+}
+
+.profileDetails {
+
+    display: inline-block;
+    margin-top: 50px;
+    margin-left: 14px;
+    height: auto;
+    width: calc(100% - 608px);
+    
+
+}
+
