@@ -22,6 +22,7 @@ p {
   display: inline-block;
   overflow: hidden;
   cursor: pointer;
+  transition: box-shadow 250ms ease;
 }
 
 .creatorDP > img {
@@ -48,6 +49,7 @@ p {
   left: 58px;
   text-overflow: ellipsis;
   overflow: hidden;
+  transition: color 250ms ease;
 }
 
 .timeCreated {
@@ -64,7 +66,7 @@ p {
   left: 58px;
   text-overflow: ellipsis;
   overflow: hidden;
-
+  
 }
 
 .displaySticker {
@@ -112,6 +114,11 @@ p {
   width: 100%;
 }
 
+.forHoverPurposes {
+  height: auto;
+  width: calc(100% - 178px);
+}
+
 .postContainer {
   width: 100%;
   height: 100%;
@@ -139,7 +146,7 @@ p {
 
 .postTitle {
   width: 90%;
-  padding-left: 12px;
+  padding-left: 14px;
   padding-top: 12px;
   padding-bottom: 14px;
   font-family: 'Assistant', sans-serif;
@@ -386,7 +393,8 @@ li {
   width: 65px;
   height: 22px;
   border-radius: 5px;
-  background: #E2B33D;
+  background: #030303;
+  border: 1px solid #FFFFFF;
   margin-top: 6px;
   margin-bottom: 8px;
   float: right;
@@ -855,14 +863,23 @@ li {
 
   .postStickerExp:hover .collectPrompt {
 
-    background: #0b0b0b;
-    border: 1px solid #E2B33D
+    background: #E2B33D;
+    border: none
 
   }
 
   .postStickerExp:hover .promptText {
+    color: #FFFFFF;
+  }
+
+  .forHoverPurposes:hover .creatorName{
     color: #E2B33D;
   }
 
+  .forHoverPurposes:hover .creatorDP {
+    box-shadow: 0 0 0 1px #E2B33D;
+  }
 
 }
+
+

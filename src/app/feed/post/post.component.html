@@ -4,12 +4,16 @@
 
   <div class="creatorDetails">
 
-    <div class="creatorDP" (click)='usernameClick()'  [routerLink]='profileRoute'>
-      <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
-    </div>
+    <div class="forHoverPurposes">
 
-    <div class="creatorName">
-      <span (click)='usernameClick()' [routerLink]='profileRoute' *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
+      <div class="creatorDP" (click)='usernameClick()'  [routerLink]='profileRoute'>
+        <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
+      </div>
+  
+      <div class="creatorName">
+        <span (click)='usernameClick()' [routerLink]='profileRoute' *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
+      </div>
+
     </div>
 
     <div class="timeCreated">

@@ -17,7 +17,7 @@
 
 .post-container {
   height: auto;
-  width: 520px;
+  width: 550px;
   margin-bottom: 5.444vh;
   overflow: hidden;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
@@ -167,7 +167,7 @@
   }
 
   .feed-container {
-    width: 480px;
+    width: 550px;
   }
 
   .profileNavigation {
