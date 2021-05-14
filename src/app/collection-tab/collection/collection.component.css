@@ -10,6 +10,7 @@
     margin-left: 10px;
     display: inline-flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .detailsSpace {
@@ -36,7 +37,9 @@
     color: #FFFFFF;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
+
 
 .creatorName {
 
@@ -51,10 +54,11 @@
     font-size: 14px;
     line-height: 0px;
     align-items: center;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
     color: rgba(255, 255, 255, 0.8);
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 
 }
 
@@ -69,7 +73,6 @@
      object-fit: cover;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: inset 2px 4px 4px rgb(0 0 0 / 25%);
 }
 
 
