@@ -1,11 +1,16 @@
 .topPanel {
+
     height: 154px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+
 }
 
 .dpContainer {
 
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
     margin-top: 18px;
     margin-left: 56px;
     height: 120px;
@@ -18,12 +23,291 @@
 
 .profileDetails {
 
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
     margin-top: 50px;
     margin-left: 14px;
-    height: auto;
+    height: 67px;
     width: calc(100% - 608px);
+    white-space: nowrap;
+    
+}
+
+.userName {
+
+    display: flex;
+    flex-direction: row;
+    width: 95%;
     
 
 }
+
+.userName > span {
+
+    font-family: 'Comfortaa';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.fullName {
+
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    
+
+}
+
+.fullName > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 31px;
+    letter-spacing: 0.02em;
+    color: #E2B33D;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.displaySticker {
+
+    display: inline-flex;
+    flex-direction: row;
+    width: 390px;
+    height: 62px;
+    margin-top: 50px;
+
+}
+
+.sticker {
+
+    display: inline-flex;
+    flex-direction: column;
+    height: 60px;
+    width: 60px;
+    margin-right: 18px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    overflow: hidden;
+    
+}
+
+.infoPanel {
+
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 355px;
+    margin-left: 50px;
+    background: #030303;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+
+}
+
+.metrics {
+
+    display: flex;
+    flex-direction: row;
+    height: 56px;
+    margin-left: 14px;
+    margin-top: 12px;
+
+}
+
+.metric {
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 84px;
+
+}
+
+.metricNumbers {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+
+}
+
+.metricNumbers > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.metricText {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+
+}
+
+.metricText > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.9);
+
+}
+
+.button {
+
+    display: flex;
+    flex-direction: row;
+    width: 110px;
+    height: 26px;
+    margin-left: 14px;
+    border: 1px solid #FFFFFF;
+    border-radius: 6px;
+    place-content: center;
+    
+}
+
+.editProfile {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.link {
+
+    display: flex;
+    flex-direction: row;
+    width: 164px;
+    margin-top: 10px;
+    margin-left: 14px;
+
+}
+
+.link > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #E2B33D;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.description {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 330px;
+    margin-top: 22px;
+    margin-left: 14px;
+
+}
+
+.description > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.joiningDate {
+
+    display: flex;
+    flex-direction: row;
+    height: 55px;
+    width: 328px;
+    margin-left: 14px;
+    margin-top: 28px;
+    border-top: 1px solid #0B0B0B;
+    border-bottom: 1px solid #0B0B0B;
+    margin-bottom: 30px;
+    
+}
+
+.joinedText {
+
+    display: flex;
+    flex-direction: column;
+    width: 244px;
+    padding-top: 12px;
+    padding-left: 4px;
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 26px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.joinDate {
+
+    display: flex;
+    flex-direction: column;
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 26px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    padding-top: 12px;
+
+
+}
+
+
+
+
+
 
