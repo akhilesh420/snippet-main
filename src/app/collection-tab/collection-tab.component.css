@@ -54,7 +54,7 @@ li {
 
 .topBorder {
 
-  height: 3.9344%;
+  height: 12px;
   width: 100%;
   border-radius: 12px 12px 0px 0px;
   background-color: #E2B33D;
@@ -89,9 +89,8 @@ li {
 
 .scroll {
 
-  /* padding-top: 6.885%; */
   width: 100%;
-  height: 96.0656%;
+  height: calc(100% - 14px);
 
 }
 
