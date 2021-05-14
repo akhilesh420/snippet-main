@@ -124,6 +124,7 @@ p {
   border-bottom-right-radius: 8px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .postContent {
@@ -437,8 +438,8 @@ li {
   .postContainer {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
   }
 
   .postContent {
