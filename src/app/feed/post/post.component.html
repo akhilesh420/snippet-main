@@ -4,12 +4,16 @@
 
   <div class="creatorDetails">
 
-    <div class="creatorDP" (click)='usernameClick()'  [routerLink]='profileRoute'>
-      <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
-    </div>
+    <div class="forHoverPurposes">
 
-    <div class="creatorName">
-      <span (click)='usernameClick()' [routerLink]='profileRoute' *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
+      <div class="creatorDP" (click)='usernameClick()'  [routerLink]='profileRoute'>
+        <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
+      </div>
+  
+      <div class="creatorName">
+        <span (click)='usernameClick()' [routerLink]='profileRoute' *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
+      </div>
+
     </div>
 
     <div class="timeCreated">
@@ -43,11 +47,6 @@
             src = "assets/images/Post/postdetailDropdown.svg">
 
     </div>
-
-     <!-- Engagement bar -->
-     <div class = "engagementBar" [ngStyle]="engagementProp">
-       
-     </div>
 
   </div>
 
@@ -128,30 +127,6 @@
 
   <div class = "detailsContainer">
 
-    <div class="postDetailsExp">
-
-      <div class="postMetricsExp">
-
-        <span class = "postViewsExp">
-          {{views | numeral}} Views
-        </span>
-
-        <span class = "spacer">
-          •
-        </span>
-
-        <span class = "postHoldersExp">
-          {{collected | numeral}}  Collectors <br>
-        </span>
-
-      </div>
-
-      <div class="postDescriptionExp" *ngIf='(postDetails$ | async) as details'>
-        {{details.description}}
-      </div>
-
-    </div>
-
     <div class="postStickerExp">
 
       <div class = "postStickerHolderOutline">
@@ -171,7 +146,7 @@
       </div>
 
       <div class = "collectPrompt">
-        <span style="cursor: pointer;"
+        <span class = "promptText" style="cursor: pointer;"
               (click)='collectSticker();'>
           Collect
         </span>
@@ -179,8 +154,38 @@
 
     </div>
 
+    <div class="postDetailsExp">
 
+      <!-- Engagement bar -->
+      <div class = "engagementBar" >
+       
+        <div class="realEngagementBar" [ngStyle]="engagementProp"></div>
 
+      </div>
+
+      <div class="postMetricsExp">
+
+        <span class = "postViewsExp">
+          {{views | numeral}} Views
+        </span>
+
+        <span class = "spacer">
+          •
+        </span>
+
+        <span class = "postHoldersExp">
+          {{collected | numeral}} Collectors<br>
+        </span>
+
+      </div>
+
+      <div class="postDescriptionExp" *ngIf='(postDetails$ | async) as details'>
+        {{details.description}}
+      </div>
+
+      
+
+    </div>
 
   </div>
 
