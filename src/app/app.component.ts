@@ -1,14 +1,15 @@
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MixpanelService } from './shared/mixpanel.service';
-import { ActivityService } from 'src/app/shared/activity.service';
 import { FeedService } from 'src/app/feed/feed.service';
 import { ScrollService } from './shared/scroll.service';
 import { MiscellaneousService, PopUp } from './shared/miscellaneous.service';
 import { WindowStateService } from './shared/window.service';
 import { Component,  HostListener,  Inject,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
-import { take, takeUntil,} from 'rxjs/operators';
+import { takeUntil,} from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { InfiniteScrollService } from './shared/infinite-scroll.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DOCUMENT } from '@angular/common';
 
@@ -43,11 +44,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private windowStateService: WindowStateService,
               private router: Router,
-              private infiniteScrollService: InfiniteScrollService,
               private miscellaneousService: MiscellaneousService,
               private feedService: FeedService,
               private scrollService: ScrollService,
               private auth: AngularFireAuth,
+              private afs: AngularFirestore,
               private mixpanelService: MixpanelService,
               @Inject(DOCUMENT) private _document ) {
     document.addEventListener("visibilitychange", function() { //mute posts on tab change
@@ -55,12 +56,15 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.setFirestorePersistance();
+
     this.mixpanelService.init(); //Initialize tracking
 
     this.mixpanelService.timeEvent('session end');
     this.mixpanelService.timeEvent('sticker collect');
     this.mixpanelService.timeEvent('open holder list');
+    this.mixpanelService.timeEvent('route change');
 
     this.mixpanelService.sessionStartTrack();
     this.mixpanelService.triggerRouteTracks(this.router.url);
@@ -91,7 +95,9 @@ export class AppComponent implements OnInit, OnDestroy {
       if (!this.isAuthenticated) return this.mixpanelService.logout(); //reset on logout
       this.myUid = user.uid;
       this.myUid$.next(this.myUid);
+
       this.mixpanelService.signIn(this.myUid); //Identify user with uid
+      this.mixpanelService.setUserProperties(this.myUid); //set user properties
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
@@ -116,6 +122,23 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.popUpVal.pipe(takeUntil(this.notifier$)).subscribe(value => this.modalState.next(!!value));
+  }
+
+  async setFirestorePersistance() {
+    this.afs.firestore.settings({cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED});
+    return this.afs.firestore.enablePersistence()
+            .then(() => console.log('persistance set'))
+            .catch((err) => {
+              if (err.code == 'failed-precondition') {
+                  // Multiple tabs open, persistence can only be enabled
+                  // in one tab at a a time.
+                  // ...
+              } else if (err.code == 'unimplemented') {
+                  // The current browser does not support all of the
+                  // features required to enable persistence
+                  // ...
+              }
+            });
   }
 
   onResize(){
@@ -152,6 +175,5 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();
-    this.infiniteScrollService.getScroll$.complete();
   }
 }

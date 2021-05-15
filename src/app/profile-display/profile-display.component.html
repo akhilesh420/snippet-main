@@ -15,7 +15,7 @@
 
             </div>
 
-            <div class = "sticker col-2 no-margin-no-padding" *ngFor='let sticker of profileStickers; let i = index;'>
+            <div class = "sticker col-2 no-margin-no-padding" *ngFor='let sticker of profileStickers; let i = index; trackBy: trackByFn'>
               <div class = "stickerContainer"
                   [ngClass]="{'stickerContainer-bck': sticker === null && uid === myUid, 'stickerContainer-edit': index === i}"
                   (click)='clickProfileSticker(sticker,i)'>
