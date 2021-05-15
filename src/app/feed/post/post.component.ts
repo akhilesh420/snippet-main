@@ -184,7 +184,7 @@ export class PostComponent implements OnInit, OnDestroy {
     if (!this.stickerDetails || !this.collectedLoaded) return;
     let colour: string;
     this.engagementRatio = this.collected/this.stickerDetails.amountReleased;
-    this.engagementRatio === 1 ? colour = '#13A032': colour = '#E3B33D';
+    this.engagementRatio === 1 ? colour = '#E2B33D': colour = '#FFFFFF';
     let percentage: string = (this.engagementRatio*100).toString() + '%';
     this.engagementProp.width = percentage;
     this.engagementProp.background = colour;

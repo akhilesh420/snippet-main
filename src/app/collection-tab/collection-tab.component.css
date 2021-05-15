@@ -24,12 +24,13 @@ li {
 
   list-style: none;
   width: 100%;
-  height: 38px;
+  height: 42px;
+  transition: transform 250ms;
 
 }
 
 .padding-bottom {
-  margin-top: 10px;
+  margin-bottom: 16px;
 }
 
 
@@ -38,8 +39,8 @@ li {
 
 .collectionTab {
 
-  width: 284px;
-  height: 305px;
+  width: 300px;
+  height: 310px;
   background: #030303;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
   -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.6);
@@ -53,7 +54,7 @@ li {
 
 .topBorder {
 
-  height: 3.9344%;
+  height: 12px;
   width: 100%;
   border-radius: 12px 12px 0px 0px;
   background-color: #E2B33D;
@@ -67,7 +68,8 @@ li {
   height: 5.0459%;
   text-align: left;
   padding-left: 4.921127%;
-  padding-top: 6.5573%;
+  margin-top: 7%;
+  margin-bottom: 2%;
 
 }
 
@@ -76,7 +78,7 @@ li {
   font-family: "Comfortaa";
   font-style: normal;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 0px;
   letter-spacing: 0.1em;
   color: #FFFFFF;
@@ -87,9 +89,8 @@ li {
 
 .scroll {
 
-  padding-top: 6.885%;
   width: 100%;
-  height: 89.377049%;
+  height: calc(100% - 14px);
 
 }
 
@@ -159,7 +160,7 @@ position: absolute;
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
-  top: 40%;
+  top: 50%;
   left: 50%;
 
 }
@@ -300,3 +301,13 @@ position: absolute;
 }
 }
 
+@media (hover: hover) and (pointer: fine) {
+
+  li:hover {
+
+    transform: translateY(-5px);
+  
+  }
+
+
+}
