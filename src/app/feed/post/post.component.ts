@@ -57,7 +57,7 @@ export class PostComponent implements OnInit, OnDestroy {
   buffering: boolean = false;
   check: boolean = false;
 
-  holderList: Holder[];
+  holderList: Observable<Holder[]>;
 
   mobileCheck: boolean;
   tabletCheck: boolean;
@@ -70,8 +70,6 @@ export class PostComponent implements OnInit, OnDestroy {
   engagementProp = {'width': '0','background': '#E2B33D'};
 
   stickerCollectionState: number;
-  collectionLoaded = new BehaviorSubject<boolean>(undefined);
-  engagementLoaded = new BehaviorSubject<boolean>(undefined);
   stickerContent$: Observable<any>;
   stickerDetails: StickerDetails;
 
@@ -80,7 +78,8 @@ export class PostComponent implements OnInit, OnDestroy {
   // User stuff
   username$: Observable<{username: string}>;
   displayPicture$: Observable<string>;
-  profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}>;
+  profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}> = new Observable<{stickers: ProfileSticker[] | string[]}>()
+    .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   profileRoute: string;
   profileStickerClasses = ['stickerOne', 'stickerTwo', 'stickerThree', 'stickerFour', 'stickerFive']
 
@@ -133,15 +132,6 @@ export class PostComponent implements OnInit, OnDestroy {
     this.setUpUser();
   }
 
-  postInFrame() {
-    if (!this.post) return;
-    const rect = this.post.nativeElement.getBoundingClientRect();
-    const height = this.post.nativeElement.offsetHeight;
-    const midPoint = rect.top + height/2;
-    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
-    if (this.postFocus && this.currentPost != this.pid) this.feedService.currentPost.next(this.pid);
-  }
-
   setUpPost() {
     if (!this.pid) return;
 
@@ -149,10 +139,9 @@ export class PostComponent implements OnInit, OnDestroy {
 
     this.postContent$ = this.postService.getPostContent(this.pid);
 
-    this.postService.getPostMetadata(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
-      if (!response) return;
-      this.postType = response.contentType;
-      this.postAspectRatio = (+response.customMetadata.height)/(+response.customMetadata.width);
+    this.postService.getPostContentRef(this.pid).pipe(takeUntil(this.notifier$)).subscribe((response) => {
+      this.postType = response.fileFormat;
+      this.postAspectRatio = response.height/response.width;
     }, error => console.log(error));
 
     this.postDetails$ = this.postService.getPostDetails(this.pid);
@@ -164,11 +153,7 @@ export class PostComponent implements OnInit, OnDestroy {
       });
 
     // post collection list
-    this.activityService.getHolderList(this.pid).pipe(takeUntil(this.notifier$))
-     .subscribe(response => {
-        this.holderList = response;
-        this.collectionLoaded.next(true);
-      });
+    this.holderList = this.activityService.getHolderList(this.pid);
 
     this.stickerContent$ = this.postService.getStickerContent(this.pid);
 
@@ -178,12 +163,15 @@ export class PostComponent implements OnInit, OnDestroy {
         this.collectedLoaded = true;
         this.setUpEngagement();
       });
+
     this.activityService.getActivityViews(this.pid).pipe(takeUntil(this.notifier$))
       .subscribe(response => this.views = response.counter,
                  error => console.log(error));
   }
 
   setUpUser() {
+    if (!this.uid) return;
+
     this.profileRoute = "/profile/" + this.uid;
 
     this.username$ = this.usersService.getUsername(this.uid);
@@ -200,7 +188,55 @@ export class PostComponent implements OnInit, OnDestroy {
     let percentage: string = (this.engagementRatio*100).toString() + '%';
     this.engagementProp.width = percentage;
     this.engagementProp.background = colour;
-    this.engagementLoaded.next(true);
+  }
+
+  postInFrame() {
+    if (!this.post) return;
+    const rect = this.post.nativeElement.getBoundingClientRect();
+    const height = this.post.nativeElement.offsetHeight;
+    const midPoint = rect.top + height/2;
+    this.postFocus = midPoint - this.frameOffset >= 0 && midPoint - this.frameOffset - this.frameHeight < 0;
+    if (this.postFocus && this.currentPost != this.pid) this.feedService.currentPost.next(this.pid);
+  }
+
+  async collectSticker() {
+    if (!this.isAuthenticated) {
+      this.miscellaneousService.lastRoute='/post/' + this.pid;
+      return this.router.navigate(['/auth']);
+    }
+
+    if (this.stickerCollectionState === 0) return;
+    if (!this.uid) return this.stickerCollectionState = -1; //reject
+    this.stickerCollectionState = 0; //loading
+
+    let mixpanelObj = {};
+
+    this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()))
+      .then(() => {
+        this.stickerCollectionState = 1; //confirm
+        mixpanelObj = { collected: true,
+                        status: 'Collected',
+                        engagementRatioBefore: this.engagementRatio,
+                        premium: false,
+                        price: 0,
+                        pid: this.pid,
+                        collecteeID: this.uid,
+                        postType: this.postType};
+      }).catch((e) => {
+        this.stickerCollectionState = -1; //reject
+        const popUpObj = new PopUp(e,'Okay', undefined, ['default', 'default']);
+        this.miscellaneousService.setPopUp(popUpObj);
+        mixpanelObj = { collected: false,
+                        status: e,
+                        engagementRatioBefore: this.engagementRatio,
+                        premium: false,
+                        price: 0,
+                        pid: this.pid,
+                        collecteeID: this.uid,
+                        postType: this.postType}
+      }).finally(() => {
+        this.mixpanelService.stickerCollectionTrack(mixpanelObj);
+      });
   }
 
   postView() {
@@ -251,91 +287,20 @@ export class PostComponent implements OnInit, OnDestroy {
     if (this.showDetails) this.mixpanelService.openHolderListTrack({ pid: this.pid, creatorID: this.uid, postType: this.postType });
   }
 
+  usernameClick() {
+    this.mixpanelService.setRoutingVia('post');
+  }
+
   stopPropagation(event) {
     event.stopPropagation();
   }
 
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  stickerTrackByFn(index, item: ProfileSticker) {
+    return !!item ? item.pid : index;
   }
 
-  allowProcessing() {
-    return new Promise<boolean>((resolve) => {
-      combineLatest([this.collectionLoaded,this.engagementLoaded]).subscribe(results => {
-        if (results[0] === true && results[1] === true) resolve(true);
-      }, async (error) => {
-        this.stickerCollectionState = -1; //reject
-        const popUpObj = new PopUp("An unknown error occurred! Try again later.",'Okay', undefined, ['default', 'default']);
-        this.miscellaneousService.setPopUp(popUpObj);
-        await this.miscellaneousService.getPopUpInteraction().pipe(first()).toPromise();
-        return; //end
-      });
-    })
-  }
-
-  async collectSticker() {
-    this.auth.onAuthStateChanged(async (user) => {
-      this.isAuthenticated = !!user;
-      if (this.isAuthenticated)  {
-
-        if (this.stickerCollectionState === 0) return;
-        this.stickerCollectionState = undefined; //intermediate state
-        await this.sleep(50);
-        this.stickerCollectionState = 0; //loading
-
-        const val = await this.allowProcessing();
-
-        this.myUid = user.uid;
-
-        for (let key in this.holderList) {
-          if (this.holderList[key].collectorID === this.myUid) {
-            this.stickerCollectionState = -1; //reject
-            const popUpObj = new PopUp("You already collected this sticker!",'Okay', undefined, ['default', 'default']);
-            this.miscellaneousService.setPopUp(popUpObj);
-            return this.mixpanelService.stickerCollectionTrack({collected: false,
-                                                                status: 'Already collected',
-                                                                engagementRatioBefore: this.engagementRatio,
-                                                                premium: false,
-                                                                price: 0,
-                                                                pid: this.pid,
-                                                                collecteeID: this.uid,
-                                                                postType: this.postType}); //end
-          }
-        }
-
-        if (this.engagementRatio < 1) {
-          const success = await this.activityService.addCollection(new Collection(this.myUid, this.uid, this.pid, new Date().getTime()));
-          this.stickerCollectionState = 1; //confirm
-          return this.mixpanelService.stickerCollectionTrack({collected: success,
-                                                              status: 'Collected',
-                                                              engagementRatioBefore: this.engagementRatio,
-                                                              premium: false,
-                                                              price: 0,
-                                                              pid: this.pid,
-                                                              collecteeID: this.uid,
-                                                              postType: this.postType});
-        } else {
-          this.stickerCollectionState = -1; //reject
-          const popUpObj = new PopUp("There are no more stickers left!",'Okay', undefined, ['default', 'default']);
-          this.miscellaneousService.setPopUp(popUpObj);
-          return this.mixpanelService.stickerCollectionTrack({collected: false,
-                                                              status: 'Reached full engagement',
-                                                              engagementRatioBefore: this.engagementRatio,
-                                                              premium: false,
-                                                              price: 0,
-                                                              pid: this.pid,
-                                                              collecteeID: this.uid,
-                                                              postType: this.postType}); //end
-        }
-      } else {
-        this.miscellaneousService.lastRoute='/post/' + this.pid;
-        this.router.navigate(['/auth']);
-      }
-    });
-  }
-
-  usernameClick() {
-    this.mixpanelService.setRoutingVia('post');
+  holderTrackByFn(index, item: Holder) {
+    return !!item ? item.collectorID : index;
   }
 
   ngOnDestroy() {

@@ -79,8 +79,8 @@
 
       </div>
 
-      <div *ngIf="feedList$ | async; let posts; else loader">
-        <div class="post-container" *ngFor="let post of posts; let i = index;" #post>
+      <div *ngIf="feedList$ | async; let posts; else loader;">
+        <div class="post-container" *ngFor="let post of posts; let i = index; trackBy: trackByFn" #post>
           <app-post [pid]="post.pid" [uid]="post.creatorID"></app-post>
         </div>
           <!-- No Posts placeholder  -->

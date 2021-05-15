@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { CustomMetadata } from './post.model';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class UsersService {
 
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage,
+              private auth: AngularFireAuth,
               private mixpanelService: MixpanelService,
               private miscellaneousService: MiscellaneousService) {
     this.profileDetailsCollection = afs.collection<ProfileDetails>('profile details');
@@ -45,9 +47,15 @@ export class UsersService {
   updateProfileDetails(uid: string, details: any) {
     let obj = {...details};
     this.profileDetailsCollection.doc(uid).update(obj)
-      .then(() => {
-        if (!!details.description) this.mixpanelService.profileDescriptionTrack();
-        if (!!details.link) this.mixpanelService.profileLinkTrack();
+      .then(async () => {
+        if (!!details.description) {
+          this.mixpanelService.profileDescriptionTrack();
+          this.mixpanelService.setProperty((await this.auth.currentUser).uid, 'description', details.description.length > 0);
+        }
+        if (!!details.link) {
+          this.mixpanelService.profileLinkTrack();
+          this.mixpanelService.setProperty((await this.auth.currentUser).uid, 'link', details.link.length > 0);
+        }
       });
   }
 
@@ -80,12 +88,16 @@ export class UsersService {
     });
     const count = profileSticker.filter((sticker) => !!sticker).length;
     this.profileStickersCollection.doc(uid).update({stickers: stickerArray})
-      .then(() => this.mixpanelService.profileStickersTrack({numberOfStickers: count,
-                                                             sticker1: !!profileSticker[0], //counted from the right side
-                                                             sticker2: !!profileSticker[1],
-                                                             sticker3: !!profileSticker[2],
-                                                             sticker4: !!profileSticker[3],
-                                                             sticker5: !!profileSticker[4]}));
+      .then(async () => {
+        this.mixpanelService.profileStickersTrack({numberOfStickers: count,
+                                                    sticker5: !!profileSticker[0], //counted from the left side
+                                                    sticker4: !!profileSticker[1],
+                                                    sticker3: !!profileSticker[2],
+                                                    sticker2: !!profileSticker[3],
+                                                    sticker1: !!profileSticker[4]})
+
+        this.mixpanelService.setProperty((await this.auth.currentUser).uid, 'profile stickers', count)
+      });
   }
 
   //--------------------------------------- Personal Details ---------------------------------------
@@ -129,7 +141,7 @@ export class UsersService {
     const file = content;
     const filePath = 'display pictures/' + uid +'/original';
     const ref = this.storage.ref(filePath);
-    const metadataUp = {contentType: file.type, customMetadata: {...customMetadata}};
+    const metadataUp = {contentType: file.type,  cacheControl: 'public, max-age=31536000', customMetadata: {...customMetadata}};
     const task = ref.put(file, metadataUp);
     return task.percentageChanges();
   }
@@ -144,7 +156,10 @@ export class UsersService {
 
     this.updateDisplayPicture(uid, content, customMetadata).pipe(first(progress => progress === 100)).subscribe(response => {
       this.updateDisplayPictureRef(uid, displayPicture)
-        .then(() => success = true)
+        .then(() => {
+          success = true;
+          this.mixpanelService.setProperty(uid, 'dp', true);
+        })
         .catch(() => {
           success = false;
           this.miscellaneousService.setPopUp(new PopUp("There was a problem while uploading your display picture! Try again later",
@@ -153,22 +168,23 @@ export class UsersService {
                                                        ['default', 'reject']));
         })
         .finally(() => {
+          this.miscellaneousService.endLoading();
+
           this.mixpanelService.dpUpdateTrack({
             fileType: content.type,
             fileSize: content.size,
             fileDimensions: {width: +customMetadata.width, height: +customMetadata.height},
             success: success
           });
-          this.miscellaneousService.endLoading();
         });
     }, error => {
+      this.miscellaneousService.endLoading();
       this.mixpanelService.dpUpdateTrack({
         fileType: content.type,
         fileSize: content.size,
         fileDimensions: {width: +customMetadata.width, height: +customMetadata.height},
         success: success
       });
-      this.miscellaneousService.endLoading();
     });
   }
 

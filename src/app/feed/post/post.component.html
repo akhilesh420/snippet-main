@@ -17,7 +17,7 @@
     </div>
 
     <!-- Profile stickers -->
-    <div *ngFor='let sticker of (profileStickers$ | async).stickers; let i = index;'
+    <div *ngFor='let sticker of (profileStickers$ | async).stickers; let i = index; trackBy: stickerTrackByFn'
          class="displaySticker {{profileStickerClasses[i]}}"
         [ngClass]="{'displaySticker-bck': sticker === 'loading'}">
       <app-sticker *ngIf='sticker != null && sticker != "loading"' [pid]="sticker.pid" location='post'></app-sticker>
@@ -88,7 +88,7 @@
     </ng-template>
 
     <!-- buffering spinner -->
-    <div class="buffering-ring center-absolute" *ngIf='buffering && !playFailSafe'><div></div><div></div><div></div><div></div></div>
+    <app-loading-spinner class="center-absolute" *ngIf='buffering && !playFailSafe'></app-loading-spinner>
 
     <!-- Fail-safe button -->
     <div class = "center-absolute" *ngIf='playFailSafe' (click)='videoToggle(); stopPropagation($event);'>
@@ -108,13 +108,17 @@
 
       </div>
 
-      <ul class = "holderSpace">
+      <ul class = "holderSpace" *ngIf='(holderList | async) as holders; else holderLoader'>
 
-          <li *ngFor='let holder of holderList'>
-            <app-holder [uid]='holder.collectorID'> </app-holder>
+          <li *ngFor='let holder of holders;trackBy: holderTrackByFn'>
+            <app-holder [uid]='holder.collectorID'></app-holder>
           </li>
 
       </ul>
+
+      <ng-template #holderLoader>
+        <app-loading-spinner class="center-absolute"></app-loading-spinner>
+      </ng-template>
 
     </div>
 

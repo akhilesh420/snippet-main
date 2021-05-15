@@ -275,6 +275,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   previousClick() {
     if (this.isCreating) return;
 
+    --this.stepCounter;
     if (this.currentStep === 'description') {
       this.router.navigate(['/create/content']);
       return;
