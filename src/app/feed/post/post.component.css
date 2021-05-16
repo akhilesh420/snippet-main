@@ -22,6 +22,7 @@ p {
   display: inline-block;
   overflow: hidden;
   cursor: pointer;
+  transition: box-shadow 250ms ease;
 }
 
 .creatorDP > img {
@@ -38,21 +39,22 @@ p {
   width: calc(100% - 235px);
   height: auto;
   font-family: 'Assistant', sans-serif;
-  font-style: normal;
+  font-style: 16px;
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.02em;
   color: #FFFFFF;
   position: absolute;
-  top: 14px;
+  top: 13px;
   left: 58px;
   text-overflow: ellipsis;
   overflow: hidden;
+  transition: color 250ms ease;
 }
 
 .timeCreated {
   width: calc(100% - 235px);
-  height: 15px;
+  height: 16px;
   font-family: 'Assistant', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -112,6 +114,11 @@ p {
   width: 100%;
 }
 
+.forHoverPurposes {
+  height: auto;
+  width: calc(100% - 178px);
+}
+
 .postContainer {
   width: 100%;
   height: 100%;
@@ -124,6 +131,7 @@ p {
   border-bottom-right-radius: 8px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .postContent {
@@ -138,7 +146,7 @@ p {
 
 .postTitle {
   width: 90%;
-  padding-left: 12px;
+  padding-left: 14px;
   padding-top: 12px;
   padding-bottom: 14px;
   font-family: 'Assistant', sans-serif;
@@ -162,6 +170,7 @@ p {
   display: inline-block;
   width: 10%;
   height: auto;
+  margin-top: 3px;
 
 }
 
@@ -176,13 +185,16 @@ p {
 
 .engagementBar {
   position: relative;
-  bottom: 0px;
+  top: 0px;
   height: 3px;
-  width: 80%;
-  background-color: hsl(43, 74%, 56%);
-  overflow: hidden;
-  /* border-top-left-radius: 3px;
-  border-top-right-radius: 0px; */
+  width: calc(100% - 10px);
+}
+
+.realEngagementBar {
+  width: 100%;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 5px;
 }
 
 .holderList {
@@ -192,7 +204,7 @@ p {
   height: 70%;
   max-height: 360px;
   border-radius: 10px;
-  background: rgba(11, 11, 11, 0.90);
+  background: rgba(3, 3, 3, 0.90);
   box-shadow: 0px 3px 4px 1px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   min-width: 300px;
@@ -205,7 +217,7 @@ p {
   height: 10%;
   font-size: calc(16px * var(--norm-height));
   font-family: 'Assistant', sans-serif;
-  font-weight: bold;
+  font-weight: 600;
   letter-spacing: 0.05em;
   color: #E2B33D;
   padding-left: 12px;
@@ -277,8 +289,8 @@ li {
 }
 
 .postDetailsExp {
-  width: 77.5%;
-  height: 100%;
+  width: calc(100% - 92px);
+  margin-top: 12px;
   display: inline-block;
 }
 
@@ -287,9 +299,9 @@ li {
   font-weight: 600;
   letter-spacing: 0.02em;
   font-size: 14px;
-  line-height: 14px;
   align-items: center;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.95);;
+
 }
 
 .spacer {
@@ -306,35 +318,36 @@ li {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  line-height: 14px;
   align-items: center;
-  color: #FFFFFF;
+  color: rgba(255, 255, 255, 0.95);;
 }
 
 .postDescriptionExp {
   font-family: 'Assistant', sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 350;
   font-size: 14px;
-  line-height: 20px;
   letter-spacing: 0.02em;
+  line-height: 16px;
   color: #FFFFFF;
-  padding-left: 10px;
-  padding-top: 2px;
-  padding-bottom: 8px;
+  min-height: 66px;
+  padding-left: 1px;
+  padding-right: 5px;
   word-wrap: break-word;
+  margin-bottom: 10px;
 }
 
 
 .postStickerExp {
-  width: 22.5%;
-  height: 100%;
+  width: 90px;
+  padding-bottom: 4px;
   display: inline-block;
 }
 
 .postMetricsExp {
-  padding-top: 6px;
-  padding-left: 10px;
+  margin-top: 6px;
+  padding-left: 1px;
+  margin-bottom: 2px;
 }
 
 .postStickerHolderExp {
@@ -372,27 +385,37 @@ li {
   display: flex;
   border-radius: 50%;
   float: right;
-  margin-right: 8px;
+  margin-right: 10px;
+  transition: transform 250ms;
 }
 
 .collectPrompt {
-  margin-top: 2px;
-  font-family: 'Assistant', sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  align-items: center;
-  letter-spacing: 0.02em;
-  color: #FFFFFF;
+
+  width: 65px;
+  height: 22px;
+  border-radius: 5px;
+  background: #030303;
+  border: 1px solid #FFFFFF;
+  margin-top: 6px;
+  margin-bottom: 8px;
   float: right;
-  margin-right: 43px;
-  transform: translate(50%, 0%);
-  padding-bottom: 4px;
+  margin-right: 13px;
+  display: grid;
+  place-items: center;
+  transition: background-color 250ms ease;
+
 }
 
+.promptText {
 
+  font-family: 'Assistant', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+  transition: color 250ms ease;
 
-/* changes end */
-
+}
 
 .postSticker-bck {
   background-color: #8F8F8F;
@@ -424,8 +447,8 @@ li {
   .postContainer {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
   }
 
   .postContent {
@@ -435,16 +458,18 @@ li {
     max-height: calc(100vh - 54px);
   }
 
-}
-
-@media only screen and (max-width:360px) {
-
-  .postStickerExp {
-    width: 28%;
+  .realEngagementBar {
+    height: 3px;
   }
 
-  .postDetailsExp {
-    width: 72%;
+  .postDescriptionExp {
+    padding-left: 0px;
+  }
+
+  .postMetricsExp {
+    padding-left: 0px;
+    margin-top: 2px;
+    margin-bottom: 0px;
   }
 
 
@@ -827,3 +852,35 @@ li {
     transform: rotate(360deg);
   }
 }
+
+
+@media (hover: hover) and (pointer: fine) {
+
+  .postStickerExp:hover .postStickerHolderOutline {
+
+    transform: translateY(-5px);
+
+  }
+
+  .postStickerExp:hover .collectPrompt {
+
+    background: #E2B33D;
+    border: none
+
+  }
+
+  .postStickerExp:hover .promptText {
+    color: #FFFFFF;
+  }
+
+  .forHoverPurposes:hover .creatorName{
+    color: #E2B33D;
+  }
+
+  .forHoverPurposes:hover .creatorDP {
+    box-shadow: 0 0 0 1px #E2B33D;
+  }
+
+}
+
+

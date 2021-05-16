@@ -1,13 +1,12 @@
-import { MixpanelService } from './mixpanel.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
-import firebase from 'firebase';
-import { map, take } from 'rxjs/operators';
+
+import { map } from 'rxjs/operators';
 import { Collection } from './activity.model';
 
+import firebase from 'firebase';
+import 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,7 @@ export class ActivityService {
 
   //Firestore Collection
 
-  constructor(private afs: AngularFirestore,
-              private auth: AngularFireAuth) {}
+  constructor(private afs: AngularFirestore) {}
 
 
   // --------------------------------------- Activity ---------------------------------------
@@ -66,35 +64,48 @@ export class ActivityService {
   // collectorID: UID of the person who collected the sticker
   // collecteeID: UID of the person whose sticker was collected
   async addCollection(collection: Collection) {
-    let success: boolean;
-    const batch = this.afs.firestore.batch();
     const cid = this.afs.createId();
 
-    //Add collection
-    batch.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+    const pid = collection.pid;
+    const uid = collection.collectorID;
 
-    //Add holder and user collection
-    const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+    const hlDocRef = this.afs.firestore.collection('posts/' + pid + '/holders').doc(uid);
+    const sdDocRef = this.afs.firestore.collection('sticker details').doc(pid);
+    const aDocRef = this.afs.firestore.collection('activity/'+pid+'/metrics').doc('collected');
 
-    batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
-    batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+    const transaction = this.afs.firestore.runTransaction(async (t) => {
 
-    //Update Activity
-    batch.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
-                  {counter: firebase.firestore.FieldValue.increment(1),
-                    cid: cid}); //user
-    batch.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
-                  {counter: firebase.firestore.FieldValue.increment(1),
-                    cid: cid}); //post
+      return Promise.all([t.get(hlDocRef), t.get(sdDocRef), t.get(aDocRef)]).then((response) => {
 
-    await batch.commit()
-      .then(() => success = true)
-      .catch(async (e) => {
-        success = false;
-        console.log("error in collection", e);
-        throw new Error('Error in sticker collection');
-      });
-    return success
+        if (response[0].exists) return Promise.reject("You already collected this sticker!");
+        if (!response[1].exists || !response[2].exists) return Promise.reject("An error occurred while processing your request. Please try again later!");
+        if (response[1].data().amountReleased <= response[2].data().counter) return Promise.reject("There are no more stickers left!");
+
+        //Add collection
+        t.set(this.afs.firestore.doc('collection/'+cid), {...collection});
+
+        //Add holder and user collection
+        const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+
+        t.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
+        t.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
+
+        //Update Activity
+        t.update(this.afs.firestore.doc('activity/'+ collection.collecteeID + '/metrics/collected'),
+                      {counter: firebase.firestore.FieldValue.increment(1),
+                        cid: cid}); //user
+        t.update(this.afs.firestore.doc('activity/'+ collection.pid + '/metrics/collected'),
+                      {counter: firebase.firestore.FieldValue.increment(1),
+                        cid: cid}); //post
+        return Promise.resolve();
+      })
+    })
+
+    return transaction.catch((e) => {
+      if (e.message === 'Connection failed.') throw("Please check your internet connection and try again."); //Failed internet connection
+      if (e.name)  throw("An error occurred while processing your request. Please try again later!"); //Other error and exceptions
+      throw(e); //Custom error
+    })
   }
 
   // get collection by uid

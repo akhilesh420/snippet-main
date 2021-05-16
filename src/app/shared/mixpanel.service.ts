@@ -1,10 +1,14 @@
+import { DisplayPicture, ProfileSticker } from 'src/app/shared/profile.model';
+import { Holder, StickerDetails, Feed } from './post.model';
+import { Collection } from 'src/app/shared/activity.model';
+import { PersonalDetails, ProfileDetails } from './profile.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { NavigationEnd, Router, Event as NavigationEvent, NavigationStart } from '@angular/router';
+import { NavigationEnd, Router, Event as NavigationEvent } from '@angular/router';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as mixpanel from 'mixpanel-browser';
-import { filter, pairwise, startWith, take } from 'rxjs/operators';
+import { filter, pairwise, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +55,7 @@ export class MixpanelService {
  * @memberof MixpanelService
  */
   identify(userToken: string): void {
+    console.log('user identified');
     mixpanel.identify(userToken);
   }
 
@@ -95,6 +100,17 @@ export class MixpanelService {
     mixpanel.reset();
   }
 
+  /**
+ * Increments property for user
+ *
+ * @memberof MixpanelService
+ */
+  increment(property: string, counter = 1): void {
+    mixpanel.people.increment(property, counter);
+  }
+
+  // Events
+
   setRoutingVia(via: string) {
     this.routingVia = via;
   }
@@ -121,10 +137,7 @@ export class MixpanelService {
   }
 
   async stickerCollectionTrack(action: any = {}) {
-    const currentUser = (await this.auth.currentUser);
-    const firstCollectionFromCollectee = !(await this.afs.collection('feed/'+currentUser.uid+'/collection', ref => ref.where('creatorID', '==', action.collecteeID).limit(1))
-                                                        .valueChanges({idField: 'pid'}).pipe(take(1)).toPromise());
-    mixpanel.track('sticker collect', {firstCollectionFromCollectee: firstCollectionFromCollectee, ...action});
+    mixpanel.track('sticker collect', action);
     this.timeEvent('sticker collect');
   };
 
@@ -185,7 +198,57 @@ export class MixpanelService {
     mixpanel.track('route change', action);
   }
 
-  avatarImage(url: string) {
-    mixpanel.people.set({$avatar: url});
+  //Users
+
+  getProperty(uid:string, name: string) {
+    return this.afs.doc('mixpanel/'+uid+'/'+name+'/information').valueChanges().pipe(take(1)).toPromise()
+      .catch((e) => {
+        console.log(e);
+        return false;
+      });
+  }
+
+  setProperty(uid: string, name: string, property: any) {
+    mixpanel.people.set(name, property);
+    this.afs.doc('mixpanel/'+uid+'/'+name+'/information').set({set: true, dateUpdated: new Date()}).catch((e) => console.log(e));
+  }
+
+  async setUserProperties(uid: string) {
+    if (!(await this.getProperty(uid, '$email'))) this.setProperty(uid, '$email', (await this.auth.currentUser).email);
+    if (!(await this.getProperty(uid, '$name'))) this.setProperty(uid, '$name', (await this.afs.doc<{username: string}>('username/'+uid).valueChanges().pipe(take(1)).toPromise()).username);
+    if (!(await this.getProperty(uid, 'full name'))) this.setProperty(uid, 'full name', (await this.afs.doc<PersonalDetails>('personal details/'+uid).valueChanges().pipe(take(1)).toPromise()).name);
+    if (!(await this.getProperty(uid, 'stickers collected'))) this.setProperty(uid, 'stickers collected', ((await this.afs.doc<{counter: number}>('activity/'+uid+'/metrics/collected').valueChanges().pipe(take(1)).toPromise()).counter).toString());
+    if (!(await this.getProperty(uid, 'posts'))) this.setProperty(uid, 'posts', ((await this.afs.collection('feed/'+uid+'/posts').valueChanges().pipe(take(1)).toPromise()).length).toString());
+    if (!(await this.getProperty(uid, 'unique collection'))) this.setProperty(uid, 'unique collection', (await this.getUniqueCollection(uid)).length);
+    if (!(await this.getProperty(uid, 'stickers released'))) this.setProperty(uid, 'stickers released', await this.getStickerReleased(uid));
+    if (!(await this.getProperty(uid, 'profile stickers'))) this.setProperty(uid, 'profile stickers', await this.getProfileStickers(uid));
+    if (!(await this.getProperty(uid, 'dp'))) this.setProperty(uid, 'dp',(await this.afs.doc<DisplayPicture>('display picture/'+uid).valueChanges().pipe(take(1)).toPromise()).fileFormat != 'null');
+    if (!(await this.getProperty(uid, 'description'))) this.setProperty(uid, 'description',(await this.afs.doc<ProfileDetails>('profile details/'+uid).valueChanges().pipe(take(1)).toPromise()).description.length != 0);
+    if (!(await this.getProperty(uid, 'link'))) this.setProperty(uid, 'link',(await this.afs.doc<ProfileDetails>('profile details/'+uid).valueChanges().pipe(take(1)).toPromise()).link.length != 0);
+  }
+
+  async getUniqueCollection(uid: string) {
+    const userPosts = await this.afs.collection<Feed>('feed/'+uid+'/collection').valueChanges().pipe(take(1)).toPromise();
+    const uniqueCollections = [... new Set((userPosts).map(x => x.creatorID))];
+    console.log(userPosts, uniqueCollections);
+    return uniqueCollections;
+  }
+
+  async getStickerReleased(uid: string) {
+    const userPosts = this.afs.collection<Collection>('feed/'+uid+'/posts').valueChanges({idField: 'pid'}).pipe(take(1)).toPromise();
+    let stickerDetailsObs: Promise<StickerDetails>[] = [];
+    (await userPosts).forEach(async post => {
+      stickerDetailsObs.push(this.afs.doc<StickerDetails>('sticker details/'+post.pid).valueChanges().pipe(take(1)).toPromise());
+    })
+    let stickersReleased: number = 0;
+    (await Promise.all(stickerDetailsObs)).forEach(val => stickersReleased += val.amountReleased); //Reduce not working
+    return stickersReleased;
+  }
+
+  async getProfileStickers(uid: string) {
+    const userProfileStickers = this.afs.doc<{stickers: (ProfileSticker | string)[]}>('profile stickers/'+uid).valueChanges().pipe(take(1)).toPromise();
+    let profileStickers: number = 5;
+    (await userProfileStickers).stickers.forEach(sticker => profileStickers = sticker === 'empty' ? --profileStickers : profileStickers)
+    return profileStickers
   }
 }

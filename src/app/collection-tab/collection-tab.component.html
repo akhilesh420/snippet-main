@@ -23,17 +23,18 @@
 
     </div>
 
-    <div class = "row no-margin-no-padding title" >
-        <p class = "titleText" (click)='goToCollection();' [ngStyle]='{"cursor": !editMode ? "pointer" : null}'> {{!editMode ? 'My Collection' : 'Choose a Sticker'}} </p>
-    </div>
-
+    
     <div class = "row no-margin-no-padding scroll">
 
         <div class = "col no-margin-no-padding scrollSpace">
 
+        <div class = "title" >
+                <p class = "titleText" (click)='goToCollection();' [ngStyle]='{"cursor": !editMode ? "pointer" : null}'> {{!editMode ? 'My Collection' : 'Choose a Sticker'}} </p>
+        </div>
+
         <ul class = "no-margin-no-padding" *ngIf='isAuthenticated'>
 
-            <li *ngFor='let feed of feedList;'
+            <li *ngFor='let feed of (feedList | async); trackBy: trackByFn'
                 class = "no-margin-no-padding padding-bottom ">
               <app-collection [feed]='feed'></app-collection>
             </li>

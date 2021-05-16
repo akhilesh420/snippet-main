@@ -1,132 +1,20 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
-
-/* Classes for Multiple Components */
-
-/* .no-margin-no-padding {
-
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-}
-
-
-/* Classes for single components */
-
-/* .collection {
-
-    height: 100%;
-    width: 100%;
-
-}
-
-.collectionBackpanel {
-
-    height: 100%;
-    width: 100%;
-
-}
-
-.postDetails {
-
-    height: 100%;
-    width: 100%;
-
-}
-
-.postTitle {
-
-    height: 50%;
-    width: 100%;
-    margin-top: 0.8%;
-    overflow: hidden;
-}
-
-.creatorName {
-
-    height: 45%;
-    width: 100%;
-    overflow: hidden;
-    margin-top: 0.8%;
-
-}
-
-.stickerContainer {
-
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-    overflow: hidden;
-
-}
-
-.sticker-bck {
-  background-color: #c4c4c4;
-}
-
-.stickerContainer > img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.title {
-
-    padding-top: 2%;
-    padding-left: 3%;
-    text-align: left;
-    font-family: "Assistant";
-    font-style: normal;
-    font-size: 14px;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
-
-}
-
-
-.name {
-
-    padding-left: 3%;
-    text-align: left;
-    font-family: 'Comfortaa';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.8);
-
-} */ 
-
 .collection {
     display: flex;
     flex-direction: row;
 }
 
 .postSticker {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     margin-left: 10px;
     display: inline-flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .detailsSpace {
-    height: 38px;
+    height: 42px;
     width: calc(100% - 58px);
     margin-left: 10px;
     display: inline-flex;
@@ -139,10 +27,9 @@
     height: 16px;
     width: 98%;
     border-radius: 3px;
-    /* background-color: #c4c4c4; */
-    margin-top: 3px;
+    margin-top: 4px;
     font-family: 'Assistant';
-    font-weight: normal;
+    font-weight: 600;
     font-size: 14px;
     line-height: 0px;
     align-items: center;
@@ -150,7 +37,9 @@
     color: #FFFFFF;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
+
 
 .creatorName {
 
@@ -159,17 +48,17 @@
     height: 12px;
     width: 85%;
     border-radius: 3px;
-    /* background-color: #c4c4c4; */
     margin-top: 4px;
-    font-family: 'Comfortaa';
-    font-weight: normal;
-    font-size: 10px;
+    font-family: 'Assistant';
+    font-weight: 400;
+    font-size: 14px;
     line-height: 0px;
     align-items: center;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
     color: rgba(255, 255, 255, 0.8);
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 
 }
 
@@ -184,7 +73,6 @@
      object-fit: cover;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: inset 2px 4px 4px rgb(0 0 0 / 25%);
 }
 
 
