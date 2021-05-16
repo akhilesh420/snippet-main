@@ -65,6 +65,30 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
   }
 });
 
+exports.deletePost = functions.https.onCall(async (data, context) => {
+
+  try {
+    const uid = data.uid;
+    const token = context.auth.token;
+
+    functions.logger.info('user token:', token);
+
+    // Verify the ID token first.
+    admin
+    .auth()
+    .verifyIdToken(idToken)
+    .then((claims) => {
+      if (claims.admin === true) {
+        // Allow access to requested admin resource.
+        functions.logger.info('Admin account');
+      }
+    });
+
+  } catch(e) {
+    functions.logger.info(e);
+  }
+});
+
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
 .document('post content/{pid}')
 .onCreate(async (snap, context) => {
