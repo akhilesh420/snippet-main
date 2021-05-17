@@ -1,10 +1,12 @@
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { MixpanelService } from './mixpanel.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { forkJoin, throwError } from 'rxjs';
 import { PostContent, PostDetails, StickerDetails, CustomMetadata, Feed } from './post.model';
 
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { MiscellaneousService, PopUp } from './miscellaneous.service';
 import { Collection } from './activity.model';
 
@@ -16,14 +18,24 @@ import 'firebase/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class PostService implements OnInit {
 
   placeholderImg = 'assets/default image/blank_image@2x.png';
 
   constructor(private afs: AngularFirestore,
               private storage: AngularFireStorage,
+              private auth: AngularFireAuth,
+              private fns: AngularFireFunctions,
               private miscellaneousService: MiscellaneousService,
               private mixpanelService: MixpanelService) {}
+
+  // testing
+
+  ngOnInit(): void {
+    this.deletePost('06OsGI9DmxVJhRcCKjjT');
+  }
+
+  // testing
 
   //--------------------------------------- Post infoormation ---------------------------------------
   // Get post info from cloud firestore by PID
@@ -227,6 +239,18 @@ export class PostService {
             success: false
           });
         });
+  }
+
+  async deletePost(pid: string) {
+    console.log('deleting post with pid:', pid);
+    const callable = this.fns.httpsCallable('deletePost'); //delete post
+
+    const data = {pid: pid, uid: (await this.auth.currentUser).uid}
+
+    const data$ = await callable(data).pipe(first()).toPromise()
+      .catch((e) => {return e});
+    console.log(data$);
+    console.log('done');
   }
 
   // --------------------------------------- Error handling ---------------------------------------

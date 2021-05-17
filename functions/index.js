@@ -67,26 +67,40 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
 
 exports.deletePost = functions.https.onCall(async (data, context) => {
 
-  try {
-    const uid = data.uid;
+  const uid = data.uid;
+  const pid = data.pid;
+  let isAdmin = false;
+  let message = 'Post deleted by user';
 
-    // Verify the ID token first.
-    admin
-    .auth()
-    .verifyIdToken(idToken)
-    .then((claims) => {
-      if (claims.admin === true) {
-        // Allow access to requested admin resource.
-        functions.logger.info('User is admin');
-      }
-    });
+  return new Promise(async (resolve, reject) => {
+    // Lookup the user associated with the specified uid.
+    await admin
+      .auth()
+      .getUser(uid)
+      .then(async (userRecord) => {
+        // The claims can be accessed on the user record.
+        if (!!userRecord.customClaims && userRecord.customClaims['admin'] == true) {
+          // Allow access to requested admin resource.
+          functions.logger.info('User is admin');
+          isAdmin = true;
+          message = 'Post deleted for violating community guidelines'
+        } else {
+          await admin.firestore()
+            .collection('posts')
+            .doc(pid)
+            .get()
+            .then(res => {
+              functions.logger.info('post data', res);
+              if (res.creatorId != uid) reject("You don't have access");
+            });
+        }
+      });
 
     functions.logger.info('Done');
-
-
-  } catch(e) {
-    functions.logger.info(e);
-  }
+    resolve('success');
+  })
+  .then((val) => {return {message: val}})
+  .catch((e) =>{return {message: e}});
 });
 
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore

@@ -1,3 +1,4 @@
+import { PostService } from './shared/post.service';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private auth: AngularFireAuth,
               private afs: AngularFirestore,
               private mixpanelService: MixpanelService,
+              private postService: PostService,
               @Inject(DOCUMENT) private _document ) {
     document.addEventListener("visibilitychange", function() { //mute posts on tab change
       feedService.mutePosts.next(!!document.hidden);
@@ -98,6 +100,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
       this.mixpanelService.signIn(this.myUid); //Identify user with uid
       this.mixpanelService.setUserProperties(this.myUid); //set user properties
+
+      //test//
+      this.postService.ngOnInit();
+      //test//
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
@@ -146,7 +152,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onWindowScroll($event){
-    console.log('scroll')
     this.scrollService.setScroll();
   }
 
