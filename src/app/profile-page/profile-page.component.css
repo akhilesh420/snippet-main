@@ -429,5 +429,148 @@
 
 }
 
+@media only screen and (max-width:950px) {
+
+    .topPanel {
+        height:230px;
+    }
+
+    .metrics {
+        margin-top: 0px;
+    }
+
+    .metric {
+        margin-top: 8px;
+    }
+
+    .dpContainer {
+        margin-top: 94px;
+        margin-left: 12px;
+    }
+
+    .divider {
+        width: calc(100% - 40px);
+        right: 20px;
+    }
+
+    .postsButton {
+        left: 20px;
+    }
+
+    .collectionButton {
+        left: 108px;
+    }
+
+    .displaySticker {
+        display: block;
+        position: absolute;
+        right: 0px;
+        width: auto;
+    }
+
+    .sticker {
+        margin-right: 12px;
+    }
+
+    .profileDetails {
+        margin-top: 126px;
+        width: calc(100% - 188px);
+    }
+
+    .infoPanel {
+        margin-left: 20px;
+        width: calc(100% - 40px);
+        background: none; 
+        box-shadow: none;
+       }
+
+    .metrics {
+
+        margin-left: 0px;
+
+    }
+
+    .button {
+
+        margin-left: 0px;
+        margin-top: 4px;
+
+    }
+
+    .link {
+
+        margin-left: 0px;
+        margin-top: 12px;
+
+    }
+
+    .description {
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 8px;
+    }
+
+    .joiningDate {
+        display: none;
+    }
+
+    .metricText > span {
+        font-size: 20px;
+        margin-top: 2px;
+    }
+
+    .metricNumbers >span {
+        font-size: 20px;
+    }
+  
+}
+
+@media only screen and (max-width:550px) {
+
+    .topPanel {
+        height: 206px;  
+    }
+
+    .dpContainer {
+        width: 110px;
+        height: 110px;
+    }
+
+    .displaySticker {
+        top: 18px;
+        margin-top: 0px;
+    }
+
+    .profileDetails {
+        margin-top: 116px;
+        width: calc(100% - 146px);
+    }
+
+    .userName .fullName {
+        width: 98%;
+    }
+
+
+    .userName > span {
+        font-size: 28px;
+    }
+
+    .fullName > span {
+        font-size: 22px;
+    }
+
+    
+
+
+}
+
+@media only screen and (max-width:372px) {
+
+.sticker {
+    margin-right: 8px;
+}
+
+
+}
 
 
