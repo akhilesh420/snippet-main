@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
+const db = admin.firestore();
+
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -67,10 +69,10 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
 
 exports.deletePost = functions.https.onCall(async (data, context) => {
 
-  const uid = data.uid;
   const pid = data.pid;
-  let isAdmin = false;
-  let message = 'Post deleted by user';
+  var uid = data.uid;
+  var isAdmin = false;
+  var message = 'Post deleted by user';
 
   return new Promise(async (resolve, reject) => {
     // Lookup the user associated with the specified uid.
@@ -84,23 +86,56 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
           functions.logger.info('User is admin');
           isAdmin = true;
           message = 'Post deleted for violating community guidelines'
-        } else {
-          await admin.firestore()
-            .collection('posts')
+        }
+
+        await db.collection('posts')
             .doc(pid)
             .get()
             .then(res => {
-              functions.logger.info('post data', res);
-              if (res.creatorId != uid) reject("You don't have access");
+              const data = res.data();
+              functions.logger.info('post data', data);
+              if (data.creatorId != uid && !isAdmin) reject("You don't have access");
+              else uid = data.creatorId;
             });
-        }
       });
 
-    functions.logger.info('Done');
+
+    var refs = [];
+    refs.push(db.collection('feed/explore/global').doc(pid));
+    refs.push(db.collection('feed/' + uid + '/posts').doc(pid));
+
+    await db.collection('posts/' + pid + '/holders')
+      .get()
+      .then(res => {
+        res.forEach((doc) => {
+          refs.push(db.collection('feed/' + doc.id + '/collection').doc(pid));
+        })
+      });
+
+    await db.runTransaction(async (t) =>{
+      var getRefs = [];
+      refs.forEach((ref) => {
+        getRefs.push(t.get(ref));
+      });
+
+      return t.get(db.collection('activity').doc(pid))
+        .then((res) => {
+
+        })
+      return Promise.all(getRefs)
+        .then((res) => {
+          res.forEach((doc) => {
+            functions.logger.info(doc.data());
+          })
+        })
+      });
+
+
+    functions.logger.info('done');
     resolve('success');
   })
-  .then((val) => {return {message: val}})
-  .catch((e) =>{return {message: e}});
+  .then((val) => {return {message: val, success: true}})
+  .catch((e) =>{return {message: e, success: false}});
 });
 
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
