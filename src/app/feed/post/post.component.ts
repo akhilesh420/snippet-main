@@ -74,6 +74,7 @@ export class PostComponent implements OnInit, OnDestroy {
   stickerDetails: StickerDetails;
 
   mutePost: boolean = false;
+  deleted: boolean;
 
   // User stuff
   username$: Observable<{username: string}>;
@@ -127,6 +128,13 @@ export class PostComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated)  this.myUid = user.uid;
     });
+
+    this.postService.getPostInfo(this.pid)
+      .pipe(takeUntil(this.notifier$))
+      .subscribe((res) => {
+        this.deleted = res.deleted;
+        // if (!this.deleted) this.stickerContent = this.postService.getStickerContent(this.pid);
+      });
 
     this.setUpPost();
     this.setUpUser();

@@ -85,7 +85,7 @@ export class ActivityService {
         t.set(this.afs.firestore.doc('collection/'+cid), {...collection});
 
         //Add holder and user collection
-        const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+        const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID, deleted: false};
 
         t.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
         t.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);

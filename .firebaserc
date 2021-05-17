@@ -2,6 +2,6 @@
   "projects": {
     "production": "snippet-web-9818a",
     "testing": "snippet-test2",
-    "default": "snippet-web-9818a"
+    "default": "snippet-test2"
   }
 }

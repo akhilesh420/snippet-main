@@ -165,7 +165,7 @@ export class PostService implements OnInit {
           batch.set(activityCollectedDoc, {counter: 1}); //1 sticker given to creator
           batch.set(activityViewsDoc, {counter: 0});
 
-          const feedObj = {creatorID: uid, dateCreated: dateCreated};
+          const feedObj = {creatorID: uid, dateCreated: dateCreated, deleted: false};
           // feed
           batch.set(profileFeedDoc, feedObj);
           batch.set(exploreFeedDoc, feedObj);
@@ -180,7 +180,7 @@ export class PostService implements OnInit {
           batch.set(this.afs.firestore.doc('collection/'+cid), {...collection});
 
           //Add holder and user collection
-          const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID};
+          const collectionObj = {cid: cid, timeStamp: collection.timeStamp, creatorID: collection.collecteeID, deleted: false};
 
           batch.set(this.afs.firestore.doc('feed/'+ collection.collectorID + '/collection/' + collection.pid), collectionObj);
           batch.set(this.afs.firestore.doc('posts/'+ collection.pid + '/holders/' + collection.collectorID), collectionObj);
@@ -245,7 +245,7 @@ export class PostService implements OnInit {
     console.log('deleting post with pid:', pid);
     const callable = this.fns.httpsCallable('deletePost'); //delete post
 
-    const data = {pid: pid, uid: (await this.auth.currentUser).uid}
+    const data = {pid: pid}
 
     const data$ = await callable(data).pipe(first()).toPromise()
       .catch((e) => {return e});

@@ -70,35 +70,22 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
 exports.deletePost = functions.https.onCall(async (data, context) => {
 
   const pid = data.pid;
-  var uid = data.uid;
-  var isAdmin = false;
+  var uid = context.auth.uid;
+  var isAdmin = context.auth.token.admin || false;
   var reason = 'Post deleted by user';
 
   return new Promise(async (resolve, reject) => {
-    // Lookup the user associated with the specified uid.
-    await admin
-      .auth()
-      .getUser(uid)
-      .then(async (userRecord) => {
-        // The claims can be accessed on the user record.
-        if (!!userRecord.customClaims && userRecord.customClaims['admin'] == true) {
-          // Allow access to requested admin resource.
-          functions.logger.info('User is admin');
-          isAdmin = true;
-          reason = 'Post deleted for violating community guidelines'
-        }
 
-        await db.collection('posts')
-            .doc(pid)
-            .get()
-            .then(res => {
-              const data = res.data();
-              functions.logger.info('post data', data);
-              if (data.creatorID != uid && !isAdmin) reject("You don't have access");
-              else uid = data.creatorID;
-            });
-      });
-
+    // Get post creatorID
+    await db.collection('posts')
+    .doc(pid)
+    .get()
+    .then(res => {
+      const data = res.data();
+      functions.logger.info('post data', data);
+      if (data.creatorID != uid && !isAdmin) reject("You don't have access");
+      else uid = data.creatorID;
+    });
 
     var refs = [];
     refs.push(db.collection('feed/explore/global').doc(pid));

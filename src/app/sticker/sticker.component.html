@@ -1,9 +1,10 @@
 <div (click)="onClick()"
       class="sticker"
       style="cursor: pointer;"
-     *ngIf="stickerContent | async; let content;">
-    <img [src]='content'
-         alt="sticker"
-         (click)="onClick()"
-         appLazyImg>
+     *ngIf="!deleted">
+    <img *ngIf="stickerContent | async; let content;"
+          [src]='content'
+          alt="sticker"
+          (click)="onClick()"
+          appLazyImg>
 </div>

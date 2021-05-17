@@ -1,3 +1,4 @@
+import { takeUntil } from 'rxjs/operators';
 import { MixpanelService } from './../shared/mixpanel.service';
 import { Observable, Subject } from 'rxjs';
 import { PostService } from './../shared/post.service';
@@ -20,12 +21,19 @@ export class StickerComponent implements OnInit, OnDestroy {
   stickerContent: Observable<any>;
   notifier$ = new Subject();
 
+  deleted: boolean;
+
   constructor(private postService: PostService,
               private mixpanelService: MixpanelService,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.stickerContent = this.postService.getStickerContent(this.pid);
+    this.postService.getPostInfo(this.pid)
+      .pipe(takeUntil(this.notifier$))
+      .subscribe((res) => {
+        this.deleted = res.deleted;
+        if (!this.deleted) this.stickerContent = this.postService.getStickerContent(this.pid);
+      });
    }
 
   onClick() {
