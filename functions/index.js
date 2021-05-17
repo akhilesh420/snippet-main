@@ -72,7 +72,7 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
   const pid = data.pid;
   var uid = data.uid;
   var isAdmin = false;
-  var message = 'Post deleted by user';
+  var reason = 'Post deleted by user';
 
   return new Promise(async (resolve, reject) => {
     // Lookup the user associated with the specified uid.
@@ -85,7 +85,7 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
           // Allow access to requested admin resource.
           functions.logger.info('User is admin');
           isAdmin = true;
-          message = 'Post deleted for violating community guidelines'
+          reason = 'Post deleted for violating community guidelines'
         }
 
         await db.collection('posts')
@@ -94,8 +94,8 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
             .then(res => {
               const data = res.data();
               functions.logger.info('post data', data);
-              if (data.creatorId != uid && !isAdmin) reject("You don't have access");
-              else uid = data.creatorId;
+              if (data.creatorID != uid && !isAdmin) reject("You don't have access");
+              else uid = data.creatorID;
             });
       });
 
@@ -103,31 +103,31 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
     var refs = [];
     refs.push(db.collection('feed/explore/global').doc(pid));
     refs.push(db.collection('feed/' + uid + '/posts').doc(pid));
+    const postRef = db.collection('posts').doc(pid);
 
-    await db.collection('posts/' + pid + '/holders')
-      .get()
-      .then(res => {
-        res.forEach((doc) => {
-          refs.push(db.collection('feed/' + doc.id + '/collection').doc(pid));
-        })
-      });
+    const deleteObj = {deleted: true};
 
-    await db.runTransaction(async (t) =>{
-      var getRefs = [];
-      refs.forEach((ref) => {
-        getRefs.push(t.get(ref));
-      });
+    await db.runTransaction(async (t) => {
+      //Re-run transaction incase of new collection
+      return t.get(db.collection('activity/' + pid + '/metrics').doc('collected'))
+        .then(async (res) => {
+          if (!res.exists) return reject('Something went wrong! Try again later');
+          await db.collection('posts/' + pid + '/holders')
+          .get()
+          .then(res => {
+            res.forEach((doc) => refs.push(db.collection('feed/' + doc.id + '/collection').doc(pid)));
+          });
 
-      return t.get(db.collection('activity').doc(pid))
-        .then((res) => {
+          var updateRefs = [];
+          refs.forEach(ref => {
+            updateRefs.push(t.update(ref, deleteObj));
+          });
 
-        })
-      return Promise.all(getRefs)
-        .then((res) => {
-          res.forEach((doc) => {
-            functions.logger.info(doc.data());
-          })
-        })
+          updateRefs.push(t.update(postRef, {reason: reason,...deleteObj}));
+
+          await Promise.all(updateRefs)
+            .catch(e => reject('Something went wrong! Try again later'));
+        }).catch(e => reject('Something went wrong! Try again later'));
       });
 
 

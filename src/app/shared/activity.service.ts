@@ -110,15 +110,17 @@ export class ActivityService {
 
   // get collection by uid
   getUserCollection(uid: string) {
-    return this.afs.collection<any>('feed/'+uid+'/collection', ref => ref.orderBy('timeStamp', 'desc'))
-                      .valueChanges({idField: 'pid'})
-                      .pipe(map(postsList => {
-                        if (!postsList) return postsList;
-                        postsList = postsList.map(post => {
-                          return {dateCreated: new Date(post.timeStamp), creatorID: post.creatorID, pid: post.pid}
-                        })
-                        return postsList;
-                      }));
+    return this.afs.collection<any>('feed/'+uid+'/collection', ref => ref
+        .orderBy('timeStamp', 'desc')
+        .where('deleted','==', false))
+      .valueChanges({idField: 'pid'})
+      .pipe(map(postsList => {
+        if (!postsList) return postsList;
+        postsList = postsList.map(post => {
+          return {dateCreated: new Date(post.timeStamp), creatorID: post.creatorID, pid: post.pid}
+        })
+        return postsList;
+      }));
   }
 
   // get collection by pid

@@ -101,9 +101,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.mixpanelService.signIn(this.myUid); //Identify user with uid
       this.mixpanelService.setUserProperties(this.myUid); //set user properties
 
-      //test//
-      this.postService.ngOnInit();
-      //test//
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {

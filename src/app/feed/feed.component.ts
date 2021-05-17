@@ -147,7 +147,7 @@ export class FeedComponent implements OnInit, OnDestroy {
   }
 
   setUpPosts() {
-    this.pidList$.pipe(take(1)).subscribe(response => {
+    this.pidList$.subscribe(response => {
       if (!response) return this.done = true;
 
       this.done = false;
