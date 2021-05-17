@@ -55,9 +55,9 @@ export class CustomMetadata {
 export class Feed {
 
   constructor(
-    public pid: string,
     public creatorID: string,
     public dateCreated: Date,
-    public deleted: boolean
+    public deleted: boolean,
+    public pid?: string
   ) {}
 }
