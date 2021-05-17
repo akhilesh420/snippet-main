@@ -3,6 +3,7 @@ import { map, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
+import { Feed } from '../shared/post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class FeedService {
   // get explore page
   getExplorePage() {
     return this.afs
-      .collection<{dateCreated: Date, creatorID: string}>('feed/explore/global', ref => ref
+      .collection<Feed>('feed/explore/global', ref => ref
         .where('deleted','==', false)
         .orderBy('dateCreated', 'desc'))
       .valueChanges({idField: 'pid'});
@@ -26,7 +27,7 @@ export class FeedService {
 
   // get profile page
   getProfilePage(uid: string) {
-    return this.afs.collection<{dateCreated: Date, creatorID: string}>('feed/'+uid+'/posts', ref => ref
+    return this.afs.collection<Feed>('feed/'+uid+'/posts', ref => ref
         .where('deleted','==', false)
         .orderBy('dateCreated', 'desc'))
       .valueChanges({idField: 'pid'});
@@ -51,7 +52,7 @@ export class FeedService {
   }
 
   getPostPage(pid: string) {
-    return this.afs.doc<{dateCreated: Date, creatorID: string}>('posts/'+pid)
+    return this.afs.doc<Feed>('posts/'+pid)
       .valueChanges({idField: 'pid'})
       .pipe(map(post => {return [post];}));
   }
