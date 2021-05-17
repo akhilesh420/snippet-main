@@ -1,9 +1,4 @@
-/*
-* Prefixed by https://autoprefixer.github.io
-* PostCSS: v7.0.29,
-* Autoprefixer: v9.7.6
-* Browsers: last 4 version
-*/
+/* 
 
 .profileDisplay {
   height: 234px;
@@ -320,7 +315,6 @@ resize: none;
 background: transparent;
 }
 
-/* Change css for editable div in focus here */
 [contenteditable="true"]:active,
 [contenteditable="true"]:focus {
 outline: 0.5px solid #E2B33D;
@@ -390,8 +384,6 @@ border-radius: 50%;
 }
 
 
-/* Opacity in for dp */
-
 .opacity-in-details {
 -webkit-animation: opacity-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
         animation: opacity-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -444,7 +436,7 @@ border-radius: 50%;
 }
 
 
-/* Opacity in for profile stickers */
+
 
 .opacity-in-sticker {
 -webkit-animation: opacity-in-sticker 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
@@ -498,4 +490,74 @@ pointer-events: none;
 
 .blue {
 background-color: blue;
+} */
+
+.borderBox {
+
+  display: flex;
+  flex-direction: row;
+  width: 363px;
+  height: 218px;
+  background: linear-gradient(102.39deg, #632FDE 0.7%, #8451B4 5.32%, #A87687 15.04%, #E2B33D 46.6%, #DF9C3D 78.57%, #DB7E3D 87.17%, #CF263C 100%);
+  border-radius: 5px;
+
+}
+
+.profileDisplay {
+
+  display: flex;
+  flex-direction: column;
+  width: 355px;
+  height: 210px;
+  left: 45px;
+  top: 45px;
+  background: #030303;
+  border-radius: 5px;
+  margin-top: 4px;
+  margin-left: 4px;
+
+}
+
+.displayStickers {
+
+  display: flex;
+  flex-direction: row;
+  margin-top: 12px;
+  margin-left: 95px;
+  height: 40px;
+  width: auto;
+
+}
+
+.sticker {
+  
+  display: flex;
+  flex-direction: column;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 12px;
+  background-color: #c4c4c4;
+
+}
+
+.profileDetails {
+
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  width: 331px;
+  margin-left: 12px;
+  margin-top: 12px;
+
+}
+
+.dpContainer {
+
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  width: 80px;
+  
 }

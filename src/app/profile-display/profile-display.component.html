@@ -1,4 +1,4 @@
-<form #f='ngForm'>
+<!-- <form #f='ngForm'>
   <div class = "profileDisplay"
       [routerLink]='!isAuthenticated ? "/auth" : null'
       [ngStyle]='{"cursor": !isAuthenticated ? "pointer" : null}'>
@@ -23,8 +23,8 @@
                 <app-sticker *ngIf='sticker != null' [pid]="sticker.pid" [overrideNavigate]='inEditing' location='profile display'></app-sticker>
 
                 <div class="sticker-opacity-edit" [ngClass]='(inEditing && sticker != null) && index != i ? "opacity-in-sticker" : "opacity-out-sticker"'></div>
-                <!-- Edit Mode -->
-                <svg *ngIf='((inEditing || sticker === null) && uid === myUid) && index != i' class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                Edit Mode -->
+                <!-- <svg *ngIf='((inEditing || sticker === null) && uid === myUid) && index != i' class = "svgCenter" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g>
                   <rect x="8" width="4" height="20" rx="2" fill="white"/>
                   <rect y="8" width="20" height="4" rx="2" fill="white"/>
@@ -211,16 +211,93 @@
 
           </div>
         </div>
-      </ng-template>
+      </ng-template> -->
 
       <!-- Not logged in state -->
-      <div *ngIf='!isAuthenticated && uid === myUid; else display' class = "loggedout" >
+      <!-- <div *ngIf='!isAuthenticated && uid === myUid; else display' class = "loggedout" >
 
         <p class = "loggedoutText no-margin-no-padding">Sign In</p>
 
       </div>
     </div>
   </div>
-</form>
+</form> --> 
 
 
+<div class="borderBox">
+
+  <div class="profileDisplay">
+
+    <div class="displayStickers">
+
+      <div class="sticker">
+
+      </div>
+
+      <div class="sticker">
+        
+      </div>
+
+      <div class="sticker">
+        
+      </div>
+
+      <div class="sticker">
+        
+      </div>
+
+      <div class="sticker">
+        
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="profileDetails">
+
+    <div class="dpContainer">
+
+    </div>
+
+    <div class="detailsText">
+
+      <div class="userName">
+
+      </div>
+
+      <div class="fullName">
+
+      </div>
+
+      <div class="profileMetrics">
+
+        <!-- Views -->
+
+        <div class="metric">
+
+        </div>
+
+        <div class="metricText">
+
+        </div>
+
+        <!-- Collectors -->
+
+        <div class="metric">
+
+        </div>
+
+        <div class="metricText">
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>

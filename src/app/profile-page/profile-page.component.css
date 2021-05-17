@@ -198,6 +198,7 @@
 
 }
 
+
 .editProfile {
 
     font-family: 'Assistant';
@@ -319,6 +320,14 @@
 
 }
 
+.dividerNotUser {
+
+    border: 2px solid #FFFFFF;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+
+}
+
 .toggleButton {
 
     position: absolute;
@@ -330,6 +339,11 @@
     place-content: center;
 
 }
+
+.buttonNotUser {
+    background: #E2B33D;
+}
+
 
 .buttonActive {
 
@@ -451,6 +465,10 @@
     .divider {
         width: calc(100% - 40px);
         right: 20px;
+    }
+
+    .dividerNotUser {
+        border-radius: 2px;
     }
 
     .postsButton {
