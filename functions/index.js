@@ -65,6 +65,31 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
   }
 });
 
+exports.colourPallette = functions.https.onCall(async (data, context) => {
+
+  try {
+    const filePath = data.filePath;
+    functions.logger.info('Getting colour pallette for:', filePath);
+
+    const fileBucket = bucket_name;
+    const bucket = admin.storage().bucket(fileBucket);
+
+    const fileName = filePath.split('/')[1];
+    const tempFilePath = path.join(os.tmpdir(), fileName);
+
+    await bucket.file(filePath).download({destination: tempFilePath})
+      .catch((e) => functions.logger.info(e));
+
+    await spawn('convert', [tempFilePath, '-depth 8 txt:- | sed -e "1d;s/.* #/#/;s/ .*//" | sort -u'])
+      .catch((e) => functions.logger.info(e));
+
+
+
+  } catch(e) {
+    functions.logger.info(e);
+  }
+});
+
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
 .document('post content/{pid}')
 .onCreate(async (snap, context) => {

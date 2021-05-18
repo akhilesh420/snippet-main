@@ -1,3 +1,4 @@
+import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { ActivityService } from './../shared/activity.service';
 import { UsersService } from './../shared/users.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -37,11 +38,14 @@ export class ProfilePageComponent implements OnInit {
   childRoute: string;
   tabletCheck: boolean;
 
+  currentScroll: number;
+
   notifier$ = new Subject();
 
   constructor(private feedService: FeedService,
               private usersService: UsersService,
               private activityService: ActivityService,
+              private miscellaneousService: MiscellaneousService,
               private router: Router,
               private auth: AngularFireAuth,
               private windowStateService: WindowStateService) { }
@@ -50,7 +54,10 @@ export class ProfilePageComponent implements OnInit {
     this.getPosts(this.router.url);
     this.router.events
       .pipe(filter((event: NavigationEvent) => event instanceof NavigationEnd), takeUntil(this.notifier$))
-      .subscribe((event: NavigationEnd) => this.getPosts(event.urlAfterRedirects));
+      .subscribe((event: NavigationEnd) => {
+        this.miscellaneousService.startLoading();
+        this.getPosts(event.urlAfterRedirects);
+      });
 
     this.auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
@@ -61,8 +68,7 @@ export class ProfilePageComponent implements OnInit {
       .pipe(takeUntil(this.notifier$))
       .subscribe(() => {
         this.tabletCheck = this.windowStateService.tabletCheck;
-      })
-
+      });
   }
 
   setUpProfile(uid: string) {

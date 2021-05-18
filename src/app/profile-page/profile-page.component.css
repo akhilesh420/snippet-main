@@ -14,7 +14,8 @@
     display: grid;
     place-items: center;
     right: 0px;
-    
+    top: 270px;
+
 }
 
 
@@ -596,7 +597,7 @@
         display: none;
 
     }
-   
+
 
 }
 

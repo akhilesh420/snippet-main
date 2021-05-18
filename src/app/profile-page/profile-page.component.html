@@ -1,5 +1,5 @@
 <div class="linearGradientBox">
-    
+
 </div>
 
 <div class="topPanel" #topPanel>
@@ -37,8 +37,8 @@
                         location='profile'>
            </app-sticker>
 
-          </div>    
-          
+          </div>
+
         </div>
 
     </div>
@@ -86,7 +86,7 @@
 
     </div>
 
-    <div class="link">
+    <div *ngIf='!link || link.length == 0' class="link">
 
       <a [href]='link | url' target='_blank'>
 
@@ -96,7 +96,7 @@
 
     </div>
 
-    <div class="description">
+    <div *ngIf='!description || description.length == 0' class="description">
 
         <span>{{description}}</span>
 
@@ -151,13 +151,16 @@
 
 </div>
 
-<app-feed [posts$]='posts$' class = "feedPosition" ></app-feed>
+<app-feed [posts$]='posts$'
+          class = "feedPosition"
+          [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 10 + 28 + 8 + 10).toString() + "px" : null}'>>
+</app-feed>
 
-<div class="profileDisplayPosition">
+<!-- <div class="profileDisplayPosition">
 
     <app-profile-display></app-profile-display>
 
-</div>
+</div> -->
 
 
 

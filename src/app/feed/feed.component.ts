@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy, Input, OnChanges, ChangeDetectionStrategy
 import { Feed } from './../shared/post.model';
 import { takeUntil } from 'rxjs/operators';
 import { FeedService } from './feed.service';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-feed',
@@ -27,24 +28,23 @@ export class FeedComponent implements OnInit, OnChanges, OnDestroy {
   batchNumber: number = 1; //start from 1
   done: boolean = true;
 
+  mobileCheck: boolean;
   tabletCheck: boolean;
 
   subscription: Subscription;
 
   constructor(private feedService: FeedService,
-              private windowStateService:  WindowStateService) {
+              private windowStateService:  WindowStateService,
+              private miscellaneousService: MiscellaneousService) {
    }
 
 
   ngOnInit(): void {
-
-    const emptyFeed = new Feed(undefined, undefined, undefined);
-    this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed]);
-
     this.windowStateService.screenWidthValue.pipe(takeUntil(this.notifier$))
     .subscribe(val => {
       if (!val) return;
       this.tabletCheck = this.windowStateService.tabletCheck;
+      this.mobileCheck = this.windowStateService.mobileCheck;
     });
 
     // Infinite scroll
@@ -65,12 +65,15 @@ export class FeedComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   setUpPosts() {
+    const emptyFeed = new Feed(undefined, undefined, undefined);
+    this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed]);
+
     this.subscription = this.posts$.pipe(takeUntil(this.notifier$)).subscribe(response => {
+      this.miscellaneousService.endLoading();
       if (!response) return this.done = true;
 
       this.done = false;
       this.postsList = response;
-      console.log(response);
       if (this.postsList.length != 0) return this.initBatch();
 
       this.done = true;
