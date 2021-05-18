@@ -1,3 +1,4 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { FeedService } from './../feed/feed.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
@@ -12,12 +13,19 @@ import { Feed } from '../shared/post.model';
 export class ExplorePageComponent implements OnInit, OnDestroy {
 
   posts$: Observable<Feed[]> = new Observable();
+  myUid: string;
+
   notifier$ = new Subject();
 
   constructor(private feedService: FeedService,
+              private auth: AngularFireAuth,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.auth.onAuthStateChanged((user) => {
+      if (!!user) this.myUid = user.uid;
+    });
+
     this.getPosts(this.router.url);
     this.router.events
       .pipe(filter((event: NavigationEvent) => event instanceof NavigationEnd), takeUntil(this.notifier$))
