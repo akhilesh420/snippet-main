@@ -86,7 +86,9 @@
 
     </div>
 
-    <div *ngIf='link.length > 0' class="link">
+    <div *ngIf='link.length > 0'
+          [ngStyle]='{"margin-top": isAuthenticated && uid === myUid ? "12px" : "0"}'
+          class="link">
 
       <a [href]='link | url' target='_blank'>
 
@@ -116,8 +118,8 @@
 
 </div>
 
-<div  [ngClass] = "{'dividerNotUser': isAuthenticated && uid != myUid}"
-      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 28 + 8).toString() + "px" : null}'
+<div  [ngClass] = "{'dividerNotUser': isAuthenticated && uid != myUid  || !isAuthenticated}"
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16 + 28 + 8).toString() + "px" : null}'
       class="divider" >
 
     <div  *ngIf='isAuthenticated && uid === myUid'
@@ -130,10 +132,10 @@
 </div>
 
 <div  [routerLink]='"/profile/posts/" + uid'
-      [ngClass] = "{'buttonActive': childRoute === 'posts',
+      [ngClass] = "{'buttonActive': isAuthenticated && uid === myUid ? childRoute === 'posts' : false,
                     'buttonInactive': childRoute != 'posts',
                     'buttonNotUser': isAuthenticated ? uid != myUid : true}"
-      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54).toString() + "px" : null}'
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16).toString() + "px" : null}'
       class="toggleButton postsButton"
       #postButton>
 
@@ -146,7 +148,7 @@
       [ngClass] = "{'buttonActive': childRoute === 'collection',
                     'buttonInactive': childRoute != 'collection'}"
       class="toggleButton collectionButton"
-      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54).toString() + "px" : null}'>
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16).toString() + "px" : null}'>
 
     <span>Collection</span>
 
@@ -154,7 +156,7 @@
 
 <app-feed [posts$]='posts$'
           class = "feedPosition"
-          [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 10 + 28 + 8 + 10).toString() + "px" : null}'>>
+          [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16 + 10 + 28 + 8 + 10).toString() + "px" : null}'>>
 </app-feed>
 
 <div  *ngIf='!tabletCheck'
