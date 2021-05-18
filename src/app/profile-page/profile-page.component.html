@@ -86,7 +86,7 @@
 
     </div>
 
-    <div *ngIf='!link || link.length == 0' class="link">
+    <div *ngIf='link.length > 0' class="link">
 
       <a [href]='link | url' target='_blank'>
 
@@ -96,7 +96,7 @@
 
     </div>
 
-    <div *ngIf='!description || description.length == 0' class="description">
+    <div *ngIf=' description.length >= 0' class="description">
 
         <span>{{description}}</span>
 
