@@ -366,7 +366,7 @@
 
 .dividerNotUser {
 
-    border: 2px solid #FFFFFF;
+    border: 1px solid #FFFFFF;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 
@@ -388,6 +388,7 @@
 
 .buttonNotUser {
     background: none;
+    padding-right: 12px;
 }
 
 
