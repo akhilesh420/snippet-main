@@ -23,7 +23,7 @@ const appRoutes: Routes = [
       { path: 'collection/:id', component: FeedComponent, ...canActivate(onlyAllowSelf)}
     ]
   },
-  { path: 'post/:id', component: FeedComponent},
+  { path: 'post/:id', component: ExplorePageComponent},
   { path: 'create/:step', component: CreateComponent, ...canActivate(redirectUnauthorizedToLogin)},
   { path: 'create', redirectTo: '/create/content', pathMatch: 'full', ...canActivate(redirectUnauthorizedToLogin)},
   { path: 'feedback', component: FeedbackComponent},
