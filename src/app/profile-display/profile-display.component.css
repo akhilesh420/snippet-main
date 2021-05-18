@@ -507,14 +507,14 @@ background-color: blue;
 
   display: flex;
   flex-direction: column;
-  width: 355px;
-  height: 210px;
+  width: 359px;
+  height: 214px;
   left: 45px;
   top: 45px;
   background: #030303;
   border-radius: 5px;
-  margin-top: 4px;
-  margin-left: 4px;
+  margin-top: 2px;
+  margin-left: 2px;
 
 }
 
@@ -522,8 +522,8 @@ background-color: blue;
 
   display: flex;
   flex-direction: row;
-  margin-top: 12px;
-  margin-left: 95px;
+  margin-top: 14px;
+  margin-left: 97px;
   height: 40px;
   width: auto;
 
@@ -548,8 +548,8 @@ background-color: blue;
   flex-direction: row;
   height: auto;
   width: 331px;
-  margin-left: 12px;
-  margin-top: 12px;
+  margin-left: 10px;
+  margin-top: 14px;
 
 }
 
@@ -557,7 +557,174 @@ background-color: blue;
 
   display: flex;
   flex-direction: column;
-  height: 80px;
-  width: 80px;
+  height: 84px;
+  width: 84px;
+  border-radius: 50%;
+  background-color: #c4c4c4;
   
+}
+
+.detailsText {
+
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 241px;
+  margin-left: 10px;
+
+}
+
+.userName {
+
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 2px;
+
+}
+
+.userName > span {
+
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+
+.fullName {
+
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 1px;
+
+}
+
+.fullName > span {
+
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #E2B33D;
+
+}
+
+.profileMetrics {
+
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  height: auto;
+  margin-top: 4px;
+
+}
+
+.metricCol {
+
+  display: flex;
+  flex-direction: column;
+  width: 54px;
+  height: auto;
+
+}
+
+.metric {
+
+  display: flex;
+  flex-direction: row;
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+
+}
+
+.metricText {
+
+  display: flex;
+  flex-direction: row;
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.7);
+
+}
+
+.lastRow {
+
+  display: flex;
+  flex-direction: row;
+  height: 25px;
+  width: 100%;
+  margin-top: 24px;
+
+}
+
+.linkCol {
+
+  display: flex;
+  flex-direction: column;
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  color: #E2B33D;
+  overflow: hidden;
+  margin-left: 20px;
+  width: 120px;
+  
+
+}
+
+.editButton {
+
+  display: flex;
+  flex-direction: column;
+  height: 25px;
+  width: 80px;
+  background: #E2B33D;
+  border-radius: 4px;
+  place-content: center;
+  margin-left: 124px;
+
+}
+
+.editButton > span {
+
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+
 }
