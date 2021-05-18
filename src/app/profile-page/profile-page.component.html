@@ -70,7 +70,7 @@
 
     </div>
 
-    <div class="button editProfile">
+    <div class="button editProfile" *ngIf='!!myUid && uid === myUid'>
 
         <span> Edit Profile</span>
 
@@ -78,7 +78,11 @@
 
     <div class="link">
 
+      <a [href]='link | url' target='_blank'>
+
         <span>{{link}}</span>
+
+      </a>
 
     </div>
 

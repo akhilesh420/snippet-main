@@ -233,7 +233,7 @@
 
 }
 
-.link > span {
+.link > a > span {
 
     font-family: 'Assistant';
     font-style: normal;

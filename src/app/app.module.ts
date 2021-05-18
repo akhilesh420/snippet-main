@@ -36,6 +36,7 @@ import { TimeSincePipe } from './shared/time-since.pipe';
 import { LazyImgDirective } from './shared/directives/lazy-img.directive';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
+import { UrlPipe } from './shared/pipes/url.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ExplorePageComponent } from './explore-page/explore-page.component';
     TimeSincePipe,
     LazyImgDirective,
     ProfilePageComponent,
-    ExplorePageComponent
+    ExplorePageComponent,
+    UrlPipe
   ],
   imports: [
     BrowserModule,
