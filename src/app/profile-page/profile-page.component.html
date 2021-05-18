@@ -157,7 +157,8 @@
           [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 10 + 28 + 8 + 10).toString() + "px" : null}'>>
 </app-feed>
 
-<div  class="profileDisplayPosition"
+<div  *ngIf='!tabletCheck'
+      class="profileDisplayPosition"
       [ngStyle]='{"display": currentScroll <= (topPanel.offsetHeight + infoPanel.offsetHeight) ? "none" : "block"}'>
 
     <app-profile-display [uid]='uid'></app-profile-display>
