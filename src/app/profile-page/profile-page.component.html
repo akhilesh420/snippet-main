@@ -27,12 +27,18 @@
     <div class="displaySticker">
 
         <div *ngFor='let sticker of (profileStickers$ | async).stickers | reverse; trackBy: stickerTrackByFn'
-              [ngClass]="{'sticker-bck': sticker === 'loading'}"
               class="sticker">
-          <app-sticker  *ngIf='sticker != null && sticker != "loading"'
+
+          <div class = "stickerContainer"
+            [ngClass]="{'sticker-bck': sticker === 'loading'}">
+
+            <app-sticker  *ngIf='sticker != null && sticker != "loading"'
                         [pid]="sticker.pid"
                         location='profile'>
-          </app-sticker>
+           </app-sticker>
+
+          </div>    
+          
         </div>
 
     </div>
@@ -146,6 +152,13 @@
 </div>
 
 <app-feed [posts$]='posts$' class = "feedPosition" ></app-feed>
+
+<div class="profileDisplayPosition">
+
+    <app-profile-display></app-profile-display>
+
+</div>
+
 
 
 

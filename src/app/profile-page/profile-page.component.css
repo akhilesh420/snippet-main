@@ -127,12 +127,24 @@
     height: 60px;
     width: 60px;
     margin-right: 18px;
-    border-radius: 50%;
 
 }
 
 .sticker-bck {
-  background-color: #FFFFFF;
+  background-color: #C4C4C4;
+}
+
+.stickerContainer {
+
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 .infoPanel {
@@ -452,6 +464,15 @@
 
 }
 
+.profileDisplayPosition {
+
+    position: absolute;
+    left: 50px;
+    top: 208px;
+    position: fixed;
+
+}
+
 
 
 
@@ -570,6 +591,11 @@
         display: none;
     }
 
+    .profileDisplayPosition {
+
+        display: none;
+
+    }
    
 
 }
