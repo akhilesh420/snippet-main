@@ -1,3 +1,4 @@
+import { ScrollService } from './../shared/scroll.service';
 import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { ActivityService } from './../shared/activity.service';
 import { UsersService } from './../shared/users.service';
@@ -48,7 +49,8 @@ export class ProfilePageComponent implements OnInit {
               private miscellaneousService: MiscellaneousService,
               private router: Router,
               private auth: AngularFireAuth,
-              private windowStateService: WindowStateService) { }
+              private windowStateService: WindowStateService,
+              private scrollService: ScrollService) { }
 
   ngOnInit(): void {
     this.getPosts(this.router.url);
@@ -68,6 +70,13 @@ export class ProfilePageComponent implements OnInit {
       .pipe(takeUntil(this.notifier$))
       .subscribe(() => {
         this.tabletCheck = this.windowStateService.tabletCheck;
+      });
+
+    this.currentScroll = window.scrollY;
+    this.scrollService.getScroll()
+      .pipe(takeUntil(this.notifier$))
+      .subscribe((scroll) => {
+        this.currentScroll = scroll;
       });
   }
 

@@ -1,10 +1,10 @@
 import { MixpanelService } from './../shared/mixpanel.service';
 import { UsersService } from './../shared/users.service';
-import { ProfileSticker, DisplayPicture } from './../shared/profile.model';
+import { ProfileSticker, DisplayPicture, PersonalDetails, ProfileDetails } from './../shared/profile.model';
 import { Router} from '@angular/router';
 import { startWith, takeUntil} from 'rxjs/operators';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef, OnChanges} from '@angular/core';
 import { ActivityService } from '../shared/activity.service';
 import { MiscellaneousService, PopUp } from '../shared/miscellaneous.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -15,83 +15,60 @@ import { CustomMetadata } from '../shared/post.model';
   templateUrl: './profile-display.component.html',
   styleUrls: ['./profile-display.component.css']
 })
-export class ProfileDisplayComponent implements OnInit, OnDestroy {
+export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() uid$: BehaviorSubject<string>;
-  @Input() editable?: boolean = true;
-  uid: string;
-
-  username$: Observable<{username: string}> = new Observable(observer => observer.next({username: ''}));
-  displayPicture$: Observable<string>;
-  tempDisplayPicture$ = new BehaviorSubject<any>(null);
-  // activity: Activity;
+  @Input() uid: string;
+  lastUid: string;
+  myUid: string;
 
   isAuthenticated: boolean = true;
-  allowEdit: boolean = false;
-  notifier$ = new Subject();
 
-  collected: number = 0;
-  views: number = 0;
-
-  myUid: string;
-  stickerSize: string;
-  profileRoute: string;
-
-  inEditing: Boolean = false;
-  dpLoaded: Boolean = false;
-  descLoaded: Boolean = false;
-  stickerLoaded: Boolean = false;
-  editDesc: Boolean = false;
-  editLink: Boolean = false;
-  editStickers: Boolean = false;
-  description: string = '';
+  username$: Observable<{username: string}>;
+  displayPicture$: Observable<string>;
+  personalDetails$: Observable<PersonalDetails>;
+  profileDetails$: Observable<ProfileDetails>;
+  views$: Observable<{ counter: number }>;
+  collectors$: Observable<{ counter: number }>;
+  profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}> = new Observable<{stickers: ProfileSticker[] | string[]}>()
+    .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   link: string = '';
-  profileStickers: ProfileSticker[] = [null,null,null,null,null];
-  userStickers:  ProfileSticker[] = [null,null,null,null,null];
-  error: string;
-  displayPicture: File;
-  changedDP: boolean = false;
-  profileStickersChanged: boolean = false;
-  updatedDP: any;
-  saving: boolean = false;
 
-  @ViewChild('descriptionRef') descriptionRef : ElementRef;
-  @ViewChild('linkRef') linkRef : ElementRef;
-  @ViewChild('dpInput') dpInput: ElementRef<HTMLElement>;
-
-  emittedPid: string;
-  index: number;
-
-  descriptionLimit: number = 105;
-  linkLimit: number = 21;
-
-  preloadImages = [ '/assets/images/Profile%20Display/editModeBackground.svg',
-                    '/assets/images/Profile%20Display/profileDescription.svg',
-                    '/assets/images/Profile%20Display/profileDisplayBorder.svg',
-                    '/assets/images/Profile%20Display/profileLinkEdit.svg',
-                    '/assets/images/Profile%20Display/saveButton.svg'];
+  notifier$ = new Subject();
 
   constructor( private auth: AngularFireAuth,
                private usersService: UsersService,
                private activityService: ActivityService,
-               private router: Router,
-               private miscellaneousService: MiscellaneousService,
                private mixpanelService: MixpanelService) { }
 
   ngOnInit(): void {
-
-
+    this.setUpProfile(this.uid);
     this.auth.onAuthStateChanged((user) => {
       this.isAuthenticated = !!user;
-      this.allowEdit = this.isAuthenticated;
-      if (this.isAuthenticated)  {
-        this.myUid = user.uid;
-      }
+      if (this.isAuthenticated)  this.myUid = user.uid;
     });
   }
 
-  setUpProfile() {
+  ngOnChanges() {
+    console.log('on changes profile display');
+    this.setUpProfile(this.uid);
+  }
 
+  setUpProfile(uid: string) {
+    if (this.lastUid === uid) return;
+    console.log(uid);
+    this.lastUid = uid;
+    this.username$ = this.usersService.getUsername(uid);
+    this.displayPicture$ = this.usersService.getDisplayPicture(uid);
+    this.personalDetails$ = this.usersService.getPersonalDetails(uid);
+    this.profileDetails$ = this.usersService.getProfileDetails(uid);
+
+    this.views$ = this.activityService.getActivityViews(uid)
+      .pipe(startWith({counter: 0}));
+    this.collectors$ = this.activityService.getActivityCollection(uid)
+      .pipe(startWith({counter: 0}));
+
+    this.profileStickers$ = this.usersService.getProfileStickers(uid)
+      .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   }
 
   trackByFn(index, item: ProfileSticker) {

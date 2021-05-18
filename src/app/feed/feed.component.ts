@@ -59,7 +59,6 @@ export class FeedComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    console.log('on changes')
     if (this.subscription) this.subscription.unsubscribe();
     this.setUpPosts();
   }

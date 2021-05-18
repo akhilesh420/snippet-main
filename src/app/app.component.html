@@ -15,7 +15,7 @@
     <div class="feed-mobile">
 
       <div class='profile-display-mobile' (click)="stopPropagation($event)">
-        <app-profile-display [uid$]='myUid$'></app-profile-display>
+        <app-profile-display [uid]='myUid'></app-profile-display>
       </div>
 
       <div (click)="stopPropagation($event)" [ngClass]='{"collection-tab-edit-mobile": profileStickerEdit, "feed-mobile": tabletCheck}'>

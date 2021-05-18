@@ -94,7 +94,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
       if (!this.isAuthenticated) return this.mixpanelService.logout(); //reset on logout
       this.myUid = user.uid;
-      this.myUid$.next(this.myUid);
 
       this.mixpanelService.signIn(this.myUid); //Identify user with uid
       this.mixpanelService.setUserProperties(this.myUid); //set user properties
