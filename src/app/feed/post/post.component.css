@@ -137,8 +137,8 @@ p {
 
 .postContent {
   width: 100%;
-  min-height: calc(400px * var(--norm-height));
-  max-height: calc(800px * var(--norm-height));
+  min-height: calc(350px * var(--norm-height));
+  max-height: 80vh;
   background-color: #C4C4C4;
   position: relative;
   overflow: hidden;
@@ -287,6 +287,9 @@ li {
   background: #030303;
   border-radius: 0px 0px 4px 4px;
   display: flex;
+  padding-top: 6px;
+  padding-left: 4px;
+
 }
 
 .postDetailsExp {
@@ -334,6 +337,7 @@ li {
   min-height: 66px;
   padding-left: 1px;
   padding-right: 5px;
+  margin-top: 6px;
   word-wrap: break-word;
   margin-bottom: 10px;
 }
@@ -455,8 +459,7 @@ li {
   .postContent {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    min-height: calc((100vh * (3 / 5)) - 54px);
-    max-height: calc(100vh - 54px);
+    min-height: 15vh;
   }
 
   .realEngagementBar {
@@ -471,6 +474,12 @@ li {
     padding-left: 0px;
     margin-top: 2px;
     margin-bottom: 0px;
+  }
+
+  .detailsContainer {
+
+    padding-top: 2px;
+
   }
 
 
