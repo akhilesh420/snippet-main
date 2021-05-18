@@ -7,6 +7,16 @@
     z-index: 0;
 }
 
+.feedPosition {
+
+    position: absolute;
+    width: calc(100% - 433px);
+    display: grid;
+    place-items: center;
+    right: 0px;
+    top: 280px;
+}
+
 
 .topPanel {
 
@@ -360,6 +370,8 @@
     display: flex;
     place-content: center;
     cursor: pointer;
+    outline: none;
+
 }
 
 .buttonNotUser {
@@ -469,6 +481,10 @@
 
     .topPanel {
         height:230px;
+    }
+
+    .feedPosition {
+        width: 100vw;
     }
 
     .metrics {

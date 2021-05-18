@@ -111,7 +111,7 @@
 </div>
 
 <div  [ngClass] = "{'dividerNotUser': isAuthenticated && uid != myUid}"
-      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 28 + 36).toString() + "px" : null}'
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 28 + 8).toString() + "px" : null}'
       class="divider" >
 
     <div [ngClass] = "{'buttonHighlightPosts': childRoute === 'posts',
@@ -145,7 +145,7 @@
 
 </div>
 
-<app-feed [posts$]='posts$'></app-feed>
+<app-feed [posts$]='posts$' class = "feedPosition" ></app-feed>
 
 
 
