@@ -9,7 +9,6 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { first } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import 'firebase/firestore'
 import { Collection } from '../shared/activity.model';
 
 @Injectable({ providedIn: 'root' })

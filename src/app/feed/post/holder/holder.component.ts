@@ -29,7 +29,7 @@ export class HolderComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.profileRoute = "/profile/" + this.uid;
+    this.profileRoute = "/profile/posts/" + this.uid;
     this.username$ = this.usersService.getUsername(this.uid);
     this.usersService.getProfileStickers(this.uid).pipe(takeUntil(this.notifier$))
       .subscribe(response => {

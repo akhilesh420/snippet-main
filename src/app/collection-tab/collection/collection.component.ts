@@ -56,7 +56,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   usernameClick() {
     if (this.profileStickerEdit) return;
-    this.router.navigate(["/profile/" + this.uid]);
+    this.router.navigate(["/profile/posts/" + this.uid]);
 
     this.mixpanelService.setRoutingVia('collection tab');
   }

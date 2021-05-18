@@ -1,20 +1,20 @@
-<div class="topPanel">
+<div class="topPanel" #topPanel>
 
     <div class="dpContainer">
-
+      <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
     </div>
 
     <div class="profileDetails">
 
         <div class="userName">
 
-            <span>LorEmIpsUm</span>
+            <span *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
 
         </div>
 
         <div class="fullName">
 
-            <span>Cecil Adamsam</span>
+            <span>{{name}}</span>
 
         </div>
 
@@ -22,24 +22,13 @@
 
     <div class="displaySticker">
 
-        <div class="sticker">
-
-        </div>
-
-        <div class="sticker">
-
-        </div>
-
-        <div class="sticker">
-
-        </div>
-
-        <div class="sticker">
-
-        </div>
-
-        <div class="sticker">
-
+        <div *ngFor='let sticker of (profileStickers$ | async).stickers | reverse; trackBy: stickerTrackByFn'
+              [ngClass]="{'sticker-bck': sticker === 'loading'}"
+              class="sticker">
+          <app-sticker  *ngIf='sticker != null && sticker != "loading"'
+                        [pid]="sticker.pid"
+                        location='profile'>
+          </app-sticker>
         </div>
 
     </div>
@@ -48,16 +37,16 @@
 
 </div>
 
-<div class="infoPanel">
+<div class="infoPanel" #infoPanel>
 
-    
+
     <div class="metrics">
 
         <!-- Views -->
         <div class="metric">
 
             <div class="metricNumbers">
-                <span>235 K</span>
+                <span *ngIf='views$ | async as views'>{{views.counter | numeral}}</span>
             </div>
 
             <div class="metricText">
@@ -70,7 +59,7 @@
         <div class="metric">
 
             <div class="metricNumbers">
-                <span>450</span>
+                <span *ngIf='collectors$ | async as collectors'>{{collectors.counter | numeral}}</span>
             </div>
 
             <div class="metricText">
@@ -89,13 +78,13 @@
 
     <div class="link">
 
-        <span>bit.biglink.ly/username</span>
+        <span>{{link}}</span>
 
     </div>
 
     <div class="description">
 
-        <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi in orci sed metus molestie malesuada. Aliquam suscipit elementum eros egestas efficitur. Donec felis arcu, elementum in bibendum vel, sagittis id diam. Curabitur convallis purus at quam venenatis, vel rutrum nibh sagittis.</span>
+        <span>{{description}}</span>
 
     </div>
 
@@ -106,33 +95,49 @@
         </div>
 
         <div class="joinDate">
-            <span class = "joinText">Jan 2020</span>
+            <span class = "joinText">{{dateJoined | date: 'MMM y'}}</span>
         </div>
 
     </div>
 
 </div>
 
-<div class="divider dividerNotUser">
+<div  [ngClass] = "{'dividerNotUser': !!myUid && uid != myUid}"
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 28 + 36).toString() + "px" : null}'
+      class="divider" >
 
-
-    <div class = "buttonHighlightPosts">
+    <div [ngClass] = "{'buttonHighlightPosts': childRoute === 'posts',
+                       'buttonHighlightCollection': childRoute === 'collection'}">
 
     </div>
 
 
 </div>
 
-<div class="toggleButton buttonActive buttonNotUser postsButton"> 
+<div  [routerLink]='"/profile/posts/" + uid'
+      [ngClass] = "{'buttonActive': childRoute === 'posts',
+                    'buttonInactive': childRoute != 'posts',
+                    'buttonNotUser': !!myUid && uid != myUid}"
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54).toString() + "px" : null}'
+      class="toggleButton postsButton"
+      #postButton>
 
     <span>Posts</span>
 
 </div>
 
-<div class="toggleButton buttonInactive collectionButton">
+<div  *ngIf='!!myUid && uid === myUid'
+      [routerLink]='"/profile/collection/" + uid'
+      [ngClass] = "{'buttonActive': childRoute === 'collection',
+                    'buttonInactive': childRoute != 'collection'}"
+      class="toggleButton collectionButton"
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54).toString() + "px" : null}'>
 
     <span>Collection</span>
 
 </div>
+
+<app-feed [posts$]='posts$'></app-feed>
+
 
 

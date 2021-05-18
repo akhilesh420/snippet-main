@@ -17,8 +17,16 @@
     width: 120px;
     border-radius: 50%;
     overflow: hidden;
-    background-color: #c4c4c4;
 
+}
+
+.dpContainer > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .profileDetails {
@@ -30,7 +38,7 @@
     height: 67px;
     width: calc(100% - 608px);
     white-space: nowrap;
-    
+
 }
 
 .userName {
@@ -38,7 +46,7 @@
     display: flex;
     flex-direction: row;
     width: 95%;
-    
+
 
 }
 
@@ -62,7 +70,7 @@
     display: flex;
     flex-direction: row;
     width: 95%;
-    
+
 
 }
 
@@ -98,10 +106,12 @@
     height: 60px;
     width: 60px;
     margin-right: 18px;
-    background-color: #FFFFFF;
     border-radius: 50%;
-    overflow: hidden;
-    
+
+}
+
+.sticker-bck {
+  background-color: #FFFFFF;
 }
 
 .infoPanel {
@@ -274,7 +284,7 @@
     border-top: 1px solid #0B0B0B;
     border-bottom: 1px solid #0B0B0B;
     margin-bottom: 30px;
-    
+
 }
 
 .joinedText {
@@ -337,7 +347,7 @@
     border-radius: 5px;
     display: flex;
     place-content: center;
-
+    cursor: pointer;
 }
 
 .buttonNotUser {
@@ -354,7 +364,7 @@
 .buttonInactive {
 
     background: rgba(0, 0, 0, 0.0);
-    
+
 }
 
 .buttonHighlightPosts {
@@ -399,7 +409,7 @@
     color: #FFFFFF;
     display: flex;
     place-items: center;
-    
+
 
 }
 
@@ -436,7 +446,7 @@
 
             background-color: #E2B33D;
             border: none;
-        
+
     }
 
 
@@ -498,7 +508,7 @@
     .infoPanel {
         margin-left: 20px;
         width: calc(100% - 40px);
-        background: none; 
+        background: none;
         box-shadow: none;
        }
 
@@ -540,13 +550,13 @@
     .metricNumbers >span {
         font-size: 20px;
     }
-  
+
 }
 
 @media only screen and (max-width:550px) {
 
     .topPanel {
-        height: 206px;  
+        height: 206px;
     }
 
     .dpContainer {
@@ -581,7 +591,7 @@
         border: 1px solid #FFFFFF;
     }
 
-    
+
 
 
 }

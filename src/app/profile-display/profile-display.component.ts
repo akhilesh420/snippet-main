@@ -138,7 +138,7 @@ export class ProfileDisplayComponent implements OnInit, OnDestroy {
     this.uid$.pipe(takeUntil(this.notifier$)).subscribe(uid =>{
       if (uid) {
         this.uid = uid;
-        this.profileRoute = "/profile/" + this.uid;
+        this.profileRoute = "/profile/posts/" + this.uid;
         this.setUpProfile();
         this.setUpActivity();
       }

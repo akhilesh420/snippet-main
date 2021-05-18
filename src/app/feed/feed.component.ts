@@ -1,25 +1,20 @@
-import { MixpanelService } from './../shared/mixpanel.service';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { UsersService } from 'src/app/shared/users.service';
 import { WindowStateService } from './../shared/window.service';
-import { AuthService } from './../auth/auth.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
-import { Feed, PostDetails } from './../shared/post.model';
-import { take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Feed } from './../shared/post.model';
+import { takeUntil } from 'rxjs/operators';
 import { FeedService } from './feed.service';
-import { MiscellaneousService } from '../shared/miscellaneous.service';
 
 @Component({
   selector: 'app-feed',
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class FeedComponent implements OnInit, OnDestroy {
+export class FeedComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() posts$: Observable<Feed[]>;
+  @Input() posts$: Observable<Feed[]> = new Observable();
 
   feedList$: BehaviorSubject<Feed[]>;
   notifier$ = new Subject();
@@ -33,6 +28,8 @@ export class FeedComponent implements OnInit, OnDestroy {
   done: boolean = true;
 
   tabletCheck: boolean;
+
+  subscription: Subscription;
 
   constructor(private feedService: FeedService,
               private windowStateService:  WindowStateService) {
@@ -50,16 +47,30 @@ export class FeedComponent implements OnInit, OnDestroy {
       this.tabletCheck = this.windowStateService.tabletCheck;
     });
 
+    // Infinite scroll
+    this.feedService.currentPost.pipe(takeUntil(this.notifier$)).subscribe(pid => {
+      if (!pid) return;
+      const currentFeed = this.feedList$.value
+      const index = currentFeed.findIndex(post => post.pid === pid);
+      if (index === currentFeed.length - 2) this.moreBatch();
+    });
+
+    this.setUpPosts();
+  }
+
+  ngOnChanges() {
+    console.log('on changes')
+    if (this.subscription) this.subscription.unsubscribe();
     this.setUpPosts();
   }
 
   setUpPosts() {
-    this.posts$.pipe(take(1)).subscribe(response => {
+    this.subscription = this.posts$.pipe(takeUntil(this.notifier$)).subscribe(response => {
       if (!response) return this.done = true;
 
       this.done = false;
       this.postsList = response;
-
+      console.log(response);
       if (this.postsList.length != 0) return this.initBatch();
 
       this.done = true;
