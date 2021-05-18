@@ -120,7 +120,8 @@
       [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 28 + 8).toString() + "px" : null}'
       class="divider" >
 
-    <div [ngClass] = "{'buttonHighlightPosts': childRoute === 'posts',
+    <div  *ngIf='isAuthenticated && uid != myUid'
+          [ngClass] = "{'buttonHighlightPosts': childRoute === 'posts',
                        'buttonHighlightCollection': childRoute === 'collection'}">
 
     </div>
