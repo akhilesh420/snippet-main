@@ -70,7 +70,7 @@
 
     </div>
 
-    <div class="button editProfile" *ngIf='!!myUid && uid === myUid'>
+    <div class="button editProfile" *ngIf='isAuthenticated && uid === myUid'>
 
         <span> Edit Profile</span>
 
@@ -106,7 +106,7 @@
 
 </div>
 
-<div  [ngClass] = "{'dividerNotUser': !!myUid && uid != myUid}"
+<div  [ngClass] = "{'dividerNotUser': isAuthenticated && uid != myUid}"
       [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54 + 28 + 36).toString() + "px" : null}'
       class="divider" >
 
@@ -121,7 +121,7 @@
 <div  [routerLink]='"/profile/posts/" + uid'
       [ngClass] = "{'buttonActive': childRoute === 'posts',
                     'buttonInactive': childRoute != 'posts',
-                    'buttonNotUser': !!myUid && uid != myUid}"
+                    'buttonNotUser': isAuthenticated ? uid != myUid : true}"
       [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + infoPanel.offsetHeight + 10 + 54).toString() + "px" : null}'
       class="toggleButton postsButton"
       #postButton>

@@ -23,6 +23,7 @@
     "@types/mixpanel-browser": "^2.35.6",
     "bootstrap": "^4.5.2",
     "child-process-promise": "^2.2.1",
+    "colorthief": "^2.3.2",
     "firebase": "^8.2.4",
     "firebase-admin": "^9.2.0",
     "jquery": "^3.5.1",
