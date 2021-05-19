@@ -9,7 +9,7 @@
       <div class="creatorDP" (click)='usernameClick()'  [routerLink]='profileRoute'>
         <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
       </div>
-  
+
       <div class="creatorName">
         <span (click)='usernameClick()' [routerLink]='profileRoute' *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
       </div>
@@ -88,7 +88,7 @@
         <div class="cardText deleteText">
           <span> Delete Post </span>
         </div>
-        
+
       </div>
 
       <div class="optionCard">
@@ -98,7 +98,7 @@
           <span>CLOSE</span>
 
         </div>
-        
+
       </div> -->
 
       <!-- Delete Process -->
@@ -109,19 +109,19 @@
 
           <span>Delete this post ?<br>
             Collectors will loose it as well. </span>
-  
+
         </div>
-  
+
         <div class="deleteButtons">
-  
+
           <div class="deleteButton confirmDeleteButton">
             <span>DELETE</span>
           </div>
-  
+
           <div class="deleteButton closeDeleteButton">
             <span>CLOSE</span>
           </div>
-  
+
         </div>
 
       </div>
@@ -136,19 +136,19 @@
 
         <!-- Deleting cover -->
 
-        <div class="deleteCover">
+        <!-- <div class="deleteCover">
 
           <div class="deleteCoverItems">
 
             <div class="deleteCoverText">
               <span>DELETING</span>
             </div>
-  
+
             <app-loading-spinner class = "deleteCoverBuffer"></app-loading-spinner>
 
           </div>
 
-        </div>
+        </div> -->
 
     <!-- Content -->
     <div *ngIf="(postContent$ | async) as content; else loading">
@@ -250,7 +250,7 @@
 
       <!-- Engagement bar -->
       <div class = "engagementBar" >
-       
+
         <div class="realEngagementBar" [ngStyle]="engagementProp"></div>
 
       </div>
@@ -275,7 +275,7 @@
         {{details.description}}
       </div>
 
-      
+
 
     </div>
 

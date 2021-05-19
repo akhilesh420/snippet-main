@@ -58,6 +58,7 @@ export class Feed {
     public creatorID: string,
     public dateCreated: Date,
     public deleted: boolean,
+    public reason? : string,
     public pid?: string
   ) {}
 }

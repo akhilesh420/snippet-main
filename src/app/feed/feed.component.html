@@ -83,12 +83,12 @@
         <div class="post-container" *ngFor="let post of posts; let i = index; trackBy: trackByFn" #post>
 
           <!-- Deleted Post placeholder -->
-          <div class="deletedPostPlaceholder">
+          <div  *ngIf='post.deleted' class="deletedPostPlaceholder">
             <span>POST DELETED</span>
-            <span class = "deletionReason">Deletion Reason</span>
+            <span class = "deletionReason">{{post.reason}}</span>
           </div>
 
-          <app-post [pid]="post.pid" [uid]="post.creatorID"></app-post>
+          <app-post *ngIf='!post.deleted' [pid]="post.pid" [uid]="post.creatorID"></app-post>
         </div>
           <!-- No Posts placeholder  -->
         <div class="post-container no-posts" *ngIf='posts.length === 0'>
