@@ -18,7 +18,7 @@ export class StickerComponent implements OnInit, OnDestroy {
 
   stickerSize = {};
 
-  stickerContent: Observable<any>;
+  url: string;
   notifier$ = new Subject();
 
   deleted: boolean;
@@ -32,7 +32,13 @@ export class StickerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.notifier$))
       .subscribe((res) => {
         this.deleted = res.deleted;
-        if (!this.deleted) this.stickerContent = this.postService.getStickerContent(this.pid);
+        if (!this.deleted) {
+          this.postService.getStickerContent(this.pid)
+            .pipe(takeUntil(this.notifier$))
+            .subscribe((url) => {
+              this.url = url;
+            });
+        }
       });
    }
 

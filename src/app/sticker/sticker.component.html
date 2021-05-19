@@ -1,16 +1,15 @@
 <div (click)="onClick()"
       class="sticker"
-      style="cursor: pointer;"
-     *ngIf="!deleted">
-    <img *ngIf="stickerContent | async; let content;"
-          [src]='content'
+      style="cursor: pointer;">
+    <img  *ngIf="!deleted && !!url"
+          [src]='url'
           alt="sticker"
           (click)="onClick()"
           appLazyImg>
-</div>
-
-<div class="deletedSticker">
-
+    <div *ngIf="deleted" class="deletedSticker">
       <span>D</span>
-
+    </div>
 </div>
+
+
+
