@@ -355,13 +355,21 @@ place-items: center;
 
 }
 
+.deleteCoverItems {
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 32%;
+  transform: translate(0,-50%);
+}
+
 .deleteCoverText {
 
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: row;
-  margin-top: 25%;
 
 }
 
@@ -385,8 +393,9 @@ place-items: center;
   height: auto;
   display: flex;
   flex-direction: row;
-  margin-top: 10%;
+  margin-top: 5%;
   justify-content: center;
+
 }
 
 .engagementBar {
