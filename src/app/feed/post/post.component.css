@@ -165,22 +165,58 @@ p {
   cursor: pointer;
 }
 
-.dropdownButton {
+/* .dropdownButton {
 
   display: inline-block;
   width: 10%;
   height: auto;
   margin-top: 3px;
 
-}
+} */
 
 /* below are changes */
-.dropdownButton > img {
+/* .dropdownButton > img {
   cursor: pointer;
   width: 16px;
   height: auto;
   margin-left: calc(100% - 28px);
   margin-bottom: 2px;
+} */
+
+.optionsButton {
+
+  margin-top: 12px;
+  float: right;
+  margin-right: 12px;
+  
+}
+
+.optionsDropDown {
+
+  height: 120px;
+  width: 100%;
+  background-color: #030303;
+  position: absolute;
+  z-index: 1;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.optionCard {
+
+  display: flex;
+  flex-direction: column;
+  width: 95px;
+  height: 95px;
+  border-radius: 5px;
+  margin-left: 15px;
+  background-color: #0F0F0F;
+
 }
 
 .engagementBar {

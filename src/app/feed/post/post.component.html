@@ -39,18 +39,61 @@
 
     </div>
 
-    <div class="dropdownButton">
+    <!-- <div class="dropdownButton">
 
       <img (click)='toggleHolderList()'
             [ngClass]='{"rotate-90-ccw ": showDetails, "rotate-90-cw ": !showDetails}'
             class = "dropdownButton"
             src = "assets/images/Post/postdetailDropdown.svg">
 
+    </div> -->
+
+    <div class="optionsButton optionsButtonActive">
+
+
+      <img src = "assets/images/Post/optionsButtonInactive.svg">
+
+
     </div>
 
   </div>
 
-  
+  <!-- Options Dropdown -->
+  <div class="optionsDropDown">
+
+      <div class="optionCard">
+
+        <div class="collectorsImage">
+
+          <img src = "assets/images/Post/collectorsImage.svg">
+
+        </div>
+
+        <div class="cardText">
+          <span> Collectors </span>
+        </div>
+
+      </div>
+
+      <div class="optionCard">
+
+        <div class="deleteImage">
+
+          <img src = "assets/images/Post/deleteImage.svg">
+
+        </div>
+
+        <div class="cardText">
+          <span> Delete Post </span>
+        </div>
+        
+      </div>
+
+      <div class="optionCard">
+        
+      </div>
+ 
+  </div>
 
   <div #contentContainer
         class = "postContent"
