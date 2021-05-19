@@ -81,6 +81,13 @@
 
       <div *ngIf="feedList$ | async; let posts; else loader;">
         <div class="post-container" *ngFor="let post of posts; let i = index; trackBy: trackByFn" #post>
+
+          <!-- Deleted Post placeholder -->
+          <div class="deletedPostPlaceholder">
+            <span>POST DELETED</span>
+            <span class = "deletionReason">Deletion Reason</span>
+          </div>
+
           <app-post [pid]="post.pid" [uid]="post.creatorID"></app-post>
         </div>
           <!-- No Posts placeholder  -->
