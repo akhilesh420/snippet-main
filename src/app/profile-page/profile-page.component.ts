@@ -118,6 +118,10 @@ export class ProfilePageComponent implements OnInit {
     return !!item ? item.pid : index;
   }
 
+  onClickEdit() {
+    this.miscellaneousService.getPallette('display pictures/' + this.uid + '/original');
+  }
+
   ngOnDestroy() {
     this.notifier$.next();
     this.notifier$.complete();

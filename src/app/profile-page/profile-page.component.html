@@ -80,7 +80,7 @@
 
     </div>
 
-    <div class="button editProfile" *ngIf='isAuthenticated && uid === myUid'>
+    <div class="button editProfile" *ngIf='isAuthenticated && uid === myUid' (click)='onClickEdit()'>
 
         <span> Edit Profile</span>
 

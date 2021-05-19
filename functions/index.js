@@ -5,6 +5,7 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const spawn = require('child-process-promise').spawn;
+const getColours = require('get-image-colors')
 
 const runtimeOpts = {
   timeoutSeconds: 540,
@@ -75,15 +76,21 @@ exports.colourPallette = functions.https.onCall(async (data, context) => {
     const bucket = admin.storage().bucket(fileBucket);
 
     const fileName = filePath.split('/')[1];
-    const tempFilePath = path.join(os.tmpdir(), fileName);
+    const localFilePath = path.join(os.tmpdir(), fileName);
 
-    await bucket.file(filePath).download({destination: tempFilePath})
+    const options = {count: data.count};
+
+    await bucket.file(filePath).download({destination: localFilePath})
       .catch((e) => functions.logger.info(e));
 
-    await spawn('convert', [tempFilePath, '-depth 8 txt:- | sed -e "1d;s/.* #/#/;s/ .*//" | sort -u'])
-      .catch((e) => functions.logger.info(e));
+    await getColours(localFilePath, options).then(colours => {
+      // `colors` is an array of color objects
+      functions.logger.info('Colours Identified:', colours);
+      hslColours = colours.map(color => color.hsl());
+      functions.logger.info('Colours Identified in HSL:', hslColours);
+    })
 
-
+    finishUp([localFilePath]);
 
   } catch(e) {
     functions.logger.info(e);
