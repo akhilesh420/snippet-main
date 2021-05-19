@@ -251,6 +251,7 @@ export class PostService implements OnInit {
       .catch((e) => {return e});
     console.log(data$);
     console.log('done');
+    return data$;
   }
 
   // --------------------------------------- Error handling ---------------------------------------

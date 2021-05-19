@@ -48,7 +48,7 @@
 
     </div> -->
 
-    <div class="optionsButton optionsButtonActive">
+    <div class="optionsButton optionsButtonActive" (click)='openDropdown = !openDropdown; showDetails = false;'>
 
 
       <img src = "assets/images/Post/optionsButtonInactive.svg">
@@ -59,11 +59,11 @@
   </div>
 
   <!-- Options Dropdown -->
-  <div class="optionsDropDown slide-in-top">
+  <div class="optionsDropDown slide-in-top" *ngIf='openDropdown'>
 
       <!-- Options Menu -->
 
-      <!-- <div class="optionCard">
+      <div *ngIf='!onDelete' class="optionCard" (click)='toggleHolderList(); openDropdown = false;'>
 
         <div class="collectorsImage">
 
@@ -77,7 +77,7 @@
 
       </div>
 
-      <div class="optionCard">
+      <div *ngIf='!onDelete && (isAuthenticated && uid === myUid)' class="optionCard" (click)='onDelete = true;'>
 
         <div class="deleteImage">
 
@@ -91,7 +91,7 @@
 
       </div>
 
-      <div class="optionCard">
+      <div *ngIf='!onDelete' class="optionCard" (click)='openDropdown = false; onDelete = false;'>
 
         <div class="closeText">
 
@@ -99,11 +99,11 @@
 
         </div>
 
-      </div> -->
+      </div>
 
       <!-- Delete Process -->
 
-      <div class="deleteProcess slide-in-left">
+      <div *ngIf='onDelete  && (isAuthenticated && uid === myUid)' class="deleteProcess slide-in-left">
 
         <div class="deleteConfirmPrompt">
 
@@ -114,11 +114,11 @@
 
         <div class="deleteButtons">
 
-          <div class="deleteButton confirmDeleteButton">
+          <div (click)='postDelete();' class="deleteButton confirmDeleteButton">
             <span>DELETE</span>
           </div>
 
-          <div class="deleteButton closeDeleteButton">
+          <div (click)='openDropdown = false; onDelete = false;' class="deleteButton closeDeleteButton">
             <span>CLOSE</span>
           </div>
 
@@ -136,7 +136,7 @@
 
         <!-- Deleting cover -->
 
-        <!-- <div class="deleteCover">
+        <div *ngIf='deleting' class="deleteCover">
 
           <div class="deleteCoverItems">
 
@@ -148,7 +148,7 @@
 
           </div>
 
-        </div> -->
+        </div>
 
     <!-- Content -->
     <div *ngIf="(postContent$ | async) as content; else loading">

@@ -39,7 +39,9 @@ export class PostComponent implements OnInit, OnDestroy {
 
   viewed: boolean = false;
   showDetails = false;
-  fullscreenToggle = false;
+  openDropdown = false;
+  onDelete: boolean = false;
+  deleting: boolean = false;
   collected: number = 0;
   views: number = 0;
   collectedLoaded = false;
@@ -74,7 +76,6 @@ export class PostComponent implements OnInit, OnDestroy {
   stickerDetails: StickerDetails;
 
   mutePost: boolean = false;
-  deleted: boolean;
 
   // User stuff
   username$: Observable<{username: string}>;
@@ -128,13 +129,6 @@ export class PostComponent implements OnInit, OnDestroy {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated)  this.myUid = user.uid;
     });
-
-    this.postService.getPostInfo(this.pid)
-      .pipe(takeUntil(this.notifier$))
-      .subscribe((res) => {
-        this.deleted = res.deleted;
-        // if (!this.deleted) this.stickerContent = this.postService.getStickerContent(this.pid);
-      });
 
     this.setUpPost();
     this.setUpUser();
@@ -292,7 +286,26 @@ export class PostComponent implements OnInit, OnDestroy {
   toggleHolderList() {
     this.showDetails = !this.showDetails;
 
-    if (this.showDetails) this.mixpanelService.openHolderListTrack({ pid: this.pid, creatorID: this.uid, postType: this.postType });
+    if (this.showDetails) {
+      this.mixpanelService.openHolderListTrack({ pid: this.pid, creatorID: this.uid, postType: this.postType });
+      this.openDropdown = false;
+    };
+  }
+
+  async postDelete() {
+    if (this.deleting) return;
+    this.deleting = true;
+    this.openDropdown = false;
+    this.showDetails = false;
+
+    const res:any = await this.postService.deletePost(this.pid);
+
+    let popUpObj: PopUp;
+    if (res.success) popUpObj = new PopUp("Post deleted successfully!",'Okay',undefined,['default', 'reject']);
+    else popUpObj = new PopUp("Post could not be deleted! Try again later!",'Okay',undefined,['default', 'reject']);
+
+    this.miscellaneousService.setPopUp(popUpObj);
+    this.deleting = false;
   }
 
   usernameClick() {
