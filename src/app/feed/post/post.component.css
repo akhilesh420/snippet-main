@@ -160,34 +160,16 @@ p {
   display: inline-block;
 }
 
-/* below are changes */
 .postTitle > p {
   cursor: pointer;
 }
-
-/* .dropdownButton {
-
-  display: inline-block;
-  width: 10%;
-  height: auto;
-  margin-top: 3px;
-
-} */
-
-/* below are changes */
-/* .dropdownButton > img {
-  cursor: pointer;
-  width: 16px;
-  height: auto;
-  margin-left: calc(100% - 28px);
-  margin-bottom: 2px;
-} */
 
 .optionsButton {
 
   margin-top: 12px;
   float: right;
   margin-right: 12px;
+  cursor: pointer;
   
 }
 
@@ -195,16 +177,16 @@ p {
 
   height: 120px;
   width: 100%;
-  background-color: #030303;
+  background: #030303;
   position: absolute;
   z-index: 1;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
+  
 }
 
 .optionCard {
@@ -216,7 +198,195 @@ p {
   border-radius: 5px;
   margin-left: 15px;
   background-color: #0F0F0F;
+  cursor: pointer;
+  transition: transform 300ms ease;
 
+}
+
+.collectorsImage {
+
+  display: flex;
+  flex-direction: row;
+  height: 75px;
+  width: 100%;
+  justify-content: center;
+
+}
+
+.deleteImage {
+
+  display: flex;
+  flex-direction: row;
+  height: 75px;
+  width: 100%;
+  justify-content: center;
+
+}
+
+.collectorsImage > img {
+
+  width: 65px;
+  height: 40px;
+  margin-top: 24px;
+
+}
+
+.deleteImage > img {
+
+  width: 24px;
+  height: 24px;
+  margin-top: 34px;
+
+}
+
+.cardText {
+
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+}
+
+.deleteText {
+  color: #FFFFFF;
+}
+
+.closeText {
+
+font-family: 'Assistant';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 16px;
+letter-spacing: 0.02em;
+color: #FFFFFF;
+height: 100%;
+width: 100%;
+display: grid;
+place-items: center;
+
+}
+
+.deleteProcess {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.deleteConfirmPrompt {
+
+  display: flex;
+  flex-direction: column;
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #F0C505;
+  align-content: center;
+  height: 42px;
+  width: 240px;
+  word-wrap: break-word;
+  margin-right: 10px;
+  margin-bottom: 16px;
+
+}
+
+.deleteButtons {
+
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100px;
+  cursor: pointer;
+
+}
+
+.deleteButton {
+
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  width: 100px;
+  margin-bottom: 10px;
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: transform 250ms ease;
+
+}
+
+.confirmDeleteButton {
+
+  background-color: #E60000;;
+
+}
+
+.closeDeleteButton {
+
+  background-color: #0F0F0F;
+
+}
+
+.deleteCover {
+
+  z-index: 1;
+  position: absolute;
+  background: rgba(255, 76, 76, 0.7);
+  height: 100%;
+  width: 100%;
+
+}
+
+.deleteCoverText {
+
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  margin-top: 25%;
+
+}
+
+.deleteCoverText > span {
+
+  margin-left: 50%;
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  transform: translate(-50%);
+
+}
+
+.deleteCoverBuffer {
+
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10%;
+  justify-content: center;
 }
 
 .engagementBar {
@@ -331,6 +501,7 @@ li {
 }
 
 .postViewsExp {
+
   font-family: 'Assistant', sans-serif;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -739,34 +910,6 @@ li {
   }
 }
 
-/* Rotate to original for postDetails Button */
-
-.rotate-90-cw {
-  -webkit-animation: rotate-90-cw 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-          animation: rotate-90-cw 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-
-@-webkit-keyframes rotate-90-cw {
-  0% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-  }
-  100% {
-    -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
-  }
-}
-@keyframes rotate-90-cw {
-  0% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-  }
-  100% {
-    -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
-  }
-}
-
 /* fade-in-top for postDetails and opacity */
 
 .fade-in-top {
@@ -889,6 +1032,67 @@ li {
   }
 }
 
+.slide-in-top {
+	-webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+ @-webkit-keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+            transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-top {
+  0% {
+    -webkit-transform: translateY(-1000px);
+            transform: translateY(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-left {
+	-webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 
 @media (hover: hover) and (pointer: fine) {
 
@@ -915,6 +1119,18 @@ li {
 
   .forHoverPurposes:hover .creatorDP {
     box-shadow: 0 0 0 1px #E2B33D;
+  }
+
+  .optionCard:hover {
+
+    transform: translateY(-5px);
+
+  }
+
+  .deleteButton:hover {
+
+    transform: translateY(-5px);
+
   }
 
 }

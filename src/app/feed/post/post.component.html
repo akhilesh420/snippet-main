@@ -59,9 +59,11 @@
   </div>
 
   <!-- Options Dropdown -->
-  <div class="optionsDropDown">
+  <div class="optionsDropDown slide-in-top">
 
-      <div class="optionCard">
+      <!-- Options Menu -->
+
+      <!-- <div class="optionCard">
 
         <div class="collectorsImage">
 
@@ -83,16 +85,47 @@
 
         </div>
 
-        <div class="cardText">
+        <div class="cardText deleteText">
           <span> Delete Post </span>
         </div>
         
       </div>
 
       <div class="optionCard">
+
+        <div class="closeText">
+
+          <span>CLOSE</span>
+
+        </div>
         
+      </div> -->
+
+      <!-- Delete Process -->
+
+      <div class="deleteProcess slide-in-left">
+
+        <div class="deleteConfirmPrompt">
+
+          <span>Delete this post ?<br>
+            Collectors will loose it as well. </span>
+  
+        </div>
+  
+        <div class="deleteButtons">
+  
+          <div class="deleteButton confirmDeleteButton">
+            <span>DELETE</span>
+          </div>
+  
+          <div class="deleteButton closeDeleteButton">
+            <span>CLOSE</span>
+          </div>
+  
+        </div>
+
       </div>
- 
+
   </div>
 
   <div #contentContainer
@@ -100,6 +133,16 @@
        [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",
                    "background-color": !(postContent$ | async) ? "#C4C4C4" : "transparent"}'
         (click)='toggleHolderList()'>
+
+        <div class="deleteCover">
+
+          <div class="deleteCoverText">
+            <span>DELETING</span>
+          </div>
+
+          <app-loading-spinner class = "deleteCoverBuffer"></app-loading-spinner>
+
+        </div>
 
     <!-- Content -->
     <div *ngIf="(postContent$ | async) as content; else loading">
