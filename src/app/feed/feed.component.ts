@@ -66,6 +66,7 @@ export class FeedComponent implements OnInit, OnChanges, OnDestroy {
   setUpPosts() {
     const emptyFeed = new Feed(undefined, undefined, undefined);
     this.feedList$ = new BehaviorSubject<Feed[]>([emptyFeed]);
+    this.done = true;
 
     this.subscription = this.posts$.pipe(takeUntil(this.notifier$)).subscribe(response => {
       this.miscellaneousService.endLoading();
