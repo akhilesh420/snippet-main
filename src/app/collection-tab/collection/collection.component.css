@@ -15,7 +15,7 @@
 
 .detailsSpace {
     height: 42px;
-    width: calc(100% - 58px);
+    width: calc(100% - 64px);
     margin-left: 10px;
     display: inline-flex;
     flex-direction: column;
