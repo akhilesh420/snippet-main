@@ -83,6 +83,7 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
     .then(res => {
       const data = res.data();
       functions.logger.info('post data', data);
+      if (isAdmin) reason = 'Post deleted for violating community guidelines'
       if (data.creatorID != uid && !isAdmin) reject("You don't have access");
       else uid = data.creatorID;
     });
