@@ -1,0 +1,677 @@
+.linearGradientBox {
+
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+}
+
+.feedPosition {
+
+    position: absolute;
+    width: calc(100% - 433px);
+    display: grid;
+    place-items: center;
+    right: 0px;
+    top: 290px;
+
+}
+
+
+.topPanel {
+
+    height: 154px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+}
+
+.dpContainer {
+
+    display: inline-flex;
+    flex-direction: column;
+    margin-top: 18px;
+    margin-left: 56px;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+
+}
+
+.dpContainer > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profileDetails {
+
+    display: inline-flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-left: 14px;
+    height: 67px;
+    width: calc(100% - 608px);
+    white-space: nowrap;
+
+}
+
+.userName {
+
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+
+
+}
+
+.userName > span {
+
+    font-family: 'Comfortaa';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.fullName {
+
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    padding-left: 2px;
+
+
+}
+
+.fullName > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 31px;
+    letter-spacing: 0.02em;
+    color: #E2B33D;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.displaySticker {
+
+    display: inline-flex;
+    flex-direction: row;
+    width: 390px;
+    height: 62px;
+    margin-top: 50px;
+
+}
+
+.sticker {
+
+    display: inline-flex;
+    flex-direction: column;
+    height: 60px;
+    width: 60px;
+    margin-right: 18px;
+
+}
+
+.sticker-bck {
+  background-color: #C4C4C4;
+}
+
+.stickerContainer {
+
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.infoPanel {
+
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 355px;
+    margin-left: 50px;
+    background: #030303;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    position: relative;
+
+}
+
+.metrics {
+
+    display: flex;
+    flex-direction: row;
+    height: 54px;
+    margin-left: 14px;
+    margin-top: 12px;
+
+}
+
+.metric {
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 84px;
+
+}
+
+.metricNumbers {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+
+}
+
+.metricNumbers > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.metricText {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+
+}
+
+.metricText > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.9);
+
+}
+
+.button {
+
+    display: flex;
+    flex-direction: row;
+    width: 110px;
+    height: 26px;
+    margin-left: 14px;
+    border: 1px solid #FFFFFF;
+    border-radius: 6px;
+    place-content: center;
+    background-color: #030303;
+    transition: background-color 350ms ease;
+    /* transition: border 350ms ease; */
+
+}
+
+
+.editProfile {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.link {
+
+    display: flex;
+    flex-direction: row;
+    width: 164px;
+    margin-left: 14px;
+
+}
+
+.link > a > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #E2B33D;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.description {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 330px;
+    margin-top: 12px;
+    margin-left: 14px;
+    word-break: break-word;
+
+}
+
+.description > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.joiningDate {
+
+    display: flex;
+    flex-direction: row;
+    height: 55px;
+    width: 328px;
+    margin-left: 14px;
+    margin-top: 28px;
+    border-top: 1px solid #0B0B0B;
+    border-bottom: 1px solid #0B0B0B;
+    margin-bottom: 30px;
+
+}
+
+.joinedText {
+
+    display: flex;
+    flex-direction: column;
+    width: 244px;
+    padding-top: 12px;
+    padding-left: 4px;
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 26px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+
+}
+
+.joinDate {
+
+    display: flex;
+    flex-direction: column;
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 26px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    padding-top: 12px;
+
+}
+
+.divider {
+
+    position: absolute;
+    top: 260px;
+    right: 0px;
+    width: calc(100% - 433px);
+    height: 0px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
+
+}
+
+.dividerNotUser {
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+   
+
+}
+
+.toggleButton {
+
+    position: absolute;
+    width: 85px;
+    height: 28px;
+    top: 224px;
+    border-radius: 5px;
+    display: flex;
+    place-content: center;
+    cursor: pointer;
+    outline: none;
+
+}
+
+.buttonNotUser {
+    background: none;
+    padding-right: 12px;
+}
+
+
+.buttonActive {
+
+    background: #E2B33D;
+
+}
+
+.buttonInactive {
+
+    background: rgba(0, 0, 0, 0.0);
+
+}
+
+.buttonHighlightPosts {
+
+    position: relative;
+    top: -1px;
+    width: 85px;
+    border: 1px solid #E2B33D;
+
+}
+
+.buttonHighlightCollection {
+
+    position: relative;
+    top: -1px;
+    left: 88px;
+    width: 85px;
+    border: 1px solid #E2B33D;
+
+}
+
+.postsButton {
+
+    left: 433px;
+
+}
+
+.collectionButton {
+
+    left: 522px;
+
+}
+
+.buttonActive > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 0px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    display: flex;
+    place-items: center;
+
+
+}
+
+.buttonNotUser > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 0px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    display: flex;
+    place-items: center;
+    padding-top: 18px;
+    padding-right: 24px;
+
+}
+
+.buttonInactive > span {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 500ms ease;
+
+}
+
+.profileDisplayPosition {
+
+    left: 50px;
+    top: 100px;
+    position: fixed;
+
+}
+
+
+
+
+
+/* Hover animation */
+
+@media(hover: hover) and (pointer: fine) {
+
+    .buttonInactive :hover {
+
+        color: #E2B33D;
+
+    }
+
+    .button:hover{
+
+            background-color: #E2B33D;
+            border: none;
+
+    }
+
+
+
+}
+
+@media only screen and (max-width:950px) {
+
+    .topPanel {
+        height:230px;
+    }
+
+    .feedPosition {
+        width: 100vw;
+    }
+
+    .metrics {
+        margin-top: 0px;
+    }
+
+    .metric {
+        margin-top: 8px;
+    }
+
+    .dpContainer {
+        margin-top: 94px;
+        margin-left: 12px;
+    }
+
+    .divider {
+        width: calc(100% - 40px);
+        right: 20px;
+    }
+
+    .dividerNotUser {
+        border-radius: 2px;
+    }
+
+    .postsButton {
+        left: 20px;
+    }
+
+    .collectionButton {
+        left: 108px;
+    }
+
+    .displaySticker {
+        display: block;
+        position: absolute;
+        right: 0px;
+        width: auto;
+    }
+
+    .sticker {
+        margin-right: 12px;
+    }
+
+    .profileDetails {
+        margin-top: 126px;
+        width: calc(100% - 188px);
+    }
+
+    .infoPanel {
+        margin-left: 20px;
+        width: calc(100% - 40px);
+        background: none;
+        box-shadow: none;
+       }
+
+    .metrics {
+
+        margin-left: 0px;
+
+    }
+
+    .button {
+
+        margin-left: 0px;
+        margin-top: 4px;
+
+    }
+
+    .link {
+
+        margin-left: 0px;
+
+    }
+
+    .description {
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 8px;
+    }
+
+    .joiningDate {
+        display: none;
+    }
+
+    .profileDisplayPosition {
+
+        display: none;
+
+    }
+
+
+}
+
+@media only screen and (max-width:550px) {
+
+    .linearGradientBox {
+
+        position: absolute;
+        width: 100vw;
+        height: 30vh;
+        z-index: 0;
+    }
+
+    .topPanel {
+        height: 206px;
+    }
+
+    .dpContainer {
+        width: 110px;
+        height: 110px;
+    }
+
+    .displaySticker {
+        top: 18px;
+        margin-top: 0px;
+    }
+
+    .profileDetails {
+        margin-top: 124px;
+        width: calc(100% - 146px);
+    }
+
+    .userName .fullName {
+        width: 98%;
+    }
+
+
+    .userName > span {
+        font-size: 24px;
+        line-height: unset;
+    }
+
+    .fullName > span {
+        font-size: 20px;
+        line-height: unset;
+    }
+
+
+}
+
+@media only screen and (max-width:372px) {
+
+.sticker {
+    margin-right: 8px;
+}
+
+
+}
+
+

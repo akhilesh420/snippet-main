@@ -1,0 +1,61 @@
+.mainContainer {
+
+    display: grid;
+    place-items: center;
+
+}
+
+.centerContainer {
+
+    width: 963px;
+    height: 100vh;
+    margin-top: 48px;
+
+}
+
+.feedPosition {
+
+    position: relative;
+    display: inline-block;
+    height: auto;
+    width: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+}
+
+.dashboardPosition {
+
+    display: inline-block;
+    position: fixed;
+    height:auto;
+    width: auto;
+    margin-left: 50px;
+}
+
+.collectionTabPosition {
+
+    margin-top: 22px;
+
+}
+
+@media only screen and (max-width:950px) {
+
+    .dashboardPosition {
+        display: none;
+    }
+
+    .centerContainer {
+        width: 550px;
+    }
+
+}
+
+@media only screen and (max-width:550px) {
+
+    .centerContainer {
+        margin-top: 0px;
+        width: 100vw;
+    }
+
+}

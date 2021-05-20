@@ -116,7 +116,7 @@ export class UsersService {
 
    // get display picture from cloud firestore
    getDisplayPictureRef(uid: string) {
-    return this.afs.doc('display picture/' + uid).valueChanges();
+    return this.afs.doc<DisplayPicture>('display picture/' + uid).valueChanges();
   }
 
   // Get display picture from firebase storage by UID
@@ -154,29 +154,36 @@ export class UsersService {
     let success: Boolean = false;
     this.miscellaneousService.startLoading();
 
-    this.updateDisplayPicture(uid, content, customMetadata).pipe(first(progress => progress === 100)).subscribe(response => {
-      this.updateDisplayPictureRef(uid, displayPicture)
-        .then(() => {
-          success = true;
-          this.mixpanelService.setProperty(uid, 'dp', true);
-        })
-        .catch(() => {
-          success = false;
-          this.miscellaneousService.setPopUp(new PopUp("There was a problem while uploading your display picture! Try again later",
-                                                       'Okay',
-                                                       undefined,
-                                                       ['default', 'reject']));
-        })
-        .finally(() => {
-          this.miscellaneousService.endLoading();
+    this.updateDisplayPicture(uid, content, customMetadata)
+      .pipe(first(progress => progress === 100))
+      .subscribe(async () => {
+        const res = await this.miscellaneousService
+          .getPallette('display pictures/' + uid + '/original', content.type);
 
-          this.mixpanelService.dpUpdateTrack({
-            fileType: content.type,
-            fileSize: content.size,
-            fileDimensions: {width: +customMetadata.width, height: +customMetadata.height},
-            success: success
+        const colours = res.response;
+
+        this.updateDisplayPictureRef(uid, {colours: colours, ...displayPicture})
+          .then(() => {
+            success = true;
+            this.mixpanelService.setProperty(uid, 'dp', true);
+          })
+          .catch(() => {
+            success = false;
+            this.miscellaneousService.setPopUp(new PopUp("There was a problem while uploading your display picture! Try again later",
+                                                        'Okay',
+                                                        undefined,
+                                                        ['default', 'reject']));
+          })
+          .finally(() => {
+            this.miscellaneousService.endLoading();
+
+            this.mixpanelService.dpUpdateTrack({
+              fileType: content.type,
+              fileSize: content.size,
+              fileDimensions: {width: +customMetadata.width, height: +customMetadata.height},
+              success: success
+            });
           });
-        });
     }, error => {
       this.miscellaneousService.endLoading();
       this.mixpanelService.dpUpdateTrack({

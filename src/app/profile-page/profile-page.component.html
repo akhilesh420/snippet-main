@@ -1,0 +1,172 @@
+<div  class="linearGradientBox"
+      [ngStyle]='{"background": "linear-gradient(125deg, " + gradientColour +" 0%, #0B0B0B 30%)"}'>
+
+</div>
+
+<div class="topPanel" #topPanel>
+
+    <div class="dpContainer">
+      <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
+    </div>
+
+    <div class="profileDetails">
+
+        <div class="userName">
+
+            <span *ngIf='(username$ | async) as userInfo'>{{userInfo.username}}</span>
+
+        </div>
+
+        <div class="fullName">
+
+            <span>{{name}}</span>
+
+        </div>
+
+    </div>
+
+    <div class="displaySticker">
+
+        <div *ngFor='let sticker of (profileStickers$ | async).stickers | reverse; trackBy: stickerTrackByFn'
+              class="sticker">
+
+          <div class = "stickerContainer"
+            [ngClass]="{'sticker-bck': sticker === 'loading'}">
+
+            <app-sticker  *ngIf='sticker != null && sticker != "loading"'
+                        [pid]="sticker.pid"
+                        location='profile'>
+           </app-sticker>
+
+          </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<div class="infoPanel" #infoPanel>
+
+
+    <div class="metrics">
+
+        <!-- Views -->
+        <div class="metric">
+
+            <div class="metricNumbers">
+                <span *ngIf='views$ | async as views'>{{views.counter | numeral}}</span>
+            </div>
+
+            <div class="metricText">
+                <span>Views</span>
+            </div>
+
+        </div>
+
+        <!-- Collectors -->
+        <div class="metric">
+
+            <div class="metricNumbers">
+                <span *ngIf='collectors$ | async as collectors'>{{collectors.counter | numeral}}</span>
+            </div>
+
+            <div class="metricText">
+                <span>Collectors</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="button editProfile" *ngIf='isAuthenticated && uid === myUid'>
+
+        <span> Edit Profile</span>
+
+    </div>
+
+    <div *ngIf='link.length > 0'
+          [ngStyle]='{"margin-top": isAuthenticated && uid === myUid ? "12px" : "0"}'
+          class="link">
+
+      <a [href]='link | url' target='_blank'>
+
+        <span>{{link}}</span>
+
+      </a>
+
+    </div>
+
+    <div *ngIf=' description.length >= 0' class="description">
+
+        <span>{{description}}</span>
+
+    </div>
+
+    <div class="joiningDate">
+
+        <div class="joinedText">
+            <span class = "joinText">Joined</span>
+        </div>
+
+        <div class="joinDate">
+            <span class = "joinText">{{dateJoined | date: 'MMM y'}}</span>
+        </div>
+
+    </div>
+
+</div>
+
+<div  [ngClass] = "{'dividerNotUser': isAuthenticated && uid != myUid  || !isAuthenticated}"
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16 + 28 + 8).toString() + "px" : null}'
+      class="divider" >
+
+    <div  *ngIf='isAuthenticated && uid === myUid'
+          [ngClass] = "{'buttonHighlightPosts': childRoute === 'posts',
+                       'buttonHighlightCollection': childRoute === 'collection'}">
+
+    </div>
+
+
+</div>
+
+<div  [routerLink]='"/profile/posts/" + uid'
+      [ngClass] = "{'buttonActive': isAuthenticated && uid === myUid ? childRoute === 'posts' : false,
+                    'buttonInactive': childRoute != 'posts',
+                    'buttonNotUser': isAuthenticated ? uid != myUid : true}"
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16).toString() + "px" : null}'
+      class="toggleButton postsButton"
+      #postButton>
+
+    <span>Posts</span>
+
+</div>
+
+<div  *ngIf='!!myUid && uid === myUid'
+      [routerLink]='"/profile/collection/" + uid'
+      [ngClass] = "{'buttonActive': childRoute === 'collection',
+                    'buttonInactive': childRoute != 'collection'}"
+      class="toggleButton collectionButton"
+      [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16).toString() + "px" : null}'>
+
+    <span>Collection</span>
+
+</div>
+
+<app-feed [posts$]='posts$'
+          class = "feedPosition"
+          [ngStyle]='{"top": tabletCheck ? (topPanel.offsetHeight + topPanel.offsetTop + infoPanel.offsetHeight + 16 + 10 + 28 + 8 + 10).toString() + "px" : null}'>>
+</app-feed>
+
+<div  *ngIf='!tabletCheck'
+      class="profileDisplayPosition"
+      [ngStyle]='{"display": currentScroll <= (topPanel.offsetHeight + infoPanel.offsetHeight) ? "none" : "block"}'>
+
+    <app-profile-display [uid]='uid'></app-profile-display>
+
+</div>
+
+
+

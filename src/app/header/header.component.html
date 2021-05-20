@@ -97,8 +97,8 @@
         <!-- Active -->
          <img class = "activeexploreButton"
               *ngIf='currentRoute.includes("explore")
-                    || ( currentRoute.includes("profile/")
-                    && !currentRoute.includes("profile/"+myUid)); else inactiveExplore'
+                    || ( currentRoute.includes("profile/posts")
+                    && !currentRoute.includes("profile/posts"+myUid)); else inactiveExplore'
               src = "assets/images/Header Icons/exploreActive.svg">
 
 
@@ -125,7 +125,7 @@
 
         <!-- Active -->
 
-        <img class = "activeprofileButton" *ngIf='currentRoute.includes("profile/"+myUid) || currentRoute.includes("collection/"+myUid); else inactiveProfile' src = "assets/images/Header Icons/profilebuttonActive.svg">
+        <img class = "activeprofileButton" *ngIf='currentRoute.includes("profile/posts"+myUid) || currentRoute.includes("profile/collection/"+myUid); else inactiveProfile' src = "assets/images/Header Icons/profilebuttonActive.svg">
 
       </div>
 

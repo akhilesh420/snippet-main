@@ -174,7 +174,7 @@ export class PostComponent implements OnInit, OnDestroy {
   setUpUser() {
     if (!this.uid) return;
 
-    this.profileRoute = "/profile/" + this.uid;
+    this.profileRoute = "/profile/posts/" + this.uid;
 
     this.username$ = this.usersService.getUsername(this.uid);
     this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);

@@ -7,6 +7,7 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const spawn = require('child-process-promise').spawn;
+const getColours = require('get-image-colors');
 
 const runtimeOpts = {
   timeoutSeconds: 540,
@@ -124,6 +125,44 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
   })
   .then((val) => {return {message: val, success: true}})
   .catch((e) =>{return {message: e, success: false}});
+
+exports.colourPallette = functions.https.onCall(async (data, context) => {
+  return new Promise(async (resolve, reject) => {
+    const filePath = data.filePath;
+    const fileType = data.fileType;
+
+    functions.logger.info('Getting colour pallette for:', filePath);
+    functions.logger.info('File type:', fileType);
+
+    const fileBucket = bucket_name;
+    const bucket = admin.storage().bucket(fileBucket);
+
+    const fileName = filePath.split('/')[1];
+    const localFilePath = path.join(os.tmpdir(), fileName);
+
+
+    await bucket.file(filePath).download({destination: localFilePath})
+      .catch((e) => functions.logger.info(e));
+
+    const options = {count: data.count, type: fileType};
+    var finalColours;
+
+    await getColours(localFilePath, options).then(colours => {
+      // `colors` is an array of color objects
+      functions.logger.info('Colours Identified:', colours);
+      finalColours = colours.map(colour => colour.set('hsl.s', 1));
+      functions.logger.info('Colours in hex with 100% saturation:', finalColours);
+    });
+
+    finalColours.sort((a,b) => b.get('hsl.l') - a.get('hsl.l'));
+    const cssColours = finalColours.map(colour => colour.css());
+    functions.logger.info('Colours sorted by lightness:', cssColours);
+
+    finishUp([localFilePath]);
+    resolve(cssColours);
+  })
+  .then((colours) => {return {response: colours, success: true}})
+  .catch((e) => {return {response: e, success: false}})
 });
 
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore

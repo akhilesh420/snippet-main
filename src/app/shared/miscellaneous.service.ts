@@ -4,6 +4,8 @@ import { UsersService } from 'src/app/shared/users.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { first } from 'rxjs/operators';
 
 export class PopUp {
    constructor(
@@ -39,7 +41,7 @@ export class MiscellaneousService {
 
   images = [];
 
-  constructor() { }
+  constructor(private fns: AngularFireFunctions) { }
 
   ngOnInit() {
     this.loadingStart.next(false);
@@ -84,6 +86,21 @@ export class MiscellaneousService {
       this.images[i] = new Image();
       this.images[i].src = environment.websitePath + images[i];
     }
+  }
+
+  async getPallette(filePath: string, fileType: string, count: number = 2) {
+    console.log('getting colour pallette');
+    const callable = this.fns.httpsCallable('colourPallette'); //delete post
+
+    const data = {filePath: filePath, fileType: fileType, count: count};
+    console.log(data);
+
+    const data$ = await callable(data).pipe(first()).toPromise()
+      .catch(e => console.log(e));
+    console.log(data$);
+    console.log('done');
+
+    return data$;
   }
 
   getDimension(file: File, type: string): Promise<{width: number; height: number}> {

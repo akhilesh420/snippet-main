@@ -29,6 +29,7 @@ export class DisplayPicture {
     public height: number,
     public fileFormat: string = 'image',
     public dateCreated: Date,
+    public colours?: string[]
   ) {}
 }
 
@@ -37,8 +38,8 @@ export class PersonalDetails {
 
   constructor(
     public name: string,
-    public dateOfBirth: Date,
-    public dateCreated: Date,
+    public dateOfBirth: any,
+    public dateCreated: any,
   ) {}
 }
 

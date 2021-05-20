@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.isAuthenticated = !!user;
       if (this.isAuthenticated) {
         this.myUid = user.uid;
-        this.profileRoute = "/profile/" + this.myUid;
+        this.profileRoute = "/profile/posts/" + this.myUid;
         this.createRoute = "/create/content";
         this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
         this.updateOnDPChange();

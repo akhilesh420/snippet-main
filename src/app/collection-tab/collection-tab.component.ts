@@ -56,7 +56,7 @@ export class CollectionTabComponent implements OnInit, OnDestroy {
 
   goToCollection() {
     if (this.editMode) return;
-    this.router.navigate(["/collection/"+this.myUid]);
+    this.router.navigate(["/profile/collection/"+this.myUid]);
     this.mixpanelService.setRoutingVia('collection tab');
   }
 

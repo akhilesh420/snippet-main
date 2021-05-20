@@ -1,3 +1,5 @@
+import { ExplorePageComponent } from './explore-page/explore-page.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { FeedComponent } from './feed/feed.component';
 import { AuthComponent } from './auth/auth.component';
 import { CreateComponent } from './create/create.component';
@@ -14,16 +16,21 @@ const onlyAllowSelf = (next) => map((user: any) => !!user && next.params.id === 
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/explore', pathMatch: 'full'},
-  { path: 'explore', component: FeedComponent},
-  { path: 'collection/:id', component: FeedComponent, ...canActivate(onlyAllowSelf)},
+  { path: 'explore', component: ExplorePageComponent},
+  { path: 'profile', component: ProfilePageComponent,
+    children: [
+      { path: 'posts/:id', component: FeedComponent },
+      { path: 'collection/:id', component: FeedComponent, ...canActivate(onlyAllowSelf)}
+    ]
+  },
+  { path: 'post/:id', component: ExplorePageComponent},
   { path: 'create/:step', component: CreateComponent, ...canActivate(redirectUnauthorizedToLogin)},
   { path: 'create', redirectTo: '/create/content', pathMatch: 'full', ...canActivate(redirectUnauthorizedToLogin)},
-  { path: 'profile/:id', component: FeedComponent},
   { path: 'feedback', component: FeedbackComponent},
-  { path: 'post/:id', component: FeedComponent},
   { path: 'auth', component: AuthComponent},
   { path: 'auth/:id', component: AuthComponent},
   { path: 'tutorial', component: TutorialPageComponent},
+  { path: 'p', component: ProfilePageComponent},
   {path: '404', redirectTo: '/explore'},
   {path: '**', redirectTo: '/explore'}
 ];

@@ -1,0 +1,31 @@
+<div class="mainContainer">
+
+    <div class="centerContainer">
+
+        <div class="feedPosition">
+
+            <app-feed [posts$]='posts$'></app-feed>
+
+        </div>
+
+
+        <div class="dashboardPosition">
+
+            <app-profile-display class = "profileDisplayPosition" [uid]='myUid'></app-profile-display>
+
+            <div class="collectionTabPosition">
+
+                <app-collection-tab></app-collection-tab>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
