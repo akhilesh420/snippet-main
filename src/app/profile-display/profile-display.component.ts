@@ -76,6 +76,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     this.usersService.getDisplayPictureRef(uid)
     .pipe(takeUntil(this.notifier$))
     .subscribe((details) => {
+      if(!details) return;
       if (!!details.colours) this.gradientColour = details.colours[1];
     });
   }
