@@ -29,6 +29,7 @@ export class DisplayPicture {
     public height: number,
     public fileFormat: string = 'image',
     public dateCreated: Date,
+    public colours?: string[]
   ) {}
 }
 

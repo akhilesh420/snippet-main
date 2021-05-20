@@ -33,7 +33,7 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   link: string = '';
 
-  gradientColours: string[] = ['#0B0B0B','#0B0B0B'];
+  gradientColour: string = '#0B0B0B';
 
   notifier$ = new Subject();
 
@@ -54,8 +54,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     console.log('on changes profile display');
     this.setUpProfile(this.uid);
-
-    this.getPallette();
   }
 
   setUpProfile(uid: string) {
@@ -74,6 +72,12 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
     this.profileStickers$ = this.usersService.getProfileStickers(uid)
       .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
+
+    this.usersService.getDisplayPictureRef(uid)
+    .pipe(takeUntil(this.notifier$))
+    .subscribe((details) => {
+      if (!!details.colours) this.gradientColour = details.colours[1];
+    });
   }
 
   trackByFn(index, item: ProfileSticker) {
@@ -82,17 +86,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   usernameClick() {
     this.mixpanelService.setRoutingVia('profile display');
-  }
-
-  async getPallette() {
-    if (!this.uid) return;
-    const res = await this.miscellaneousService
-      .getPallette(
-        'display pictures/' + this.uid + '/original',
-        'display picture',
-        this.uid
-      );
-    if (res.success) return this.gradientColours = res.response;
   }
 
   ngOnDestroy() {

@@ -70,11 +70,10 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
 exports.colourPallette = functions.https.onCall(async (data, context) => {
   return new Promise(async (resolve, reject) => {
     const filePath = data.filePath;
-    const collectionPath = data.collectionPath;
-    const docPath = data.docPath;
+    const fileType = date.fileType;
 
     functions.logger.info('Getting colour pallette for:', filePath);
-    functions.logger.info('Getting image information from:', collectionPath + '/' + docPath);
+    functions.logger.info('File type:', fileType);
 
     const fileBucket = bucket_name;
     const bucket = admin.storage().bucket(fileBucket);
@@ -82,18 +81,11 @@ exports.colourPallette = functions.https.onCall(async (data, context) => {
     const fileName = filePath.split('/')[1];
     const localFilePath = path.join(os.tmpdir(), fileName);
 
-    const doc = await db.collection(collectionPath).doc(docPath).get();
-
-    if (!doc.exists) reject("No such document!");
-
-    const imageInfo = doc.data();
-    functions.logger.info('Image information:', imageInfo);
-    functions.logger.info('Image type:', imageInfo.fileFormat);
 
     await bucket.file(filePath).download({destination: localFilePath})
       .catch((e) => functions.logger.info(e));
 
-    const options = {count: data.count, type: imageInfo.fileFormat};
+    const options = {count: data.count, type: fileType};
     var finalColours;
 
     await getColours(localFilePath, options).then(colours => {

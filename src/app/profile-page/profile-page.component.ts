@@ -40,7 +40,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   tabletCheck: boolean;
 
   currentScroll: number;
-  gradientColours: string[] = ['#0B0B0B','#0B0B0B'];
+  gradientColour: string = '#0B0B0B';
 
   notifier$ = new Subject();
 
@@ -79,8 +79,6 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
       .subscribe((scroll) => {
         this.currentScroll = scroll;
       });
-
-    this.getPallette();
   }
 
   setUpProfile(uid: string) {
@@ -94,15 +92,22 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
       .pipe(startWith({counter: 0}));
     this.profileStickers$ = this.usersService.getProfileStickers(uid)
       .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
-    this.usersService.getPersonalDetails(uid).pipe(takeUntil(this.notifier$))
+    this.usersService.getPersonalDetails(uid)
+      .pipe(takeUntil(this.notifier$))
       .subscribe((personal) => {
         this.name = personal.name;
         this.dateJoined = personal.dateCreated.seconds * 1000;
       });
-    this.usersService.getProfileDetails(uid).pipe(takeUntil(this.notifier$))
+    this.usersService.getProfileDetails(uid)
+      .pipe(takeUntil(this.notifier$))
       .subscribe((details) => {
         this.description = details.description;
         this.link = details.link;
+      });
+    this.usersService.getDisplayPictureRef(uid)
+      .pipe(takeUntil(this.notifier$))
+      .subscribe((details) => {
+        if (!!details.colours) this.gradientColour = details.colours[1];
       });
   }
 
@@ -119,17 +124,6 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
 
   stickerTrackByFn(index, item: ProfileSticker) {
     return !!item ? item.pid : index;
-  }
-
-  async getPallette() {
-    if (!this.uid) return;
-    const res = await this.miscellaneousService
-      .getPallette(
-        'display pictures/' + this.uid + '/original',
-        'display picture',
-        this.uid
-      );
-    if (res.success) return this.gradientColours = res.response;
   }
 
   ngOnDestroy() {
