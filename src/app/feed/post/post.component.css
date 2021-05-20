@@ -112,6 +112,7 @@ p {
 .titleTop {
   height: auto;
   width: 100%;
+  min-height: 42px;
 }
 
 .forHoverPurposes {
@@ -176,16 +177,17 @@ p {
 .optionsDropDown {
 
   height: 120px;
-  width: 100%;
+  width: calc(100% - 10px);
   background: #030303;
   position: absolute;
   z-index: 1;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-top: 5px;
+  margin-left: 5px;
+  border-radius: 8px;
   
 }
 
@@ -656,9 +658,9 @@ li {
 
 @media only screen and (max-width:550px) {
 
-  .titleTop {
+  /* .titleTop {
     min-height: 28px;
-  }
+  } */
 
   .postContainer {
     border-bottom-left-radius: 0px;
