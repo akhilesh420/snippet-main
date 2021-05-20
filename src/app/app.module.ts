@@ -1,3 +1,4 @@
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -71,6 +72,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
     AngularFireStorageModule, // storage
     AngularFirePerformanceModule, // performance
     AngularFireAnalyticsModule, // analytics
+    AngularFireMessagingModule, // FCM
     ClickOutsideModule
   ],
   providers: [

@@ -1,3 +1,4 @@
+import { MessagingService } from './shared/services/messaging.service';
 import { MixpanelService } from './shared/mixpanel.service';
 import { ActivityService } from 'src/app/shared/activity.service';
 import { FeedService } from 'src/app/feed/feed.service';
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private scrollService: ScrollService,
               private auth: AngularFireAuth,
               private mixpanelService: MixpanelService,
+              private messagingService: MessagingService,
               @Inject(DOCUMENT) private _document ) {
     document.addEventListener("visibilitychange", function() { //mute posts on tab change
       feedService.mutePosts.next(!!document.hidden);
@@ -57,6 +59,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.mixpanelService.init(); //Initialize tracking
+
+    this.messagingService.requestPermission();
 
     this.mixpanelService.timeEvent('session end');
     this.mixpanelService.timeEvent('sticker collect');

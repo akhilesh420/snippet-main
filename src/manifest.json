@@ -1,0 +1,9 @@
+{
+  "name": "Snippet",
+  "short_name": "Snippet",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
+  "start_url": "/",
+
+  "gcm_sender_id": "103953800507"
+}
