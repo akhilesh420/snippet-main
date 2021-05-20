@@ -1,4 +1,3 @@
-import { environment } from './../../environments/environment';
 import { map, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
