@@ -125,6 +125,7 @@ exports.deletePost = functions.https.onCall(async (data, context) => {
   })
   .then((val) => {return {message: val, success: true}})
   .catch((e) =>{return {message: e, success: false}});
+});
 
 exports.colourPallette = functions.https.onCall(async (data, context) => {
   return new Promise(async (resolve, reject) => {
