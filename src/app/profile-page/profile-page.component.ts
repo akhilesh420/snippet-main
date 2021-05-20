@@ -1,22 +1,22 @@
 import { ScrollService } from './../shared/scroll.service';
-import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { ActivityService } from './../shared/activity.service';
 import { UsersService } from './../shared/users.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FeedService } from './../feed/feed.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, Event as NavigationEvent } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { Feed } from '../shared/post.model';
 import { ProfileSticker } from '../shared/profile.model';
 import { WindowStateService } from '../shared/window.service';
+import { MiscellaneousService } from '../shared/miscellaneous.service';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.css']
 })
-export class ProfilePageComponent implements OnInit {
+export class ProfilePageComponent implements OnInit, OnDestroy {
 
   posts$: Observable<Feed[]> = new Observable();
 
@@ -40,6 +40,7 @@ export class ProfilePageComponent implements OnInit {
   tabletCheck: boolean;
 
   currentScroll: number;
+  gradientColours: string[] = ['#0B0B0B','#0B0B0B'];
 
   notifier$ = new Subject();
 
@@ -78,6 +79,8 @@ export class ProfilePageComponent implements OnInit {
       .subscribe((scroll) => {
         this.currentScroll = scroll;
       });
+
+    this.getPallette();
   }
 
   setUpProfile(uid: string) {
@@ -118,8 +121,15 @@ export class ProfilePageComponent implements OnInit {
     return !!item ? item.pid : index;
   }
 
-  onClickEdit() {
-    this.miscellaneousService.getPallette('display pictures/' + this.uid + '/original');
+  async getPallette() {
+    if (!this.uid) return;
+    const res = await this.miscellaneousService
+      .getPallette(
+        'display pictures/' + this.uid + '/original',
+        'display picture',
+        this.uid
+      );
+    if (res.success) return this.gradientColours = res.response;
   }
 
   ngOnDestroy() {

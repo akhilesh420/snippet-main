@@ -1,4 +1,5 @@
-<div class="linearGradientBox">
+<div  class="linearGradientBox"
+      [ngStyle]='{"background": "linear-gradient(180deg, " + gradientColours[0] +" 0%, " + gradientColours[1] + " 35%, #0B0B0B 75%)"}'>
 
 </div>
 
@@ -80,7 +81,7 @@
 
     </div>
 
-    <div class="button editProfile" *ngIf='isAuthenticated && uid === myUid' (click)='onClickEdit()'>
+    <div class="button editProfile" *ngIf='isAuthenticated && uid === myUid'>
 
         <span> Edit Profile</span>
 

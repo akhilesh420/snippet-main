@@ -88,16 +88,17 @@ export class MiscellaneousService {
     }
   }
 
-  async getPallette(filePath: string) {
+  async getPallette(filePath: string, collectionPath: string, docPath: string) {
     console.log('getting colour pallette');
     const callable = this.fns.httpsCallable('colourPallette'); //delete post
 
-    const data = {filePath: filePath, count: 2}
-
+    const data = {filePath: filePath, collectionPath: collectionPath, docPath: docPath, count: 2};
+    console.log(data);
     const data$ = await callable(data).pipe(first()).toPromise()
       .catch(e => console.log(e));
     console.log(data$);
     console.log('done');
+    return data$;
   }
 
   getDimension(file: File, type: string): Promise<{width: number; height: number}> {

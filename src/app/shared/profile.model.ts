@@ -37,8 +37,8 @@ export class PersonalDetails {
 
   constructor(
     public name: string,
-    public dateOfBirth: Date | any,
-    public dateCreated: Date | any,
+    public dateOfBirth: any,
+    public dateCreated: any,
   ) {}
 }
 

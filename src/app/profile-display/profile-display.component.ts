@@ -33,12 +33,15 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   link: string = '';
 
+  gradientColours: string[] = ['#0B0B0B','#0B0B0B'];
+
   notifier$ = new Subject();
 
   constructor( private auth: AngularFireAuth,
                private usersService: UsersService,
                private activityService: ActivityService,
-               private mixpanelService: MixpanelService) { }
+               private mixpanelService: MixpanelService,
+               private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.setUpProfile(this.uid);
@@ -51,6 +54,8 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     console.log('on changes profile display');
     this.setUpProfile(this.uid);
+
+    this.getPallette();
   }
 
   setUpProfile(uid: string) {
@@ -77,6 +82,17 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
   usernameClick() {
     this.mixpanelService.setRoutingVia('profile display');
+  }
+
+  async getPallette() {
+    if (!this.uid) return;
+    const res = await this.miscellaneousService
+      .getPallette(
+        'display pictures/' + this.uid + '/original',
+        'display picture',
+        this.uid
+      );
+    if (res.success) return this.gradientColours = res.response;
   }
 
   ngOnDestroy() {

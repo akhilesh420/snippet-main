@@ -1,11 +1,12 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
+const db = admin.firestore();
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
 const spawn = require('child-process-promise').spawn;
-const getColours = require('get-image-colors')
+const getColours = require('get-image-colors');
 
 const runtimeOpts = {
   timeoutSeconds: 540,
@@ -67,10 +68,13 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
 });
 
 exports.colourPallette = functions.https.onCall(async (data, context) => {
-
-  try {
+  return new Promise(async (resolve, reject) => {
     const filePath = data.filePath;
+    const collectionPath = data.collectionPath;
+    const docPath = data.docPath;
+
     functions.logger.info('Getting colour pallette for:', filePath);
+    functions.logger.info('Getting image information from:', collectionPath + '/' + docPath);
 
     const fileBucket = bucket_name;
     const bucket = admin.storage().bucket(fileBucket);
@@ -78,23 +82,36 @@ exports.colourPallette = functions.https.onCall(async (data, context) => {
     const fileName = filePath.split('/')[1];
     const localFilePath = path.join(os.tmpdir(), fileName);
 
-    const options = {count: data.count};
+    const doc = await db.collection(collectionPath).doc(docPath).get();
+
+    if (!doc.exists) reject("No such document!");
+
+    const imageInfo = doc.data();
+    functions.logger.info('Image information:', imageInfo);
+    functions.logger.info('Image type:', imageInfo.fileFormat);
 
     await bucket.file(filePath).download({destination: localFilePath})
       .catch((e) => functions.logger.info(e));
 
+    const options = {count: data.count, type: imageInfo.fileFormat};
+    var finalColours;
+
     await getColours(localFilePath, options).then(colours => {
       // `colors` is an array of color objects
       functions.logger.info('Colours Identified:', colours);
-      hslColours = colours.map(color => color.hsl());
-      functions.logger.info('Colours Identified in HSL:', hslColours);
-    })
+      finalColours = colours.map(colour => colour.set('hsl.s', 1));
+      functions.logger.info('Colours in hex with 100% saturation:', finalColours);
+    });
+
+    finalColours.sort((a,b) => b[2] - a[2]);
+    const cssColours = finalColours.map(colour => colour.css());
+    functions.logger.info('Colours sorted by lightness:', cssColours);
 
     finishUp([localFilePath]);
-
-  } catch(e) {
-    functions.logger.info(e);
-  }
+    resolve(cssColours);
+  })
+  .then((colours) => {return {response: colours, success: true}})
+  .catch((e) => {return {response: e, success: false}})
 });
 
 exports.contentCreate = functions.runWith(runtimeOpts_content).firestore
