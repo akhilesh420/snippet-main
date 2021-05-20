@@ -70,7 +70,7 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
 exports.colourPallette = functions.https.onCall(async (data, context) => {
   return new Promise(async (resolve, reject) => {
     const filePath = data.filePath;
-    const fileType = date.fileType;
+    const fileType = data.fileType;
 
     functions.logger.info('Getting colour pallette for:', filePath);
     functions.logger.info('File type:', fileType);

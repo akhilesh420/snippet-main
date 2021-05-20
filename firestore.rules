@@ -114,7 +114,7 @@ service cloud.firestore {
 
     match /display%20picture/{uid} {
       allow read: if true;
-      allow write: if isUser(uid);
+      allow write: if isUser(uid) || isAdmin();
     }
 
     match /personal%20details/{uid} {
