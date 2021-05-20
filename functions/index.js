@@ -103,7 +103,7 @@ exports.colourPallette = functions.https.onCall(async (data, context) => {
       functions.logger.info('Colours in hex with 100% saturation:', finalColours);
     });
 
-    finalColours.sort((a,b) => b[2] - a[2]);
+    finalColours.sort((a,b) => b.get('hsl.l') - a.get('hsl.l'));
     const cssColours = finalColours.map(colour => colour.css());
     functions.logger.info('Colours sorted by lightness:', cssColours);
 
