@@ -39,7 +39,7 @@
 
     </div>
 
-    <div class="optionsButton optionsButtonActive" (click)='openDropdown = !openDropdown; showDetails = false;'>
+    <div class="optionsButton optionsButtonActive" (click)='toggleDropdown(!openDropdown); showDetails = false;'>
 
 
       <img [src] = "openDropdown ? 'assets/images/Post/optionsButtonActive.svg' : 'assets/images/Post/optionsButtonInactive.svg'">
@@ -54,7 +54,7 @@
 
       <!-- Options Menu -->
 
-      <div *ngIf='!onDelete' class="optionCard" (click)='toggleHolderList(); openDropdown = false;'>
+      <div *ngIf='!onDelete' class="optionCard" (click)='toggleHolderList(); toggleDropdown(false);'>
 
         <div class="collectorsImage">
 
@@ -82,7 +82,7 @@
 
       </div>
 
-      <div *ngIf='!onDelete' class="optionCard" (click)='openDropdown = false; onDelete = false;'>
+      <div *ngIf='!onDelete' class="optionCard" (click)='toggleDropdown(false);'>
 
         <div class="closeText">
 
@@ -123,7 +123,7 @@
         class = "postContent"
        [ngStyle]='{"height": (contentContainer.offsetWidth * postAspectRatio).toString() + "px",
                    "background-color": !(postContent$ | async) ? "#C4C4C4" : "transparent"}'
-        (click)='toggleHolderList()'>
+        (click)='openDropdown ? toggleDropdown(false) : toggleHolderList();'>
 
         <!-- Deleting cover -->
 
@@ -256,7 +256,7 @@
           •
         </span>
 
-        <span class = "postHoldersExp">
+        <span class = "postHoldersExp" (click)='toggleDropdown(false); showDetails = true;'>
           {{collected | numeral}} Collectors<br>
         </span>
 

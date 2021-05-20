@@ -308,6 +308,11 @@ export class PostComponent implements OnInit, OnDestroy {
     this.deleting = false;
   }
 
+  toggleDropdown(toState: boolean) {
+    this.openDropdown = toState;
+    this.onDelete = false;
+  }
+
   usernameClick() {
     this.mixpanelService.setRoutingVia('post');
   }
