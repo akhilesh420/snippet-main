@@ -23,7 +23,7 @@ export class MessagingService {
           console.log('Permission granted! Save to the server!', token);
           this.afs
             .collection('fcmTokens')
-            .doc((await this.auth.currentUser).uid)
+            .doc((await this.auth.currentUser).uid) //Check if authenticated
             .set({token: token})},
         (error) => { console.error(error); },
       );

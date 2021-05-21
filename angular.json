@@ -22,8 +22,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "firebase-messaging-sw.js",
-              "manifest.json"
+              "src/firebase-messaging-sw.js",
+              "src/manifest.json"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

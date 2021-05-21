@@ -291,6 +291,11 @@ service cloud.firestore {
       }
     }
 
+    match /fcmTokens/{uid} {
+      allow read: if false;
+      allow write: if isUser(uid);
+    }
+
   }
 }
 

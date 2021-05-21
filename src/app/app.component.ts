@@ -60,8 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.mixpanelService.init(); //Initialize tracking
 
-    this.messagingService.requestPermission();
-
     this.mixpanelService.timeEvent('session end');
     this.mixpanelService.timeEvent('sticker collect');
     this.mixpanelService.timeEvent('open holder list');
@@ -96,6 +94,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.myUid = user.uid;
       this.myUid$.next(this.myUid);
       this.mixpanelService.signIn(this.myUid); //Identify user with uid
+      this.messagingService.requestPermission();
     });
 
     this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => {
