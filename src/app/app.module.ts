@@ -37,6 +37,9 @@ import { LazyImgDirective } from './shared/directives/lazy-img.directive';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
 import { UrlPipe } from './shared/pipes/url.pipe';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { DisplayStickersEditComponent } from './profile-edit/display-stickers-edit/display-stickers-edit.component';
+import { DisplayPictureEditComponent } from './profile-edit/display-picture-edit/display-picture-edit.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,10 @@ import { UrlPipe } from './shared/pipes/url.pipe';
     LazyImgDirective,
     ProfilePageComponent,
     ExplorePageComponent,
-    UrlPipe
+    UrlPipe,
+    ProfileEditComponent,
+    DisplayStickersEditComponent,
+    DisplayPictureEditComponent
   ],
   imports: [
     BrowserModule,
