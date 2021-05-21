@@ -19,9 +19,9 @@
     height: 386px;
     display: flex;
     flex-direction: column;  
-    background: #010100;
+    background: #060500;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.015);
 
 }
 
