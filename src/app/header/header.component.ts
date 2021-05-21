@@ -1,13 +1,12 @@
 import { MixpanelService } from './../shared/mixpanel.service';
 import { AuthService } from './../auth/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';;
+import { Component, OnInit, OnDestroy } from '@angular/core';;
 import { Subject, Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil, pairwise } from 'rxjs/operators';
 import { MiscellaneousService } from '../shared/miscellaneous.service';
 import { UsersService } from '../shared/users.service';
-
+import { NavigationEnd, Router, Event as NavigationEvent, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -19,9 +18,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
   myUid: string;
 
   profileRoute: string = '/auth';
-  createRoute: string = "/create/content";
 
-  currentRoute: string = '';
+  parentRoute: string = '';
+  uid: string = '';
 
   notifier$ = new Subject();
   loadingBar$: Subject<boolean>;
@@ -31,28 +30,26 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   showDashboard: boolean = false;
 
-  preloadImages = ['/assets/images/Header%20Icons/createButtonActive.svg',
-                   '/assets/images/Header%20Icons/createButtonInactive.svg',
-                   '/assets/images/Header%20Icons/exploreActive.svg',
-                   '/assets/images/Header%20Icons/exploreInactive.svg',
-                   '/assets/images/Header%20Icons/optionsButtonActive.svg',
-                   '/assets/images/Header%20Icons/optionsButtonInactive.svg',
-                   '/assets/images/Header%20Icons/profileButtonActive.svg',
-                   '/assets/images/Header%20Icons/profileButtonInactive.svg',
-                   '/assets/images/Header%20Icons/displaybuttonInactive.svg',
-                   '/assets/images/Header%20Icons/displaybuttonActive.svg'];
-
   constructor(private auth: AngularFireAuth,
               private authService: AuthService,
               private router: Router,
+              private route: ActivatedRoute,
               private usersService: UsersService,
               private miscellaneousService: MiscellaneousService,
               private mixpanelService: MixpanelService){
   }
 
   ngOnInit(): void {
+    this.parentRoute = this.router.url.split('/')[1];
+    this.router.events
+      .pipe(filter((event: NavigationEvent) => event instanceof NavigationEnd), takeUntil(this.notifier$))
+      .subscribe((event: NavigationEnd) => {
+        const currentRoute = event.urlAfterRedirects;
+        this.parentRoute = currentRoute.split('/')[1];
+        console.log(this.parentRoute);
+        if (this.parentRoute === "profile") this.uid = currentRoute.split("/")[3];
+      });
 
-    this.miscellaneousService.preloadImages(this.preloadImages); //preload icons
     this.loadingBar$ = this.miscellaneousService.getLoading();
 
     this.auth.onAuthStateChanged(user => {
@@ -60,25 +57,16 @@ export class HeaderComponent implements OnInit, OnDestroy{
       if (this.isAuthenticated) {
         this.myUid = user.uid;
         this.profileRoute = "/profile/posts/" + this.myUid;
-        this.createRoute = "/create/content";
         this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
-        this.updateOnDPChange();
       } else {
         this.myUid = undefined;
         this.profileRoute = '/auth';
       }
     });
 
-    this.router.events.pipe(takeUntil(this.notifier$)).subscribe(val => this.currentRoute = this.router.url);
-
-    this.miscellaneousService.showDashboard.pipe(takeUntil(this.notifier$)).subscribe(value => this.showDashboard = value);
-
-  }
-
-  updateOnDPChange() {
-    this.usersService.getDisplayPictureRef(this.myUid).pipe(takeUntil(this.notifier$)).subscribe(res => {
-      this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
-    });
+    this.miscellaneousService.showDashboard
+      .pipe(takeUntil(this.notifier$))
+      .subscribe(value => this.showDashboard = value);
   }
 
   clickAuth() {
