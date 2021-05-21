@@ -8,6 +8,14 @@
 
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
 
 /* Classes for single components */
 

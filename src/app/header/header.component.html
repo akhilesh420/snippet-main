@@ -16,7 +16,14 @@
 
     <div class = "row dropdownText borderTop no-margin-no-padding">
 
-      <p class = "Text diffPadding" (click)='clickAuth()' [ngClass]='{"active-link": currentRoute.includes("auth")}' style='cursor: pointer'> {{isAuthenticated ? "Logout": "Login"}} </p>
+      <p  class = "Text diffPadding"
+          (click)='clickAuth()'
+          [ngClass]='{"active-link": parentRoute === "auth"}'
+          style='cursor: pointer'>
+
+            {{isAuthenticated ? "Logout": "Login"}}
+
+      </p>
 
     </div>
 
@@ -52,18 +59,22 @@
 
 
 
-    <a [routerLink]='createRoute'>
+    <a [routerLink]='"/create/content"'>
 
 
 
         <!-- Inactive -->
 
-        <img class = "createButtonInactive" *ngIf='!currentRoute.includes("create")' src="assets/images/Header Icons/createButtonInactive.svg">
+        <img  class = "createButtonInactive hide"
+              [ngClass]='{"show": parentRoute != "create"}'
+              src="assets/images/Header Icons/createButtonInactive.svg">
 
 
         <!-- Active -->
 
-        <img class = "createButtonActive" *ngIf='currentRoute.includes("create")' src = "assets/images/Header Icons/createButtonActive.svg">
+        <img  class = "createButtonActive hide"
+              [ngClass]='{"show": parentRoute === "create"}'
+              src = "assets/images/Header Icons/createButtonActive.svg">
 
 
 
@@ -75,13 +86,16 @@
 
       <!-- Inactive -->
 
-      <img class = "displaybuttonActive" *ngIf='!showDashboard; else activeDashboard' src = "assets/images/Header Icons/displaybuttonInactive.svg">
+      <img  class = "displaybuttonActive"
+            [ngClass]='{"show": !showDashboard, "hide": showDashboard}'
+            src = "assets/images/Header Icons/displaybuttonInactive.svg">
 
 
       <!-- Active -->
-      <ng-template #activeDashboard>
-        <img class = "displaybuttonInactive" src = "assets/images/Header Icons/displaybuttonActive.svg">
-      </ng-template>
+      <img  class = "displaybuttonInactive"
+            [ngClass]='{"show": showDashboard, "hide": !showDashboard}'
+            src = "assets/images/Header Icons/displaybuttonActive.svg">
+
 
     </div>
 
@@ -90,15 +104,15 @@
 
 
         <!-- Inactive -->
-        <ng-template #inactiveExplore>
-          <img class = "exploreButton" src = "assets/images/Header Icons/exploreInactive.svg">
-        </ng-template>
+        <img  class = "exploreButton hide"
+              [ngClass]='{"show": !activeExplore.classList.contains("show")}'
+              src = "assets/images/Header Icons/exploreInactive.svg">
+
 
         <!-- Active -->
-         <img class = "activeexploreButton"
-              *ngIf='currentRoute.includes("explore")
-                    || ( currentRoute.includes("profile/posts")
-                    && !currentRoute.includes("profile/posts"+myUid)); else inactiveExplore'
+         <img class = "activeexploreButton hide"
+              #activeExplore
+              [ngClass]='{ "show": parentRoute === "explore" || (parentRoute === "profile" && uid != myUid) || parentRoute === "post"}'
               src = "assets/images/Header Icons/exploreActive.svg">
 
 
@@ -110,22 +124,25 @@
       <div class = "profileButton">
 
         <div class = "dpContainer">
-          <img *ngIf="isAuthenticated && (displayPicture$ | async) as dp"
-          [src]="dp"
-          alt="display picture">
+          <img  [ngClass]='{"show": isAuthenticated, "hide": !isAuthenticated}'
+                [src]="(displayPicture$ | async)"
+                alt="display picture">
 
         </div>
 
         <!-- Inactive -->
 
-        <ng-template #inactiveProfile>
-          <img src = "assets/images/Header Icons/profilebuttonInactive.svg">
-        </ng-template>
+        <img  src = "assets/images/Header Icons/profilebuttonInactive.svg"
+              class='hide'
+              [ngClass]='{"show": !activeProfile.classList.contains("show")}'>
 
 
         <!-- Active -->
 
-        <img class = "activeprofileButton" *ngIf='currentRoute.includes("profile/posts"+myUid) || currentRoute.includes("profile/collection/"+myUid); else inactiveProfile' src = "assets/images/Header Icons/profilebuttonActive.svg">
+        <img class = "activeprofileButton hide"
+            #activeProfile
+            [ngClass]='{"show": parentRoute === "profile" && uid === myUid}'
+            src = "assets/images/Header Icons/profilebuttonActive.svg">
 
       </div>
 
@@ -139,15 +156,16 @@
 
       <!-- Inactive -->
 
-      <img class = "optionsButtonInactive" *ngIf='!(currentRoute.includes("auth") || currentRoute.includes("feedback")) ; else activeDropdown' src = "assets/images/Header Icons/optionsButtonInactive.svg">
+      <img  class = "optionsButtonInactive hide"
+            [ngClass]='{"show": !activeDropdown.classList.contains("show")}'
+            src = "assets/images/Header Icons/optionsButtonInactive.svg">
 
       <!-- Active -->
 
-
-
-      <ng-template #activeDropdown>
-        <img class = "optionsButtonActive" src = "assets/images/Header Icons/optionsButtonActive.svg">
-      </ng-template>
+      <img  #activeDropdown 
+            class = "optionsButtonActive hide"
+            [ngClass]='{"show": parentRoute === "auth" || parentRoute === "feedback"}'
+            src = "assets/images/Header Icons/optionsButtonActive.svg">
 
     </div>
 
