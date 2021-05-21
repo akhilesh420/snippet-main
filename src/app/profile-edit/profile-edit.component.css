@@ -1,0 +1,273 @@
+.mainContainer {
+
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(1, 1, 0, 0.7);
+    backdrop-filter: blur(15px);
+    z-index: 6;
+    display: grid;
+    place-items: center;
+
+}
+
+.editProfileContainer {
+
+    width: 342px;
+    height: 386px;
+    display: flex;
+    flex-direction: column;  
+    background: #010100;
+    border-radius: 12px;
+
+}
+
+.topHeader {
+
+    display: flex;
+    flex-direction: row;
+    height: 31px;
+    width: 100%;
+
+}
+
+.cancelNav {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    margin-top: 10px;
+    margin-left: 14px;
+
+}
+
+.formTitle {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    margin-top: 10px;
+    margin-left: 70px;
+
+}
+
+.doneNav {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #F0C505;
+    margin-top: 10px;
+    margin-left: 82px;
+
+}
+
+.changedpRow {
+
+    height: 70px;
+    width: 100%;
+    margin-top: 17px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.dpSpace {
+
+    display: flex;
+    flex-direction: column;
+    height: 70px;
+    width: 70px;
+    margin-left: 14px;
+
+}
+
+.dpContainer {
+
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background-color: #C4C4C4;
+    overflow: hidden;
+
+}
+
+.feildTitleText {
+
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;    
+
+}
+
+.feildTitleText > span {
+
+    transition: color 300ms ease;
+    
+}
+
+.changedpTitle {
+
+    margin-top: 23px;
+    margin-left: 8px;
+
+}
+
+.editBioCol {
+
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+
+}
+
+.editBioTitle {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    margin-left: 144px;
+    margin-top: 14px;
+
+}
+
+.currentBio {
+
+    width: calc(100% - 28px);
+    margin-left: 14px;
+    margin-top: 2px;
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.changeLinkCol {
+
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+
+}
+
+.editLinkTitle {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    margin-left: 128px;
+    margin-top: 40px;
+
+}
+
+.changeDisplayStickerCol {
+
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+
+}
+
+.displayStickersTitle {
+
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    margin-left: 90px;
+   
+}
+
+.stickers {
+
+    display: flex;
+    flex-direction: row;
+    width: 238px;
+    height: 40px;
+    margin-top: 8px;
+    margin-left: 52px;
+
+}
+
+.sticker {
+
+    display: flex;
+    flex-direction: column;
+    height: 40px;
+    width: 50px;
+
+}
+
+.sticker > img {
+    display: block;
+    align-self: flex-start;
+}
+
+.stickerContainer {
+
+    height: 40px;
+    width: 40px;
+    background-color: #c4c4c4;
+    border-radius: 50%;
+    overflow: hidden;
+
+}
+
+.highlight {
+
+    height: 100%;
+    background: #F0C505;
+    border-radius: 0px 5px 5px 0px;
+    width: 5px;
+    display: inline-table;
+
+}
+
+@media(hover: hover) and (pointer: fine) {
+
+    .feild:hover .feildTitleText > span {
+
+        color: #F0C505;
+
+    }
+
+}
