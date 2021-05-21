@@ -81,13 +81,6 @@ export class MiscellaneousService {
     this.popUpSetup.next(undefined);
   }
 
-  preloadImages(images: string[]) {
-    for (var i = 0; i < images.length; i++) {
-      this.images[i] = new Image();
-      this.images[i].src = environment.websitePath + images[i];
-    }
-  }
-
   async getPallette(filePath: string, fileType: string, count: number = 2) {
     console.log('getting colour pallette');
     const callable = this.fns.httpsCallable('colourPallette'); //delete post
