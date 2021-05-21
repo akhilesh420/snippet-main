@@ -367,8 +367,8 @@
 
 .dividerNotUser {
 
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.4);
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
    
@@ -390,8 +390,7 @@
 }
 
 .buttonNotUser {
-    background: none;
-    padding-right: 12px;
+    display: none;
 }
 
 
@@ -453,21 +452,7 @@
 
 }
 
-.buttonNotUser > span {
 
-    font-family: 'Assistant';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 0px;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
-    display: flex;
-    place-items: center;
-    padding-top: 18px;
-    padding-right: 24px;
-
-}
 
 .buttonInactive > span {
 

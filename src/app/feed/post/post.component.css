@@ -112,7 +112,6 @@ p {
   height: auto;
   width: 100%;
   min-height: 42px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .forHoverPurposes {
@@ -167,7 +166,7 @@ p {
 
 .optionsButton {
 
-  margin-top: 12px;
+  margin-top: 14px;
   float: right;
   margin-right: 12px;
   cursor: pointer;
@@ -185,9 +184,9 @@ p {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
   margin-left: 5px;
-  border-radius: 8px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 
 }
 
@@ -266,7 +265,6 @@ font-family: 'Assistant';
 font-style: normal;
 font-weight: 600;
 font-size: 16px;
-line-height: 16px;
 letter-spacing: 0.02em;
 color: #FFFFFF;
 height: 100%;
@@ -664,9 +662,6 @@ li {
 
 @media only screen and (max-width:550px) {
 
-  /* .titleTop {
-    min-height: 28px;
-  } */
 
   .postContainer {
     border-bottom-left-radius: 0px;
@@ -1054,34 +1049,18 @@ li {
   }
 }
 
-.slide-in-top {
-	-webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-	        animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+.scale-up-top {
+	animation: scale-up-top 0.4s forwards;
 }
 
-
- @-webkit-keyframes slide-in-top {
+@keyframes scale-up-top {
   0% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-    opacity: 0;
+    transform: scale(0.0);
+    transform-origin: 50% 0%;
   }
   100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    opacity: 1;
-  }
-}
-@keyframes slide-in-top {
-  0% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    opacity: 1;
+    transform: scale(1);
+    transform-origin: 50% 0%;
   }
 }
 
