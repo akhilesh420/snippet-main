@@ -26,7 +26,6 @@ export class BioEditComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit(): void {
     this.tempBio = this.bio;
-    this.autoGrowInput();
 
     this.save$
       .pipe(takeUntil(this.notifier$))

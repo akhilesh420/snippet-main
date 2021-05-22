@@ -2,6 +2,6 @@
   <textarea [(ngModel)]='tempBio' (input)='onInput();' #inputBox></textarea>
 </div>
 
-<div class="characterCounter" [ngClass]="{'errorPrompt': bio.length > charLimit}">
+<div class="characterCounter" [ngClass]="{'errorPrompt': tempBio.length > charLimit}">
   <span>{{charLimit - tempBio.length}} CHARACTERS REMAINING</span>
 </div>
