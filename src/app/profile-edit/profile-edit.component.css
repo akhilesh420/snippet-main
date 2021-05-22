@@ -16,10 +16,10 @@
 .editProfileContainer {
 
     width: 342px;
-    height: 386px;
+    height: auto;
     display: flex;
     flex-direction: column;  
-    background: #060500;
+    background: #010100;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.015);
 
