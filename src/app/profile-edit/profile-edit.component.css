@@ -9,6 +9,7 @@
     display: grid;
     place-items: center;
     top: 0px;
+    
    
 
 }
@@ -22,6 +23,7 @@
     background: #010100;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.015);
+    min-height: 386px;
 
 }
 
@@ -334,9 +336,52 @@
 
 }
 
+.formTitleLinkMenu {
+
+    margin-left: 67px;
+
+}
+
+.doneNavLinkMenu {
+
+    margin-left: 77px;
+
+}
+
 .doneInactive {
 
     color: rgba(255, 255, 255, 0.4);
+
+}
+
+.changeLinkFeild {
+
+    display: flex;
+    flex-direction: row;
+    background: #161616;
+    border-radius: 5px;
+    width: calc(100% - 28px);
+    margin-left: 14px;
+    margin-top: 40px;
+    height: 26px;
+    
+}
+
+.changeLinkText {
+
+    width: 100%;
+    font-family: 'Assistant';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+    margin-top: 4px;
+    margin-left: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 }
 
