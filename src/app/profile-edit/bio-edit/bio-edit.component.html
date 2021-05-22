@@ -1,0 +1,7 @@
+<div class="editBioSpace">
+  <textarea [(ngModel)]='bio' (input)='onInput();' #inputBox></textarea>
+</div>
+
+<div class="characterCounter" [ngClass]="{'errorPrompt': bio.length > charLimit}">
+  <span>{{charLimit - bio.length}} CHARACTERS REMAINING</span>
+</div>

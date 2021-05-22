@@ -40,6 +40,8 @@ import { UrlPipe } from './shared/pipes/url.pipe';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { DisplayStickersEditComponent } from './profile-edit/display-stickers-edit/display-stickers-edit.component';
 import { DisplayPictureEditComponent } from './profile-edit/display-picture-edit/display-picture-edit.component';
+import { BioEditComponent } from './profile-edit/bio-edit/bio-edit.component';
+import { LinkEditComponent } from './profile-edit/link-edit/link-edit.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { DisplayPictureEditComponent } from './profile-edit/display-picture-edit
     UrlPipe,
     ProfileEditComponent,
     DisplayStickersEditComponent,
-    DisplayPictureEditComponent
+    DisplayPictureEditComponent,
+    BioEditComponent,
+    LinkEditComponent
   ],
   imports: [
     BrowserModule,

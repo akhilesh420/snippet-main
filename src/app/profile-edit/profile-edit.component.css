@@ -282,7 +282,7 @@
 
 }
 
-.editBioSpace {
+/* .editBioSpace {
 
     display: flex;
     flex-direction: row;
@@ -334,7 +334,7 @@
     margin-top: 4px;
     margin-left: 14px;
 
-}
+} */
 
 .formTitleLinkMenu {
 
@@ -395,7 +395,7 @@
 
 @media(hover: hover) and (pointer: fine) {
 
-    .feild:hover .feildTitleText > span {
+    .field:hover .feildTitleText > span {
 
         color: #F0C505;
 
