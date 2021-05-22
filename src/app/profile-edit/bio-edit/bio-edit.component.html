@@ -3,5 +3,6 @@
 </div>
 
 <div class="characterCounter" [ngClass]="{'errorPrompt': tempBio.length > charLimit}">
-  <span>{{charLimit - tempBio.length}} CHARACTERS REMAINING</span>
+  <span *ngIf='charLimit - tempBio.length >= 0'>{{charLimit - tempBio.length}} CHARACTERS REMAINING</span>
+  <span *ngIf='charLimit - tempBio.length < 0'>{{tempBio.length - charLimit}} CHARACTERS OVER LIMIT</span>
 </div>
