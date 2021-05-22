@@ -78,11 +78,13 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       .pipe(first())
       .toPromise();
     if (response) this.returnHome();
+    else this.unsavedChanges = false;
     this.miscellaneousService.closePopUp();  
   }
 
   onDone() {
     if (this.unsavedChanges) this.save$.next();
+    this.unsavedChanges = false;
     this.returnHome();
   }
 

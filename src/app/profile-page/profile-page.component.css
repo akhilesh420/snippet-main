@@ -304,7 +304,7 @@
     line-height: 21px;
     letter-spacing: 0.02em;
     color: #FFFFFF;
-
+    white-space: pre-line
 }
 
 .joiningDate {

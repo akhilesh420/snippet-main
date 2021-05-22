@@ -26,6 +26,7 @@ export class BioEditComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit(): void {
     this.tempBio = this.bio;
+    this.autoGrowInput();
 
     this.save$
       .pipe(takeUntil(this.notifier$))
@@ -40,15 +41,24 @@ export class BioEditComponent implements OnInit, AfterViewInit, OnChanges {
     this.inputBox.nativeElement.focus();
   }
 
+  ngAfterViewChecked() {
+    this.autoGrowInput();
+  }
+
   onInput() {
-    this.inputBox.nativeElement.style.height = 'auto';
-    this.inputBox.nativeElement.style.height = this.inputBox.nativeElement.scrollHeight + 'px';
+    this.autoGrowInput();
     this.error.emit(this.tempBio.length  > this.charLimit);
     this.unsavedChanges.emit(this.bio != this.tempBio);
   }
 
+  autoGrowInput() {
+    this.inputBox.nativeElement.style.height = 'auto';
+    this.inputBox.nativeElement.style.height = this.inputBox.nativeElement.scrollHeight + 'px';
+  }
+
   saveBio() {
     if (!this.uid || !this.tempBio) return;
+    console.log(this.tempBio);
     this.usersService.updateProfileDetails(this.uid, {description: this.tempBio})
   }
 
