@@ -12,13 +12,12 @@ textarea {
   border: none;
   overflow: auto;
   outline: none;
-
+  padding: 0px;
+  height: auto;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-
   resize: none; /*remove the resize handle on the bottom right*/
-
   font-family: 'Assistant';
   font-style: normal;
   font-weight: normal;
@@ -38,7 +37,7 @@ textarea {
   font-family: 'Assistant';
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 13px;
   display: flex;
   flex-direction: row;
@@ -55,7 +54,7 @@ textarea {
   font-family: 'Assistant';
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 18px;
   display: flex;
   flex-direction: row;
