@@ -1,0 +1,53 @@
+.editBioSpace {
+
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  width: calc(100% - 28px);
+  margin-left: 14px;
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  margin-top: 20px;
+  word-wrap: break-word;
+
+}
+
+.characterCounter {
+
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 13px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 4px;
+  margin-left: 14px;
+
+}
+
+.errorPrompt {
+
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #E50000;
+  margin-top: 4px;
+  margin-left: 14px;
+
+}

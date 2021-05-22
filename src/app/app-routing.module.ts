@@ -1,3 +1,5 @@
+import { LinkEditComponent } from './profile-edit/link-edit/link-edit.component';
+import { BioEditComponent } from './profile-edit/bio-edit/bio-edit.component';
 import { DisplayStickersEditComponent } from './profile-edit/display-stickers-edit/display-stickers-edit.component';
 import { DisplayPictureEditComponent } from './profile-edit/display-picture-edit/display-picture-edit.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
@@ -30,7 +32,15 @@ const appRoutes: Routes = [
   { path: 'edit/:page', 
     outlet: 'modal', 
     component: ProfileEditComponent,
-    ...canActivate(redirectUnauthorizedToLogin)},
+    ...canActivate(redirectUnauthorizedToLogin),
+    children: [
+      // { path: '', redirectTo: 'home', pathMatch: 'full'},
+      { path: 'bio', component: BioEditComponent},
+      { path: 'link', component: LinkEditComponent},
+      { path: 'dp', component: DisplayPictureEditComponent},
+      { path: 'ds/:index', component: DisplayStickersEditComponent},
+      // {path: '**', redirectTo: 'home'}
+    ]},
   { path: 'post/:id', component: ExplorePageComponent},
   { path: 'create/:step', component: CreateComponent, ...canActivate(redirectUnauthorizedToLogin)},
   { path: 'create', redirectTo: '/create/content', pathMatch: 'full', ...canActivate(redirectUnauthorizedToLogin)},

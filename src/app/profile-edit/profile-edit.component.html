@@ -2,97 +2,102 @@
 
     <div class="editProfileContainer">
 
-        <!-- <div class="topHeader">
+        <div class="topHeader">
 
             <div class="cancelNav">
                 <span>Cancel</span>
             </div>
 
             <div class="formTitle">
-                <span>Edit Profile</span>
+                <span>{{title}}</span>
             </div>
             
             <div class="doneNav">
                 <span>Done</span>
             </div>
 
-        </div> -->
+        </div>
 
         <!-- Main Menu -->
-
-        <!-- <div class="feild changedpRow">
+        <div *ngIf='currentPage === "home"'>
+          <div  class="field changedpRow"
+                [routerLink]="['/', {outlets: {modal: 'edit/dp'}}]">
 
             <div class="dpSpace">
                 <div class="dpContainer"></div>
             </div>
 
-            <div class="feildTitleText changedpTitle">
+            <div  class="feildTitleText changedpTitle">
                 <span>Change display picture</span>
             </div>
 
+          </div>  
+
+          <div  class="field editBioCol"
+                [routerLink]="['/', {outlets: {modal: 'edit/bio'}}]">
+
+              <div  class="feildTitleText editBioTitle">
+                  <span>Edit Bio</span>
+              </div>
+
+              <div class="currentBio">
+                  <span>{{bio}}</span>
+              </div>
+
+          </div>
+
+          <div  class="field changeLinkCol"
+                [routerLink]="['/', {outlets: {modal: 'edit/link'}}]">
+
+              <div  class="feildTitleText editLinkTitle">
+                  <span>Change Link</span>
+              </div>
+
+              <div class="currentBio">
+                  <span>{{link}}</span>
+              </div>
+
+          </div>
+
+          <div class="field changeDisplayStickerCol">
+
+              <div  class="feildTitleText displayStickersTitle">
+                  <span [routerLink]="['/', {outlets: {modal: 'edit/ds/0'}}]">Change Display Stickers</span>
+              </div>
+
+              <div class="stickers">     
+                  
+                  <div class="sticker">
+                      
+                          <img src= "assets/images/Edit Page/emptyStickerPlaceholder.svg">
+                      
+                  </div>
+
+                  <div class="sticker">
+                      <div class="stickerContainer"></div>
+                  </div>
+
+                  <div class="sticker">
+                      <div class="stickerContainer"></div>
+                  </div>
+
+                  <div class="sticker">
+                      <div class="stickerContainer"></div>
+                  </div>
+
+                  <div class="sticker">
+                      <div class="stickerContainer"></div>
+                  </div>
+
+              </div>
+
+          </div> 
+
         </div>
-
-        <div class="feild editBioCol">
-
-            <div class="feildTitleText editBioTitle">
-                <span>Edit Bio</span>
-            </div>
-
-            <div class="currentBio">
-                <span>praesentium voluptatum deleniti atque coreniti atque</span>
-            </div>
-
-        </div>
-
-        <div class="feild changeLinkCol">
-
-            <div class="feildTitleText editLinkTitle">
-                <span>Change Link</span>
-            </div>
-
-            <div class="currentBio">
-                <span>bit.biglink.ly/username</span>
-            </div>
-
-        </div>
-
-        <div class="feild changeDisplayStickerCol">
-
-            <div class="feildTitleText displayStickersTitle">
-                <span>Change Display Stickers</span>
-            </div>
-
-            <div class="stickers">     
-                
-                <div class="sticker">
-                    
-                        <img src= "assets/images/Edit Page/emptyStickerPlaceholder.svg">
-                    
-                </div>
-
-                <div class="sticker">
-                    <div class="stickerContainer"></div>
-                </div>
-
-                <div class="sticker">
-                    <div class="stickerContainer"></div>
-                </div>
-
-                <div class="sticker">
-                    <div class="stickerContainer"></div>
-                </div>
-
-                <div class="sticker">
-                    <div class="stickerContainer"></div>
-                </div>
-
-            </div>
-
-        </div> -->
 
         <!-- Edit Bio Menu -->
 
-        <div class="topHeader">
+        <!-- <div class="topHeader">
 
             <div class="cancelNav">
                 <span>Cancel</span>
@@ -106,17 +111,10 @@
                 <span>Done</span>
             </div>
 
-        </div>
-
-        <div class="editBioSpace">
-            <span>            accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum sunet 
-            </span>
-        </div>
-
-        <div class="characterCounter errorPrompt">
-            <span>89 CHARACTERS REMAINING</span>
-        </div>
-
+        </div> -->
+       
+        <router-outlet name="modal"></router-outlet>
+        
     </div>
 
 </div>
