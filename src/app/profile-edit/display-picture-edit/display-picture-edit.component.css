@@ -13,11 +13,19 @@
     height: 70px;
     width: 70px;
     border-radius: 50%;
-    background-color: #C4C4C4;
-
+    overflow: hidden;
 }
 
-.dpConatainerError {
+.dpContainer > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.dpContainerError {
 
     border: 1px solid #E50000;
     box-sizing: border-box;
@@ -77,5 +85,17 @@
         margin-top: 4px;
         width: 100%;
     
+}
+
+.file-input {
+  position: absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+  width: 0px;
+  height: 0px;
+  opacity: 0;
 }
 

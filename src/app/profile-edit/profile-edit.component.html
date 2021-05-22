@@ -29,11 +29,11 @@
 
             <div class="dpSpace">
                 <div class="dpContainer">
-                  <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
+                  <img *ngIf='displayPictureURL as content' [src]='content' alt='dp' appLazyImg>
                 </div>
             </div>
 
-            <div  class="feildTitleText changedpTitle">
+            <div  class="fieldTitleText changedpTitle">
                 <span>Change display picture</span>
             </div>
 
@@ -42,7 +42,7 @@
           <div  class="field editBioCol"
                 [routerLink]="['/', {outlets: {modal: 'edit/bio/0'}}]">
 
-              <div  class="feildTitleText editBioTitle">
+              <div  class="fieldTitleText editBioTitle">
                   <span>Edit Bio</span>
               </div>
 
@@ -55,7 +55,7 @@
           <div  class="field changeLinkCol"
                 [routerLink]="['/', {outlets: {modal: 'edit/link/0'}}]">
 
-              <div  class="feildTitleText editLinkTitle">
+              <div  class="fieldTitleText editLinkTitle">
                   <span>Change Link</span>
               </div>
 
@@ -67,7 +67,7 @@
 
           <div class="field changeDisplayStickerCol">
 
-              <div  class="feildTitleText displayStickersTitle" [routerLink]="['/', {outlets: {modal: 'edit/ds/4'}}]">
+              <div  class="fieldTitleText displayStickersTitle" [routerLink]="['/', {outlets: {modal: 'edit/ds/4'}}]">
                   <span>Change Display Stickers</span>
               </div>
 
@@ -106,7 +106,13 @@
                       (error)='error = $event'>
         </app-bio-edit>        
         <app-link-edit *ngIf='currentPage === "link"'></app-link-edit>        
-        <app-display-picture-edit *ngIf='currentPage === "dp"'></app-display-picture-edit>        
+        <app-display-picture-edit *ngIf='currentPage === "dp"'
+                                  [uid]='uid'
+                                  [displayPictureURL]='displayPictureURL' 
+                                  [save$]='save$' 
+                                  (unsavedChanges)='unsavedChanges = $event' 
+                                  (error)='error = $event'>
+          </app-display-picture-edit>        
         <app-display-stickers-edit *ngIf='currentPage === "ds"'></app-display-stickers-edit>        
 
     </div>

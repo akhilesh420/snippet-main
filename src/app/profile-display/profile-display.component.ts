@@ -24,7 +24,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   isAuthenticated: boolean = true;
 
   username$: Observable<{username: string}>;
-  displayPicture$: Observable<string>;
   personalDetails$: Observable<PersonalDetails>;
   profileDetails$: Observable<ProfileDetails>;
   views$: Observable<{ counter: number }>;
@@ -59,7 +58,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     if (this.lastUid === uid) return;
     this.lastUid = uid;
     this.username$ = this.usersService.getUsername(uid);
-    this.displayPicture$ = this.usersService.getDisplayPicture(uid);
     this.personalDetails$ = this.usersService.getPersonalDetails(uid);
     this.profileDetails$ = this.usersService.getProfileDetails(uid);
 

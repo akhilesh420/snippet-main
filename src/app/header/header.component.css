@@ -178,15 +178,6 @@
 
 }
 
-.dpContainer > img {
-  height: 100%;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
 .headerDropdownBorder {
 
 position: fixed;

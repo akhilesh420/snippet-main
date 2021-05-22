@@ -134,7 +134,7 @@
   overflow: hidden;
 }
 
-.feildTitleText {
+.fieldTitleText {
 
     font-family: 'Assistant';
     font-style: normal;
@@ -149,7 +149,7 @@
 
 }
 
-.feildTitleText > span {
+.fieldTitleText > span {
 
     transition: color 300ms ease;
     
@@ -413,7 +413,7 @@
 
 @media(hover: hover) and (pointer: fine) {
 
-    .field:hover .feildTitleText > span {
+    .field:hover .felidTitleText > span {
 
         color: #F0C505;
 

@@ -43,14 +43,22 @@ service firebase.storage {
     }
 
     match /display%20pictures/{uid}{
+
+      allow read: if true;
+      allow write: if isUser(uid);
+
       match /original {
         allow read: if true;
-        allow write: if writeDP(uid);
+        allow create: if writeDP(uid);
+        allow update: if writeDP(uid);
+        allow delete: if isUser(uid);
       }
 
       match /small {
         allow read: if true;
-        allow write: if false;
+        allow create: if writeDP(uid);
+        allow update: if writeDP(uid);
+        allow delete: if isUser(uid);
       }
     }
 

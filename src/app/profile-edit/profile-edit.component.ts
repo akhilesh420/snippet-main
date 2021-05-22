@@ -21,7 +21,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   title: string = 'Edit Profile';
 
   // User data
-  displayPicture$: Observable<string>;
+  displayPictureURL: string;
   profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}> = new Observable<{stickers: ProfileSticker[] | string[]}>()
     .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   bio = '';
@@ -42,7 +42,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.notifier$))
       .subscribe((params) => {
         this.currentPage = params['page'];
-        console.log(this.currentPage);
         if (this.currentPage === 'home') this.title = 'Edit Profile';
         else if (this.currentPage === 'bio') this.title = 'Edit Bio';
         else if (this.currentPage === 'link') this.title = 'Edit link';
@@ -55,8 +54,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
 
   setUpProfile(uid: string) {
-    this.displayPicture$ = this.usersService.getDisplayPicture(uid);
-
     this.profileStickers$ = this.usersService.getProfileStickers(uid)
       .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
 
@@ -67,6 +64,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.bio = details.description;
       this.link = details.link;
     });
+
+    this.usersService.getDisplayPicture(uid)
+      .pipe(takeUntil(this.notifier$))
+      .subscribe((url) => {
+        this.displayPictureURL = url;
+      });
   }
 
 
@@ -77,8 +80,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     const response = await this.miscellaneousService.getPopUpInteraction()
       .pipe(first())
       .toPromise();
-    if (response) this.returnHome();
-    else this.unsavedChanges = false;
+    if (response) {
+      this.returnHome();
+      this.unsavedChanges = false
+    };
     this.miscellaneousService.closePopUp();  
   }
 

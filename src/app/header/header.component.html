@@ -124,10 +124,7 @@
       <div class = "profileButton">
 
         <div class = "dpContainer">
-          <img  [ngClass]='{"show": isAuthenticated, "hide": !isAuthenticated}'
-                [src]="(displayPicture$ | async)"
-                alt="display picture">
-
+          <app-display-picture [uid]='uid'></app-display-picture>
         </div>
 
         <!-- Inactive -->

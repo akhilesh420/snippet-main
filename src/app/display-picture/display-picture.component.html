@@ -1,0 +1,3 @@
+<img *ngIf='!deleted && displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
+<img *ngIf='deleted' [src]='placeholderImg' alt='dp' appLazyImg>
+

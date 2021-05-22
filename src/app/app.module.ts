@@ -42,6 +42,7 @@ import { DisplayStickersEditComponent } from './profile-edit/display-stickers-ed
 import { DisplayPictureEditComponent } from './profile-edit/display-picture-edit/display-picture-edit.component';
 import { BioEditComponent } from './profile-edit/bio-edit/bio-edit.component';
 import { LinkEditComponent } from './profile-edit/link-edit/link-edit.component';
+import { DisplayPictureComponent } from './display-picture/display-picture.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { LinkEditComponent } from './profile-edit/link-edit/link-edit.component'
     DisplayStickersEditComponent,
     DisplayPictureEditComponent,
     BioEditComponent,
-    LinkEditComponent
+    LinkEditComponent,
+    DisplayPictureComponent,
   ],
   imports: [
     BrowserModule,

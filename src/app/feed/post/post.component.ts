@@ -79,7 +79,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
   // User stuff
   username$: Observable<{username: string}>;
-  displayPicture$: Observable<string>;
   profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}> = new Observable<{stickers: ProfileSticker[] | string[]}>()
     .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   profileRoute: string;
@@ -177,7 +176,6 @@ export class PostComponent implements OnInit, OnDestroy {
     this.profileRoute = "/profile/posts/" + this.uid;
 
     this.username$ = this.usersService.getUsername(this.uid);
-    this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
     this.profileStickers$ = this.usersService.getProfileStickers(this.uid)
                               .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   }

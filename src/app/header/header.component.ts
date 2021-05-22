@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
   loadingBar$: Subject<boolean>;
 
   dropdown: boolean = false;
-  displayPicture$: Observable<string>;
 
   showDashboard: boolean = false;
 
@@ -56,7 +55,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
       if (this.isAuthenticated) {
         this.myUid = user.uid;
         this.profileRoute = "/profile/posts/" + this.myUid;
-        this.displayPicture$ = this.usersService.getDisplayPicture(this.myUid);
       } else {
         this.myUid = undefined;
         this.profileRoute = '/auth';

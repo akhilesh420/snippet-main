@@ -26,7 +26,6 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
 
   username$: Observable<{username: string}>;
-  displayPicture$: Observable<string>;
   views$: Observable<{ counter: number }>;
   collectors$: Observable<{ counter: number }>;
   profileStickers$: Observable<{stickers: ProfileSticker[] | string[]}> = new Observable<{stickers: ProfileSticker[] | string[]}>()
@@ -78,14 +77,12 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
         this.currentScroll = scroll;
       });
 
-    console.log("profile page init");
   }
 
   setUpProfile(uid: string) {
     if (this.lastUid === uid) return;
     this.lastUid = uid;
     this.username$ = this.usersService.getUsername(uid);
-    this.displayPicture$ = this.usersService.getDisplayPicture(uid);
     this.views$ = this.activityService.getActivityViews(uid)
       .pipe(startWith({counter: 0}));
     this.collectors$ = this.activityService.getActivityCollection(uid)

@@ -1,6 +1,6 @@
 import { UsersService } from 'src/app/shared/users.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Component, Input, OnInit, ViewChild, ElementRef, Output, EventEmitter, OnChanges, AfterViewInit } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ export class BioEditComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild("inputBox") inputBox: ElementRef;
 
   tempBio: string;
-  charLimit: number = 180;
+  charLimit: number = 280;
 
   notifier$ = new Subject();
 

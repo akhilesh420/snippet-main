@@ -2,23 +2,36 @@
 
     <div class="dpSpace">
 
-        <div class="dpContainer">
-    
+        <div class="dpContainer" (click)='inputFile.click()'>
+
+          <img *ngIf='newDisplayPictureURL as content' [src]='content' alt='dp' appLazyImg>
+  
         </div>
     
     </div>
 
-     <!-- During dynamic, add 'Change display picture'if there is already an image there' -->
-    <div class="promptText">
+    <input
+      type="file"
+      id="dp-file"
+      class="file-input"
+      accept="image/x-png,image/gif,image/jpeg"
+      name="dp"
+      (change)="onDpChange($event)"
+      (click)="stopPropagation($event);"
+      #inputFile
+      required>
+
+     <!-- During dynamic, add 'Change display picture' if there is already an image there' -->
+    <div class="promptText" (click)='inputFile.click()'>
         <span>Add Display Picture</span>
     </div>
 
-    <div class="removeText">
+    <div class="removeText" (click)="onDpRemove();">
         <span>Remove display picture</span>
     </div>
 
-    <div class="errorPrompt">
-        <span>Check Error Prompt</span>
+    <div class="errorPrompt" *ngIf='error'>
+        <span>DP file size too big! There is a 15 MB limit</span>
     </div>
 
 

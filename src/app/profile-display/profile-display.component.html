@@ -24,7 +24,7 @@
     <div class="profileDetails">
 
       <div class="dpContainer">
-        <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
+        <app-display-picture [uid]='uid'></app-display-picture>
       </div>
 
       <div class="detailsText">

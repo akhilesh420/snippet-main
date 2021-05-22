@@ -1,13 +1,14 @@
 import { MiscellaneousService, PopUp } from './miscellaneous.service';
 import { MixpanelService } from './mixpanel.service';
-import { throwError} from 'rxjs';
-import { catchError, finalize, map, startWith, take, first } from 'rxjs/operators';
+import { Observable, Subject, throwError} from 'rxjs';
+import { catchError, finalize, map, startWith, take, first, pairwise } from 'rxjs/operators';
 import { ProfileDetails, PersonalDetails, ProfileSticker, DisplayPicture, Credential } from './profile.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { CustomMetadata } from './post.model';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root'
@@ -127,12 +128,9 @@ export class UsersService {
       catchError(err => {
         this.handleError(err);
         const ref = this.storage.ref('display pictures/' + uid +'/original');
-        return ref.getDownloadURL().pipe(
-          startWith(this.placeholderDP),
-          catchError(err => {
-            return this.handleError(err);
-          }));
-      }));
+        return ref.getDownloadURL().pipe(startWith(this.placeholderDP))
+      })
+    );
   }
 
 
@@ -195,6 +193,12 @@ export class UsersService {
     });
   }
 
+  removeDisplayPicture(uid: string) {
+    this.afs
+      .collection('display picture')
+      .doc(uid)
+      .update({deleted: true, dateCreated: new Date()});
+  }
 
   // --------------------------------------- Error handling ---------------------------------------
   handleError(error) {
