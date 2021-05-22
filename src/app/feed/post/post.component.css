@@ -126,7 +126,7 @@ p {
   position: relative;
   overflow: hidden;
   margin-bottom: 0px;
-  background-color: #030303;
+  background-color: #010100;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   border-top-left-radius: 4px;
@@ -176,15 +176,14 @@ p {
 .optionsDropDown {
 
   height: 120px;
-  width: calc(100% - 10px);
-  background: #030303;
+  width: 100%;
+  background: #010100;
   position: absolute;
   z-index: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-left: 5px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 
@@ -245,7 +244,7 @@ p {
   font-family: 'Assistant';
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 16px;
   letter-spacing: 0.02em;
   color: #FFFFFF;
@@ -264,7 +263,7 @@ p {
 font-family: 'Assistant';
 font-style: normal;
 font-weight: 600;
-font-size: 16px;
+font-size: 14px;
 letter-spacing: 0.02em;
 color: #FFFFFF;
 height: 100%;
@@ -500,7 +499,7 @@ li {
   height: auto;
   min-height: 102px;
   width: 100%;
-  background: #030303;
+  background: #010100;
   border-radius: 0px 0px 4px 4px;
   display: flex;
   padding-top: 2px;
