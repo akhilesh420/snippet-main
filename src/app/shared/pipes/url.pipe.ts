@@ -8,7 +8,9 @@ export class UrlPipe implements PipeTransform {
   transform(url: string): unknown {
     if (!url) return url
     var linkify = require('linkifyjs');
-    return linkify.find(url)[0].href;
+    const val = linkify.find(url);
+    if (!val[0]) return url
+    return val[0].href;
   }
 
 }

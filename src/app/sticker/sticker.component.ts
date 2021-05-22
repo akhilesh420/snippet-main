@@ -14,7 +14,7 @@ export class StickerComponent implements OnInit, OnDestroy {
 
   @Input() pid: string;
   @Input() overrideNavigate: boolean = false;
-  @Input() location: string;
+  @Input() location?: string;
 
   stickerSize = {};
 

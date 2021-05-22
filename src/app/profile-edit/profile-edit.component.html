@@ -1,10 +1,12 @@
+<div class="exit-contianer" [routerLink]="['/', {outlets: {modal: null}}]"></div>
+
 <div class="mainContainer">
 
     <div class="editProfileContainer">
 
         <div class="topHeader">
 
-            <div class="cancelNav">
+            <div class="cancelNav" (click)="onCancel();">
                 <span>Cancel</span>
             </div>
 
@@ -12,7 +14,9 @@
                 <span>{{title}}</span>
             </div>
             
-            <div class="doneNav" [ngClass]="{'doneInactive': error}">
+            <div  class="doneNav" 
+                  [ngClass]="{'doneInactive': error}" 
+                  (click)="onDone();">
                 <span>Done</span>
             </div>
 
@@ -24,7 +28,9 @@
                 [routerLink]="['/', {outlets: {modal: 'edit/dp/0'}}]">
 
             <div class="dpSpace">
-                <div class="dpContainer"></div>
+                <div class="dpContainer">
+                  <img *ngIf='displayPicture$ | async as content' [src]='content' alt='dp' appLazyImg>
+                </div>
             </div>
 
             <div  class="feildTitleText changedpTitle">
@@ -47,7 +53,7 @@
           </div>
 
           <div  class="field changeLinkCol"
-                [routerLink]="['/', {outlets: {modal: 'edit/link'}}]">
+                [routerLink]="['/', {outlets: {modal: 'edit/link/0'}}]">
 
               <div  class="feildTitleText editLinkTitle">
                   <span>Change Link</span>
@@ -61,32 +67,29 @@
 
           <div class="field changeDisplayStickerCol">
 
-              <div  class="feildTitleText displayStickersTitle" [routerLink]="['/', {outlets: {modal: 'edit/ds/0'}}]">
+              <div  class="feildTitleText displayStickersTitle" [routerLink]="['/', {outlets: {modal: 'edit/ds/4'}}]">
                   <span>Change Display Stickers</span>
               </div>
 
               <div class="stickers">     
                   
-                  <div class="sticker">
+                  <div  class="sticker" 
+                        *ngFor='let sticker of (profileStickers$ | async).stickers | reverse; let i = index; trackBy: trackByFn'
+                        [routerLink]="['/', {outlets: {modal: 'edit/ds/' + i}}]">
                       
-                          <img src= "assets/images/Edit Page/emptyStickerPlaceholder.svg">
+                      <img *ngIf='sticker === null' src= "assets/images/Edit Page/emptyStickerPlaceholder.svg">
+
+                      <div class="stickerContainer" 
+                           *ngIf='sticker != null'
+                            [ngClass]='{"sticker-bck": sticker === "loading"}'>
+
+                        <app-sticker *ngIf='sticker != "loading"' [pid]="sticker.pid" [overrideNavigate]='true'>
+                        </app-sticker>
+
+                      </div>
+
+                    
                       
-                  </div>
-
-                  <div class="sticker">
-                      <div class="stickerContainer"></div>
-                  </div>
-
-                  <div class="sticker">
-                      <div class="stickerContainer"></div>
-                  </div>
-
-                  <div class="sticker">
-                      <div class="stickerContainer"></div>
-                  </div>
-
-                  <div class="sticker">
-                      <div class="stickerContainer"></div>
                   </div>
 
               </div>
@@ -95,7 +98,13 @@
 
         </div>
        
-        <app-bio-edit *ngIf='currentPage === "bio"' [bio]='bio' (error)='error = $event'></app-bio-edit>        
+        <app-bio-edit *ngIf='currentPage === "bio"' 
+                      [uid]='uid'
+                      [bio]='bio' 
+                      [save$]='save$' 
+                      (unsavedChanges)='unsavedChanges = $event' 
+                      (error)='error = $event'>
+        </app-bio-edit>        
         <app-link-edit *ngIf='currentPage === "link"'></app-link-edit>        
         <app-display-picture-edit *ngIf='currentPage === "dp"'></app-display-picture-edit>        
         <app-display-stickers-edit *ngIf='currentPage === "ds"'></app-display-stickers-edit>        

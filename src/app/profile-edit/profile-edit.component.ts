@@ -1,6 +1,7 @@
+import { MiscellaneousService, PopUp } from 'src/app/shared/miscellaneous.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UsersService } from 'src/app/shared/users.service';
-import { startWith, takeUntil } from 'rxjs/operators';
+import { startWith, takeUntil, first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
@@ -12,6 +13,8 @@ import { ProfileSticker } from '../shared/profile.model';
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit, OnDestroy {
+
+  uid: string;
 
   notifier$ = new Subject();
   currentPage: string;
@@ -25,10 +28,14 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   link = ''
   
   error: boolean = false;
+  unsavedChanges: boolean = false;
+  save$ = new Subject();
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private usersService: UsersService,
-              private auth: AngularFireAuth) { }
+              private auth: AngularFireAuth,
+              private miscellaneousService: MiscellaneousService) { }
 
   async ngOnInit(): Promise<void> {
     this.route.params
@@ -43,7 +50,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         else if (this.currentPage === 'ds') this.title = 'Edit Display Stickers';
       });
 
-    this.setUpProfile((await this.auth.currentUser).uid);
+    this.uid = (await this.auth.currentUser).uid; 
+    this.setUpProfile(this.uid);
   }
 
   setUpProfile(uid: string) {
@@ -59,6 +67,31 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.bio = details.description;
       this.link = details.link;
     });
+  }
+
+
+  async onCancel() {
+    if (!this.unsavedChanges) return this.returnHome();
+    const popUpObj: PopUp = new PopUp("You have unsaved changes! Are you sure you want to cancel?","Yes","no", ['confirm', 'reject'])
+    this.miscellaneousService.setPopUp(popUpObj);
+    const response = await this.miscellaneousService.getPopUpInteraction()
+      .pipe(first())
+      .toPromise();
+    if (response) this.returnHome();
+    this.miscellaneousService.closePopUp();  
+  }
+
+  onDone() {
+    if (this.unsavedChanges) this.save$.next();
+    this.returnHome();
+  }
+
+  returnHome() {
+    this.router.navigate(['/', {outlets: {modal: this.currentPage === "home" ? null : "edit/home/0"}}]);
+  }
+
+  trackByFn(index, item: ProfileSticker) {
+    return !!item ? item.pid : index;
   }
 
   ngOnDestroy() {
