@@ -52,13 +52,11 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    console.log('on changes profile display');
     this.setUpProfile(this.uid);
   }
 
   setUpProfile(uid: string) {
     if (this.lastUid === uid) return;
-    console.log(uid);
     this.lastUid = uid;
     this.username$ = this.usersService.getUsername(uid);
     this.displayPicture$ = this.usersService.getDisplayPicture(uid);

@@ -4,7 +4,7 @@ import { UsersService } from './../shared/users.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FeedService } from './../feed/feed.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationEnd, Router, Event as NavigationEvent } from '@angular/router';
+import { NavigationEnd, Router, Event as NavigationEvent, ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { filter, startWith, takeUntil } from 'rxjs/operators';
 import { Feed } from '../shared/post.model';
@@ -40,7 +40,6 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   tabletCheck: boolean;
 
   currentScroll: number;
-  gradientColour: string = '#0B0B0B';
 
   notifier$ = new Subject();
 
@@ -49,17 +48,16 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
               private activityService: ActivityService,
               private miscellaneousService: MiscellaneousService,
               private router: Router,
+              private route: ActivatedRoute,
               private auth: AngularFireAuth,
               private windowStateService: WindowStateService,
               private scrollService: ScrollService) { }
 
-  ngOnInit(): void {
-    this.getPosts(this.router.url);
-    this.router.events
-      .pipe(filter((event: NavigationEvent) => event instanceof NavigationEnd), takeUntil(this.notifier$))
-      .subscribe((event: NavigationEnd) => {
-        this.miscellaneousService.startLoading();
-        this.getPosts(event.urlAfterRedirects);
+  ngOnInit(): void {    
+    this.route.params
+      .pipe(takeUntil(this.notifier$))
+      .subscribe(params => {
+      this.getPosts(params['page'], params['id']);
       });
 
     this.auth.onAuthStateChanged((user) => {
@@ -79,6 +77,8 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
       .subscribe((scroll) => {
         this.currentScroll = scroll;
       });
+
+    console.log("profile page init");
   }
 
   setUpProfile(uid: string) {
@@ -95,31 +95,29 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     this.usersService.getPersonalDetails(uid)
       .pipe(takeUntil(this.notifier$))
       .subscribe((personal) => {
+        if (!personal) return;
         this.name = personal.name;
         this.dateJoined = personal.dateCreated.seconds * 1000;
       });
     this.usersService.getProfileDetails(uid)
       .pipe(takeUntil(this.notifier$))
       .subscribe((details) => {
+        if (!details) return;
         this.description = details.description;
         this.link = details.link;
       });
-    this.usersService.getDisplayPictureRef(uid)
-      .pipe(takeUntil(this.notifier$))
-      .subscribe((details) => {
-        if (!!details.colours) this.gradientColour = details.colours[1];
-      });
   }
 
-  getPosts(currentRoute: string) {
-    this.childRoute = currentRoute.split('/')[2];
-    this.uid = currentRoute.split('/')[3];
+  getPosts(childRoute: string, uid: string) {
+    this.childRoute = childRoute;
+    this.uid = uid;
 
     this.setUpProfile(this.uid);
     // My posts
     if (this.childRoute === 'posts') return this.posts$ = this.feedService.getProfilePage(this.uid);
     // My Collection
     this.posts$ = this.feedService.getCollectionPage(this.uid);
+    this.miscellaneousService.startLoading();
   }
 
   stickerTrackByFn(index, item: ProfileSticker) {

@@ -1,3 +1,4 @@
+import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FeedService } from './../feed/feed.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -16,8 +17,10 @@ export class ExplorePageComponent implements OnInit, OnDestroy {
   myUid: string;
 
   notifier$ = new Subject();
+  lastURL: string;
 
   constructor(private feedService: FeedService,
+              private miscellaneousService: MiscellaneousService,
               private auth: AngularFireAuth,
               private router: Router) { }
 
@@ -30,9 +33,14 @@ export class ExplorePageComponent implements OnInit, OnDestroy {
     this.router.events
       .pipe(filter((event: NavigationEvent) => event instanceof NavigationEnd), takeUntil(this.notifier$))
       .subscribe((event: NavigationEnd) => this.getPosts(event.urlAfterRedirects));
+    
+    console.log("explore init");
   }
 
   getPosts(currentRoute: string) {
+    if (currentRoute.includes(this.lastURL)) return; //Auxillary route change
+    this.lastURL = currentRoute;
+
     // Explore page
     const parentRoute = currentRoute.split('/')[1];
 
@@ -41,6 +49,7 @@ export class ExplorePageComponent implements OnInit, OnDestroy {
     // Post page
     const pid = currentRoute.split('/')[2];
     if (parentRoute === 'post') return this.posts$ = this.feedService.getPostPage(pid);
+    this.miscellaneousService.startLoading();
   }
 
   ngOnDestroy() {

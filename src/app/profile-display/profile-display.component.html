@@ -90,7 +90,9 @@
 
       </div>
 
-      <div *ngIf='isAuthenticated && uid === myUid' class="editButton">
+      <div  *ngIf='isAuthenticated && uid === myUid' 
+            class="editButton" 
+            [routerLink]="['/', {outlets: {modal: 'edit/main'}}]">
 
         <span>Edit Profile</span>
 

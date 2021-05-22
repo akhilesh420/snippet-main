@@ -4,6 +4,8 @@
 
   <div class='spacing' [ngClass]='{"dashboard-bck-mobile": showDashboard && tabletCheck}'>
     <router-outlet></router-outlet>
+    		<!-- Modal outlet. -->
+		<router-outlet name="modal"></router-outlet>
   </div>
 
   <!-- Dashboard -->

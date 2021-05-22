@@ -1,3 +1,5 @@
+import { DisplayStickersEditComponent } from './profile-edit/display-stickers-edit/display-stickers-edit.component';
+import { DisplayPictureEditComponent } from './profile-edit/display-picture-edit/display-picture-edit.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { FeedComponent } from './feed/feed.component';
@@ -10,6 +12,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { map } from 'rxjs/operators';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth']);
 const onlyAllowSelf = (next) => map((user: any) => !!user && next.params.id === user.uid);
@@ -17,12 +20,17 @@ const onlyAllowSelf = (next) => map((user: any) => !!user && next.params.id === 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/explore', pathMatch: 'full'},
   { path: 'explore', component: ExplorePageComponent},
-  { path: 'profile', component: ProfilePageComponent,
+  { path: 'profile/:page/:id', 
+    component: ProfilePageComponent,
     children: [
-      { path: 'posts/:id', component: FeedComponent },
-      { path: 'collection/:id', component: FeedComponent, ...canActivate(onlyAllowSelf)}
+      { path: 'posts', component: FeedComponent },
+      { path: 'collection', component: FeedComponent, ...canActivate(onlyAllowSelf)}
     ]
   },
+  { path: 'edit/:page', 
+    outlet: 'modal', 
+    component: ProfileEditComponent,
+    ...canActivate(redirectUnauthorizedToLogin)},
   { path: 'post/:id', component: ExplorePageComponent},
   { path: 'create/:step', component: CreateComponent, ...canActivate(redirectUnauthorizedToLogin)},
   { path: 'create', redirectTo: '/create/content', pathMatch: 'full', ...canActivate(redirectUnauthorizedToLogin)},

@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
       .subscribe((event: NavigationEnd) => {
         const currentRoute = event.urlAfterRedirects;
         this.parentRoute = currentRoute.split('/')[1];
-        console.log(this.parentRoute);
         if (this.parentRoute === "profile") this.uid = currentRoute.split("/")[3];
       });
 

@@ -90,6 +90,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.miscellaneousService.showDashboard.next(false);
 
       if (!this.currentRoute.includes('/auth')) this.miscellaneousService.lastRoute = this.currentRoute;
+      if (this.currentRoute.includes('modal:edit')) this.modalState.next(true);
+      else this.modalState.next(false);
     });
 
     this.auth.onAuthStateChanged((user) => {
@@ -111,17 +113,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.miscellaneousService.profileStickerEdit.pipe(takeUntil(this.notifier$)).subscribe(value => this.profileStickerEdit = value);
 
-    this.modalState.pipe(takeUntil(this.notifier$)).subscribe(state => {
-      if (!state) {
-        this._document.body.style.top = null;
-        this._document.body.classList.remove('body-no-scroll');
-        window.scroll(0, this.lastScroll);
-      } else {
-        this.lastScroll = window.scrollY;
-        this._document.body.style.top = (-1 * this.lastScroll).toString() + 'px';
-        this._document.body.classList.add('body-no-scroll');
-      }
-    });
+    this.modalState
+      .pipe(takeUntil(this.notifier$))
+      .subscribe(state => {
+        if (!state) {
+          this._document.body.style.top = null;
+          this._document.body.classList.remove('body-no-scroll');
+          window.scroll(0, this.lastScroll);
+        } else {
+          this.lastScroll = window.scrollY;
+          this._document.body.style.top = (-1 * this.lastScroll).toString() + 'px';
+          this._document.body.classList.add('body-no-scroll');
+        }
+      });
 
     this.popUpVal.pipe(takeUntil(this.notifier$)).subscribe(value => this.modalState.next(!!value));
   }
