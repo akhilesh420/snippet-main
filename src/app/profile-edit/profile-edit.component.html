@@ -21,7 +21,7 @@
         <!-- Main Menu -->
         <div *ngIf='currentPage === "home"'>
           <div  class="field changedpRow"
-                [routerLink]="['/', {outlets: {modal: 'edit/dp'}}]">
+                [routerLink]="['/', {outlets: {modal: 'edit/dp/0'}}]">
 
             <div class="dpSpace">
                 <div class="dpContainer"></div>
@@ -34,7 +34,7 @@
           </div>  
 
           <div  class="field editBioCol"
-                [routerLink]="['/', {outlets: {modal: 'edit/bio'}}]">
+                [routerLink]="['/', {outlets: {modal: 'edit/bio/0'}}]">
 
               <div  class="feildTitleText editBioTitle">
                   <span>Edit Bio</span>
@@ -112,7 +112,7 @@
             </div>
 
         </div> -->
-       
+      
         <app-bio-edit *ngIf='currentPage === "bio"' [bio]='bio' (error)='error = $event'></app-bio-edit>        
         <app-link-edit *ngIf='currentPage === "link"'></app-link-edit>        
         <app-display-picture-edit *ngIf='currentPage === "dp"'></app-display-picture-edit>        
