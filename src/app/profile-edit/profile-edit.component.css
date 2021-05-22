@@ -385,6 +385,14 @@
 
 }
 
+.formTitledpMenu {
+    margin-left: 32px;
+}
+
+.donedpMenu {
+    margin-left: 32px;
+}
+
 @media(hover: hover) and (pointer: fine) {
 
     .feild:hover .feildTitleText > span {
