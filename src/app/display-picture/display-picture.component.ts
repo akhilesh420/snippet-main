@@ -19,6 +19,8 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
   notifier$ = new Subject();
   placeholderImg: string;
 
+  lastUpdated: number;
+
   constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
@@ -27,6 +29,9 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.notifier$))
       .subscribe((res) => {
         this.deleted = res.deleted;
+        console.log(this.lastUpdated, res.dateCreated)
+        if (this.lastUpdated === res.dateCreated.seconds) return;
+        this.lastUpdated = res.dateCreated.seconds;
         if (!this.deleted) this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
       });
   }

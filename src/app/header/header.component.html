@@ -124,7 +124,7 @@
       <div class = "profileButton">
 
         <div class = "dpContainer">
-          <app-display-picture [uid]='uid'></app-display-picture>
+          <app-display-picture *ngIf='isAuthenticated' [uid]='myUid'></app-display-picture>
         </div>
 
         <!-- Inactive -->

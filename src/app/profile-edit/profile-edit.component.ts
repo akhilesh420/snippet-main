@@ -31,6 +31,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   unsavedChanges: boolean = false;
   save$ = new Subject();
 
+  // DP stuff
+  placeholderImg: string;
+  deleted: boolean = false;
+  lastUpdated: number;
   constructor(private route: ActivatedRoute,
               private router: Router,
               private usersService: UsersService,
@@ -65,11 +69,25 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.link = details.link;
     });
 
-    this.usersService.getDisplayPicture(uid)
+    this.placeholderImg = this.usersService.placeholderDP;
+    this.usersService.getDisplayPictureRef(this.uid)
       .pipe(takeUntil(this.notifier$))
-      .subscribe((url) => {
-        this.displayPictureURL = url;
+      .subscribe((res) => {
+        this.deleted = res.deleted;
+        console.log(this.lastUpdated, res.dateCreated)
+        if (this.lastUpdated === res.dateCreated.seconds) return;
+        this.lastUpdated = res.dateCreated.seconds;
+        if (!this.deleted) {
+          this.usersService.getDisplayPicture(uid)
+            .pipe(takeUntil(this.notifier$))
+            .subscribe((url) => {
+              this.displayPictureURL = url;
+            });
+        } else {
+          this.displayPictureURL = this.placeholderImg;
+        };
       });
+    
   }
 
 

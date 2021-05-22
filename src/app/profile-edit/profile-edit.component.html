@@ -29,7 +29,8 @@
 
             <div class="dpSpace">
                 <div class="dpContainer">
-                  <img *ngIf='displayPictureURL as content' [src]='content' alt='dp' appLazyImg>
+                  <img *ngIf='!deleted && displayPictureURL as content' [src]='content' alt='dp' appLazyImg>
+                  <img *ngIf='deleted' [src]='placeholderImg' alt='dp' appLazyImg>
                 </div>
             </div>
 

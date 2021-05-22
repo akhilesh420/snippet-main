@@ -1,3 +1,6 @@
+import { DisplayPicture } from 'src/app/shared/profile.model';
+import { MiscellaneousService } from 'src/app/shared/miscellaneous.service';
+import { CustomMetadata } from './../../shared/post.model';
 import { UsersService } from 'src/app/shared/users.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -24,7 +27,8 @@ export class DisplayPictureEditComponent implements OnInit, OnChanges, OnDestroy
 
   notifier$ = new Subject();
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService,
+              private miscellaneousService: MiscellaneousService) { }
 
   ngOnInit(): void {
     this.newDisplayPictureURL = this.displayPictureURL;
@@ -67,10 +71,15 @@ export class DisplayPictureEditComponent implements OnInit, OnChanges, OnDestroy
     this.unsavedChanges.emit(true);
   }
 
-  onSave() {
-    console.log(this.removed)
+  async onSave() {
     if (this.removed) {
       this.usersService.removeDisplayPicture(this.uid);
+    } else {
+      const dimensions = await this.miscellaneousService.getDimension(this.dpFile, this.dpFile.type);
+      const colours = await this.miscellaneousService.getPallette('display pictures/' + this.uid + '/original', this.dpFile.type, 2)
+      const customMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
+      const displayPicture =  new DisplayPicture(this.uid, +dimensions.width, +dimensions.height, this.dpFile.type, new Date(), false, colours)
+      this.usersService.uploadDisplayPicture(this.uid, this.dpFile, customMetadata, displayPicture);
     }
   }
 
