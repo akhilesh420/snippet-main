@@ -94,29 +94,12 @@
           </div> 
 
         </div>
-
-        <!-- Edit Bio Menu -->
-
-        <!-- <div class="topHeader">
-
-            <div class="cancelNav">
-                <span>Cancel</span>
-            </div>
-
-            <div class="formTitle formTitleBioMenu">
-                <span>Edit Bio</span>
-            </div>
-            
-            <div class="doneNav doneNavBioMenu doneInactive">
-                <span>Done</span>
-            </div>
-
-        </div> -->
-      
+       
         <app-bio-edit *ngIf='currentPage === "bio"' [bio]='bio' (error)='error = $event'></app-bio-edit>        
         <app-link-edit *ngIf='currentPage === "link"'></app-link-edit>        
         <app-display-picture-edit *ngIf='currentPage === "dp"'></app-display-picture-edit>        
         <app-display-stickers-edit *ngIf='currentPage === "ds"'></app-display-stickers-edit>        
+
     </div>
 
 </div>
