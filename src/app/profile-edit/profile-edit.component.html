@@ -12,7 +12,7 @@
                 <span>{{title}}</span>
             </div>
             
-            <div class="doneNav">
+            <div class="doneNav" [ngClass]="{'doneInactive': error}">
                 <span>Done</span>
             </div>
 
@@ -61,8 +61,8 @@
 
           <div class="field changeDisplayStickerCol">
 
-              <div  class="feildTitleText displayStickersTitle">
-                  <span [routerLink]="['/', {outlets: {modal: 'edit/ds/0'}}]">Change Display Stickers</span>
+              <div  class="feildTitleText displayStickersTitle" [routerLink]="['/', {outlets: {modal: 'edit/ds/0'}}]">
+                  <span>Change Display Stickers</span>
               </div>
 
               <div class="stickers">     
@@ -113,8 +113,10 @@
 
         </div> -->
        
-        <router-outlet name="modal"></router-outlet>
-        
+        <app-bio-edit *ngIf='currentPage === "bio"' [bio]='bio' (error)='error = $event'></app-bio-edit>        
+        <app-link-edit *ngIf='currentPage === "link"'></app-link-edit>        
+        <app-display-picture-edit *ngIf='currentPage === "dp"'></app-display-picture-edit>        
+        <app-display-stickers-edit *ngIf='currentPage === "ds"'></app-display-stickers-edit>        
     </div>
 
 </div>

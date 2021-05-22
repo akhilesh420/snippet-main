@@ -23,6 +23,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   bio = '';
   link = ''
+  
+  error: boolean = false;
 
   constructor(private route: ActivatedRoute,
               private usersService: UsersService,
