@@ -18,6 +18,7 @@ export class DisplayPictureEditComponent implements OnInit, OnChanges, OnDestroy
   @Input() save$: Subject<void>;
   @Output('unsavedChanges') unsavedChanges = new EventEmitter<boolean>();
   @Output('error') error$ = new EventEmitter<boolean>();
+  @Output('url') url$ = new EventEmitter<string>();
 
   newDisplayPictureURL:string;
   dpFile: File;
@@ -72,13 +73,13 @@ export class DisplayPictureEditComponent implements OnInit, OnChanges, OnDestroy
   }
 
   async onSave() {
+    this.url$.emit(this.newDisplayPictureURL);
     if (this.removed) {
       this.usersService.removeDisplayPicture(this.uid);
     } else {
       const dimensions = await this.miscellaneousService.getDimension(this.dpFile, this.dpFile.type);
-      const colours = await this.miscellaneousService.getPallette('display pictures/' + this.uid + '/original', this.dpFile.type, 2)
       const customMetadata = new CustomMetadata(this.uid, dimensions.width.toString(), dimensions.height.toString());
-      const displayPicture =  new DisplayPicture(this.uid, +dimensions.width, +dimensions.height, this.dpFile.type, new Date(), false, colours)
+      const displayPicture =  new DisplayPicture(this.uid, +dimensions.width, +dimensions.height, this.dpFile.type, new Date(), false)
       this.usersService.uploadDisplayPicture(this.uid, this.dpFile, customMetadata, displayPicture);
     }
   }

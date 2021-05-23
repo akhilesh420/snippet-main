@@ -155,12 +155,7 @@ export class UsersService {
     this.updateDisplayPicture(uid, content, customMetadata)
       .pipe(first(progress => progress === 100))
       .subscribe(async () => {
-        const res = await this.miscellaneousService
-          .getPallette('display pictures/' + uid + '/original', content.type);
-
-        const colours = res.response;
-
-        this.updateDisplayPictureRef(uid, {colours: colours, ...displayPicture})
+        this.updateDisplayPictureRef(uid, {...displayPicture})
           .then(() => {
             success = true;
             this.mixpanelService.setProperty(uid, 'dp', true);

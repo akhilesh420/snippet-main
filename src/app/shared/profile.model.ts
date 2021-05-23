@@ -30,7 +30,6 @@ export class DisplayPicture {
     public fileFormat: string = 'image',
     public dateCreated: Date | any,
     public deleted: boolean,
-    public colours?: string[]
   ) {}
 }
 

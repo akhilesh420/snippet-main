@@ -126,7 +126,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       const credential = new Credential(uid, this.credential);
       const profileDetails  = new ProfileDetails('','');
       const personalDetails = new PersonalDetails(this.name, new Date(), new Date());
-      const displayPicture = new DisplayPicture(uid, 0, 0, 'null', new Date(), false, ['#0B0B0B','#0B0B0B']);
+      const displayPicture = new DisplayPicture(uid, 0, 0, 'null', new Date(), false);
       const exclusiveObj = {dateCreated: new Date(), uid: uid, username: this.username, fullname: this.name, email: this.credential};
 
       const success: boolean = await this.authService.newUser(uid,

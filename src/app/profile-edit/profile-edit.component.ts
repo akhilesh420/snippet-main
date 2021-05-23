@@ -4,7 +4,7 @@ import { UsersService } from 'src/app/shared/users.service';
 import { startWith, takeUntil, first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { ProfileSticker } from '../shared/profile.model';
 
 @Component({
@@ -35,6 +35,8 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   placeholderImg: string;
   deleted: boolean = false;
   lastUpdated: number;
+  dpSubs: Subscription;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private usersService: UsersService,
@@ -70,11 +72,10 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     });
 
     this.placeholderImg = this.usersService.placeholderDP;
-    this.usersService.getDisplayPictureRef(this.uid)
+    this.dpSubs = this.usersService.getDisplayPictureRef(this.uid)
       .pipe(takeUntil(this.notifier$))
       .subscribe((res) => {
         this.deleted = res.deleted;
-        console.log(this.lastUpdated, res.dateCreated)
         if (this.lastUpdated === res.dateCreated.seconds) return;
         this.lastUpdated = res.dateCreated.seconds;
         if (!this.deleted) {
@@ -114,6 +115,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   returnHome() {
     this.router.navigate(['/', {outlets: {modal: this.currentPage === "home" ? null : "edit/home/0"}}]);
   }
+
+  onDpChange(event: string) {
+    this.dpSubs.unsubscribe();
+    this.displayPictureURL = event;
+  } 
 
   trackByFn(index, item: ProfileSticker) {
     return !!item ? item.pid : index;

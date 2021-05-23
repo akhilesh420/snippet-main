@@ -112,7 +112,8 @@
                                   [displayPictureURL]='displayPictureURL' 
                                   [save$]='save$' 
                                   (unsavedChanges)='unsavedChanges = $event' 
-                                  (error)='error = $event'>
+                                  (error)='error = $event'
+                                  (url)='onDpChange($event)'>
           </app-display-picture-edit>        
         <app-display-stickers-edit *ngIf='currentPage === "ds"'></app-display-stickers-edit>        
 

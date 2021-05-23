@@ -32,8 +32,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
     .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
   link: string = '';
 
-  gradientColour: string = '#0B0B0B';
-
   notifier$ = new Subject();
 
   constructor( private auth: AngularFireAuth,
@@ -68,13 +66,6 @@ export class ProfileDisplayComponent implements OnInit, OnChanges, OnDestroy {
 
     this.profileStickers$ = this.usersService.getProfileStickers(uid)
       .pipe(startWith({stickers: ['loading','loading','loading','loading','loading']}));
-
-    this.usersService.getDisplayPictureRef(uid)
-    .pipe(takeUntil(this.notifier$))
-    .subscribe((details) => {
-      if(!details) return;
-      if (!!details.colours) this.gradientColour = details.colours[1];
-    });
   }
 
   trackByFn(index, item: ProfileSticker) {

@@ -28,8 +28,8 @@ export class DisplayPictureComponent implements OnInit, OnDestroy {
     this.usersService.getDisplayPictureRef(this.uid)
       .pipe(takeUntil(this.notifier$))
       .subscribe((res) => {
+        if (!res) return;
         this.deleted = res.deleted;
-        console.log(this.lastUpdated, res.dateCreated)
         if (this.lastUpdated === res.dateCreated.seconds) return;
         this.lastUpdated = res.dateCreated.seconds;
         if (!this.deleted) this.displayPicture$ = this.usersService.getDisplayPicture(this.uid);
