@@ -328,7 +328,7 @@ exports.dpCreate = functions.runWith(runtimeOpts).firestore
 
 function getDimensions(width, height, dimension) {
   if (width == 0 || height == 0) return;
-  var _dimensions;
+  let _dimensions;
   if (width > height) _dimensions  = {width: dimension * (width/height), height: dimension};
   _dimensions = {width: dimension, height: dimension * (height/width)};
   return {width: _dimensions.width.toString(), height: _dimensions.height.toString()};

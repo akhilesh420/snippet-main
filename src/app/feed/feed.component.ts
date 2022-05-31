@@ -33,11 +33,11 @@ export class FeedComponent implements OnInit, OnDestroy {
   done: boolean = true;
 
   showProfileDisplay: boolean; //show the profile display tab
-  showProfileNavigation: boolean; //show the profile display tab
+  showProfileNavigation: boolean; //show the profile navigation tab
 
   uid$ = new BehaviorSubject<string>(null); //From URL
-  myUid$ = new BehaviorSubject<string>(null); //From URL
-  displayPicture$: Observable<string>; //From URL
+  myUid$ = new BehaviorSubject<string>(null); 
+  displayPicture$: Observable<string>; 
   myUid: string; //Authenticated user uid
   uid: string; //current profile uid
   isAuthenticated: boolean;
@@ -178,7 +178,7 @@ export class FeedComponent implements OnInit, OnDestroy {
     this.feedService.currentPost.next(this.feedList$.value[0].pid);
   }
 
-  moreBatch() { // get the next batch of posts used for manual render
+  moreBatch() { // get the next batch of posts also used for manual render
     if (this.done) return;
     if ((this.postsList.length - this.batchSize*this.batchNumber) <= 0) {
       this.feedList$.next(this.postsList);
